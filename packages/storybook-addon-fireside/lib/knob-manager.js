@@ -1,0 +1,96 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const objPath = require("object-path");
+const addons_1 = require("@storybook/addons");
+const react_1 = require("@storybook/react");
+const knobStore = {};
+const contextStore = {};
+const selectorStore = {};
+let currentStoryId = '';
+let currentKnobs = [];
+let currentController = {};
+const channel = addons_1.default.getChannel();
+let hydratedProps = null;
+function getKnobs(context, simpleKnobs, controller, name) {
+    contextStore[context.id] = context;
+    const knobs = simpleKnobs.map(simpleKnob => {
+        const id = `${context.kind}--${context.story}--${simpleKnob.prop}`;
+        if (knobStore[id])
+            return knobStore[id];
+        else
+            return knobStore[id] = Object.assign(Object.assign({}, simpleKnob), { id: id, story: context });
+    });
+    if (hydratedProps) {
+        const props = controller.versionUpdate
+            ? controller.versionUpdate(hydratedProps)
+            : hydratedProps;
+        knobs.forEach(knob => {
+            const hydratedValue = objPath.get(props, knob.prop);
+            knob.value = hydratedValue || knob.value;
+        });
+    }
+    else if (controller.versionUpdate) {
+        const props = controller.versionUpdate(getProps(knobs));
+        knobs.forEach(knob => {
+            const newValue = objPath.get(props, knob.prop);
+            knob.value = newValue || knob.value;
+        });
+    }
+    if (currentStoryId !== context.id || hydratedProps) {
+        currentStoryId = context.id;
+        currentKnobs = knobs;
+        currentController = controller;
+        hydratedProps = null;
+        channel.emit('storyboard-bridge/update-component-name', name);
+        channel.emit('storyboard-bridge/set-knobs', knobs);
+        channel.emit('storyboard-bridge/update-component-props', getProps(knobs));
+    }
+    return knobs;
+}
+exports.getKnobs = getKnobs;
+function getProps(knobs) {
+    let props = {};
+    for (let knob of knobs) {
+        objPath.set(props, knob.prop, knob.value);
+    }
+    return props;
+}
+exports.getProps = getProps;
+function addSelector(name, cb) {
+    selectorStore[name] = cb;
+}
+exports.addSelector = addSelector;
+channel.on('storyboard-bridge/set-knob-value', ({ knobId, payload }) => {
+    const knob = knobStore[knobId];
+    if (!knob)
+        throw new Error('#1 something strange happen');
+    knob.value = payload;
+    channel.emit('storyboard-bridge/update-component-props', getProps(currentKnobs));
+    react_1.forceReRender();
+});
+channel.on('storyboard-bridge/hydrate-component', (component) => {
+    const selector = selectorStore[component.name];
+    if (!selector) {
+        throw new Error('you forgot to implement "registerWidgetSelector" for widget ' + component.name);
+    }
+    let context = selector(component.props);
+    context.kind = context.kind.replace(/\//g, '-').toLowerCase();
+    context.id = `${context.kind}--${context.story}`.toLowerCase();
+    if (currentStoryId === context.id) {
+        const props = currentController.versionUpdate
+            ? currentController.versionUpdate(component.props)
+            : component.props;
+        currentKnobs.forEach(knob => {
+            const hydratedValue = objPath.get(props, knob.prop);
+            knob.value = hydratedValue || knob.value;
+        });
+        channel.emit('storyboard-bridge/set-knobs', currentKnobs);
+        channel.emit('storyboard-bridge/update-component-props', getProps(currentKnobs));
+        react_1.forceReRender();
+    }
+    else {
+        hydratedProps = component.props;
+        channel.emit('storyboard-bridge/select-story', context);
+    }
+});
+//# sourceMappingURL=knob-manager.js.map

@@ -10,18 +10,16 @@ function useTabs(allKnobs) {
         for (let knob of allKnobs)
             tabsSet.add(knob.options.tab || 'DEFAULT');
         const tabs = [...tabsSet];
-        setTabs(tabs);
-        if (!tabsSet.has('DEFAULT') && tabs[0])
-            setActiveTab(tabs[0]);
-    }, [allKnobs]);
-    React.useEffect(() => {
+        const newActiveTab = !tabsSet.has('DEFAULT') ? tabs[0] || 'DEFAULT' : 'DEFAULT';
         const knobs = allKnobs.filter(knob => {
             if (!knob.options.tab && activeTab === 'DEFAULT')
                 return true;
             else
                 return knob.options.tab === activeTab;
         });
+        setTabs(tabs);
         setKnobs(knobs);
+        setActiveTab(newActiveTab);
     }, [allKnobs, activeTab]);
     return { tabs, knobs, activeTab, setActiveTab };
 }

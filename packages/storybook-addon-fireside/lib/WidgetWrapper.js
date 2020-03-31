@@ -22,7 +22,7 @@ function useComponentProps(props) {
     const [finalProps, setFinalProps] = React.useState(props.props);
     React.useEffect(() => {
         (() => __awaiter(this, void 0, void 0, function* () {
-            let newProps = props.props;
+            let newProps = Object.assign({}, props.props);
             if (props.controller.preprocessProps) {
                 newProps = yield props.controller.preprocessProps(newProps);
             }

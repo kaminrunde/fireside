@@ -5,6 +5,7 @@
     "lerna": "^3.20.2"
   },
   "scripts": {
-    "build": "lerna run build"
+    "build": "lerna run build",
+    "watch": "lerna run watch"
   }
 }

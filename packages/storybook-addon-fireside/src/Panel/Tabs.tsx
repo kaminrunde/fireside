@@ -1,10 +1,13 @@
 import * as React from 'react'
 import * as t from '../types'
 import styled from 'styled-components'
-import useTabs from './hooks/useTabs'
 
 type Props = {
-  tabs: ReturnType<typeof useTabs>
+  tabs: {
+    tabs: string[],
+    activeTab: string,
+    setActiveTab: (tab:string) => void
+  }
 }
 
 export default function Tabs (props:Props) {

@@ -1,7 +1,10 @@
 /// <reference types="react" />
-import useTabs from './hooks/useTabs';
 declare type Props = {
-    tabs: ReturnType<typeof useTabs>;
+    tabs: {
+        tabs: string[];
+        activeTab: string;
+        setActiveTab: (tab: string) => void;
+    };
 };
 export default function Tabs(props: Props): JSX.Element;
 export {};

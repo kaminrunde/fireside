@@ -4,7 +4,6 @@ import useKnobs from './hooks/useKnobs'
 import Widget from './Widget'
 import Tabs from './Tabs'
 import * as t from '../types'
-import useTabs from './hooks/useTabs'
 
 type Props = {
   channel: t.Channel,
@@ -12,12 +11,11 @@ type Props = {
 }
 
 export default function Panel ({channel}:Props) {
-  const [knobs,update,key] = useKnobs(channel)
-  const tabs = useTabs(knobs)
+  const {knobs,update,key, ...tabs} = useKnobs(channel)
   return (
     <Wrapper>
       <Tabs key={key} tabs={tabs} />
-      {tabs.knobs.map(knob => (
+      {knobs.map(knob => (
         <Widget 
           key={knob.id+key}
           knob={knob}

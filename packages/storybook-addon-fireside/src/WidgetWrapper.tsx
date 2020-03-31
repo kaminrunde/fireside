@@ -19,7 +19,7 @@ function useComponentProps (props:Props):[boolean,object] {
 
   React.useEffect(() => {
     (async () => {
-      let newProps:any = props.props
+      let newProps:any = {...props.props}
 
       if(props.controller.preprocessProps){
         newProps = await props.controller.preprocessProps(newProps)

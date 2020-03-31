@@ -46,6 +46,7 @@ export default function useKnobs(channel:t.Channel):Output {
   return {
     knobs,
     update: (knob:t.Knob, value:any) => {
+      knob.value = value
       channel.emit('storyboard-bridge/set-knob-value', {
         knobId: knob.id,
         payload: value

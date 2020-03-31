@@ -33,6 +33,7 @@ function useKnobs(channel) {
     return {
         knobs,
         update: (knob, value) => {
+            knob.value = value;
             channel.emit('storyboard-bridge/set-knob-value', {
                 knobId: knob.id,
                 payload: value

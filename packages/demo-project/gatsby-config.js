@@ -12,14 +12,14 @@ module.exports = {
   plugins: [
     `gatsby-plugin-typescript`,
     `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-plugin-relaxui`,
-      options: {
-        widgetFolderPath: path.resolve(__dirname, 'src/widgets'),
-        controllerName: 'request.ts',
-        fields: [ 'MagazineArticle' ],
-      }
-    },
+    // {
+    //   resolve: `gatsby-plugin-relaxui`,
+    //   options: {
+    //     widgetFolderPath: path.resolve(__dirname, 'src/widgets'),
+    //     controllerName: 'request.ts',
+    //     fields: [ 'MagazineArticle' ],
+    //   }
+    // },
     {
       resolve: `gatsby-source-filesystem`,
       options: {

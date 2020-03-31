@@ -1,8 +1,8 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "demo-project",
   "private": true,
   "description": "A simple starter to get up and developing quickly with Gatsby",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "gatsby": "^2.19.7",
@@ -20,6 +20,7 @@
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1",
     "storybook": "^5.3.12",
+    "storybook-addon-fireside": "^1.0.0",
     "styled-components": "^5.0.1"
   },
   "devDependencies": {

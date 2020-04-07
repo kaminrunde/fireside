@@ -1,8 +1,8 @@
 import * as React from 'react'
-// import config from 'fireside-config'
+import config from 'config'
 
 export default function App() {
-  // console.log(config)
+  console.log(config)
   return (
     <div className="App">
       APP

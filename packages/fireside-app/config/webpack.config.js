@@ -288,7 +288,7 @@ module.exports = function(webpackEnv) {
         .filter(ext => useTypeScript || !ext.includes('ts')),
       alias: {
         'fireside-config': isEnvProduction
-          ? '/Users/manueljung/Documents/relax/storyboard-test/fireside-config'
+          ? '/Users/manueljung/Documents/projects/fireside/packages/demo-project/fireside-config'
           : path.resolve(__dirname,'../dev-fireside-config'),
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/

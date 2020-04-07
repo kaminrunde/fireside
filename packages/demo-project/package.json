@@ -5,6 +5,7 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "fireside-app": "^1.0.0",
     "gatsby": "^2.19.7",
     "gatsby-image": "^2.2.39",
     "gatsby-plugin-manifest": "^2.2.39",
@@ -51,6 +52,7 @@
   ],
   "license": "MIT",
   "scripts": {
+    "fireside": "fireside-build",
     "storyboard": "NODE_PATH=src eject-app-test",
     "build": "gatsby build",
     "storybook": "NODE_ENV=production NODE_PATH=src start-storybook -p 6006 -c src/storybook",

@@ -6,6 +6,11 @@
       "dom.iterable",
       "esnext"
     ],
+    "baseUrl": "src",
+    "paths": {
+      "fireside-config": ["./dev-fireside-config.json"],
+    },
+    "rootDirs": ["src", "."],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -20,6 +25,7 @@
     "jsx": "react"
   },
   "include": [
-    "src"
+    "src",
+    "dev-fireside-config"
   ]
 }

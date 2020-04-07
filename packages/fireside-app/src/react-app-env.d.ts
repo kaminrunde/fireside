@@ -9,6 +9,11 @@ declare namespace NodeJS {
   }
 }
 
+declare module 'styled-components' {
+  const module:any;
+  export default module;
+}
+
 declare module '*.bmp' {
   const src: string;
   export default src;

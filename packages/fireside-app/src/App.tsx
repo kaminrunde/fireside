@@ -1,10 +1,15 @@
 import * as React from 'react'
-import config from 'config'
+import {Router} from '@reach/router'
+
+import IndexRoute from 'routes/Index'
+
 
 export default function App() {
   return (
     <div className="App">
-      APP {config.foo}
+      <Router>
+        <IndexRoute path='/'/>
+      </Router>
     </div>
   )
 }

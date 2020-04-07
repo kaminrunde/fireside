@@ -1,10 +1,21 @@
 
-let config = {
+
+type Config = {
+  mediaSizes: never[],
+  widgets: never[],
+  abFeature: boolean,
+  allowBackground: boolean,
+  allowStretch: boolean,
+  foo: string
+}
+
+let config:Config = {
   mediaSizes: [],
   widgets: [],
   abFeature: false,
   allowBackground: true,
-  allowStretch: true
+  allowStretch: true,
+  foo: 'false'
 }
 try {
   const userConfig:any = require('fireside-config')

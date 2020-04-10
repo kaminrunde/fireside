@@ -9,6 +9,14 @@ declare namespace NodeJS {
   }
 }
 
+declare module 'redux-ruleset' {
+  const module:any;
+  const dispatchEvent:any;
+  const addRule:any;
+  export default module;
+  export {dispatchEvent, addRule};
+}
+
 declare module 'styled-components' {
   const module:any;
   export default module;

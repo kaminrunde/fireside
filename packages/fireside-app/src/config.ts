@@ -1,7 +1,16 @@
 
 
 type Config = {
-  mediaSizes: never[],
+  mediaSizes: {
+    label: string,
+    icon: 
+      | 'MOBILE_S' | 'MOBILE_M' | 'MOBILE_L' 
+      | 'TABLET_S' | 'TABLET_M' | 'TABLET_L' 
+      | 'LAPTOP_S' | 'LAPTOP_M' | 'LAPTOP_L' 
+      | 'DESKTOP_S' | 'DESKTOP_M' | 'DESKTOP_L',
+    breakpoint: number,
+    initialActive: boolean
+  }[],
   widgets: never[],
   abFeature: boolean,
   allowBackground: boolean,

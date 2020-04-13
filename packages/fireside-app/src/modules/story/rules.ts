@@ -7,9 +7,9 @@ addRule({
   target: at.SET_CONNECTOR,
   output: at.SET_STORY,
   concurrency: 'LAST',
-  consequence: ({action, dispatch}) => {
+  consequence: ({action, dispatch}:any) => {
     const connector = action.payload
-    connector.onChange(story => {
+    connector.onChange((story:any) => {
       dispatch(actions.setStory(story))
     })
     return () => null

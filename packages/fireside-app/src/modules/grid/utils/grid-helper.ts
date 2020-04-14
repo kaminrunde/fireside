@@ -12,7 +12,7 @@ export function calculateY (areas:t.GridArea[], target:t.GridArea) {
   let map:{[position:string]:t.GridArea} = {}
   let targetIndex = -1
 
-  for(let y=target.y; y > target.h+target.y; y++){
+  for(let y=target.y; y < target.h+target.y; y++){
     for(let x=target.x; x < target.w+target.x; x++) {
       map[`${y}-${x}`] = target
     }
@@ -22,8 +22,10 @@ export function calculateY (areas:t.GridArea[], target:t.GridArea) {
     const area = areas[index]
     if(area.id === target.id) {
       targetIndex = index
+      areas[index] = target
+      continue
     }
-    let allowMoveDown = area.y-target.h >= 0
+    let allowMoveDown = (area.y-target.h) >= 0 && area.y !== target.y+1
     let moveUp = 0
     
     // check if move down is possible
@@ -37,15 +39,16 @@ export function calculateY (areas:t.GridArea[], target:t.GridArea) {
     }
     // check how much to move up
     if(!allowMoveDown){
-      for(let y=area.y; y < area.h+area.y; y++){
-        for(let x=area.x; x < area.w+area.x; x++) {
-          if(map[`${y+moveUp}-${x}`]){
-            moveUp++
-            y = area.y // resart
-            break
+      const shouldUpdate = () => {
+        for(let y=area.y; y < area.h+area.y; y++){
+          for(let x=area.x; x < area.w+area.x; x++) {
+            if(map[`${y+moveUp}-${x}`]){
+              return true
+            }
           }
         }
       }
+      while(shouldUpdate()) moveUp++
     }
 
     // update y

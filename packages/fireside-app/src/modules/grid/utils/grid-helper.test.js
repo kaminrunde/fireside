@@ -14,7 +14,8 @@ const createGridAreas = grid => {
     }
   }
 
-  return Object.values(areas).filter(area => area.id !== '-')
+  const unsorted = Object.values(areas).filter(area => area.id !== '-')
+  return helper.sortGridAreas(unsorted)
 }
 
 const createGrid = areas => {
@@ -70,129 +71,145 @@ describe('grid-helper', () => {
 
   test('sorting', () => {
     const areas = [
-      { id: 'b', y: 0, x: 2, w: 2, h: 1 },
-      { id: 'a', y: 0, x: 0, w: 2, h: 2 },
-      { id: 'd', y: 1, x: 3, w: 1, h: 1 },
-      { id: 'c', y: 1, x: 2, w: 1, h: 1 },
+      { id: 'b', y: 0, x: 1, w: 1, h: 1 },
+      { id: 'a', y: 0, x: 0, w: 1, h: 1 },
+      { id: 'd', y: 1, x: 1, w: 1, h: 1 },
+      { id: 'c', y: 1, x: 0, w: 1, h: 1 },
     ]
     const result = helper.sortGridAreas(areas)
     expect(result).toEqual([
-      { id: 'a', y: 0, x: 0, w: 2, h: 2 },
-      { id: 'b', y: 0, x: 2, w: 2, h: 1 },
-      { id: 'c', y: 1, x: 2, w: 1, h: 1 },
-      { id: 'd', y: 1, x: 3, w: 1, h: 1 },
+      { id: 'b', y: 0, x: 1, w: 1, h: 1 },
+      { id: 'a', y: 0, x: 0, w: 1, h: 1 },
+      { id: 'd', y: 1, x: 1, w: 1, h: 1 },
+      { id: 'c', y: 1, x: 0, w: 1, h: 1 },
     ])
   })
 
-  test('move-down', () => {
-    const areas = createGridAreas([
-      ['a'],
-      ['b'],
-    ])
-    const target = { id: 'a', y: 1, x: 0, w: 1, h: 1 }
-    const result = helper.calculateY(areas, target)
-    const grid = createGrid(result)
-    expect(grid).toHaveLength(2)
-    expect(grid[0]).toEqual(['b'])
-    expect(grid[1]).toEqual(['a'])
+  describe('move area', () => {
+    test('move-down', () => {
+      const areas = createGridAreas([
+        ['a'],
+        ['b'],
+      ])
+      const target = { id: 'a', y: 1, x: 0, w: 1, h: 1 }
+      const result = helper.calculateY(areas, target)
+      const grid = createGrid(result)
+      expect(grid).toHaveLength(2)
+      expect(grid[0]).toEqual(['b'])
+      expect(grid[1]).toEqual(['a'])
+    })
+  
+    test('move-up', () => {
+      const areas = createGridAreas([
+        ['a'],
+        ['b'],
+      ])
+      const target = { id: 'b', y: 0, x: 0, w: 1, h: 1 }
+      const result = helper.calculateY(areas, target)
+      const grid = createGrid(result)
+      expect(grid).toHaveLength(2)
+      expect(grid[0]).toEqual(['b'])
+      expect(grid[1]).toEqual(['a'])
+    })
+  
+    test('complex move-down', () => {
+      const areas = createGridAreas([
+        ['a', 'a', 'b', 'b'],
+        ['a', 'a', 'c', 'd'],
+      ])
+      const target = { id: 'c', y: 0, x: 2, w: 1, h: 1 }
+      const result = helper.calculateY(areas, target)
+      const grid = createGrid(result)
+      expect(grid).toHaveLength(3)
+      expect(grid[0]).toEqual(['a', 'a', 'c', '-'])
+      expect(grid[1]).toEqual(['a', 'a', 'b', 'b'])
+      expect(grid[2]).toEqual(['-', '-', '-', 'd'])
+    })
+  
+    test('complex move-up', () => {
+      const areas = createGridAreas([
+        ['a', 'a', 'b', 'c'],
+        ['a', 'a', 'd', 'd'],
+      ])
+      const target = { id: 'b', y: 1, x: 2, w: 1, h: 1 }
+      const result = helper.calculateY(areas, target)
+      const grid = createGrid(result)
+      expect(grid).toHaveLength(3)
+      expect(grid[0]).toEqual(['a', 'a', '-', 'c'])
+      expect(grid[1]).toEqual(['a', 'a', 'b', '-'])
+      expect(grid[2]).toEqual(['-', '-', 'd', 'd'])
+    })
+  
+    test('move-left', () => {
+      const areas = createGridAreas([
+        ['a', 'a', 'b', 'b'],
+        ['a', 'a', 'c', 'c'],
+      ])
+      const target = { id: 'b', y: 0, x: 1, w: 2, h: 1 }
+      const result = helper.calculateY(areas, target)
+      const grid = createGrid(result)
+      expect(grid).toHaveLength(3)
+      expect(grid[0]).toEqual(['-', 'b', 'b', '-'])
+      expect(grid[1]).toEqual(['a', 'a', 'c', 'c'])
+      expect(grid[2]).toEqual(['a', 'a', '-', '-'])
+    })
+  
+    test('complex move-left', () => {
+      const areas = createGridAreas([
+        ['a', 'a', 'b', 'b'],
+        ['a', 'a', 'c', 'c'],
+      ])
+      const target = { id: 'c', y: 1, x: 1, w: 2, h: 1 }
+      const result = helper.calculateY(areas, target)
+      const grid = createGrid(result)
+      expect(grid).toHaveLength(4)
+      expect(grid[0]).toEqual(['-', '-', 'b', 'b'])
+      expect(grid[1]).toEqual(['-', 'c', 'c', '-'])
+      expect(grid[2]).toEqual(['a', 'a', '-', '-'])
+      expect(grid[3]).toEqual(['a', 'a', '-', '-'])
+    })
+  
+    test('add area', () => {
+      const areas = createGridAreas([
+        ['a', 'a', 'b', 'b'],
+        ['a', 'a', 'c', 'c'],
+      ])
+      const target = { id: 'd', y: 0, x: 0, w: 2, h: 1 }
+      const result = helper.calculateY(areas, target)
+      const grid = createGrid(result)
+      expect(grid).toHaveLength(3)
+      expect(grid[0]).toEqual(['d', 'd', 'b', 'b'])
+      expect(grid[1]).toEqual(['a', 'a', 'c', 'c'])
+      expect(grid[2]).toEqual(['a', 'a', '-', '-'])
+    })
+  
+    test('resize area', () => {
+      const areas = createGridAreas([
+        ['a', 'a', 'b', 'b'],
+        ['a', 'a', 'c', 'c'],
+      ])
+      const target = { id: 'b', y: 0, x: 1, w: 3, h: 2 }
+      const result = helper.calculateY(areas, target)
+      const grid = createGrid(result)
+      expect(grid).toHaveLength(4)
+      expect(grid[0]).toEqual(['-', 'b', 'b', 'b'])
+      expect(grid[1]).toEqual(['-', 'b', 'b', 'b'])
+      expect(grid[2]).toEqual(['a', 'a', 'c', 'c'])
+      expect(grid[3]).toEqual(['a', 'a', '-', '-'])
+    })
   })
 
-  test('move-up', () => {
-    const areas = createGridAreas([
-      ['a'],
-      ['b'],
-    ])
-    const target = { id: 'b', y: 0, x: 0, w: 1, h: 1 }
-    const result = helper.calculateY(areas, target)
-    const grid = createGrid(result)
-    expect(grid).toHaveLength(2)
-    expect(grid[0]).toEqual(['b'])
-    expect(grid[1]).toEqual(['a'])
-  })
-
-  test('complex move-down', () => {
-    const areas = createGridAreas([
-      ['a', 'a', 'b', 'b'],
-      ['a', 'a', 'c', 'd'],
-    ])
-    const target = { id: 'c', y: 0, x: 2, w: 1, h: 1 }
-    const result = helper.calculateY(areas, target)
-    const grid = createGrid(result)
-    expect(grid).toHaveLength(3)
-    expect(grid[0]).toEqual(['a', 'a', 'c', '-'])
-    expect(grid[1]).toEqual(['a', 'a', 'b', 'b'])
-    expect(grid[2]).toEqual(['-', '-', '-', 'd'])
-  })
-
-  test('complex move-up', () => {
-    const areas = createGridAreas([
-      ['a', 'a', 'b', 'c'],
-      ['a', 'a', 'd', 'd'],
-    ])
-    const target = { id: 'b', y: 1, x: 2, w: 1, h: 1 }
-    const result = helper.calculateY(areas, target)
-    const grid = createGrid(result)
-    expect(grid).toHaveLength(3)
-    expect(grid[0]).toEqual(['a', 'a', '-', 'c'])
-    expect(grid[1]).toEqual(['a', 'a', 'b', '-'])
-    expect(grid[2]).toEqual(['-', '-', 'd', 'd'])
-  })
-
-  test('move-left', () => {
-    const areas = createGridAreas([
-      ['a', 'a', 'b', 'b'],
-      ['a', 'a', 'c', 'c'],
-    ])
-    const target = { id: 'b', y: 0, x: 1, w: 2, h: 1 }
-    const result = helper.calculateY(areas, target)
-    const grid = createGrid(result)
-    expect(grid).toHaveLength(3)
-    expect(grid[0]).toEqual(['-', 'b', 'b', '-'])
-    expect(grid[1]).toEqual(['a', 'a', 'c', 'c'])
-    expect(grid[2]).toEqual(['a', 'a', '-', '-'])
-  })
-
-  test('complex move-left', () => {
-    const areas = createGridAreas([
-      ['a', 'a', 'b', 'b'],
-      ['a', 'a', 'c', 'c'],
-    ])
-    const target = { id: 'c', y: 1, x: 1, w: 2, h: 1 }
-    const result = helper.calculateY(areas, target)
-    const grid = createGrid(result)
-    expect(grid).toHaveLength(4)
-    expect(grid[0]).toEqual(['-', '-', 'b', 'b'])
-    expect(grid[1]).toEqual(['-', 'c', 'c', '-'])
-    expect(grid[2]).toEqual(['a', 'a', '-', '-'])
-    expect(grid[3]).toEqual(['a', 'a', '-', '-'])
-  })
-
-  test('add area', () => {
-    const areas = createGridAreas([
-      ['a', 'a', 'b', 'b'],
-      ['a', 'a', 'c', 'c'],
-    ])
-    const target = { id: 'd', y: 0, x: 0, w: 2, h: 1 }
-    const result = helper.calculateY(areas, target)
-    const grid = createGrid(result)
-    expect(grid).toHaveLength(3)
-    expect(grid[0]).toEqual(['d', 'd', 'b', 'b'])
-    expect(grid[1]).toEqual(['a', 'a', 'c', 'c'])
-    expect(grid[2]).toEqual(['a', 'a', '-', '-'])
-  })
-
-  test('resize area', () => {
-    const areas = createGridAreas([
-      ['a', 'a', 'b', 'b'],
-      ['a', 'a', 'c', 'c'],
-    ])
-    const target = { id: 'b', y: 0, x: 1, w: 3, h: 2 }
-    const result = helper.calculateY(areas, target)
-    const grid = createGrid(result)
-    expect(grid).toHaveLength(4)
-    expect(grid[0]).toEqual(['-', 'b', 'b', 'b'])
-    expect(grid[1]).toEqual(['-', 'b', 'b', 'b'])
-    expect(grid[2]).toEqual(['a', 'a', 'c', 'c'])
-    expect(grid[3]).toEqual(['a', 'a', '-', '-'])
+  describe('gravity', () => {
+    test('simple', () => {
+      const areas = createGridAreas([
+        ['-', '-', '-', 'b'],
+        ['a', 'a', 'c', 'c'],
+      ])
+      const result = helper.applyGravity(areas)
+      const grid = createGrid(result)
+      expect(grid).toHaveLength(2)
+      expect(grid[0]).toEqual(['a', 'a', '-', 'b'])
+      expect(grid[1]).toEqual(['-', '-', 'c', 'c'])
+    })
   })
 })

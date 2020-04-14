@@ -1,5 +1,4 @@
 import * as a from '../actions'
-import * as t from '../types'
 import {State} from '../reducer'
 import useConnect, {Config} from 'hooks/useConnect'
 

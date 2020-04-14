@@ -113,7 +113,7 @@ export default function useBetterConnect <OP,Result,State,SP>(
     if (mstate === cachedData[0]) return
     if(m.areStatesEqual && m.areStatesEqual(mstate, cachedData[0])) return
     update(mstate)
-  }),[])
+  }),[cacheKey, m])
 
   if(cachedResult && cachedState === state){
     return cachedResult

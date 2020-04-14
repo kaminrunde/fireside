@@ -6,7 +6,7 @@ export const updateGridArea = (updatedArea:t.GridArea) => ({
   payload: updatedArea
 })
 
-export const addWidth = (width:string='auto') => ({
+export const addWidth = (width:string='1fr') => ({
   type: at.ADD_WIDTH,
   payload: width
 })

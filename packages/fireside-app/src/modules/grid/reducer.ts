@@ -11,9 +11,14 @@ export type State = {
 }
 
 export const defaultState:State = {
-  gridAreas: [],
-  widths: [],
-  heights: []
+  gridAreas: [
+    {id:'a', y:0, x:0, w:1, h:1},
+    {id:'b', y:0, x:1, w:1, h:1},
+    {id:'c', y:1, x:0, w:1, h:1},
+    {id:'d', y:1, x:1, w:1, h:1},
+  ],
+  widths: ['1fr', '1fr'],
+  heights: ['auto', 'auto']
 }
 
 export default produce((state:State, action:Action) => {

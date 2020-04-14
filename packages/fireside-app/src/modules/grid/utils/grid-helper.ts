@@ -1,7 +1,8 @@
 import * as t from '../types'
 import produce from 'immer'
+import {compose} from 'redux'
 
-export function sortGridAreas (gridAreas:t.GridArea[]) {
+export function sortGridAreas (gridAreas:t.GridArea[]):t.GridArea[] {
   return gridAreas.sort((a,b) => {
     if(a.y < b.y) return -1
     if(a.x < b.x) return 1
@@ -9,7 +10,7 @@ export function sortGridAreas (gridAreas:t.GridArea[]) {
   })
 }
 
-export function calculateY (areas:t.GridArea[], target:t.GridArea) {
+export function calculateY (areas:t.GridArea[], target:t.GridArea):t.GridArea[] {
   return produce(areas, areas => {
     let map:{[position:string]:t.GridArea} = {}
     let targetIndex = -1
@@ -75,7 +76,7 @@ export function calculateY (areas:t.GridArea[], target:t.GridArea) {
   })
 }
 
-export function calculateHeights (prevHeights:string[], areas:t.GridArea[]){
+export function calculateHeights (prevHeights:string[], areas:t.GridArea[]):string[]{
   let maxHeight = 1
   let prevHeight = prevHeights.length
   
@@ -97,7 +98,7 @@ export function calculateHeights (prevHeights:string[], areas:t.GridArea[]){
   else return prevHeights
 }
 
-export function applyGravity (areas: t.GridArea[]){
+export function applyGravity (areas: t.GridArea[]):t.GridArea[]{
   return produce(areas, areas => {
     let map:{[position:string]:boolean} = {}
   
@@ -130,4 +131,13 @@ export function applyGravity (areas: t.GridArea[]){
       }
     }
   })
+}
+
+export function updateGridArea (areas:t.GridArea[], target:t.GridArea):t.GridArea[]{
+  return compose<t.GridArea[]>(
+    sortGridAreas,
+    calculateY,
+    sortGridAreas,
+    applyGravity
+  )(areas, target)
 }

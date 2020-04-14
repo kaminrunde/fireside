@@ -9,6 +9,18 @@ interface CustomFunction extends Function {
   updateList: Function[]
 }
 
+export type Config<OP,Result,State,SP> = {
+  moduleKey:string,
+  name:string,
+  createCacheKey: (props:OP) => string,
+  mapState: (state:State,props:OP) => SP,
+  mapDispatch?:any,
+  transformDispatch?:{
+    [name:string]: (fn:Function,sp:Result,props:OP)=>void
+  },
+  areStatesEqual?: (a:State,b:State) => boolean
+}
+
 const cache:{[name:string]:[any,any]} = {}
 const creators:any = {}
 const listeners:CustomFunction[] = []
@@ -74,20 +86,11 @@ function subscribe (
 
 export default function useBetterConnect <OP,Result,State,SP>(
   props:OP,
-  m:{
-    moduleKey:string,
-    name:string,
-    createCacheKey: (props:OP) => string,
-    mapState: (state:State,props:OP) => SP,
-    mapDispatch?:any,
-    transformDispatch?:{
-      [name:string]: (fn:Function,sp:Result,props:OP)=>void
-    },
-    areStatesEqual?: (a:State,b:State) => boolean
-  }
+  m:Config<OP,Result,State,SP>
 ):Result {
   if(!setup) runSetup()
-  const state:State = store.getState()[m.moduleKey]
+  const rootState:any = store.getState()
+  const state:State = rootState[m.moduleKey]
   const [,update] = React.useState(0)
   const cacheKey = m.name + m.createCacheKey(props)
   const cachedData = cache[cacheKey]

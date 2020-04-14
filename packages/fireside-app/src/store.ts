@@ -1,18 +1,17 @@
-import {createStore, compose, applyMiddleware} from 'redux'
+import {createStore, compose, applyMiddleware, combineReducers} from 'redux'
 import ruleMiddleware from 'redux-ruleset'
 
-// import usersModule from './modules/users'
-// import snackbarModule from './modules/snackbar'
+import gridReducer from 'modules/grid'
 
-// import './features/tracking'
-// import './features/showErrors'
 
-function rootReducer (state={}, action) {
-  return {
-    // users: usersModule(state.users, action),
-    // snackbar: snackbarModule(state.snackbar, action)
-  }
+declare global {
+  interface Window { __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any; }
 }
+
+const rootReducer = combineReducers({
+  grid: gridReducer
+})
+
 
 let composeEnhancers = compose
 

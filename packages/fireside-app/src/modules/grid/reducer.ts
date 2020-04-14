@@ -10,7 +10,7 @@ export type State = {
   heights: string[]
 }
 
-export const defaultState = {
+export const defaultState:State = {
   gridAreas: [],
   widths: [],
   heights: []

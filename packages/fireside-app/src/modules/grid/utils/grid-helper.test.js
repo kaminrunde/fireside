@@ -49,19 +49,19 @@ describe('grid-helper', () => {
       ['a', 'a', 'c', 'd'],
     ])
     expect(areas).toEqual([
-      { id: 'a', y: 0, x: 0, w: 2, h: 2 },
-      { id: 'b', y: 0, x: 2, w: 1, h: 1 },
-      { id: 'c', y: 1, x: 2, w: 1, h: 1 },
-      { id: 'd', y: 1, x: 3, w: 1, h: 1 },
+      { i: 'a', y: 0, x: 0, w: 2, h: 2 },
+      { i: 'b', y: 0, x: 2, w: 1, h: 1 },
+      { i: 'c', y: 1, x: 2, w: 1, h: 1 },
+      { i: 'd', y: 1, x: 3, w: 1, h: 1 },
     ])
   })
 
   test('createGrid works', () => {
     const grid = createGrid([
-      { id: 'a', y: 0, x: 0, w: 2, h: 2 },
-      { id: 'b', y: 0, x: 2, w: 1, h: 1 },
-      { id: 'c', y: 1, x: 2, w: 1, h: 1 },
-      { id: 'd', y: 1, x: 3, w: 1, h: 1 },
+      { i: 'a', y: 0, x: 0, w: 2, h: 2 },
+      { i: 'b', y: 0, x: 2, w: 1, h: 1 },
+      { i: 'c', y: 1, x: 2, w: 1, h: 1 },
+      { i: 'd', y: 1, x: 3, w: 1, h: 1 },
     ])
     expect(grid).toEqual([
       ['a', 'a', 'b', '-'],
@@ -71,17 +71,17 @@ describe('grid-helper', () => {
 
   test('sorting', () => {
     const areas = [
-      { id: 'b', y: 0, x: 1, w: 1, h: 1 },
-      { id: 'a', y: 0, x: 0, w: 1, h: 1 },
-      { id: 'd', y: 1, x: 1, w: 1, h: 1 },
-      { id: 'c', y: 1, x: 0, w: 1, h: 1 },
+      { i: 'b', y: 0, x: 1, w: 1, h: 1 },
+      { i: 'a', y: 0, x: 0, w: 1, h: 1 },
+      { i: 'd', y: 1, x: 1, w: 1, h: 1 },
+      { i: 'c', y: 1, x: 0, w: 1, h: 1 },
     ]
     const result = helper.sortGridAreas(areas)
     expect(result).toEqual([
-      { id: 'b', y: 0, x: 1, w: 1, h: 1 },
-      { id: 'a', y: 0, x: 0, w: 1, h: 1 },
-      { id: 'd', y: 1, x: 1, w: 1, h: 1 },
-      { id: 'c', y: 1, x: 0, w: 1, h: 1 },
+      { i: 'b', y: 0, x: 1, w: 1, h: 1 },
+      { i: 'a', y: 0, x: 0, w: 1, h: 1 },
+      { i: 'd', y: 1, x: 1, w: 1, h: 1 },
+      { i: 'c', y: 1, x: 0, w: 1, h: 1 },
     ])
   })
 
@@ -91,7 +91,7 @@ describe('grid-helper', () => {
         ['a'],
         ['b'],
       ])
-      const target = { id: 'a', y: 1, x: 0, w: 1, h: 1 }
+      const target = { i: 'a', y: 1, x: 0, w: 1, h: 1 }
       const result = helper.calculateY(areas, target)
       const grid = createGrid(result)
       expect(grid).toHaveLength(2)
@@ -104,7 +104,7 @@ describe('grid-helper', () => {
         ['a'],
         ['b'],
       ])
-      const target = { id: 'b', y: 0, x: 0, w: 1, h: 1 }
+      const target = { i: 'b', y: 0, x: 0, w: 1, h: 1 }
       const result = helper.calculateY(areas, target)
       const grid = createGrid(result)
       expect(grid).toHaveLength(2)
@@ -117,7 +117,7 @@ describe('grid-helper', () => {
         ['a', 'a', 'b', 'b'],
         ['a', 'a', 'c', 'd'],
       ])
-      const target = { id: 'c', y: 0, x: 2, w: 1, h: 1 }
+      const target = { i: 'c', y: 0, x: 2, w: 1, h: 1 }
       const result = helper.calculateY(areas, target)
       const grid = createGrid(result)
       expect(grid).toHaveLength(3)
@@ -131,7 +131,7 @@ describe('grid-helper', () => {
         ['a', 'a', 'b', 'c'],
         ['a', 'a', 'd', 'd'],
       ])
-      const target = { id: 'b', y: 1, x: 2, w: 1, h: 1 }
+      const target = { i: 'b', y: 1, x: 2, w: 1, h: 1 }
       const result = helper.calculateY(areas, target)
       const grid = createGrid(result)
       expect(grid).toHaveLength(3)
@@ -145,7 +145,7 @@ describe('grid-helper', () => {
         ['a', 'a', 'b', 'b'],
         ['a', 'a', 'c', 'c'],
       ])
-      const target = { id: 'b', y: 0, x: 1, w: 2, h: 1 }
+      const target = { i: 'b', y: 0, x: 1, w: 2, h: 1 }
       const result = helper.calculateY(areas, target)
       const grid = createGrid(result)
       expect(grid).toHaveLength(3)
@@ -159,7 +159,7 @@ describe('grid-helper', () => {
         ['a', 'a', 'b', 'b'],
         ['a', 'a', 'c', 'c'],
       ])
-      const target = { id: 'c', y: 1, x: 1, w: 2, h: 1 }
+      const target = { i: 'c', y: 1, x: 1, w: 2, h: 1 }
       const result = helper.calculateY(areas, target)
       const grid = createGrid(result)
       expect(grid).toHaveLength(4)
@@ -174,7 +174,7 @@ describe('grid-helper', () => {
         ['a', 'a', 'b', 'b'],
         ['a', 'a', 'c', 'c'],
       ])
-      const target = { id: 'd', y: 0, x: 0, w: 2, h: 1 }
+      const target = { i: 'd', y: 0, x: 0, w: 2, h: 1 }
       const result = helper.calculateY(areas, target)
       const grid = createGrid(result)
       expect(grid).toHaveLength(3)
@@ -188,7 +188,7 @@ describe('grid-helper', () => {
         ['a', 'a', 'b', 'b'],
         ['a', 'a', 'c', 'c'],
       ])
-      const target = { id: 'b', y: 0, x: 1, w: 3, h: 2 }
+      const target = { i: 'b', y: 0, x: 1, w: 3, h: 2 }
       const result = helper.calculateY(areas, target)
       const grid = createGrid(result)
       expect(grid).toHaveLength(4)

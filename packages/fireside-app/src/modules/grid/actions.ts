@@ -1,9 +1,14 @@
 import * as t from './types'
 import * as at from './const'
 
-export const updateGridArea = (updatedArea:t.GridArea) => ({
-  type: at.UPDATE_GRID_AREA,
-  payload: updatedArea
+// export const updateGridArea = (updatedArea:t.GridArea) => ({
+//   type: at.UPDATE_GRID_AREA,
+//   payload: updatedArea
+// })
+
+export const updateGrid = (grid:t.GridArea[]) => ({
+  type: at.UPDATE_GRID,
+  payload: grid
 })
 
 export const addWidth = (width:string='1fr') => ({
@@ -28,7 +33,8 @@ export const setHeight = (index:number, height:string) => ({
 })
 
 export type Action =
-| ReturnType<typeof updateGridArea>
+// | ReturnType<typeof updateGridArea>
+| ReturnType<typeof updateGrid>
 | ReturnType<typeof addWidth>
 | ReturnType<typeof removeWidth>
 | ReturnType<typeof setWidth>

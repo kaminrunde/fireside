@@ -8,7 +8,8 @@ type Result = {
   removeWidth: typeof a.removeWidth,
   setWidth: typeof a.setWidth,
   setHeight: typeof a.setHeight,
-  updateGridArea: typeof a.updateGridArea
+  updateGrid: typeof a.updateGrid
+  // updateGridArea: typeof a.updateGridArea
 }
 
 type Props = {}
@@ -25,7 +26,8 @@ const config:Config<Props,Result,State,unknown> = {
     removeWidth: a.removeWidth,
     setWidth: a.setWidth,
     setHeight: a.setHeight,
-    updateGridArea: a.updateGridArea
+    updateGrid: a.updateGrid
+    // updateGridArea: a.updateGridArea
   }
 }
 

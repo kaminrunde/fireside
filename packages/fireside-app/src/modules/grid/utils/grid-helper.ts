@@ -23,7 +23,7 @@ export function calculateY (areas:t.GridArea[], target:t.GridArea):t.GridArea[] 
   
     for(let index=0; index<areas.length; index++) {
       const area = areas[index]
-      if(area.id === target.id) {
+      if(area.i === target.i) {
         targetIndex = index
         areas[index] = target
         continue

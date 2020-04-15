@@ -1,6 +1,6 @@
 
 export type GridArea = {
-  id: string,
+  i: string,
   x: number,
   y: number,
   w: number,

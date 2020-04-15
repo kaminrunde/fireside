@@ -3,7 +3,12 @@ import {State} from '../reducer'
 import useConnect, {Config} from 'hooks/useConnect'
 
 type Result = {
-
+  data: State,
+  addWidth: typeof a.addWidth,
+  removeWidth: typeof a.removeWidth,
+  setWidth: typeof a.setWidth,
+  setHeight: typeof a.setHeight,
+  updateGridArea: typeof a.updateGridArea
 }
 
 type Props = {}

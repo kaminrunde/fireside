@@ -22,6 +22,11 @@ declare module 'styled-components' {
   export default module;
 }
 
+declare module 'react-grid-layout' {
+  const module:any;
+  export default module;
+}
+
 declare module '*.bmp' {
   const src: string;
   export default src;

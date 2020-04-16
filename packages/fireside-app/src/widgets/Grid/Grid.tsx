@@ -26,13 +26,25 @@ export default function Grid () {
           <button><FiSettings/></button>
         </div>
         {grid.data.widths.map((width,i) => (
-          <div className='width' key={i}>{width}</div>
+          <div className='width' key={i}>
+            <input 
+              type='text' 
+              value={width} 
+              onChange={e => grid.setWidth(i, e.target.value)} 
+            />
+          </div>
         ))}
       </div>
       <div className='bottom'>
         <div className='left'>
           {grid.data.heights.map((height,i) => (
-            <div className='height' key={i}>{height}</div>
+            <div className='height' key={i}>
+              <input 
+                type='text' 
+                value={height} 
+                onChange={e => grid.setHeight(i, e.target.value)} 
+              />
+            </div>
           ))}
         </div>
         <div className='right' ref={gridWidth.ref}>
@@ -94,7 +106,18 @@ const Wrapper = styled.div`
       line-height: 40px;
       margin: ${GRID_MARGIN}px;
       text-align: center;
-      background: whitesmoke;
+      > input {
+        display: block;
+        width: 100%;
+        height: 100%;
+        font-size: 14px;
+        border: none;
+        background: whitesmoke;
+        text-align: center;
+        &:focus {
+          background: white;
+        }
+      }
     }
   }
 
@@ -104,11 +127,22 @@ const Wrapper = styled.div`
       width: ${CONTEXT_WIDTH}px;
 
       > .height {
-        background: whitesmoke;
         margin: ${GRID_MARGIN}px;
         height: ${ROW_HEIGHT}px;
         line-height: ${ROW_HEIGHT}px;
         text-align: center;
+        > input {
+          display: block;
+          width: 100%;
+          height: 100%;
+          font-size: 14px;
+          border: none;
+          background: whitesmoke;
+          text-align: center;
+          &:focus {
+            background: white;
+          }
+        }
       }
     }
 

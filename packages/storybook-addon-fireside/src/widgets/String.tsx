@@ -1,11 +1,12 @@
 import * as React from 'react'
 import styled from 'styled-components'
+import * as t from '../types'
 
 type Props = {
   value: string,
   onChange: (value:string) => void,
   focus: boolean,
-  options: {},
+  options: t.StringOptions,
 }
 
 export default function String (props:Props) {

@@ -7,7 +7,7 @@ export const string = (
   prop:string, 
   label:string, 
   value:string, 
-  options:t.KnobOptions={}
+  options:t.StringOptions={}
 ):t.SimpleKnob => ({ type: 'string', prop, label, value, options })
 
 export const constant = (

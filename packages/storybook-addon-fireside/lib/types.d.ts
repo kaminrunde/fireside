@@ -7,6 +7,10 @@ export interface KnobOptions {
     hint?: string;
     tab?: string;
 }
+export interface StringOptions extends KnobOptions {
+    foo?: string;
+    xyz?: boolean;
+}
 export interface SimpleKnob {
     type: 'string' | 'constant';
     prop: string;

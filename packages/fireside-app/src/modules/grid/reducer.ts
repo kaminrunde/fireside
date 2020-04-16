@@ -3,6 +3,7 @@ import * as t from './types'
 import * as at from './const'
 import * as gridHelper from './utils/grid-helper'
 import {Action} from './actions'
+import {compose} from 'redux'
 
 export type State = {
   gridAreas: t.GridArea[],
@@ -29,7 +30,10 @@ export default produce((state:State, action:Action) => {
     //   break
     // }
     case at.UPDATE_GRID: {
-      state.gridAreas = action.payload
+      state.gridAreas = compose(
+        gridHelper.sortGridAreas,
+        gridHelper.applyGravity
+      )(action.payload)
       state.heights = gridHelper.calculateHeights(state.heights, state.gridAreas)
       break
     }

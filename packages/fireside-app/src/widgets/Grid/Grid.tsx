@@ -6,9 +6,11 @@ import useGridWidth from './hooks/useGridWidth'
 import GridLayout from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
+import {FiPlus,FiMinus,FiSettings} from 'react-icons/fi'
 
 const GRID_MARGIN = 5
 const ROW_HEIGHT = 40
+const CONTEXT_WIDTH = 120
 
 export default function Grid () {
   const grid = useGrid()
@@ -18,7 +20,11 @@ export default function Grid () {
     <Wrapper className='Grid'>
       <div className='drag' draggable unselectable="on" onDragStart={e => e.dataTransfer.setData("text/plain", "")}></div>
       <div className='top'>
-        <div className='context'></div>
+        <div className='context'>
+          <button onClick={() => grid.removeWidth()}><FiMinus/></button>
+          <button onClick={() => grid.addWidth()}><FiPlus/></button>
+          <button><FiSettings/></button>
+        </div>
         {grid.data.widths.map((width,i) => (
           <div className='width' key={i}>{width}</div>
         ))}
@@ -38,6 +44,7 @@ export default function Grid () {
             onLayoutChange={grid.updateGrid}
             margin={[GRID_MARGIN,GRID_MARGIN]}
             isDroppable
+            onDrop={console.log}
             width={gridWidth.data}>
               {grid.data.gridAreas.map(item => (
                 <Item key={item.i}>{item.i}</Item>
@@ -60,11 +67,26 @@ const Wrapper = styled.div`
   }
 
   > .top {
-    height: 50px;
+    height: ${ROW_HEIGHT+10}px;
     display: flex;
 
     > .context {
-      width: 150px;
+      box-sizing: border-box;
+      margin: ${GRID_MARGIN}px 0;
+      width: ${CONTEXT_WIDTH}px;
+      border: 1px solid lightgrey;
+      border-radius: 8px;
+      display: flex;
+
+      > button {
+        flex: 1;
+        font-size: 15px;
+        background: none;
+        border: none;
+        border-left: 1px solid lightgrey;
+        padding-top: 3px;
+        &:first-child { border-left: none;}
+      }
     }
 
     > .width {
@@ -79,7 +101,7 @@ const Wrapper = styled.div`
   > .bottom {
     display: flex;
     > .left {
-      width: 150px;
+      width: ${CONTEXT_WIDTH}px;
 
       > .height {
         background: whitesmoke;

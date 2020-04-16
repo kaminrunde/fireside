@@ -30,10 +30,7 @@ export default produce((state:State, action:Action) => {
     //   break
     // }
     case at.UPDATE_GRID: {
-      state.gridAreas = compose(
-        gridHelper.sortGridAreas,
-        gridHelper.applyGravity
-      )(action.payload)
+      state.gridAreas = action.payload
       state.heights = gridHelper.calculateHeights(state.heights, state.gridAreas)
       break
     }

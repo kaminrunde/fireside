@@ -13,11 +13,10 @@ const ROW_HEIGHT = 40
 export default function Grid () {
   const grid = useGrid()
   const gridWidth = useGridWidth()
-  console.log('render')
 
   return (
     <Wrapper className='Grid'>
-      {/* <div className='top' draggable unselectable="on" onDragStart={e => e.dataTransfer.setData("text/plain", "")}></div> */}
+      <div className='drag' draggable unselectable="on" onDragStart={e => e.dataTransfer.setData("text/plain", "")}></div>
       <div className='top'>
         <div className='context'></div>
         {grid.data.widths.map((width,i) => (
@@ -36,8 +35,7 @@ export default function Grid () {
             cols={grid.data.widths.length} 
             rowHeight={ROW_HEIGHT}
             droppingItem={{i:'test', w:1, h:1}}
-            onDragStop={(areas:any) => grid.updateGrid(areas)}
-            onDrop={console.log}
+            onLayoutChange={grid.updateGrid}
             margin={[GRID_MARGIN,GRID_MARGIN]}
             isDroppable
             width={gridWidth.data}>
@@ -54,6 +52,12 @@ export default function Grid () {
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
+
+  > .drag {
+    width: 500px;
+    height: 40px;
+    background: grey;
+  }
 
   > .top {
     height: 50px;

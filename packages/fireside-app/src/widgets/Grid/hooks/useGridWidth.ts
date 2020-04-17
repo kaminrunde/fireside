@@ -8,6 +8,14 @@ export default function useGridWidth () {
     if(!ref.current) return
     const rect = ref.current.getBoundingClientRect()
     setGridWidth(rect.width)
+    const listener = () => {
+      if(!ref.current) return
+      const rect = ref.current.getBoundingClientRect()
+      setGridWidth(rect.width)
+    }
+
+    window.addEventListener('resize', listener)
+    return () => window.removeEventListener('resize', listener)
   }, [])
 
   return { data, ref }

@@ -4,7 +4,7 @@ import * as s from '../selectors'
 import useConnect, {Config} from 'hooks/useConnect'
 
 type Result = {
-  data: State,
+  data: ReturnType<typeof s.getMessages>,
   add: typeof a.addMessage,
   remove: typeof a.removeMessage
 }

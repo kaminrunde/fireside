@@ -2,6 +2,7 @@ import {createStore, compose, applyMiddleware, combineReducers} from 'redux'
 import ruleMiddleware from 'redux-ruleset'
 
 import gridReducer from 'modules/grid'
+import snackbarReducer from 'modules/snackbar'
 
 
 declare global {
@@ -9,7 +10,8 @@ declare global {
 }
 
 const rootReducer = combineReducers({
-  grid: gridReducer
+  grid: gridReducer,
+  snackbar: snackbarReducer
 })
 
 

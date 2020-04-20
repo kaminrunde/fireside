@@ -6,12 +6,12 @@ import * as t from './types'
 addRule<a.SetConnector,never>({
   id: 'story/MANAGE_UPDATE',
   target: at.SET_CONNECTOR,
-  output: at.SET_STORY,
+  output: at.UPDATE_STORY,
   concurrency: 'LAST',
   consequence: (action, {dispatch}) => {
     const connector = action.payload
     connector.onChange((story?:t.Story) => {
-      dispatch(a.setStory(story))
+      dispatch(a.updateStory(story))
     })
     return () => null
   }

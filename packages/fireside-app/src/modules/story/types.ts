@@ -15,6 +15,6 @@ export type Story = {
 }
 
 export type Connector = {
-  onChange: (story?:Story) => void,
+  onChange: (cb:(story?:Story) => void) => void,
   setStory: (story:Story) => void
 }

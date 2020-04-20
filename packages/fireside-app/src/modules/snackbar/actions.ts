@@ -11,6 +11,9 @@ export const removeMessage = (message:t.Message) => ({
   payload: message
 })
 
+export type AddMessage = ReturnType<typeof addMessage>
+export type RemoveMessage = ReturnType<typeof removeMessage>
+
 export type Action =
-| ReturnType<typeof addMessage>
-| ReturnType<typeof removeMessage>
+| AddMessage
+| RemoveMessage

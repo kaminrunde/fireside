@@ -10,9 +10,22 @@ declare namespace NodeJS {
 }
 
 declare module 'redux-ruleset' {
+  type Rule<Action,RootState> = {
+    id: string,
+    target: string | string[] | '*',
+    output: string | string[] | '*',
+    consequence: (action:Action, args:{
+      getState: () => RootState,
+      dispatch: Dispatch
+    }) => Function | null | {type:string}
+    concurrency?: 'LAST' | 'FIRST' | 'ONCE' | 'SWITCH',
+    delay?: number,
+    addWhen?: Function,
+    addUntil?: Function,
+  };
   const module:any;
-  const dispatchEvent:any;
-  const addRule:any;
+  const dispatchEvent:never;
+  const addRule:<Action,RootState>(rule:Rule<Action,RootState>) => Rule;
   export default module;
   export {dispatchEvent, addRule};
 }

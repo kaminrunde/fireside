@@ -1,16 +1,17 @@
 import {addRule} from 'redux-ruleset'
 import * as at from './const'
-import * as actions from './actions'
+import * as a from './actions'
+import * as t from './types'
 
-addRule({
+addRule<a.SetConnector,never>({
   id: 'story/MANAGE_UPDATE',
   target: at.SET_CONNECTOR,
   output: at.SET_STORY,
   concurrency: 'LAST',
-  consequence: ({action, dispatch}:any) => {
+  consequence: (action, {dispatch}) => {
     const connector = action.payload
-    connector.onChange((story:any) => {
-      dispatch(actions.setStory(story))
+    connector.onChange((story?:t.Story) => {
+      dispatch(a.setStory(story))
     })
     return () => null
   }

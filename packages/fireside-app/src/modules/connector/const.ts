@@ -1,7 +1,7 @@
 import * as t from './types'
 
-export const UPDATE_STORY:'story/UPDATE_STORY' = 'story/UPDATE_STORY'
-export const SET_CONNECTOR:'story/SET_CONNECTOR' = 'story/SET_CONNECTOR'
+export const UPDATE_STORY:'connector/UPDATE_STORY' = 'connector/UPDATE_STORY'
+export const SET_CONNECTOR:'connector/SET_CONNECTOR' = 'connector/SET_CONNECTOR'
 
 export const emptyStory:t.Story = {
   componentsById: {},

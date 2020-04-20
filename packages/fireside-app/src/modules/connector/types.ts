@@ -15,6 +15,7 @@ export type Story = {
 }
 
 export type Connector = {
+  name: string,
   onChange: (cb:(story?:Story) => void) => void,
   setStory: (story:Story) => void
 }

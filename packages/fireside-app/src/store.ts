@@ -1,14 +1,17 @@
+import 'features'
 import {createStore, compose, applyMiddleware, combineReducers} from 'redux'
 import ruleMiddleware from 'redux-ruleset'
 
 import gridReducer from 'modules/grid'
 import snackbarReducer from 'modules/snackbar'
+import connectorReducer from 'modules/connector'
 
 
 
 const rootReducer = combineReducers({
   grid: gridReducer,
-  snackbar: snackbarReducer
+  snackbar: snackbarReducer,
+  connector: connectorReducer
 })
 
 declare global {

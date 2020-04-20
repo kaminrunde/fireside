@@ -4,7 +4,7 @@ import * as a from './actions'
 import * as t from './types'
 
 addRule<a.SetConnector,never>({
-  id: 'story/MANAGE_UPDATE',
+  id: 'connector/MANAGE_UPDATE',
   target: at.SET_CONNECTOR,
   output: at.UPDATE_STORY,
   concurrency: 'LAST',

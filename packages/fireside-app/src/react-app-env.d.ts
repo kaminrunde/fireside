@@ -17,9 +17,10 @@ declare module 'redux-ruleset' {
     consequence: (action:Action, args:{
       getState: () => RootState,
       dispatch: Dispatch
-    }) => Function | null | {type:string}
+    }) => Function | null | {type:string} | void
     concurrency?: 'LAST' | 'FIRST' | 'ONCE' | 'SWITCH',
     delay?: number,
+    addOnce?: boolean,
     addWhen?: Function,
     addUntil?: Function,
   };

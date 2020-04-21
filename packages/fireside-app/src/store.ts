@@ -1,17 +1,23 @@
 import 'features'
 import {createStore, compose, applyMiddleware, combineReducers} from 'redux'
 import ruleMiddleware from 'redux-ruleset'
+import { createReduxHistoryContext, reachify } from "redux-first-history"
+import { createBrowserHistory } from 'history'
 
 import gridReducer from 'modules/grid'
 import snackbarReducer from 'modules/snackbar'
 import connectorReducer from 'modules/connector'
 
 
+const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({ 
+  history: createBrowserHistory()
+})
 
 const rootReducer = combineReducers({
   grid: gridReducer,
   snackbar: snackbarReducer,
-  connector: connectorReducer
+  connector: connectorReducer,
+  router: routerReducer
 })
 
 declare global {
@@ -26,16 +32,20 @@ if (typeof composeWithDevToolsExtension === 'function') {
 }
 
 
-
 const store = createStore(
   rootReducer,
   undefined,
   composeEnhancers(
-    applyMiddleware/*::<RootState,Action,Dispatch>*/(ruleMiddleware)
+    applyMiddleware/*::<RootState,Action,Dispatch>*/(
+      ruleMiddleware,
+      routerMiddleware
+    )
   )
 )
 
 export type ReduxStore = typeof store
 export type ReduxState = ReturnType<typeof rootReducer>
+
+export const history = reachify(createReduxHistory(store))
 
 export default store

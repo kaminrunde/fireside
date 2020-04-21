@@ -9,6 +9,14 @@ declare namespace NodeJS {
   }
 }
 
+declare module '@reach/router' {
+  const module:any;
+  const Router:any;
+  const push:any;
+  export {Router,push}
+  export default module
+}
+
 declare module 'redux-ruleset' {
   type Rule<Action,RootState> = {
     id: string,

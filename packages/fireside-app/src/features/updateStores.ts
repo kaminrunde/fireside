@@ -7,10 +7,6 @@ addRule<connector.a.UpdateStory,never>({
   target: connector.c.UPDATE_STORY,
   output: [grid.c.UPDATE_GRID],
   consequence: action => {
-    return grid.a.initGrid(
-      action.payload.grids['MOBILE_M'].grid,
-      action.payload.grids['MOBILE_M'].widths,
-      action.payload.grids['MOBILE_M'].heights,
-    )
+    return grid.a.init(action.payload.grids)
   }
 })

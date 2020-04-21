@@ -23,6 +23,12 @@ export const defaultState:State = {
 
 export default produce((state:State, action:Action) => {
   switch(action.type){
+    case at.INIT_GRID: {
+      state.gridAreas = action.payload.gridAreas
+      state.widths = action.payload.widths
+      state.heights = action.payload.heights
+      break
+    }
     case at.UPDATE_GRID: {
       state.gridAreas = action.payload
       state.heights = gridHelper.calculateHeights(state.heights, state.gridAreas)

@@ -32,10 +32,38 @@ export const setHeight = (index:number, height:string) => ({
   payload: height
 })
 
+export const initGrid = (grid:string[][], widths:string[], heights:string[]) => ({
+  type: at.INIT_GRID,
+  payload: {
+    gridAreas:(():t.GridArea[] => {
+      let areas:Record<string,t.GridArea> = {}
+      for(let y=0; y<grid.length;y++) for (let x=0; x<grid[y].length; x++) {
+        const area = grid[y][x]
+        if(area === '.') continue
+        if(!areas[area]) areas[area] = { x, y, w:1, h:1, i:area }
+        else {
+          if(x >= areas[area].x+areas[area].w) areas[area].w++
+          if(y >= areas[area].y+areas[area].h) areas[area].h++
+        }
+      }
+      return Object.values(areas)
+    })(),
+    widths,
+    heights
+  }
+})
+
+export type UpdateGrid = ReturnType<typeof updateGrid>
+export type AddWidth = ReturnType<typeof addWidth>
+export type RemoveWidth = ReturnType<typeof removeWidth>
+export type SetWidth = ReturnType<typeof setWidth>
+export type SetHeight = ReturnType<typeof setHeight>
+export type InitGrid = ReturnType<typeof initGrid>
+
 export type Action =
-// | ReturnType<typeof updateGridArea>
-| ReturnType<typeof updateGrid>
-| ReturnType<typeof addWidth>
-| ReturnType<typeof removeWidth>
-| ReturnType<typeof setWidth>
-| ReturnType<typeof setHeight>
+| InitGrid
+| UpdateGrid
+| AddWidth
+| RemoveWidth
+| SetWidth
+| SetHeight

@@ -8772,10 +8772,10 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
-redux-ruleset@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/redux-ruleset/-/redux-ruleset-1.2.1.tgz#27df67abae3c3a4d0d5e2aa06659261fd2ebc8c5"
-  integrity sha512-SJwiayXkZ5gJuYytnanOBQHlAoNGKAaPOqKiv0F1hpqyBNqvfVZ7bFoaWpvFDgh4Kgaj3NPe85lz1XSe3Hv6lQ==
+redux-ruleset@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/redux-ruleset/-/redux-ruleset-2.0.0.tgz#b7293fe59172a424e8e042c339a50234aa8466de"
+  integrity sha512-jLiSb1NU40tvNCkalld8Cl3zNA3D3T3ZnBkPZnjiJQ9p1BCPHE64AWm/HHHjo0ONl5V2gTKP165vJz0gAYk3vw==
 
 redux@^4.0.5:
   version "4.0.5"

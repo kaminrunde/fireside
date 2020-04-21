@@ -16,7 +16,7 @@ export type Config<OP,Result,State,SP> = {
   mapState: (state:State,props:OP) => SP,
   mapDispatch?:any,
   transformDispatch?:{
-    [name:string]: (fn:Function,sp:Result,props:OP)=>void
+    [name:string]: (fn:any,sp:Result,props:OP)=>void
   },
   areStatesEqual?: (a:State,b:State) => boolean
 }

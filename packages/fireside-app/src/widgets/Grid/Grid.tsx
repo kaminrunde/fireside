@@ -13,7 +13,7 @@ const ROW_HEIGHT = 40
 const CONTEXT_WIDTH = 120
 
 export default function Grid () {
-  const grid = useGrid()
+  const grid = useGrid('MOBILE_M')
   const gridWidth = useGridWidth()
 
   return (

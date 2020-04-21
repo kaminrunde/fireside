@@ -13,7 +13,8 @@ declare module '@reach/router' {
   const module:any;
   const Router:any;
   const push:any;
-  export {Router,push}
+  const Link:any;
+  export {Router,push,Link}
   export default module
 }
 
@@ -27,6 +28,7 @@ declare module 'redux-ruleset' {
       dispatch: Dispatch
     }) => Function | null | {type:string} | void
     concurrency?: 'LAST' | 'FIRST' | 'ONCE' | 'SWITCH',
+    position?: 'BEFORE' | 'AFTER' | 'INSTEAD',
     delay?: number,
     addOnce?: boolean,
     addWhen?: Function,

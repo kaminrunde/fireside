@@ -1,1 +1,2 @@
 import './setConnector'
+import './updateStores'

@@ -7,7 +7,9 @@ import {State} from './reducer'
 type RootState = {grid:State}
 
 /**
- * 
+ * When we add a grid area from buffer
+ * we had to add it as static (some bug)
+ * Then we remove the static attribute
  */
 addRule<a.AddFromBuffer,RootState>({
   id: 'grid/REMOVE_STATIC',

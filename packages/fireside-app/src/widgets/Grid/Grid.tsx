@@ -12,8 +12,12 @@ const GRID_MARGIN = 5
 const ROW_HEIGHT = 40
 const CONTEXT_WIDTH = 120
 
-export default function Grid () {
-  const grid = useGrid('MOBILE_M')
+type Props = {
+  mediaSize: string
+}
+
+export default function Grid (props:Props) {
+  const grid = useGrid(props.mediaSize)
   const gridWidth = useGridWidth()
   const [draggingName, setDraggingName] = React.useState('')
 

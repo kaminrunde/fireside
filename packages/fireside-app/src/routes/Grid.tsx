@@ -12,7 +12,7 @@ export default function IndexRoute (props:Props) {
   return (
     <Wrapper>
       Grid Routes
-      <Grid/>
+      <Grid mediaSize={props.mediaSize}/>
     </Wrapper>
   )
 }

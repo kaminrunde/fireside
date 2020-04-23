@@ -2,7 +2,15 @@ import Grid from './Grid'
 import React from 'react'
 import styled from 'styled-components'
 
-export default class GridWrapper extends React.Component {
+type Props = {
+  mediaSize: string
+}
+
+type State = {
+  error: null | string
+}
+
+export default class GridWrapper extends React.Component<Props,State> {
   state = {error:null}
   componentDidCatch(e:any){
     console.log(e)
@@ -17,7 +25,7 @@ export default class GridWrapper extends React.Component {
         </Wrapper>
       )
     }
-    return <Grid/>
+    return <Grid {...this.props}/>
   }
 }
 

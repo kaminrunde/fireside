@@ -103,3 +103,5 @@ channel.on('storyboard-bridge/hydrate-component', (component:t.Component) => {
     channel.emit('storyboard-bridge/select-story', context)
   }
 })
+
+channel.emit('storyboard-bridge/init-knob-manager')

@@ -12,6 +12,7 @@ type Props = {
 
 export default function Panel ({channel}:Props) {
   const {knobs,update,key, ...tabs} = useKnobs(channel)
+
   return (
     <Wrapper>
       <Tabs key={key} tabs={tabs} />

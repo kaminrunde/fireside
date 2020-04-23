@@ -41,9 +41,12 @@ addons.register('addons:storyboard-bridge', api => {
     }
   })
 
-  window.parent.postMessage({
-    type: 'fireside-init'
-  }, '*')
+
+  channel.on('storyboard-bridge/init-knob-manager', () => {
+    window.parent.postMessage({
+      type: 'fireside-init'
+    }, '*')
+  })
 
   // simulate hydrating
   // setTimeout(() => channel.emit('storyboard-bridge/hydrate-component', {

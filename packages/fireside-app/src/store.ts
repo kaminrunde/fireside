@@ -7,6 +7,7 @@ import { createBrowserHistory } from 'history'
 import gridReducer from 'modules/grid'
 import snackbarReducer from 'modules/snackbar'
 import connectorReducer from 'modules/connector'
+import componentsReducer from 'modules/components'
 
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({ 
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   grid: gridReducer,
   snackbar: snackbarReducer,
   connector: connectorReducer,
-  router: routerReducer
+  router: routerReducer,
+  components: componentsReducer
 })
 
 declare global {

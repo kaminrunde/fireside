@@ -10,7 +10,8 @@ type Result = {
   removeWidth: () => a.RemoveWidth,
   setWidth: (index:number, width:string) => a.SetWidth,
   setHeight: (index:number, height:string) => a.SetHeight,
-  updateGrid: (areas:t.GridArea[]) => a.UpdateGrid
+  updateGrid: (areas:t.GridArea[]) => a.UpdateGrid,
+  addFromBuffer: (area:t.GridArea) => a.AddFromBuffer
   // updateGridArea: typeof a.updateGridArea
 }
 
@@ -30,7 +31,8 @@ const config:Config<Props,Result,State,unknown> = {
     removeWidth: a.removeWidth,
     setWidth: a.setWidth,
     setHeight: a.setHeight,
-    updateGrid: a.updateGrid
+    updateGrid: a.updateGrid,
+    addFromBuffer: a.addFromBuffer
   },
   transformDispatch: {
     addWidth: (fn:typeof a.addWidth,sp,props) => 
@@ -43,6 +45,8 @@ const config:Config<Props,Result,State,unknown> = {
       (index:number,height:string) => fn(props.mediaSize,index,height),
     updateGrid: (fn:typeof a.updateGrid,sp,props) => 
       (areas:t.GridArea[]) => fn(props.mediaSize,areas),
+    addFromBuffer: (fn:typeof a.addFromBuffer,sp,props) => 
+      (area:t.GridArea) => fn(props.mediaSize,area),
   }
 }
 

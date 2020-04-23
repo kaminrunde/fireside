@@ -1,5 +1,5 @@
 
-// import './rules'
+import './rules'
 
 
 import * as a from './actions'

@@ -35,40 +35,48 @@ export const setHeight = (mediaSize:string, index:number, height:string) => ({
   payload: height
 })
 
+export const addFromBuffer = (mediaSize:string, gridArea:t.GridArea) => ({
+  type: at.ADD_FROM_BUFFER,
+  meta: {mediaSize},
+  payload: gridArea
+})
+
 export const init = (grids:{
   [mediaSize:string]: {
     grid: string[][],
     widths: string[],
-    heights: string[]
+    heights: string[],
+    components: string[]
   }
 }) => {
-  const createGrid = (rows:string[][]) => {
+  const createGrid = (rows:string[][]):[t.GridArea[], string[]] => {
+    let components:Record<string,true> = {}
     let areas:Record<string,t.GridArea> = {}
     for(let y=0; y<rows.length;y++) for (let x=0; x<rows[y].length; x++) {
       const area = rows[y][x]
       if(area === '.') continue
+      components[area] = true
       if(!areas[area]) areas[area] = { x, y, w:1, h:1, i:area }
       else {
         if(x >= areas[area].x+areas[area].w) areas[area].w++
         if(y >= areas[area].y+areas[area].h) areas[area].h++
       }
     }
-    return Object.values(areas)
+    return [Object.values(areas), Object.keys(components)]
   }
   type Result = {
     type: typeof at.INIT,
-    payload: Record<string,{
-      gridAreas: ReturnType<typeof createGrid>
-      widths: string[],
-      heights: string[]
-    }>
+    payload: Record<string,t.Grid>
   }
   let action:Result = { type:at.INIT, payload: {} }
   for(let mediaSize in grids){
+    const [gridAreas, components] = createGrid(grids[mediaSize].grid)
+    const componentsString = '-' + components.join('-') + '-'
     action.payload[mediaSize] = {
-      gridAreas: createGrid(grids[mediaSize].grid),
+      gridAreas: gridAreas,
       widths: grids[mediaSize].widths,
-      heights: grids[mediaSize].heights
+      heights: grids[mediaSize].heights,
+      buffer: grids[mediaSize].components.filter(s => !componentsString.includes(s))
     }
   }
 
@@ -80,6 +88,7 @@ export type AddWidth = ReturnType<typeof addWidth>
 export type RemoveWidth = ReturnType<typeof removeWidth>
 export type SetWidth = ReturnType<typeof setWidth>
 export type SetHeight = ReturnType<typeof setHeight>
+export type AddFromBuffer = ReturnType<typeof addFromBuffer>
 export type Init = ReturnType<typeof init>
 
 export type Action =
@@ -89,3 +98,4 @@ export type Action =
 | RemoveWidth
 | SetWidth
 | SetHeight
+| AddFromBuffer

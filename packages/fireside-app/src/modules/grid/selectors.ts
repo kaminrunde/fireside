@@ -4,7 +4,8 @@ import * as t from './types'
 const emptyGrid:t.Grid = {
   gridAreas: [],
   widths: ['1fr'],
-  heights: ['auto']
+  heights: ['auto'],
+  buffer: []
 }
 
 export const getGrid = (state:State, mediaSize:string):t.Grid => state[mediaSize] || emptyGrid

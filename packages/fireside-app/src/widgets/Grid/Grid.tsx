@@ -15,10 +15,10 @@ const CONTEXT_WIDTH = 120
 export default function Grid () {
   const grid = useGrid('MOBILE_M')
   const gridWidth = useGridWidth()
+  const [draggingName, setDraggingName] = React.useState('')
 
   return (
     <Wrapper className='Grid'>
-      <div className='drag' draggable unselectable="on" onDragStart={e => e.dataTransfer.setData("text/plain", "")}></div>
       <div className='top'>
         <div className='context'>
           <button onClick={() => grid.removeWidth()}><FiMinus/></button>
@@ -52,17 +52,34 @@ export default function Grid () {
             layout={grid.data.gridAreas} 
             cols={grid.data.widths.length} 
             rowHeight={ROW_HEIGHT}
-            droppingItem={{i:'test', w:1, h:1}}
-            onLayoutChange={grid.updateGrid}
+            droppingItem={{i:'insert', w:1, h:1}}
+            onLayoutChange={(layout:any) => grid.updateGrid(layout.filter((e:any) => e.i !== 'insert'))}
             margin={[GRID_MARGIN,GRID_MARGIN]}
             isDroppable
-            onDrop={console.log}
+            onDrop={(target:any) => grid.addFromBuffer({...target, i:draggingName, static:true})}
             width={gridWidth.data}>
               {grid.data.gridAreas.map(item => (
                 <Item key={item.i}>{item.i}</Item>
               ))}
           </GridLayout>
         </div>
+      </div>
+      <div className='buffer'>
+        {grid.data.buffer.map(name => (
+          <div 
+            data-name={name}
+            className='component' 
+            draggable 
+            onDragStart={e => {
+              setDraggingName(name)
+              e.dataTransfer.setData("text/plain", "")
+            }}
+            onDragEnd={() => setDraggingName('')}
+            unselectable="on" 
+            key={name}>
+              {name}
+          </div>
+        ))}
       </div>
     </Wrapper>
   )
@@ -148,6 +165,18 @@ const Wrapper = styled.div`
 
     > .right {
       flex: 1;
+    }
+  }
+
+  > .buffer {
+    margin-top: 50px;
+
+    > .component {
+      padding: 10px;
+      background: steelblue;
+      width: 300px;
+      color: white;
+      text-align: center;
     }
   }
 `

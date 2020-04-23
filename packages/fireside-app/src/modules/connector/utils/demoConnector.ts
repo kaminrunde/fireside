@@ -19,6 +19,9 @@ setTimeout(() => {
       },
       'text': {
         label: 'img-1'
+      },
+      'img-2': {
+        label: 'img-2'
       }
     },
     allComponents: ['img-1', 'text'],
@@ -26,7 +29,7 @@ setTimeout(() => {
       'MOBILE_M': {
         enabled: true,
         gap: 20,
-        components: ['img-1', 'text'],
+        components: ['img-1', 'text', 'img-2'],
         grid: [
           ['img-1', 'img-1', '.'],
           ['text', 'text', 'text'],
@@ -36,6 +39,6 @@ setTimeout(() => {
       }
     }
   })
-}, 2000)
+}, 1000)
 
 export default connector

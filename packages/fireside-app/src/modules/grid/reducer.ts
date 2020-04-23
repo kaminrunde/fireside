@@ -42,6 +42,12 @@ export default produce((state:State, action:Action) => {
       state[mediaSize].heights[index] = action.payload
       break
     }
+    case at.ADD_FROM_BUFFER: {
+      const {mediaSize} = action.meta
+      state[mediaSize].gridAreas.unshift(action.payload)
+      state[mediaSize].buffer = state[mediaSize].buffer.filter(s => s !== action.payload.i)
+      break
+    }
   }
 }, defaultState)
 

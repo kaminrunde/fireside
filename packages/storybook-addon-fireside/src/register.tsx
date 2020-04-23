@@ -11,9 +11,6 @@ addons.register('addons:storyboard-bridge', api => {
     render: () => <Panel channel={channel} api={api} />,
   })
 
-  console.log('mount')
-  window.parent.postMessage('hello world', '*')
-
   let component = {
     id: '',
     name: 'not-known',
@@ -35,14 +32,27 @@ addons.register('addons:storyboard-bridge', api => {
     component.id = id
   })
 
-  // simulate hydrating
-  setTimeout(() => channel.emit('storyboard-bridge/hydrate-component', {
-    id: 'generic-id',
-    name: 'Button',
-    props: {
-      label: 'hydrated'
+  window.addEventListener('message', (e:any) => {
+    if(typeof e.data !== 'object' || !e.data.type) return
+    switch(e.data.type){
+      case 'fireside-hydrate-component': {
+        channel.emit('storyboard-bridge/hydrate-component', e.data.component)
+      }
     }
-  }), 2000)
+  })
+
+  window.parent.postMessage({
+    type: 'fireside-init'
+  }, '*')
+
+  // simulate hydrating
+  // setTimeout(() => channel.emit('storyboard-bridge/hydrate-component', {
+  //   id: 'generic-id',
+  //   name: 'Button',
+  //   props: {
+  //     label: 'hydrated'
+  //   }
+  // }), 2000)
 })
 
 function sendToFiresideApp (component:any) {

@@ -36,7 +36,12 @@ addons.register('addons:storyboard-bridge', api => {
     if(typeof e.data !== 'object' || !e.data.type) return
     switch(e.data.type){
       case 'fireside-hydrate-component': {
-        channel.emit('storyboard-bridge/hydrate-component', e.data.component)
+        if(e.data.component){
+          channel.emit('storyboard-bridge/hydrate-component', e.data.component)
+        }
+        else {
+          api.selectStory(e.data.defaultStory)
+        }
       }
     }
   })

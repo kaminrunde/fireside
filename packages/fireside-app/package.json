@@ -59,6 +59,7 @@
     "react-dom": "^16.13.1",
     "react-grid-layout": "^0.18.3",
     "react-icons": "^3.9.0",
+    "react-iframe": "^1.8.0",
     "redux": "^4.0.5",
     "redux-first-history": "^4.5.0",
     "redux-ruleset": "^2.0.0",

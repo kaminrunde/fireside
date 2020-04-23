@@ -3,6 +3,7 @@ import {Router} from '@reach/router'
 import Snackbar from 'widgets/Snackbar'
 import {history} from './store'
 import Header from 'widgets/Header'
+import Storybook from 'widgets/Storybook'
 
 import IndexRoute from 'routes/Index'
 import GridRoute from 'routes/Grid'
@@ -17,6 +18,7 @@ export default function App() {
         <GridRoute path='/grid/:mediaSize' mediaSize=''/>
       </Router>
       <Snackbar/>
+      <Storybook/>
     </div>
   )
 }

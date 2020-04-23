@@ -9,6 +9,8 @@ addons_1.default.register('addons:storyboard-bridge', api => {
         title: 'Eigenschaften',
         render: () => React.createElement(Panel_1.default, { channel: channel, api: api }),
     });
+    console.log('mount');
+    window.parent.postMessage('hello world', '*');
     let component = {
         id: '',
         name: 'not-known',
@@ -19,9 +21,11 @@ addons_1.default.register('addons:storyboard-bridge', api => {
     });
     channel.on('storyboard-bridge/update-component-name', name => {
         component.name = name;
+        sendToFiresideApp(component);
     });
     channel.on('storyboard-bridge/update-component-props', props => {
         component.props = props;
+        sendToFiresideApp(component);
     });
     channel.on('storyboard-bridge/hydrate-component', ({ id }) => {
         component.id = id;
@@ -35,4 +39,10 @@ addons_1.default.register('addons:storyboard-bridge', api => {
         }
     }), 2000);
 });
+function sendToFiresideApp(component) {
+    window.parent.postMessage({
+        type: 'fireside-update-component',
+        component
+    }, '*');
+}
 //# sourceMappingURL=register.js.map

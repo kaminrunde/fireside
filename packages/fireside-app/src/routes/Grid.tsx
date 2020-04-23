@@ -7,11 +7,9 @@ type Props = {
   mediaSize: string
 }
 
-export default function IndexRoute (props:Props) {
-  console.log(props)
+export default function GridRoute (props:Props) {
   return (
     <Wrapper>
-      Grid Routes
       <Grid mediaSize={props.mediaSize}/>
     </Wrapper>
   )

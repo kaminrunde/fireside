@@ -1,8 +1,8 @@
 import * as React from 'react'
 import styled from 'styled-components'
-// import useGridLayout from './hooks/useGridLayout'
+import ActionButtons, {t} from 'widgets/ActionButtons'
 import {useGrid} from 'modules/grid'
-import * as components from 'modules/components'
+import {useLoadingComponent} from 'modules/components'
 import useGridWidth from './hooks/useGridWidth'
 import GridLayout from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css'
@@ -19,17 +19,38 @@ type Props = {
 
 export default function Grid (props:Props) {
   const grid = useGrid(props.mediaSize)
+  const loadingComponent = useLoadingComponent()
   const gridWidth = useGridWidth()
   const [draggingName, setDraggingName] = React.useState('')
   const [active, setActive] = React.useState<null|string>(null)
+  const [actionButtons, setActionButtons] = React.useState<t.ActionButton[]>([])
 
   const handleItemClick = (id:string) => () => {
     if(active === id) setActive(null)
     else setActive(id)
   }
 
+  React.useEffect(() => {
+    if(!active) return
+    setActionButtons([
+      {
+        label: 'Update',
+        type: 'primary',
+        onClick: () => loadingComponent.load(active)
+      },{
+        label: 'To Buffer',
+        type: 'danger',
+        onClick: console.log
+      }
+    ])
+    return () => setActionButtons([])
+  }, [active])
+
   return (
     <Wrapper className='Grid'>
+      {actionButtons.length > 0 && (
+        <ActionButtons buttons={actionButtons}/>
+      )}
       <div className='top'>
         <div className='context'>
           <button onClick={() => grid.removeWidth()}><FiMinus/></button>

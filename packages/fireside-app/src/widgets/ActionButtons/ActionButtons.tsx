@@ -1,35 +1,29 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import { v4 } from 'uuid'
+import * as t from './types'
 
-type Button = {
-  label: string,
-  type: 'primary' | 'secondary' | 'danger',
-  /** what should happen when we click on the button */
-  onClick: () => void
-}
-
-let allIds:Record<string,Button[]> = {}
+let allIds:Record<string,t.ActionButton[]> = {}
 let byId:string[] = []
-let listener:null|((data:Button[])=>void) = null
+let listener:null|((data:t.ActionButton[])=>void) = null
 const update = () => {
   if(!listener) return
-  listener(allIds[byId[byId.length-1]])
+  listener(allIds[byId[byId.length-1]] || [])
 }
-const add = (id:string, data:Button[]) => {
+const add = (id:string, data:t.ActionButton[]) => {
   byId.push(id)
   allIds[id] = data
   update()
 }
 const remove = (id:string) => {
   const index = byId.findIndex(idx => idx === id)
-  if(!index) return
+  if(index === -1) return
   byId.splice(index,1)
   delete allIds[id]
   update()
 }
 
-export default function ActionButtons (props:{buttons:Button[]}) {
+export default function ActionButtons (props:{buttons:t.ActionButton[]}) {
   React.useEffect(() => {
     const id = v4()
     add(id, props.buttons)
@@ -39,7 +33,7 @@ export default function ActionButtons (props:{buttons:Button[]}) {
 }
 
 export function ActionButtonsDisplay () {
-  const [buttons,setButtons] = React.useState<Button[]>([])
+  const [buttons,setButtons] = React.useState<t.ActionButton[]>([])
   React.useLayoutEffect(() => { listener = setButtons },[])
 
   return (

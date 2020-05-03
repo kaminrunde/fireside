@@ -21,9 +21,9 @@ export const remove = (component:t.Component) => ({
  * open storybook with component. If no component was
  * given a new one will be created
  */
-export const load = (component?:t.Component) => ({
+export const load = (componentId?:string) => ({
   type: at.LOAD,
-  payload: component
+  payload: componentId
 })
 
 /**

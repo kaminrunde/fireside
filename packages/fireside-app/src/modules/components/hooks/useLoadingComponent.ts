@@ -7,8 +7,9 @@ import useConnect, {Config} from 'hooks/useConnect'
 type Result = {
   isLoading: ReturnType<typeof s.isLoadingComponent>,
   data: ReturnType<typeof s.getLoadedComponent>,
-  unload: a.Unload,
-  add: a.Add
+  load: typeof a.load,
+  unload: typeof a.unload,
+  add: typeof a.add
 }
 
 type Props = {}
@@ -23,7 +24,8 @@ const config:Config<Props,Result,State,unknown> = {
   }),
   mapDispatch: {
     load: a.load,
-    unload: a.unload
+    unload: a.unload,
+    add: a.load
   },
 }
 

@@ -21,7 +21,7 @@ export default function reducer (state:State=defaultState, action:Action):State 
     case at.LOAD: return {
       ...state,
       isLoading: true,
-      loadId: action.payload ? action.payload.props.gridArea : null
+      loadId: action.payload || null
     }
     case at.UNLOAD: return {
       ...state,

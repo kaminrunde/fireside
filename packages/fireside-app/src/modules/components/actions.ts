@@ -1,21 +1,34 @@
 import * as t from './types'
 import * as at from './const'
 
+/**
+ * add component from storybook to component list
+ */
 export const add = (component:t.Component) => ({
   type: at.ADD,
   payload: component
 })
 
+/**
+ * remove component completly
+ */
 export const remove = (component:t.Component) => ({
   type: at.REMOVE,
   payload: component
 })
 
+/**
+ * open storybook with component. If no component was
+ * given a new one will be created
+ */
 export const load = (component?:t.Component) => ({
   type: at.LOAD,
   payload: component
 })
 
+/**
+ * closer storybook
+ */
 export const unload = () => ({
   type: at.UNLOAD
 })

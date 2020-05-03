@@ -27,6 +27,9 @@ const config:Config<Props,Result,State,unknown> = {
   },
 }
 
+/**
+ * loading component docs
+ */
 export default function useLoadingComponent ():Result {
   const props = {}
   const hook = useConnect<Props,Result,State,unknown>(props, config)

@@ -2,6 +2,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 // import useGridLayout from './hooks/useGridLayout'
 import {useGrid} from 'modules/grid'
+import * as components from 'modules/components'
 import useGridWidth from './hooks/useGridWidth'
 import GridLayout from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css'
@@ -20,6 +21,12 @@ export default function Grid (props:Props) {
   const grid = useGrid(props.mediaSize)
   const gridWidth = useGridWidth()
   const [draggingName, setDraggingName] = React.useState('')
+  const [active, setActive] = React.useState<null|string>(null)
+
+  const handleItemClick = (id:string) => () => {
+    if(active === id) setActive(null)
+    else setActive(id)
+  }
 
   return (
     <Wrapper className='Grid'>
@@ -63,26 +70,33 @@ export default function Grid (props:Props) {
             onDrop={(target:any) => grid.addFromBuffer({...target, i:draggingName, static:true})}
             width={gridWidth.data}>
               {grid.data.gridAreas.map(item => (
-                <Item key={item.i}>{item.i}</Item>
+                <Item 
+                  key={item.i}
+                  active={active === item.i} 
+                  onClick={handleItemClick(item.i)}>
+                    {item.i}
+                </Item>
               ))}
           </GridLayout>
         </div>
       </div>
       <div className='buffer'>
         {grid.data.buffer.map(name => (
-          <div 
+          <BufferComponent 
             data-name={name}
             className='component' 
             draggable 
-            onDragStart={e => {
+            active={active === name}
+            onDragStart={(e:any) => {
               setDraggingName(name)
               e.dataTransfer.setData("text/plain", "")
             }}
+            onClick={handleItemClick(name)}
             onDragEnd={() => setDraggingName('')}
             unselectable="on" 
             key={name}>
               {name}
-          </div>
+          </BufferComponent>
         ))}
       </div>
     </Wrapper>
@@ -174,14 +188,6 @@ const Wrapper = styled.div`
 
   > .buffer {
     margin-top: 50px;
-
-    > .component {
-      padding: 10px;
-      background: steelblue;
-      width: 300px;
-      color: white;
-      text-align: center;
-    }
   }
 `
 
@@ -190,4 +196,26 @@ const Item = styled.div`
   line-height: ${ROW_HEIGHT}px;
   height: ${ROW_HEIGHT}px;
   padding: 0 10px;
+  cursor: pointer;
+
+  border-left: 8px solid transparent;
+
+  ${(props:any) => props.active && `
+    border-left: 8px solid #795548;
+  `}
+`
+
+const BufferComponent = styled.div`
+  padding: 10px;
+  background: steelblue;
+  width: 300px;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+
+  border-left: 8px solid transparent;
+
+  ${(props:any) => props.active && `
+    border-left: 8px solid #795548;
+  `}
 `

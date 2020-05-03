@@ -1,6 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import {useLoadingComponent} from 'modules/components'
+import ActionButtons, {t} from 'widgets/ActionButtons'
 
 const url = "http://localhost:6006/"
 
@@ -41,6 +42,21 @@ export default function Storybook () {
   
   return (
     <Wrapper className='Storybook' visible={loadingComponent.isLoading}>
+      {loadingComponent.data && (
+        <ActionButtons
+          buttons={[
+            {
+              label: 'Save',
+              type: 'primary',
+              onClick: () => loadingComponent.unload()
+            },{
+             label: 'Abort',
+             type: 'danger',
+             onClick: () => loadingComponent.unload()
+           }
+          ]}
+        />
+      )}
       <iframe ref={ref} src={url} />
     </Wrapper>
   )

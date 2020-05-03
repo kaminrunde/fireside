@@ -1,4 +1,5 @@
 import * as t from '../types'
+import {v4} from 'uuid'
 
 let globalCb:null|Function = null
 
@@ -14,25 +15,39 @@ setTimeout(() => {
   if(!globalCb) return
   globalCb({
     componentsById: {
-      'img-1': {
-        label: 'img-1'
+      'Banner-1': {
+        id: v4(),
+        name: 'Banner',
+        props: {
+          label: 'Banner 1',
+          otherLabel: 'foo'
+        }
       },
-      'text': {
-        label: 'img-1'
+      'Banner-2': {
+        id: v4(),
+        name: 'Banner',
+        props: {
+          label: 'Banner 2',
+          otherLabel: 'foo'
+        }
       },
-      'img-2': {
-        label: 'img-2'
-      }
+      'Button-1': {
+        id: v4(),
+        name: 'Button',
+        props: {
+          label: 'Button 1'
+        }
+      },
     },
-    allComponents: ['img-1', 'text'],
+    allComponents: ['Banner-1', 'Button-1', 'Banner-2'],
     grids: {
       'MOBILE_M': {
         enabled: true,
         gap: 20,
-        components: ['img-1', 'text', 'img-2'],
+        components: ['Banner-1', 'Button-1', 'Banner-2'],
         grid: [
-          ['img-1', 'img-1', '.'],
-          ['text', 'text', 'text'],
+          ['Banner-1', 'Banner-1', '.'],
+          ['Button-1', 'Button-1', 'Button-1'],
         ],
         widths: ['1fr', '1fr', '1fr'],
         heights: ['auto', 'auto']

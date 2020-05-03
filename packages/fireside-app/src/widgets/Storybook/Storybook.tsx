@@ -1,15 +1,15 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import {useLoadingComponent} from 'modules/components'
-import ActionButtons, {t} from 'widgets/ActionButtons'
+import * as components from 'modules/components'
+import ActionButtons from 'widgets/ActionButtons'
 
 const url = "http://localhost:6006/"
 
 export default function Storybook () {
   const ref = React.useRef<null|HTMLIFrameElement>(null)
-  const [component, setComponent] = React.useState<object|null>(null)
+  const [component, setComponent] = React.useState<components.t.Component|null>(null)
   const [setupFinished, setSetupFinished] = React.useState(false)
-  const loadingComponent = useLoadingComponent()
+  const loadingComponent = components.useLoadingComponent()
   
   React.useEffect(() => {
     const listener = (e:any) => {
@@ -48,7 +48,10 @@ export default function Storybook () {
             {
               label: 'Save',
               type: 'primary',
-              onClick: () => loadingComponent.unload()
+              onClick: () => {
+                component && loadingComponent.add(component)
+                loadingComponent.unload()
+              }
             },{
              label: 'Abort',
              type: 'danger',

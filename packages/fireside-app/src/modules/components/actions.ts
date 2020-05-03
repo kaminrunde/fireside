@@ -1,6 +1,11 @@
 import * as t from './types'
 import * as at from './const'
 
+export const init = (byId:Record<string,t.Component>, allIds:string[]) => ({
+  type: at.INIT,
+  payload: {byId, allIds}
+})
+
 /**
  * add component from storybook to component list
  */
@@ -33,12 +38,14 @@ export const unload = () => ({
   type: at.UNLOAD
 })
 
+export type Init = ReturnType<typeof init>
 export type Add = ReturnType<typeof add>
 export type Remove = ReturnType<typeof remove>
 export type Load = ReturnType<typeof load>
 export type Unload = ReturnType<typeof unload>
 
 export type Action =
+| Init
 | Add
 | Remove
 | Load

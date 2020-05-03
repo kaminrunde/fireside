@@ -1,6 +1,12 @@
 
 export type Story = {
-  componentsById: {[id:string]: object},
+  componentsById: Record<string, {
+    name: string,
+    id: string,
+    props: {
+      gridArea: string
+    }
+  }>,
   allComponents: [],
   grids: {
     [size:string]: {

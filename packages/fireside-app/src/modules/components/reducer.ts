@@ -18,6 +18,10 @@ export const defaultState:State = {
 
 export default function reducer (state:State=defaultState, action:Action):State {
   switch(action.type) {
+    case at.INIT: return {
+      ...defaultState,
+      ...action.payload
+    }
     case at.LOAD: return {
       ...state,
       isLoading: true,

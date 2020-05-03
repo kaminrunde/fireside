@@ -30,7 +30,8 @@ const config:Config<Props,Result,State,unknown> = {
 }
 
 /**
- * loading component docs
+ * loading component manages the updating of a component
+ * inside storybook.
  */
 export default function useLoadingComponent ():Result {
   const props = {}

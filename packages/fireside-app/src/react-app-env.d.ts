@@ -19,26 +19,53 @@ declare module '@reach/router' {
 }
 
 declare module 'redux-ruleset' {
-  type Rule<Action,RootState> = {
-    id: string,
-    target: string | string[] | '*',
-    output: string | string[] | '*',
-    consequence: (action:Action, args:{
-      getState: () => RootState,
-      dispatch: Dispatch
-    }) => Function | null | {type:string} | void
-    concurrency?: 'LAST' | 'FIRST' | 'ONCE' | 'SWITCH',
+
+  interface Context {
+    get: (key:string) => any,
+    set: (key:string, val:any) => void
+  }
+  
+  interface Rule<Action> {
+    id: string;
+    target: '*' | string | string[],
+    output: string[] | string,
     position?: 'BEFORE' | 'AFTER' | 'INSTEAD',
-    delay?: number,
-    addOnce?: boolean,
-    addWhen?: Function,
-    addUntil?: Function,
-  };
-  const module:any;
-  const dispatchEvent:never;
-  const addRule:<Action,RootState>(rule:Rule<Action,RootState>) => Rule;
-  export default module;
-  export {dispatchEvent, addRule};
+    addUntil?: any,
+    addWhen?: any,
+    weight?: number,
+    addOnce?:boolean,
+    concurrency?: 'FIRST' | 'LAST' | 'ONCE' | 'SWITCH',
+    concurrencyFilter?: (action:Action) => string,
+    throttle?: number,
+    debounce?: number,
+    delay?:number,
+    condition?: (
+      action: Action,
+      opt: {
+        getState: () => RootState,
+        context: Context
+      }
+    ) => boolean,
+    consequence: (
+      action: Action,
+      opt: {
+        getState: () => RootState,
+        dispatch: (action:{type:string}) => void,
+        context: Context,
+        addRule: (name:string, ...args:any[])=>void,
+        removeRule: (name:string)=>void
+      }
+    ) => void | {type:string} | Promise<{type:string}> | null
+    | Promise<void> | Promise<null> | Function,
+    subRules?: Record<string,any>
+  }
+  // const addRule: <A>(rule:any)=>any;
+  const addRule: <Action>(rule:Rule<Action>)=>Rule<Action>;
+  const dispatchEvent:<Action>(action:Action)=>Action;
+  const skipRule:<Action>(id:string[]|string,action:Action)=>Action;
+  const middleware:any;
+  export {addRule, dispatchEvent, skipRule};
+  export default middleware;
 }
 
 declare module 'styled-components' {

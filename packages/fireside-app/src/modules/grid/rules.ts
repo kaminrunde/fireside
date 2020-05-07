@@ -2,16 +2,14 @@ import {addRule} from 'redux-ruleset'
 import * as at from './const'
 import * as a from './actions'
 import * as s from './selectors'
-import {State} from './reducer'
 
-type RootState = {grid:State}
 
 /**
  * When we add a grid area from buffer
  * we had to add it as static (some bug)
  * Then we remove the static attribute
  */
-addRule<a.AddFromBuffer,RootState>({
+addRule<a.AddFromBuffer>({
   id: 'grid/REMOVE_STATIC',
   target: at.ADD_FROM_BUFFER,
   output: at.UPDATE_GRID,

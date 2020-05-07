@@ -19,12 +19,6 @@ addRule<a.AddFromBuffer,RootState>({
   consequence: (action, {getState}) => {
     const state = getState()
     const grid = s.getGrid(state.grid, action.meta.mediaSize)
-    return a.updateGrid(action.meta.mediaSize, grid.gridAreas.map(a => ({
-      x: a.x,
-      y: a.y,
-      w: a.w,
-      h: a.h,
-      i: a.i
-    })))
+    return a.updateGrid(action.meta.mediaSize, grid.gridAreas)
   }
 })

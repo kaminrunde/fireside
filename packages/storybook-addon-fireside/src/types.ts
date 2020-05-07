@@ -50,6 +50,7 @@ type Event =
 | 'storyboard-bridge/hydrate-component'
 | 'storyboard-bridge/update-component-name'
 | 'storyboard-bridge/update-component-props'
+| 'storyboard-bridge/init-knob-manager'
 export type Channel = {
   emit: (event:Event, options?:any) => void,
   on: (event:Event, cb:(val:any)=>void) => void,

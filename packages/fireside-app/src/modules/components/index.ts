@@ -1,5 +1,5 @@
 
-import './rules'
+// import './rules'
 
 
 import * as a from './actions'
@@ -11,4 +11,4 @@ export {a,c,s, t}
 export {default} from './reducer'
 
 
-export {default as useGrid} from './hooks/useGrid'
+export {default as useLoadingComponent} from './hooks/useLoadingComponent'

@@ -93,4 +93,5 @@ channel.on('storyboard-bridge/hydrate-component', (component) => {
         channel.emit('storyboard-bridge/select-story', context);
     }
 });
+channel.emit('storyboard-bridge/init-knob-manager');
 //# sourceMappingURL=knob-manager.js.map

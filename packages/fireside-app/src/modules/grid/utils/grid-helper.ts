@@ -3,7 +3,6 @@ import produce from 'immer'
 import {compose} from 'redux'
 
 export function sortGridAreas (gridAreas:t.GridArea[]):t.GridArea[] {
-  console.log(gridAreas)
   return gridAreas.sort((a,b) => {
     // if(a.y < b.y) return -1
     // if(a.x < b.x) return 1
@@ -87,7 +86,6 @@ export function calculateHeights (prevHeights:string[], areas:t.GridArea[]):stri
     if(height > maxHeight) maxHeight = height
   }
 
-  console.log(maxHeight, prevHeight)
   if(maxHeight > prevHeight){
     return [
       ...prevHeights, 

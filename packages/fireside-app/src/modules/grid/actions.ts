@@ -9,7 +9,7 @@ import * as at from './const'
 export const updateGrid = (mediaSize:string, grid:t.GridArea[]) => ({
   type: at.UPDATE_GRID,
   meta: {mediaSize},
-  payload: grid
+  payload: grid.map(({i,w,h,x,y}) => ({i,w,h,x,y}))
 })
 
 export const addWidth = (mediaSize:string, width:string='1fr') => ({

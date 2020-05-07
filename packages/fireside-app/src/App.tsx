@@ -2,7 +2,7 @@ import * as React from 'react'
 import {Router} from '@reach/router'
 import Snackbar from 'widgets/Snackbar'
 import {history} from './store'
-import Header from 'widgets/Header'
+import Header from 'containers/Header'
 import Storybook from 'widgets/Storybook'
 
 import IndexRoute from 'routes/Index'

@@ -3,39 +3,38 @@ import * as React from 'react'
 import {bindActionCreators} from 'redux'
 import store from 'store'
 
-type State = any
 
 interface CustomFunction extends Function {
   updateList: Function[]
 }
 
-export type Config<OP,Result,State,SP> = {
+export type Config<Input extends object,Result,State,DP extends Partial<{[key in keyof Result]:Function}>> = {
   moduleKey:string,
+  moduleKey2?: string,
   name:string,
-  createCacheKey: (props:OP) => string,
-  mapState: (state:State,props:OP) => SP,
-  mapDispatch?:any,
-  transformDispatch?:{
-    [name:string]: (fn:any,sp:Result,props:OP)=>void
-  },
+  createCacheKey: (props:Input) => string,
+  mapState: (state:State,props:Input) => Partial<Result>,
+  // mapDispatch?: Partial<{ [K in keyof Result]: Function }>,
+  mapDispatch?: DP,
+  transformDispatch?:Partial<{
+    [K in keyof Result]: (fn:DP[K],sp:Result,props:Input)=> Result[K]
+  }>,
   areStatesEqual?: (a:State,b:State) => boolean
 }
 
-const cache:{[name:string]:[any,any]} = {}
+const cache:Record<string, [any,any]> = {}
 const creators:any = {}
 const listeners:CustomFunction[] = []
-// TODO: not used?
-const dict:{[key:string]:CustomFunction[]} = {}
-const cbDict:{[key:string]:CustomFunction} = {}
+const dict:any = {}
+const cbDict:any = {}
 let setup = false
-const dispatch:any = store.dispatch
 
 function runSetup (){
   setup = true
   store.subscribe(() => {
     const state = store.getState()
     for(let i=0;i<listeners.length;i++){
-      listeners[i](state, (state:State) => {
+      listeners[i](state, (state:any) => {
         for(let j=0;j<listeners[i].updateList.length;j++){
           listeners[i].updateList[j](state)
         }
@@ -77,6 +76,7 @@ function subscribe (
   return () => {
     if(cb.updateList.length === 1){
       removeItem(listeners, cbDict[cacheKey])
+      dict[cacheKey] = null
     }
     else {
       removeItem(cb.updateList, update)
@@ -84,13 +84,17 @@ function subscribe (
   }
 }
 
-export default function useBetterConnect <OP,Result,State,SP>(
-  props:OP,
-  m:Config<OP,Result,State,SP>
+export default function useBetterConnect <Input extends object,Result,State,DP>(
+  props:Input,
+  m:Config<Input,Result,State,DP>
 ):Result {
   if(!setup) runSetup()
   const rootState:any = store.getState()
-  const state:State = rootState[m.moduleKey]
+  let state:State = rootState[m.moduleKey]
+  if(m.moduleKey2){
+    // @ts-ignore
+    state = state[m.moduleKey2]
+  }
   const [,update] = React.useState(0)
   const cacheKey = m.name + m.createCacheKey(props)
   const cachedData = cache[cacheKey]
@@ -103,24 +107,28 @@ export default function useBetterConnect <OP,Result,State,SP>(
   }
   savedCacheKey.current = cacheKey
 
-  React.useLayoutEffect(() => subscribe(cacheKey, update, (state:any,update:Function) => {
-    const mstate:any = state[m.moduleKey]
+  React.useLayoutEffect(() => subscribe(cacheKey, update, (state:any,update:any) => {
+    state = state[m.moduleKey]
+    if(m.moduleKey2){
+      state = state[m.moduleKey2]
+    }
     const cachedData = cache[savedCacheKey.current]
     if(!cachedData) {
-      update(mstate)
+      update(state)
       return
     }
-    if (mstate === cachedData[0]) return
-    if(m.areStatesEqual && m.areStatesEqual(mstate, cachedData[0])) return
-    update(mstate)
-  }),[cacheKey, m])
+    if (state === cachedData[0]) return
+    if(m.areStatesEqual && m.areStatesEqual(state, cachedData[0])) return
+    update(state)
+  }),[])
 
   if(cachedResult && cachedState === state){
     return cachedResult
   }
 
   if(!creators[m.name]){
-    creators[m.name] = bindActionCreators(m.mapDispatch||{}, dispatch)
+    // @ts-ignore
+    creators[m.name] = bindActionCreators(m.mapDispatch||{}, store.dispatch)
   }
 
   const dp = creators[m.name]
@@ -131,6 +139,7 @@ export default function useBetterConnect <OP,Result,State,SP>(
   if(m.transformDispatch){
     for(let name in m.transformDispatch) {
       const fn = m.transformDispatch[name]
+      // @ts-ignore
       result[name] = fn(result[name],result,props)
     }
   }

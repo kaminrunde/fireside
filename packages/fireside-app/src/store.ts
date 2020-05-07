@@ -8,6 +8,7 @@ import gridReducer from 'modules/grid'
 import snackbarReducer from 'modules/snackbar'
 import connectorReducer from 'modules/connector'
 import componentsReducer from 'modules/components'
+import uiReducer from 'modules/ui'
 
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({ 
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   snackbar: snackbarReducer,
   connector: connectorReducer,
   router: routerReducer,
-  components: componentsReducer
+  components: componentsReducer,
+  ui: uiReducer
 })
 
 

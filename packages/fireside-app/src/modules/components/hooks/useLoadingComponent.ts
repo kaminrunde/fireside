@@ -14,7 +14,7 @@ type Result = {
 
 type Props = {}
 
-const config:Config<Props,Result,State,unknown> = {
+const config:Config<Props,Result,State,object> = {
   moduleKey: 'components',
   name: 'components/useLoadingComponent',
   createCacheKey: () => '',

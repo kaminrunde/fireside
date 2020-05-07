@@ -22,9 +22,6 @@ const rootReducer = combineReducers({
   components: componentsReducer
 })
 
-declare global {
-  interface Window { __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any; }
-}
 
 let composeEnhancers = compose
 
@@ -38,7 +35,7 @@ const store = createStore(
   rootReducer,
   undefined,
   composeEnhancers(
-    applyMiddleware/*::<RootState,Action,Dispatch>*/(
+    applyMiddleware(
       ruleMiddleware,
       routerMiddleware
     )
@@ -51,3 +48,10 @@ export type ReduxState = ReturnType<typeof rootReducer>
 export const history = reachify(createReduxHistory(store))
 
 export default store
+
+declare global {
+  interface Window { __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any; }
+  interface ModuleActions {}
+  type ValueOf<T> = T[keyof T]
+  type RootAction = ValueOf<ModuleActions>
+}

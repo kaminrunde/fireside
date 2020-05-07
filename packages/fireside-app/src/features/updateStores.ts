@@ -3,7 +3,7 @@ import * as connector from 'modules/connector'
 import * as grid from 'modules/grid'
 import * as components from 'modules/components'
 
-addRule<connector.a.UpdateStory,never>({
+addRule<connector.a.UpdateStory>({
   id: 'feature/UPDATE_STORES',
   target: connector.c.UPDATE_STORY,
   output: [grid.c.UPDATE_GRID],

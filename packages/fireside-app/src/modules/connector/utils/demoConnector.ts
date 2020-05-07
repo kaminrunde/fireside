@@ -51,6 +51,17 @@ setTimeout(() => {
         ],
         widths: ['1fr', '1fr', '1fr'],
         heights: ['auto', 'auto']
+      },
+      'MOBILE_L': {
+        enabled: true,
+        gap: 20,
+        components: ['Banner-1', 'Button-1', 'Banner-2'],
+        grid: [
+          ['Banner-1', '.'],
+          ['Button-1', 'Button-1'],
+        ],
+        widths: ['1fr', '1fr'],
+        heights: ['auto', 'auto']
       }
     }
   })

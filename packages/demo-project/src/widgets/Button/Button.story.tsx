@@ -9,6 +9,7 @@ b.registerWidgetSelector(Component.name, props => {
 
 storiesOf('cms/base/Button', module)
   .add('Builder', b.create('Button', Component, [
+    b.string('gridArea', 'Grid-Area', 'Button'),
     b.constant('__version', 'Version', 1),
     b.string('label', 'Label', 'foo', {
       hint: 'Das ist der label'

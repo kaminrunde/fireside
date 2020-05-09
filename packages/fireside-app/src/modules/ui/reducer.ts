@@ -12,6 +12,7 @@ export const defaultState = {
 
 export default produce((state:State,action:Action) => {
   switch(action.type){
+    case at.CLEAR: return defaultState
     case at.SET_SIDEBAR_OPEN: {
       state.sidebarOpen = action.payload
       return

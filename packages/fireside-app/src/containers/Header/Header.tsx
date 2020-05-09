@@ -2,11 +2,15 @@ import * as React from 'react'
 import styled from 'styled-components'
 import {ActionButtonsDisplay} from 'widgets/ActionButtons'
 import { FiMenu } from "react-icons/fi"
-import {MdClose} from 'react-icons/md'
+import {MdClose, MdFullscreen} from 'react-icons/md'
 import {useSidebar} from 'modules/ui'
+import toggleFullscreen from 'toggle-fullscreen'
 
 export default function Header () {
   const sidebar = useSidebar()
+  const handleFullscreenClick = () => {
+    toggleFullscreen(document.body)
+  }
   return (
     <Wrapper>
       <div className='burger-menu' onClick={sidebar.isOpen ? sidebar.close : sidebar.open}>
@@ -15,7 +19,9 @@ export default function Header () {
       <div className='logo'></div>
       <div className='title'></div>
       <ActionButtonsDisplay/>
-      <div className='fullscreen'></div>
+      <div className='fullscreen' onClick={handleFullscreenClick}>
+        <MdFullscreen/>
+      </div>
     </Wrapper>
   )
 }
@@ -41,5 +47,17 @@ const Wrapper = styled.div`
   > .logo {width: 100px;}
   > .title {flex:1;}
   > .ActionButtonsDisplay {}
-  > .fullscreen {width: 50px;}
+  > .fullscreen {
+    cursor: pointer;
+    height: 100%;
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    > svg {
+      margin-left: 15px;
+      color: white;
+      font-size: 30px;
+    }
+  }
 `

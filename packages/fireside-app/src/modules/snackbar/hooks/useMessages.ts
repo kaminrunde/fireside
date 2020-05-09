@@ -11,7 +11,7 @@ type Result = {
 
 type Props = {}
 
-const config:Config<Props,Result,State,unknown> = {
+const config:Config<Props,Result,State,object> = {
   moduleKey: 'snackbar',
   name: 'snackbar/useMessages',
   createCacheKey: () => '',
@@ -26,6 +26,6 @@ const config:Config<Props,Result,State,unknown> = {
 
 export default function useGrid ():Result {
   const props = {}
-  const hook = useConnect<Props,Result,State,unknown>(props, config)
+  const hook = useConnect<Props,Result,State,object>(props, config)
   return hook
 }

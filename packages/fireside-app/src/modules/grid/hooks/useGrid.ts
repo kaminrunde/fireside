@@ -15,11 +15,20 @@ type Result = {
   // updateGridArea: typeof a.updateGridArea
 }
 
+type DP = {
+  addWidth: typeof a.addWidth,
+  removeWidth: typeof a.removeWidth,
+  setWidth: typeof a.setWidth,
+  setHeight: typeof a.setHeight,
+  updateGrid: typeof a.updateGrid,
+  addFromBuffer: typeof a.addFromBuffer
+}
+
 type Props = {
   mediaSize: string,
 }
 
-const config:Config<Props,Result,State,unknown> = {
+const config:Config<Props,Result,State,DP> = {
   moduleKey: 'grid',
   name: 'grid/useGrid',
   createCacheKey: props => props.mediaSize,
@@ -52,6 +61,6 @@ const config:Config<Props,Result,State,unknown> = {
 
 export default function useGrid (mediaSize:string):Result {
   const props = {mediaSize}
-  const hook = useConnect<Props,Result,State,unknown>(props, config)
+  const hook = useConnect<Props,Result,State,DP>(props, config)
   return hook
 }

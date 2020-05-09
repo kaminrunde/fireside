@@ -5,7 +5,6 @@ const emptyGrid:t.Grid = {
   gridAreas: [],
   widths: ['1fr'],
   heights: ['auto'],
-  buffer: []
 }
 
 export const getGrid = (state:State, mediaSize:string):t.Grid => state[mediaSize] || emptyGrid

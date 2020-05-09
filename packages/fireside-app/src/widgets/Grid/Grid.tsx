@@ -2,7 +2,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 import ActionButtons, {t} from 'widgets/ActionButtons'
 import {useGrid} from 'modules/grid'
-import {useLoadingComponent} from 'modules/components'
+import {useLoadingComponent, useComponents} from 'modules/components'
 import useGridWidth from './hooks/useGridWidth'
 import GridLayout from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css'
@@ -20,6 +20,7 @@ type Props = {
 export default function Grid (props:Props) {
   const grid = useGrid(props.mediaSize)
   const loadingComponent = useLoadingComponent()
+  const components = useComponents()
   const gridWidth = useGridWidth()
   const [draggingName, setDraggingName] = React.useState('')
   const [active, setActive] = React.useState<null|string>(null)
@@ -102,21 +103,23 @@ export default function Grid (props:Props) {
         </div>
       </div>
       <div className='buffer'>
-        {grid.data.buffer.map(name => (
+        {components.data
+        .filter(c => !grid.data.gridAreas.find(area => area.i === c.props.gridArea))
+        .map(c => (
           <BufferComponent 
-            data-name={name}
+            data-name={c.props.gridArea}
             className='component' 
             draggable 
-            active={active === name}
+            active={active === c.props.gridArea}
             onDragStart={(e:any) => {
-              setDraggingName(name)
+              setDraggingName(c.props.gridArea)
               e.dataTransfer.setData("text/plain", "")
             }}
-            onClick={handleItemClick(name)}
+            onClick={handleItemClick(c.props.gridArea)}
             onDragEnd={() => setDraggingName('')}
             unselectable="on" 
-            key={name}>
-              {name}
+            key={c.props.gridArea}>
+              {c.props.gridArea}
           </BufferComponent>
         ))}
       </div>
@@ -209,6 +212,8 @@ const Wrapper = styled.div`
 
   > .buffer {
     margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
   }
 `
 
@@ -233,6 +238,7 @@ const BufferComponent = styled.div`
   color: white;
   text-align: center;
   cursor: pointer;
+  margin: 3px;
 
   border-left: 8px solid transparent;
 

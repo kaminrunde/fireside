@@ -10,6 +10,5 @@ export type GridArea = {
 export type Grid = {
   gridAreas: GridArea[],
   widths: string[],
-  heights: string[],
-  buffer: string[]
+  heights: string[]
 }

@@ -71,12 +71,10 @@ export const init = (grids:{
   let action:Result = { type:at.INIT, payload: {} }
   for(let mediaSize in grids){
     const [gridAreas, components] = createGrid(grids[mediaSize].grid)
-    const componentsString = '-' + components.join('-') + '-'
     action.payload[mediaSize] = {
       gridAreas: gridAreas,
       widths: grids[mediaSize].widths,
-      heights: grids[mediaSize].heights,
-      buffer: grids[mediaSize].components.filter(s => !componentsString.includes(s))
+      heights: grids[mediaSize].heights
     }
   }
 

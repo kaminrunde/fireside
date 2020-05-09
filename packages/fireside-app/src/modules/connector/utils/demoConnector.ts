@@ -19,6 +19,7 @@ setTimeout(() => {
         id: v4(),
         name: 'Banner',
         props: {
+          gridArea: 'Banner-1',
           label: 'Banner 1',
           otherLabel: 'foo'
         }
@@ -27,6 +28,7 @@ setTimeout(() => {
         id: v4(),
         name: 'Banner',
         props: {
+          gridArea: 'Banner-2',
           label: 'Banner 2',
           otherLabel: 'foo'
         }
@@ -35,6 +37,7 @@ setTimeout(() => {
         id: v4(),
         name: 'Button',
         props: {
+          gridArea: 'Button-1',
           label: 'Button 1'
         }
       },

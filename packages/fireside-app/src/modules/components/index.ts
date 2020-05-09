@@ -12,6 +12,7 @@ export {default} from './reducer'
 
 
 export {default as useLoadingComponent} from './hooks/useLoadingComponent'
+export {default as useComponents} from './hooks/useComponents'
 
 declare global {
   interface RootState { components: State }

@@ -55,6 +55,13 @@ export default produce((state:State, action:Action) => {
       state[mediaSize].gridAreas.unshift(action.payload)
       break
     }
+    case at.TO_BUFFER: {
+      const {mediaSize} = action.meta
+      const index = state[mediaSize].gridAreas.findIndex(area => area.i === action.payload.i)
+      if(index === -1) break
+      state[mediaSize].gridAreas.splice(index,1)
+      break
+    }
   }
 }, defaultState)
 

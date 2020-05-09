@@ -4,6 +4,9 @@ import * as s from '../selectors'
 import {State} from '../reducer'
 import useConnect, {Config} from 'hooks/useConnect'
 
+// type OmitParam1<T> = 
+// T extends (arg1:any, ...args: infer Args) => infer R ? (...args:Args) => R : never
+
 type Result = {
   data: t.Grid,
   addWidth: (width?:string) => a.AddWidth,
@@ -11,7 +14,8 @@ type Result = {
   setWidth: (index:number, width:string) => a.SetWidth,
   setHeight: (index:number, height:string) => a.SetHeight,
   updateGrid: (areas:t.GridArea[]) => a.UpdateGrid,
-  addFromBuffer: (area:t.GridArea) => a.AddFromBuffer
+  addFromBuffer: (area:t.GridArea) => a.AddFromBuffer,
+  toBuffer: (area:t.GridArea) => a.ToBuffer
   // updateGridArea: typeof a.updateGridArea
 }
 
@@ -21,7 +25,8 @@ type DP = {
   setWidth: typeof a.setWidth,
   setHeight: typeof a.setHeight,
   updateGrid: typeof a.updateGrid,
-  addFromBuffer: typeof a.addFromBuffer
+  addFromBuffer: typeof a.addFromBuffer,
+  toBuffer: typeof a.toBuffer
 }
 
 type Props = {
@@ -41,21 +46,17 @@ const config:Config<Props,Result,State,DP> = {
     setWidth: a.setWidth,
     setHeight: a.setHeight,
     updateGrid: a.updateGrid,
-    addFromBuffer: a.addFromBuffer
+    addFromBuffer: a.addFromBuffer,
+    toBuffer: a.toBuffer
   },
   transformDispatch: {
-    addWidth: (fn:typeof a.addWidth,sp,props) => 
-      (width?:string) => fn(props.mediaSize, width),
-    removeWidth: (fn:typeof a.removeWidth,sp,props) => 
-      () => fn(props.mediaSize),
-    setWidth: (fn:typeof a.setWidth,sp,props) => 
-      (index:number,width:string) => fn(props.mediaSize,index,width),
-    setHeight: (fn:typeof a.setHeight,sp,props) => 
-      (index:number,height:string) => fn(props.mediaSize,index,height),
-    updateGrid: (fn:typeof a.updateGrid,sp,props) => 
-      (areas:t.GridArea[]) => fn(props.mediaSize,areas),
-    addFromBuffer: (fn:typeof a.addFromBuffer,sp,props) => 
-      (area:t.GridArea) => fn(props.mediaSize,area),
+    addWidth: (fn,sp,props) => width => fn(props.mediaSize, width),
+    removeWidth: (fn,sp,props) => () => fn(props.mediaSize),
+    setWidth: (fn,sp,props) => (index,width) => fn(props.mediaSize,index,width),
+    setHeight: (fn,sp,props) => (index,height) => fn(props.mediaSize,index,height),
+    updateGrid: (fn,sp,props) => areas => fn(props.mediaSize,areas),
+    addFromBuffer: (fn,sp,props) => area => fn(props.mediaSize,area),
+    toBuffer: (fn,sp,props) => area => fn(props.mediaSize, area)
   }
 }
 

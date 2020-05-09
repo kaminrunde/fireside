@@ -41,6 +41,12 @@ export const addFromBuffer = (mediaSize:string, gridArea:t.GridArea) => ({
   payload: gridArea
 })
 
+export const toBuffer = (mediaSize:string, gridArea:t.GridArea) => ({
+  type: at.TO_BUFFER,
+  meta: {mediaSize},
+  payload: gridArea
+})
+
 export const init = (grids:{
   [mediaSize:string]: {
     grid: string[][],
@@ -87,6 +93,7 @@ export type RemoveWidth = ReturnType<typeof removeWidth>
 export type SetWidth = ReturnType<typeof setWidth>
 export type SetHeight = ReturnType<typeof setHeight>
 export type AddFromBuffer = ReturnType<typeof addFromBuffer>
+export type ToBuffer = ReturnType<typeof toBuffer>
 export type Init = ReturnType<typeof init>
 
 export type Action =
@@ -97,3 +104,4 @@ export type Action =
 | SetWidth
 | SetHeight
 | AddFromBuffer
+| ToBuffer

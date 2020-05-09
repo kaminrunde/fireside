@@ -41,11 +41,15 @@ export default function Grid (props:Props) {
       },{
         label: 'To Buffer',
         type: 'danger',
-        onClick: console.log
+        onClick: () => {
+          const gridArea = grid.data.gridAreas.find(area => area.i === active)
+          if(!gridArea) return
+          grid.toBuffer(gridArea)
+        }
       }
     ])
     return () => setActionButtons([])
-  }, [active])
+  }, [active, loadingComponent.load])
 
   return (
     <Wrapper className='Grid'>

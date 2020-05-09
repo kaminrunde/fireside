@@ -15,6 +15,15 @@ export default produce((state:State, action:Action) => {
     }
     case at.UPDATE_GRID: {
       const {mediaSize} = action.meta
+      if(!state[mediaSize]){
+        state.mediaSize = {
+          gridAreas: [],
+          widths: ['1fr'],
+          heights: ['auto'],
+          buffer: []
+        }
+        break
+      }
       state[mediaSize].gridAreas = action.payload
       state[mediaSize].heights = gridHelper.calculateHeights(
         state[mediaSize].heights, 

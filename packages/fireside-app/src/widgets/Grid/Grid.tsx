@@ -134,6 +134,9 @@ export default function Grid (props:Props) {
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
+  height: calc(100vh - 60px);
+  position: relative;
+  padding-bottom: 200px;
 
   > .drag {
     width: 500px;
@@ -215,9 +218,15 @@ const Wrapper = styled.div`
   }
 
   > .buffer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 200px;
     margin-top: 50px;
     display: flex;
     flex-wrap: wrap;
+    border-top: 2px solid grey;
   }
 `
 
@@ -243,6 +252,7 @@ const BufferComponent = styled.div`
   text-align: center;
   cursor: pointer;
   margin: 3px;
+  height: ${ROW_HEIGHT}px;
 
   border-left: 8px solid transparent;
 

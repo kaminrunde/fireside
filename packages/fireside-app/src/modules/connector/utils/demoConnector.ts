@@ -8,7 +8,10 @@ const connector:t.Connector = {
   onChange: cb => {
     globalCb = cb
   },
-  setStory: story => globalCb && globalCb(story)
+  setStory: story => {
+    setTimeout(() => globalCb && globalCb(story), 100)
+    console.log(story)
+  }
 }
 
 setTimeout(() => {
@@ -47,7 +50,6 @@ setTimeout(() => {
       'MOBILE_M': {
         enabled: true,
         gap: 20,
-        components: ['Banner-1', 'Button-1', 'Banner-2'],
         grid: [
           ['Banner-1', 'Banner-1', '.'],
           ['Button-1', 'Button-1', 'Button-1'],
@@ -58,7 +60,6 @@ setTimeout(() => {
       'MOBILE_L': {
         enabled: true,
         gap: 20,
-        components: ['Banner-1', 'Button-1', 'Banner-2'],
         grid: [
           ['Banner-1', '.'],
           ['Button-1', 'Button-1'],

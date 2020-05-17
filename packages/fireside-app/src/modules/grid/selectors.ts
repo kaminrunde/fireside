@@ -8,3 +8,5 @@ const emptyGrid:t.Grid = {
 }
 
 export const getGrid = (state:State, mediaSize:string):t.Grid => state[mediaSize] || emptyGrid
+
+export const getGridDict = (state:State):State => state

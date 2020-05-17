@@ -25,7 +25,7 @@ const config:Config<Props,Result,State,object> = {
   mapDispatch: {
     load: a.load,
     unload: a.unload,
-    add: a.load
+    add: a.add
   },
 }
 

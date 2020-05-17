@@ -52,7 +52,6 @@ export const init = (grids:{
     grid: string[][],
     widths: string[],
     heights: string[],
-    components: string[]
   }
 }) => {
   const createGrid = (rows:string[][]):[t.GridArea[], string[]] => {

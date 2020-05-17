@@ -7,12 +7,11 @@ export type Story = {
       gridArea: string
     }
   }>,
-  allComponents: [],
+  allComponents: string[],
   grids: {
     [size:string]: {
       enabled: boolean,
       gap: number,
-      components: string[],
       grid: string[][],
       widths: string[],
       heights: string[]

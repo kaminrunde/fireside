@@ -1,3 +1,21 @@
 {
-  "foo": "bar"
+  "mediaSizes": [
+    {
+      "label": "MOBILE M",
+      "key": "MOBILE_M",
+      "breakpoint": 0,
+      "initialyActive": true
+    },{
+      "label": "MOBILE L",
+      "key": "MOBILE_L",
+      "breakpoint": 500,
+      "initialyActive": false
+    },{
+      "label": "LAPTOP",
+      "key": "LAPTOP",
+      "breakpoint": 800,
+      "initialyActive": false
+    }
+  ],
+  "gidGap": 20
 }

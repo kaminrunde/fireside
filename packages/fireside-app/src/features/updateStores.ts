@@ -9,7 +9,6 @@ addRule<connector.a.UpdateStory>({
   output: [grid.c.UPDATE_GRID],
   consequence: (action, {dispatch}) => {
     const {grids, componentsById, allComponents} = action.payload
-    console.log()
     const updates = [
       grid.a.init(grids),
       components.a.init(componentsById, allComponents)

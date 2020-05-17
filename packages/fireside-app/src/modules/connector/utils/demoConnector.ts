@@ -8,7 +8,7 @@ const connector:t.Connector = {
   onChange: cb => {
     globalCb = cb
   },
-  setStory: story => null
+  setStory: story => globalCb && globalCb(story)
 }
 
 setTimeout(() => {

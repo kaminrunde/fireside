@@ -26,7 +26,7 @@ addRule<
     grid.c.SET_WIDTH,
     grid.c.UPDATE_GRID
   ],
-  output: connector.c.UPDATE_STORY,
+  output: connector.c.UPDATE_CONNECTOR,
   consequence: (_, {getState}) => {
     const state = getState()
     const componentList = components.s.getComponents(state.components)
@@ -54,7 +54,7 @@ addRule<
     }
 
     let story = { componentsById, allComponents, grids }
-    return connector.a.updateStory(story)
+    return connector.a.updateConnector(story)
   }
 })
 

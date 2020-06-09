@@ -12,9 +12,16 @@ export const setConnector = (connector:t.Connector) => ({
   payload: connector
 })
 
+export const updateConnector = (story:t.Story) => ({
+  type: at.UPDATE_CONNECTOR,
+  payload: story
+})
+
 export type UpdateStory = ReturnType<typeof updateStory>
 export type SetConnector = ReturnType<typeof setConnector>
+export type UpdateConnector = ReturnType<typeof updateConnector>
 
 export type Action =
 | UpdateStory
 | SetConnector
+| UpdateConnector

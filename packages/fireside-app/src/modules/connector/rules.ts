@@ -16,3 +16,14 @@ addRule<a.SetConnector>({
     return () => null
   }
 })
+
+addRule<a.UpdateConnector>({
+  id: 'connector/UPDATE_CONNECTOR',
+  target: at.UPDATE_CONNECTOR,
+  output: '#connector-update',
+  consequence: (action, {getState}) => {
+    const connector = getState().connector
+    if(!connector) return
+    connector.setStory(action.payload)
+  }
+})

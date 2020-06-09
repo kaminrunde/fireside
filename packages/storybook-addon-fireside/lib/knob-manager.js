@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.addSelector = exports.getProps = exports.getKnobs = void 0;
 const objPath = require("object-path");
 const addons_1 = require("@storybook/addons");
 const react_1 = require("@storybook/react");

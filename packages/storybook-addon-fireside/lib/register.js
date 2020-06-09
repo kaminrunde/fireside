@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const crypto_browserify_1 = require("crypto-browserify");
 const React = require("react");
 const addons_1 = require("@storybook/addons");
 const Panel_1 = require("./Panel");
@@ -57,9 +58,10 @@ addons_1.default.register('addons:storyboard-bridge', api => {
     // }), 2000)
 });
 function sendToFiresideApp(component) {
+    const hash = crypto_browserify_1.createHash('md5').update(JSON.stringify(component)).digest('hex');
     window.parent.postMessage({
         type: 'fireside-update-component',
-        component
+        component: Object.assign(Object.assign({}, component), { hash })
     }, '*');
 }
 //# sourceMappingURL=register.js.map

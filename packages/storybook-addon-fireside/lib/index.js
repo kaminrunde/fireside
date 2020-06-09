@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.registerWidgetSelector = exports.create = exports.constant = exports.string = void 0;
 const React = require("react");
 const manager = require("./knob-manager");
 const WidgetWrapper_1 = require("./WidgetWrapper");

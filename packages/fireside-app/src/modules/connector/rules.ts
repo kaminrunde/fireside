@@ -2,6 +2,7 @@ import {addRule} from 'redux-ruleset'
 import * as at from './const'
 import * as a from './actions'
 import * as t from './types'
+import * as s from './selectors'
 
 addRule<a.SetConnector>({
   id: 'connector/MANAGE_UPDATE',
@@ -22,7 +23,8 @@ addRule<a.UpdateConnector>({
   target: at.UPDATE_CONNECTOR,
   output: '#connector-update',
   consequence: (action, {getState}) => {
-    const connector = getState().connector
+    const state = getState()
+    const connector = s.getConnector(state.connector)
     if(!connector) return
     connector.setStory(action.payload)
   }

@@ -1,3 +1,4 @@
+import {createHash} from 'crypto-browserify'
 import {addRule} from 'redux-ruleset'
 import * as connector from 'modules/connector'
 import * as grid from 'modules/grid'
@@ -31,6 +32,7 @@ addRule<
   concurrency: 'LAST',
   consequence: (_, {getState}) => {
     const state = getState()
+    const prevStory = connector.s.getStory(state.connector)
     const componentList = components.s.getComponents(state.components)
     const gridDict = grid.s.getGridDict(state.grid)
 
@@ -55,7 +57,15 @@ addRule<
       }
     }
 
-    let story = { componentsById, allComponents, grids }
+    let story = { componentsById, allComponents, grids, hash:'' }
+    console.log(JSON.stringify(story,null,2))
+    const hash = createHash('md5').update(JSON.stringify(story)).digest('hex')
+    story.hash = hash
+
+    // do not update if hash did not change
+    if(story.hash === prevStory?.hash){
+      return
+    }
     return connector.a.updateConnector(story)
   }
 })

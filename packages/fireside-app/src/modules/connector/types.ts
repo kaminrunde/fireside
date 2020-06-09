@@ -1,5 +1,6 @@
 
 export type Story = {
+  hash: string,
   componentsById: Record<string, {
     name: string,
     id: string,

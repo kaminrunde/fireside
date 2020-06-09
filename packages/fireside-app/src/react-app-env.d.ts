@@ -9,6 +9,11 @@ declare namespace NodeJS {
   }
 }
 
+declare module 'crypto-browserify' {
+  const createHash:any;
+  export {createHash}
+}
+
 declare module '@reach/router' {
   const module:any;
   const Router:any;

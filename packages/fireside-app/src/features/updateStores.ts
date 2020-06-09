@@ -6,7 +6,7 @@ import * as components from 'modules/components'
 addRule<connector.a.UpdateStory>({
   id: 'feature/UPDATE_STORES',
   target: connector.c.UPDATE_STORY,
-  output: [grid.c.UPDATE_GRID],
+  output: [grid.c.INIT, components.c.INIT],
   consequence: (action, {dispatch}) => {
     const {grids, componentsById, allComponents} = action.payload
     const updates = [

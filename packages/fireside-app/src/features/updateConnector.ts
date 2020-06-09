@@ -27,6 +27,8 @@ addRule<
     grid.c.UPDATE_GRID
   ],
   output: connector.c.UPDATE_CONNECTOR,
+  delay: 500,
+  concurrency: 'LAST',
   consequence: (_, {getState}) => {
     const state = getState()
     const componentList = components.s.getComponents(state.components)

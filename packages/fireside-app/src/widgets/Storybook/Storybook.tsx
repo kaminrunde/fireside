@@ -42,7 +42,7 @@ export default function Storybook () {
   
   return (
     <Wrapper className='Storybook' visible={loadingComponent.isLoading}>
-      {loadingComponent.data && (
+      {loadingComponent.isLoading && (
         <ActionButtons
           buttons={[
             {

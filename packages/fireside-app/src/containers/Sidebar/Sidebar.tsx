@@ -63,6 +63,7 @@ const Wrapper = styled.div`
       text-decoration: none;
       color: black;
       cursor: pointer;
+      font-family: 'Open Sans', sans-serif;
       &:hover {background: lightgrey;}
     }
   }

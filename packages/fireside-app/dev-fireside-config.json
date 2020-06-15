@@ -3,19 +3,21 @@
     {
       "label": "MOBILE M",
       "key": "MOBILE_M",
+      "gap": 20,
       "breakpoint": 0,
       "initialyActive": true
     },{
       "label": "MOBILE L",
       "key": "MOBILE_L",
+      "gap": 20,
       "breakpoint": 500,
       "initialyActive": false
     },{
       "label": "LAPTOP",
       "key": "LAPTOP",
+      "gap": 20,
       "breakpoint": 800,
       "initialyActive": false
     }
-  ],
-  "gidGap": 20
+  ]
 }

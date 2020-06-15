@@ -4,6 +4,7 @@ type Config = {
   mediaSizes: {
     label: string,
     key: string,
+    gap: number,
     // icon: 
     //   | 'MOBILE_S' | 'MOBILE_M' | 'MOBILE_L' 
     //   | 'TABLET_S' | 'TABLET_M' | 'TABLET_L' 
@@ -12,7 +13,6 @@ type Config = {
     breakpoint: number,
     initialyActive: boolean,
   }[],
-  gridGap: number,
   widgets: never[],
   abFeature: boolean,
   allowBackground: boolean,
@@ -22,7 +22,6 @@ type Config = {
 let config:Config = {
   mediaSizes: [],
   widgets: [],
-  gridGap: 0,
   abFeature: false,
   allowBackground: true,
   allowStretch: true,

@@ -7,7 +7,7 @@ export const updateStory = (story?:t.Story) => {
   const target = story || emptyStory
   const defaultGrids = config.mediaSizes.reduce<any>((prev,next) => {
     prev[next.key] = {
-      gap: config.gridGap,
+      gap: next.gap,
       grid: [[]],
       widths: ['1fr'],
       heights: ['auto']

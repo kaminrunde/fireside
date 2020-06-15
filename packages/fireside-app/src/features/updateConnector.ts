@@ -47,9 +47,9 @@ addRule<
     // format grids
     let grids:Record<string,any> = {}
     for(let key in gridDict){
-      const {gridAreas, widths, heights} = gridDict[key]
+      const {gridAreas, widths, heights, gap} = gridDict[key]
       grids[key] = {
-        gap: 999999999,
+        gap: gap,
         grid: formatGrid(gridAreas, heights.length, widths.length),
         widths: widths,
         heights: heights

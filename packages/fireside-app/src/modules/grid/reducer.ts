@@ -3,6 +3,7 @@ import * as t from './types'
 import * as at from './const'
 import * as gridHelper from './utils/grid-helper'
 import {Action} from './actions'
+import config from 'config'
 
 export type State = Record<string,t.Grid>
 
@@ -16,10 +17,11 @@ export default produce((state:State, action:Action) => {
     case at.UPDATE_GRID: {
       const {mediaSize} = action.meta
       if(!state[mediaSize]){
-        state.mediaSize = {
+        state[mediaSize] = {
           gridAreas: [],
           widths: ['1fr'],
-          heights: ['auto']
+          heights: ['auto'],
+          gap: config.mediaSizes.find(m => m.key === mediaSize)?.gap || 0
         }
         break
       }

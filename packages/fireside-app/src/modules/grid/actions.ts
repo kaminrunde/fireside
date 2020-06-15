@@ -1,10 +1,6 @@
 import * as t from './types'
 import * as at from './const'
-
-// export const updateGridArea = (updatedArea:t.GridArea) => ({
-//   type: at.UPDATE_GRID_AREA,
-//   payload: updatedArea
-// })
+import config from 'config'
 
 export const updateGrid = (mediaSize:string, grid:t.GridArea[]) => ({
   type: at.UPDATE_GRID,
@@ -77,6 +73,7 @@ export const init = (grids:{
   for(let mediaSize in grids){
     const [gridAreas, components] = createGrid(grids[mediaSize].grid)
     action.payload[mediaSize] = {
+      gap: config.mediaSizes.find(m => m.key === mediaSize)?.gap || 0,
       gridAreas: gridAreas,
       widths: grids[mediaSize].widths,
       heights: grids[mediaSize].heights

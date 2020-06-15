@@ -49,8 +49,7 @@ addRule<
     for(let key in gridDict){
       const {gridAreas, widths, heights} = gridDict[key]
       grids[key] = {
-        enabled: true,
-        gap: 0,
+        gap: 999999999,
         grid: formatGrid(gridAreas, heights.length, widths.length),
         widths: widths,
         heights: heights
@@ -58,7 +57,6 @@ addRule<
     }
 
     let story = { componentsById, allComponents, grids, hash:'' }
-    console.log(JSON.stringify(story,null,2))
     const hash = createHash('md5').update(JSON.stringify(story)).digest('hex')
     story.hash = hash
 

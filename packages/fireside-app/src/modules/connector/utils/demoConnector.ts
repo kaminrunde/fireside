@@ -52,7 +52,7 @@ setTimeout(() => {
     "grids": {
       "MOBILE_M": {
         "enabled": true,
-        "gap": 0,
+        "gap": 20,
         "grid": [
           [
             "Banner-1",
@@ -77,7 +77,7 @@ setTimeout(() => {
       },
       "MOBILE_L": {
         "enabled": true,
-        "gap": 0,
+        "gap": 20,
         "grid": [
           [
             "Banner-1",

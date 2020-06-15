@@ -2,6 +2,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 import {useSidebar} from 'modules/ui'
 import {Link} from '@reach/router'
+import config from 'config'
 
 export default function Sidebar () {
   const sidebar = useSidebar()
@@ -14,18 +15,12 @@ export default function Sidebar () {
             <div className='icon'></div>
             <div className='label'>COMPONENTS</div>
           </Link>
-          <Link className='item' to='/grid/MOBILE_M'>
-            <div className='icon'></div>
-            <div className='label'>MOBILE M</div>
-          </Link>
-          <Link className='item' to='/grid/MOBILE_L'>
-            <div className='icon'></div>
-            <div className='label'>MOBILE L</div>
-          </Link>
-          <Link className='item' to='/grid/LAPTOP'>
-            <div className='icon'></div>
-            <div className='label'>LAPTOP</div>
-          </Link>
+          {config.mediaSizes.map(ms => (
+            <Link key={ms.key} className='item' to={`/grid/${ms.key}`}>
+              <div className='icon'></div>
+              <div className='label'>{ms.label}</div>
+            </Link>
+          ))}
           <Link className='item' to='SETTINGS'>
             <div className='icon'></div>
             <div className='label'>SETTINGS</div>

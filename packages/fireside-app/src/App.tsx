@@ -8,6 +8,7 @@ import Storybook from 'widgets/Storybook'
 
 import IndexRoute from 'routes/Index'
 import GridRoute from 'routes/Grid'
+import Settings from 'routes/Settings'
 
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
       <Router history={history}>
         <IndexRoute path='/'/>
         <GridRoute path='/grid/:mediaSize' mediaSize=''/>
+        <Settings path='/settings' />
       </Router>
       <Snackbar/>
       <Storybook/>

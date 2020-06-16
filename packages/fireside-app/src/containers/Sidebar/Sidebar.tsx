@@ -23,7 +23,7 @@ export default function Sidebar () {
               <div className='label'>{ms.label}</div>
             </Link>
           ))}
-          <Link className='item' to='SETTINGS'>
+          <Link className='item' to='/settings'>
             <div className='icon'></div>
             <div className='label'>SETTINGS</div>
           </Link>

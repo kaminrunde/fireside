@@ -15,6 +15,6 @@ export {default} from './reducer'
 // export {default as useComponents} from './hooks/useComponents'
 
 declare global {
-  interface RootState { config: State }
-  interface ModuleActions { config: a.Action }
+  interface RootState { settings: State }
+  interface ModuleActions { settings: a.Action }
 }

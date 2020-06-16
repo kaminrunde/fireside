@@ -2,7 +2,7 @@ import {addRule} from 'redux-ruleset'
 import * as connector from 'modules/connector'
 import * as grid from 'modules/grid'
 import * as components from 'modules/components'
-import * as config from 'modules/config'
+import * as settings from 'modules/settings'
 
 addRule<connector.a.UpdateStory>({
   id: 'feature/UPDATE_STORES',
@@ -13,7 +13,7 @@ addRule<connector.a.UpdateStory>({
     const updates = [
       grid.a.init(grids),
       components.a.init(componentsById, allComponents),
-      config.a.init(Object.entries(grids).reduce<Record<string,boolean>>((p, n) => {
+      settings.a.init(Object.entries(grids).reduce<Record<string,boolean>>((p, n) => {
         const [key,val] = n
         p[key] = val.enabled || false
         return p

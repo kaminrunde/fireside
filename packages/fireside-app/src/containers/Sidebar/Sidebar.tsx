@@ -3,9 +3,11 @@ import styled from 'styled-components'
 import {useSidebar} from 'modules/ui'
 import {Link} from '@reach/router'
 import config from 'config'
+import {useActiveMediaSizes} from 'modules/settings'
 
 export default function Sidebar () {
   const sidebar = useSidebar()
+  const ms = useActiveMediaSizes()
   return (
     <Wrapper className='Sidebar'>
       {sidebar.isOpen && [
@@ -15,7 +17,7 @@ export default function Sidebar () {
             <div className='icon'></div>
             <div className='label'>COMPONENTS</div>
           </Link>
-          {config.mediaSizes.map(ms => (
+          {config.mediaSizes.filter(row => ms.data[row.key]).map(ms => (
             <Link key={ms.key} className='item' to={`/grid/${ms.key}`}>
               <div className='icon'></div>
               <div className='label'>{ms.label}</div>

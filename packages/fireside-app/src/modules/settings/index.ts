@@ -11,7 +11,7 @@ export {a,c}
 export {default} from './reducer'
 
 
-// export {default as useLoadingComponent} from './hooks/useLoadingComponent'
+export {default as useActiveMediaSizes} from './hooks/useActiveMediaSizes'
 // export {default as useComponents} from './hooks/useComponents'
 
 declare global {

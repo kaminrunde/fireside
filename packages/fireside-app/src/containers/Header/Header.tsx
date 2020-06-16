@@ -6,6 +6,7 @@ import {MdClose, MdFullscreen} from 'react-icons/md'
 import {useSidebar} from 'modules/ui'
 import toggleFullscreen from 'toggle-fullscreen'
 
+
 export default function Header () {
   const sidebar = useSidebar()
   const handleFullscreenClick = () => {

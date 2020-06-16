@@ -25,6 +25,7 @@
     "babel-preset-react-app": "^9.1.2",
     "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
+    "contentful-ui-extensions-sdk": "^3.15.0",
     "crypto-browserify": "^3.12.0",
     "css-loader": "3.4.2",
     "d": "^1.0.1",

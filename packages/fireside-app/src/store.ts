@@ -9,6 +9,7 @@ import snackbarReducer from 'modules/snackbar'
 import connectorReducer from 'modules/connector'
 import componentsReducer from 'modules/components'
 import uiReducer from 'modules/ui'
+import configReducer from 'modules/config'
 
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({ 
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   connector: connectorReducer,
   router: routerReducer,
   components: componentsReducer,
-  ui: uiReducer
+  ui: uiReducer,
+  config: configReducer
 })
 
 

@@ -11,6 +11,7 @@ export type Story = {
   allComponents: string[],
   grids: {
     [size:string]: {
+      enabled: boolean,
       gap: number,
       grid: string[][],
       widths: string[],

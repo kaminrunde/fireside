@@ -6,17 +6,21 @@ import useConnect, {Config} from 'hooks/useConnect'
 
 type Result = {
   data: ReturnType<typeof s.getComponents>,
+  removeComponent: typeof a.remove
 }
 
 type Props = {}
 
-const config:Config<Props,Result,State,never> = {
+const config:Config<Props,Result,State,object> = {
   moduleKey: 'components',
   name: 'components/useComponents',
   createCacheKey: () => '',
   mapState: state => ({
     data: s.getComponents(state),
   }),
+  mapDispatch: {
+    removeComponent: a.remove
+  }
 }
 
 /**
@@ -24,6 +28,6 @@ const config:Config<Props,Result,State,never> = {
  */
 export default function useLoadingComponent ():Result {
   const props = {}
-  const hook = useConnect<Props,Result,State,never>(props, config)
+  const hook = useConnect<Props,Result,State,object>(props, config)
   return hook
 }

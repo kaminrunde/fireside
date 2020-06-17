@@ -18,7 +18,7 @@ initContentfulExtension((_sdk:any) => {
   sdk = _sdk
   try {
     // @ts-ignore
-    sdk.window.updateHeight(900)
+    sdk.window.updateHeight(600)
   }
   catch(e){}
 

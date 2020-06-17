@@ -21,8 +21,6 @@ initContentfulExtension((_sdk:any) => {
     sdk.window.updateHeight(600)
   }
   catch(e){}
-
-  // connector.onChange(sdk.field.getValue())
   sdk.field.onValueChanged(globalCb)
 })
 

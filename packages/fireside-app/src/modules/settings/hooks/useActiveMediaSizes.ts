@@ -1,11 +1,10 @@
 import * as a from '../actions'
-// import * as t from '../types'
-// import * as s from '../selectors'
+import * as s from '../selectors'
 import {State} from '../reducer'
 import useConnect, {Config} from 'hooks/useConnect'
 
 type Result = {
-  data: Record<string,boolean>,
+  data: ReturnType<typeof s.getActiveMediaSizes>,
   toggleSize: typeof a.toggleMediaSize
 }
 
@@ -16,7 +15,7 @@ const config:Config<Props,Result,State,object> = {
   name: 'settings/useActiveMediaSizes',
   createCacheKey: () => '',
   mapState: state => ({
-    data: state.activeMediaSizes,
+    data: s.getActiveMediaSizes(state),
   }),
   mapDispatch: {
     toggleSize: a.toggleMediaSize

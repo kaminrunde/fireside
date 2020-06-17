@@ -3,6 +3,7 @@ import {addRule} from 'redux-ruleset'
 import * as connector from 'modules/connector'
 import * as grid from 'modules/grid'
 import * as components from 'modules/components'
+import * as settings from 'modules/settings'
 
 /**
  * When the user changes the story
@@ -16,6 +17,7 @@ addRule<
 | grid.a.SetHeight
 | grid.a.SetWidth
 | grid.a.UpdateGrid
+| settings.a.ToggleMediaSize
 >({
   id: 'feature/UPDATE_CONNECTOR',
   target: [
@@ -25,7 +27,8 @@ addRule<
     grid.c.REMOVE_WIDTH,
     grid.c.SET_HEIGHT,
     grid.c.SET_WIDTH,
-    grid.c.UPDATE_GRID
+    grid.c.UPDATE_GRID,
+    settings.c.TOGGLE_MEDIA_SIZE
   ],
   output: connector.c.UPDATE_CONNECTOR,
   delay: 500,
@@ -35,6 +38,7 @@ addRule<
     const prevStory = connector.s.getStory(state.connector)
     const componentList = components.s.getComponents(state.components)
     const gridDict = grid.s.getGridDict(state.grid)
+    const activeMs = settings.s.getActiveMediaSizes(state.settings)
 
     // format components
     let allComponents:string[] = []
@@ -49,6 +53,7 @@ addRule<
     for(let key in gridDict){
       const {gridAreas, widths, heights, gap} = gridDict[key]
       grids[key] = {
+        enabled: activeMs[key] || false,
         gap: gap,
         grid: formatGrid(gridAreas, heights.length, widths.length),
         widths: widths,

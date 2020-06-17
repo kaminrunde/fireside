@@ -1,13 +1,14 @@
+import * as t from './types'
 import * as at from './const'
 import {Action} from './actions'
 import config from 'config'
 
 export type State = {
-  activeMediaSizes: Record<string, boolean>,
+  activeMediaSizes: t.MS,
 }
 
 export const defaultState:State = {
-  activeMediaSizes: config.mediaSizes.reduce<Record<string, boolean>>((p,n) => {
+  activeMediaSizes: config.mediaSizes.reduce<t.MS>((p,n) => {
     p[n.key] = n.initialyActive || false
     return p
   }, {})

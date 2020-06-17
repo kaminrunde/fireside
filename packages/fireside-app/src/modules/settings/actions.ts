@@ -1,6 +1,7 @@
+import * as t from './types'
 import * as at from './const'
 
-export const init = (ms:Record<string,boolean>) => ({
+export const init = (ms:t.MS) => ({
   type: at.INIT,
   payload: {
     activeMediaSizes: ms

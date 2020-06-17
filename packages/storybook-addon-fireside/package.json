@@ -10,7 +10,7 @@
     "build": "tsc --declaration",
     "build:types": "tsc --emitDeclarationOnly"
   },
-  "author": "",
+  "author": "Manuel Jung",
   "license": "MIT",
   "dependencies": {
     "@storybook/addons": "^5.3.17",

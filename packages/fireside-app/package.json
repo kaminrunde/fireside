@@ -1,7 +1,7 @@
 {
   "name": "fireside-app",
   "version": "1.0.0",
-  "private": true,
+  "author": "Manuel Jung",
   "dependencies": {
     "@babel/core": "7.9.0",
     "@reach/router": "^1.3.3",

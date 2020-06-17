@@ -1,4 +1,5 @@
 {
+  "defaultStory": "cms/base/Button",
   "mediaSizes": [
     {
       "label": "MOBILE M",

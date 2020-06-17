@@ -2,6 +2,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 import * as components from 'modules/components'
 import ActionButtons from 'widgets/ActionButtons'
+import config from 'config'
 
 const url = "http://localhost:6006/"
 
@@ -36,7 +37,7 @@ export default function Storybook () {
     ref.current?.contentWindow?.postMessage({
       type: 'fireside-hydrate-component',
       component: loadingComponent.data,
-      defaultStory: 'any'
+      defaultStory: config.defaultStory
     }, '*')
   }, [setupFinished, loadingComponent.isLoading, loadingComponent.data])
   

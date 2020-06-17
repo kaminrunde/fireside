@@ -1,6 +1,7 @@
 
 
 type Config = {
+  defaultStory:string,
   mediaSizes: {
     label: string,
     key: string,
@@ -20,6 +21,7 @@ type Config = {
 }
 
 let config:Config = {
+  defaultStory: '',
   mediaSizes: [],
   widgets: [],
   abFeature: false,

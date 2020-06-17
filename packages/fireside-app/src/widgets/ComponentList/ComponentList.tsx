@@ -16,7 +16,7 @@ export default function ComponentList () {
           </div>
           <div className='name'>{c.name}</div>
           <div className='btn-update'>
-            <button onClick={() => loading.load(c.id)}>update</button>
+            <button onClick={() => loading.load(c.props.gridArea)}>update</button>
           </div>
           <div className='btn-remove'>
             <button>remove</button>

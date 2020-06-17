@@ -1,4 +1,4 @@
-import {createHash} from 'crypto-browserify'
+import {createHash, randomBytes} from 'crypto-browserify'
 import * as React from 'react'
 import addons from '@storybook/addons'
 import * as t from './types'
@@ -64,6 +64,9 @@ addons.register('addons:storyboard-bridge', api => {
 })
 
 function sendToFiresideApp (component:any) {
+  if(!component.id){
+    component.id = randomBytes(12).toString('hex')
+  }
   const hash = createHash('md5').update(JSON.stringify(component)).digest('hex')
   window.parent.postMessage({
     type: 'fireside-update-component',

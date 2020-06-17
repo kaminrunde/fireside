@@ -58,6 +58,9 @@ addons_1.default.register('addons:storyboard-bridge', api => {
     // }), 2000)
 });
 function sendToFiresideApp(component) {
+    if (!component.id) {
+        component.id = crypto_browserify_1.randomBytes(12).toString('hex');
+    }
     const hash = crypto_browserify_1.createHash('md5').update(JSON.stringify(component)).digest('hex');
     window.parent.postMessage({
         type: 'fireside-update-component',

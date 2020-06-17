@@ -8,7 +8,6 @@ b.registerWidgetSelector(Component.name, props => {
 })
 
 storiesOf('cms/base/Banner', module)
-  .add('Custom', (ctx) => <div>Hello World</div>)
   .add('Builder', b.create('Banner', Component, [
     b.string('gridArea', 'Grid-Area', 'Banner'),
     b.string('label', 'Label', 'foo',{

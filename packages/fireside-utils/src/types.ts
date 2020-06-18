@@ -1,6 +1,10 @@
 
 export type Config = {
-  resolveController: (name:string) => Controller | Promise<Controller>
+  resolveController: (name:string) => Controller | Promise<Controller>,
+  nodes: string[] | {
+    name:string,
+    key:string
+  }[]
 }
 
 export type Controller = {

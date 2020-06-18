@@ -1,4 +1,5 @@
 {
+  "storybookUrl": "http://localhost:6006/",
   "defaultStory": "cms/base/Banner",
   "mediaSizes": [
     {

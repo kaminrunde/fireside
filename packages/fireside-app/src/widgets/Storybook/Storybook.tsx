@@ -4,8 +4,6 @@ import * as components from 'modules/components'
 import ActionButtons from 'widgets/ActionButtons'
 import config from 'config'
 
-const url = "http://localhost:6006/"
-
 export default function Storybook () {
   const ref = React.useRef<null|HTMLIFrameElement>(null)
   const [component, setComponent] = React.useState<components.t.Component|null>(null)
@@ -61,7 +59,7 @@ export default function Storybook () {
           ]}
         />
       )}
-      <iframe ref={ref} src={url} />
+      <iframe ref={ref} src={config.storybookUrl} />
     </Wrapper>
   )
 }

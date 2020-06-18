@@ -1,6 +1,13 @@
 
 export type Config = {
+  resolveController: (name:string) => Controller | Promise<Controller>
+}
 
+export type Controller = {
+  versionUpdate?: Function,
+  createContext?: Function,
+  preprocessProps?: Function,
+  createStoryEvents?: Function
 }
 
 /**
@@ -42,6 +49,7 @@ export type RawStory = {
  */
 export type FormattedStory = {
   hash: string,
+  events: any[],
   componentsById: Record<string, Component>,
   allComponents: string[],
   grids: Record<string, string>

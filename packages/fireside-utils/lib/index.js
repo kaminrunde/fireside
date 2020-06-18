@@ -13,4 +13,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./types"), exports);
 var preprocessStory_1 = require("./preprocessStory");
 Object.defineProperty(exports, "preprocessStory", { enumerable: true, get: function () { return preprocessStory_1.default; } });
+var preprocessComponent_1 = require("./preprocessComponent");
+Object.defineProperty(exports, "preprocessComponent", { enumerable: true, get: function () { return preprocessComponent_1.default; } });
+var formatGrid_1 = require("./formatGrid");
+Object.defineProperty(exports, "formatGrid", { enumerable: true, get: function () { return formatGrid_1.default; } });
 //# sourceMappingURL=index.js.map

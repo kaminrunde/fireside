@@ -1,4 +1,12 @@
-export declare type Config = {};
+export declare type Config = {
+    resolveController: (name: string) => Controller | Promise<Controller>;
+};
+export declare type Controller = {
+    versionUpdate?: Function;
+    createContext?: Function;
+    preprocessProps?: Function;
+    createStoryEvents?: Function;
+};
 /**
  * Basic building block for stories
  */
@@ -35,6 +43,7 @@ export declare type RawStory = {
  */
 export declare type FormattedStory = {
     hash: string;
+    events: any[];
     componentsById: Record<string, Component>;
     allComponents: string[];
     grids: Record<string, string>;

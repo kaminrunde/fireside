@@ -52,13 +52,10 @@ function preprocessStory(story, config) {
                         events: []
                     };
                     return [4 /*yield*/, Promise.all(story.allComponents
-                            .map(function (name) { return [name, story.componentsById[name]]; })
-                            .map(function (_a) {
-                            var name = _a[0], c = _a[1];
-                            return preprocessComponent_1.default(name, c, {
-                                resolveController: config.resolveController
-                            });
-                        }))];
+                            .map(function (name) { return story.componentsById[name]; })
+                            .map(function (c) { return preprocessComponent_1.default(c, {
+                            resolveController: config.resolveController
+                        }); }))];
                 case 1:
                     formattedComponents = _a.sent();
                     formattedComponents.forEach(function (_a, i) {

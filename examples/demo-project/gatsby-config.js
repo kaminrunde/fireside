@@ -10,6 +10,20 @@ module.exports = {
     author: `@gatsbyjs`,
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-fireside`,
+      options: {
+        resolveController: name => {
+          try {
+            return require(`./src/widgets/${name}/request.ts`)
+          }
+          catch(e) {
+            return null
+          }
+        },
+        nodes: ['Test'],
+      },
+    },
     `gatsby-plugin-typescript`,
     `gatsby-plugin-react-helmet`,
     // {

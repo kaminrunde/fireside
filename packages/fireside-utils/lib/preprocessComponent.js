@@ -45,16 +45,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @param c Component
  * @param config Config
  */
-function preprocessComponent(name, c, config) {
+function preprocessComponent(c, config) {
     return __awaiter(this, void 0, void 0, function () {
         var controller, updated, storyEvents, _a, _b, _c, _d, _e;
         return __generator(this, function (_f) {
             switch (_f.label) {
-                case 0: return [4 /*yield*/, config.resolveController(name)];
+                case 0: return [4 /*yield*/, config.resolveController(c.name)];
                 case 1:
                     controller = _f.sent();
                     updated = Object.assign({}, c);
                     storyEvents = [];
+                    if (!controller)
+                        return [2 /*return*/, [c, storyEvents]];
                     if (controller.versionUpdate) {
                         updated.props = controller.versionUpdate(updated.props);
                     }

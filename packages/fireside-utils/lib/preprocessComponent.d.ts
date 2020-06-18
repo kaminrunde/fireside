@@ -11,5 +11,5 @@ declare type Config = {
  * @param c Component
  * @param config Config
  */
-export default function preprocessComponent(name: string, c: t.Component, config: Config): Promise<[t.Component, any[]]>;
+export default function preprocessComponent(c: t.Component, config: Config): Promise<[t.Component, any[]]>;
 export {};

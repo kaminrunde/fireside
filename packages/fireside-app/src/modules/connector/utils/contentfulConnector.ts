@@ -10,6 +10,7 @@ const connector:t.Connector = {
     globalCb = cb
   },
   setStory: story => {
+    console.log(story)
     sdk && sdk.field.setValue(story)
   }
 }

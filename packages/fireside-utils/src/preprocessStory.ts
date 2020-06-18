@@ -13,8 +13,8 @@ export default async function preprocessStory (story:t.RawStory, config:t.Config
 
   const formattedComponents = await Promise.all(
     story.allComponents
-      .map(name => [name, story.componentsById[name]] as [string, t.Component])
-      .map(([name,c]) => preprocessComponent(name, c, {
+      .map(name => story.componentsById[name])
+      .map(c => preprocessComponent(c, {
         resolveController: config.resolveController
       }))
   )

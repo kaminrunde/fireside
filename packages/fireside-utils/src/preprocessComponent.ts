@@ -14,13 +14,13 @@ type Config = {
  * @param config Config
  */
 export default async function preprocessComponent(
-  name:string,
   c:t.Component, 
   config:Config
 ):Promise<[t.Component, any[]]> {
-  const controller = await config.resolveController(name)
+  const controller = await config.resolveController(c.name)
   let updated = Object.assign({},c)
   let storyEvents = []
+  if(!controller) return [c, storyEvents]
 
   if(controller.versionUpdate){
     updated.props = controller.versionUpdate(updated.props)

@@ -6,7 +6,9 @@
   },
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "lerna run build",
-    "watch": "lerna run watch"
+    "watch": "lerna run watch",
+    "start:example": "lerna run start --scope='demo-project'",
+    "start:app": "lerna run start --scope='fireside-app'",
+    "start:storybook": "lerna run storybook --scope='demo-project'"
   }
 }

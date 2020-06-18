@@ -20,6 +20,8 @@ export type Controller = {
 export type Component = {
   name: string,
   id: string,
+  createdAt: number,
+  updatedAt: number,
   props: {
     gridArea: string
   }
@@ -42,6 +44,7 @@ export type RawGrid = {
  * Can be transformed further with fireside-utils
  */
 export type RawStory = {
+  version: '1.0.0',
   hash: string,
   componentsById: Record<string, Component>,
   allComponents: string[],

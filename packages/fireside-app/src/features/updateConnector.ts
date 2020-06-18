@@ -60,8 +60,8 @@ addRule<
         heights: heights
       }
     }
-
-    let story = { componentsById, allComponents, grids, hash:'' }
+    const VERSION:'1.0.0' = '1.0.0'
+    let story = { version: VERSION, componentsById, allComponents, grids, hash:'' }
     const hash = createHash('md5').update(JSON.stringify(story)).digest('hex')
     story.hash = hash
 

@@ -17,6 +17,8 @@ export declare type Controller = {
 export declare type Component = {
     name: string;
     id: string;
+    createdAt: number;
+    updatedAt: number;
     props: {
         gridArea: string;
     };
@@ -37,6 +39,7 @@ export declare type RawGrid = {
  * Can be transformed further with fireside-utils
  */
 export declare type RawStory = {
+    version: '1.0.0';
     hash: string;
     componentsById: Record<string, Component>;
     allComponents: string[];

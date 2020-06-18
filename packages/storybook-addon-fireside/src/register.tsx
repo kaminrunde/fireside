@@ -58,7 +58,15 @@ function sendToFiresideApp (component:any) {
   if(!component.id){
     component.id = randomBytes(12).toString('hex')
   }
-  const hash = createHash('md5').update(JSON.stringify(component)).digest('hex')
+  if(!component.createdAt){
+    component.createdAt = Date.now()
+  }
+  component.updatedAt = Date.now()
+  const hash = createHash('md5').update(JSON.stringify({
+    props: component.props,
+    name: component.name,
+    id: component.id
+  })).digest('hex')
   window.parent.postMessage({
     type: 'fireside-update-component',
     component: { ...component, hash }

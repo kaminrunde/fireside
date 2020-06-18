@@ -1,7 +1,3 @@
-export type Component = {
-  name: string,
-  id: string,
-  props: {
-    gridArea: string
-  }
-}
+import {Component as UComponent} from 'fireside-utils'
+
+export type Component = UComponent

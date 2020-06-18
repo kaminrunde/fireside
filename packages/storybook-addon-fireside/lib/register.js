@@ -53,7 +53,15 @@ function sendToFiresideApp(component) {
     if (!component.id) {
         component.id = crypto_browserify_1.randomBytes(12).toString('hex');
     }
-    const hash = crypto_browserify_1.createHash('md5').update(JSON.stringify(component)).digest('hex');
+    if (!component.createdAt) {
+        component.createdAt = Date.now();
+    }
+    component.updatedAt = Date.now();
+    const hash = crypto_browserify_1.createHash('md5').update(JSON.stringify({
+        props: component.props,
+        name: component.name,
+        id: component.id
+    })).digest('hex');
     window.parent.postMessage({
         type: 'fireside-update-component',
         component: Object.assign(Object.assign({}, component), { hash })

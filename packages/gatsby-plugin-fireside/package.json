@@ -4,14 +4,7 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "npm run build -- --watch",
-    "type-check": "tsc --noEmit",
-    "build": "tsc --declaration",
-    "build:types": "tsc --emitDeclarationOnly"
-  },
-  "dependencies": {
-    "typescript": "^3.8.3"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Manuel Jung",
   "license": "MIT"

@@ -1,16 +1,14 @@
-import * as t from './types'
-import preprocessStory from './preprocessStory'
-
-export const createSchemaCustomization = ({actions}:any, config:t.Config) => {
+exports.createSchemaCustomization = ({actions}, config) => {
   const { createFieldExtension, createTypes } = actions
 
   createFieldExtension({
     name: "Story",
     extend: () => ({
-      resolve: async (node:t.GatsbyNode) => {
+      resolve: async node => {
         if(!node.story) return null
         try {
-          return await preprocessStory(node.story)
+          return null
+          // return await preprocessStory(node.story)
         } catch (e) {
           throw new Error(e.stack)
         }

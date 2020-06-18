@@ -1,2 +1,2 @@
 import * as t from './types';
-export default function preprocess(story: t.RawStory): t.RawStory;
+export default function preprocessStory(story: t.RawStory, config: t.Config): t.FormattedStory;

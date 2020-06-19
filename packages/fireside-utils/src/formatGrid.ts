@@ -26,13 +26,13 @@ export default function formatGrid (grid:t.RawGrid, config:Config) {
   }))
   for(let name in gridAreasRaw){
     const c = gridAreasRaw[name]
-    gridAreas[name] = `${c[0][0]} / ${c[0][1]} / ${c[1][0]} / ${c[1][1]}`
+    gridAreas[name] = `${c[0][0]}/${c[0][1]}/${c[1][0]}/${c[1][1]}`
   }
 
   let result = 
-    `grid-template-columns: ${grid.widths.join(' ')};` +
-    `grid-template-rows: ${grid.heights.join(' ')};` +
-    `grid-gap: ${grid.gap}px;`
+    `grid-template-columns:${grid.widths.join(' ')};` +
+    `grid-template-rows:${grid.heights.join(' ')};` +
+    `grid-gap:${grid.gap}px;`
 
   if (unusedIds.length) {
     result += '> ' + unusedIds.map(s => `.${s}`).join(',') + '{display:none;}'
@@ -40,7 +40,7 @@ export default function formatGrid (grid:t.RawGrid, config:Config) {
 
   for(let name of usedIds){
     result += 
-      `> .${name}{` +
+      `>.${name}{` +
         `grid-area: ${gridAreas[name]};` +
         `display: flex;` +
       `}`

@@ -28,18 +28,18 @@ function formatGrid(grid, config) {
     }); });
     for (var name_2 in gridAreasRaw) {
         var c = gridAreasRaw[name_2];
-        gridAreas[name_2] = c[0][0] + " / " + c[0][1] + " / " + c[1][0] + " / " + c[1][1];
+        gridAreas[name_2] = c[0][0] + "/" + c[0][1] + "/" + c[1][0] + "/" + c[1][1];
     }
-    var result = "grid-template-columns: " + grid.widths.join(' ') + ";" +
-        ("grid-template-rows: " + grid.heights.join(' ') + ";") +
-        ("grid-gap: " + grid.gap + "px;");
+    var result = "grid-template-columns:" + grid.widths.join(' ') + ";" +
+        ("grid-template-rows:" + grid.heights.join(' ') + ";") +
+        ("grid-gap:" + grid.gap + "px;");
     if (unusedIds.length) {
         result += '> ' + unusedIds.map(function (s) { return "." + s; }).join(',') + '{display:none;}';
     }
     for (var _e = 0, usedIds_1 = usedIds; _e < usedIds_1.length; _e++) {
         var name_3 = usedIds_1[_e];
         result +=
-            "> ." + name_3 + "{" +
+            ">." + name_3 + "{" +
                 ("grid-area: " + gridAreas[name_3] + ";") +
                 "display: flex;" +
                 "}";

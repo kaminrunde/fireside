@@ -29,6 +29,7 @@ export declare type Component = {
  */
 export declare type RawGrid = {
     enabled: boolean;
+    ms: number;
     gap: number;
     grid: string[][];
     widths: string[];
@@ -53,5 +54,5 @@ export declare type FormattedStory = {
     events: any[];
     componentsById: Record<string, Component>;
     allComponents: string[];
-    grids: Record<string, RawGrid>;
+    grids: Record<string, string>;
 };

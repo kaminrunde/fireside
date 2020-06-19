@@ -67,7 +67,9 @@ function preprocessStory(story, config) {
                     Object.entries(story.grids)
                         .map(function (_a) {
                         var key = _a[0], val = _a[1];
-                        return [key, formatGrid_1.default(val, {})];
+                        return [key, formatGrid_1.default(val, {
+                                allIds: story.allComponents,
+                            })];
                     })
                         .forEach(function (_a) {
                         var key = _a[0], val = _a[1];

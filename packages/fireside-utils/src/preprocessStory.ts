@@ -25,7 +25,9 @@ export default async function preprocessStory (story:t.RawStory, config:t.Config
   })
 
   Object.entries(story.grids)
-    .map(([key, val]) => [key, formatGrid(val, {})] as [string, ReturnType<typeof formatGrid>])
+    .map(([key, val]) => [key, formatGrid(val, {
+      allIds: story.allComponents,
+    })] as [string, ReturnType<typeof formatGrid>])
     .forEach(([key, val]) => {
       formatted.grids[key] = val
     })

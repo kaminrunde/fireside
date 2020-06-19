@@ -33,6 +33,7 @@ export type Component = {
  */
 export type RawGrid = {
   enabled: boolean,
+  ms: number,
   gap: number,
   grid: string[][],
   widths: string[],
@@ -59,5 +60,5 @@ export type FormattedStory = {
   events: any[],
   componentsById: Record<string, Component>,
   allComponents: string[],
-  grids: Record<string, RawGrid>
+  grids: Record<string, string>
 }

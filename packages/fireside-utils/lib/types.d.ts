@@ -53,5 +53,5 @@ export declare type FormattedStory = {
     events: any[];
     componentsById: Record<string, Component>;
     allComponents: string[];
-    grids: Record<string, string>;
+    grids: Record<string, RawGrid>;
 };

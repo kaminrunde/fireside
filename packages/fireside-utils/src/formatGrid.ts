@@ -41,8 +41,8 @@ export default function formatGrid (grid:t.RawGrid, config:Config) {
   for(let name of usedIds){
     result += 
       `>.${name}{` +
-        `grid-area: ${gridAreas[name]};` +
-        `display: flex;` +
+        `grid-area:${gridAreas[name]};` +
+        `display:flex;` +
       `}`
   }
 

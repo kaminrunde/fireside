@@ -40,8 +40,8 @@ function formatGrid(grid, config) {
         var name_3 = usedIds_1[_e];
         result +=
             ">." + name_3 + "{" +
-                ("grid-area: " + gridAreas[name_3] + ";") +
-                "display: flex;" +
+                ("grid-area:" + gridAreas[name_3] + ";") +
+                "display:flex;" +
                 "}";
     }
     return result;

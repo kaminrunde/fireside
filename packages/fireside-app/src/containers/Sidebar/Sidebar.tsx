@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import {useSidebar} from 'modules/ui'
-import {Link} from '@reach/router'
+import Link from 'components/Link'
 import config from 'config'
 import {useActiveMediaSizes} from 'modules/settings'
 

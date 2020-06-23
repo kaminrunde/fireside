@@ -1,5 +1,6 @@
 {
-  "name": "root",
+  "name": "@kaminrunde/fireside-wrapper",
+  "version": "1.0.0",
   "private": true,
   "devDependencies": {
     "lerna": "^3.20.2"
@@ -9,6 +10,13 @@
     "watch": "lerna run watch",
     "start:example": "lerna run start --scope='demo-project'",
     "start:app": "lerna run start --scope='fireside-app'",
-    "start:storybook": "lerna run storybook --scope='demo-project'"
+    "start:storybook": "lerna run storybook --scope='demo-project'",
+    "prepare-release": "git checkout master && git pull --rebase origin master && lerna updated",
+    "release": "yarn run prepare-release && lerna publish --exact",
+    "prerelease": "lerna publish prerelease"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaminrunde/firescout.git"
   }
 }

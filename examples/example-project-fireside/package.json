@@ -1,15 +1,13 @@
 {
-  "name": "demo-project",
+  "name": "@kaminrunde/example-project-fireside",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
   "version": "1.0.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "fireside-app": "^1.0.0",
-    "fireside-utils": "^1.0.0",
+    "@kaminrunde/fireside-app": "^1.0.0",
+    "@kaminrunde/fireside-utils": "^1.0.0",
     "gatsby": "^2.19.7",
     "gatsby-image": "^2.2.39",
-    "gatsby-plugin-fireside": "^1.0.0",
+    "@kaminrunde/gatsby-plugin-fireside": "^1.0.0",
     "gatsby-plugin-manifest": "^2.2.39",
     "gatsby-plugin-offline": "^3.0.32",
     "gatsby-plugin-react-helmet": "^3.1.21",
@@ -23,7 +21,7 @@
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1",
     "storybook": "^5.3.12",
-    "storybook-addon-fireside": "^1.0.0",
+    "@kaminrunde/storybook-addon-fireside": "^1.0.0",
     "styled-components": "^5.0.1"
   },
   "devDependencies": {

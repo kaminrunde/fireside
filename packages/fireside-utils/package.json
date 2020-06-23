@@ -1,5 +1,5 @@
 {
-  "name": "fireside-utils",
+  "name": "@kaminrunde/fireside-utils",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
@@ -14,5 +14,12 @@
   "license": "MIT",
   "dependencies": {
     "typescript": "^3.9.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaminrunde/fireside.git"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

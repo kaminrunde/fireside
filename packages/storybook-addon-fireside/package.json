@@ -1,5 +1,5 @@
 {
-  "name": "storybook-addon-fireside",
+  "name": "@kaminrunde/storybook-addon-fireside",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
@@ -23,5 +23,12 @@
   },
   "devDependencies": {
     "@types/node": "^12.12.31"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaminrunde/fireside.git"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

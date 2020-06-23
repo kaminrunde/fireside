@@ -1,5 +1,5 @@
 {
-  "name": "fireside-app",
+  "name": "@kaminrunde/fireside-app",
   "version": "1.0.0",
   "author": "Manuel Jung",
   "dependencies": {
@@ -40,7 +40,7 @@
     "eslint-plugin-react": "7.19.0",
     "eslint-plugin-react-hooks": "^1.6.1",
     "file-loader": "4.3.0",
-    "fireside-utils": "^1.0.0",
+    "@kaminrunde/fireside-utils": "^1.0.0",
     "fs-extra": "^8.1.0",
     "history": "^4.10.1",
     "html-webpack-plugin": "4.0.0-beta.11",
@@ -164,5 +164,12 @@
     "presets": [
       "react-app"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaminrunde/fireside.git"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-plugin-fireside",
+  "name": "@kaminrunde/gatsby-plugin-fireside",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
@@ -9,6 +9,13 @@
   "author": "Manuel Jung",
   "license": "MIT",
   "dependencies": {
-    "fireside-utils": "^1.0.0"
+    "@kaminrunde/fireside-utils": "^1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaminrunde/fireside.git"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

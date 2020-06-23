@@ -7,7 +7,8 @@ Usage:
 
 ```bash
 # bootstrap
-lerna bootstrap --force-local
+#lerna bootstrap --force-local gives STRANGE errors yarn install --mutex network:42424 --non-interactive...
+lerna link && lerna exec npm install
 ```
 
 Add `"private": true` to package's `package.json` for package to remain private.

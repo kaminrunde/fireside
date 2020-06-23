@@ -7,8 +7,9 @@ Usage:
 
 ```bash
 # bootstrap
-#lerna bootstrap --force-local gives STRANGE errors yarn install --mutex network:42424 --non-interactive...
-lerna link && lerna exec npm install
+# !!! NOTE comment out registry=... in .npmrc
+lerna bootstrap --force-local
+# !!! NOTE comment in registry=... in .npmrc
 ```
 
 Add `"private": true` to package's `package.json` for package to remain private.
@@ -41,3 +42,32 @@ npm login --registry=https://npm.pkg.github.com --scope=@kaminrunde
 Publishing a package using a local `.npmrc` file
 
 <https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages#publishing-a-package-using-a-local-npmrc-file>
+
+### manual prerelease `lerna publish prerelease`
+
+```bash
+❯ yarn run prerelease
+yarn run v1.22.4
+$ lerna publish prerelease
+lerna notice cli v3.20.2
+lerna info current version 1.0.0
+lerna info Assuming all packages changed
+
+Changes:
+ - @kaminrunde/example-project-fireside: 1.0.0 => 1.0.1-alpha.0 (private)
+ - @kaminrunde/fireside-app: 1.0.0 => 1.0.1-alpha.0
+ - @kaminrunde/fireside-utils: 1.0.0 => 1.0.1-alpha.0
+ - @kaminrunde/gatsby-plugin-fireside: 1.0.0 => 1.0.1-alpha.0
+ - @kaminrunde/storybook-addon-fireside: 1.0.0 => 1.0.1-alpha.0
+
+? Are you sure you want to publish these packages? Yes
+
+[...]
+
+Successfully published:
+ - @kaminrunde/fireside-app@1.0.1-alpha.0
+ - @kaminrunde/fireside-utils@1.0.1-alpha.0
+ - @kaminrunde/gatsby-plugin-fireside@1.0.1-alpha.0
+ - @kaminrunde/storybook-addon-fireside@1.0.1-alpha.0
+lerna success published 4 packages
+```

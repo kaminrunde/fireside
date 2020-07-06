@@ -15,7 +15,7 @@ type Config = {
     breakpoint: number,
     initialyActive: boolean,
   }[],
-  widgets: never[],
+  widgets: any[],
   abFeature: boolean,
   allowBackground: boolean,
   allowStretch: boolean,

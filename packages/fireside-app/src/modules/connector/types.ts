@@ -1,4 +1,4 @@
-import {RawStory} from 'fireside-utils'
+import {RawStory} from '@kaminrunde/fireside-utils'
 
 export type Story = RawStory
 

@@ -11,7 +11,7 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: `gatsby-plugin-fireside`,
+      resolve: `@kaminrunde/gatsby-plugin-fireside`,
       options: {
         resolveController: name => {
           try {

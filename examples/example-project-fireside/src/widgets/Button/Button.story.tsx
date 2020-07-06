@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Component from './Button'
 import { storiesOf } from '@storybook/react'
-import * as b from 'storybook-addon-fireside'
+import * as b from '@kaminrunde/storybook-addon-fireside'
 
 b.registerWidgetSelector(Component.name, props => {
   return {kind:'cms/base/Button',story: 'Builder'}

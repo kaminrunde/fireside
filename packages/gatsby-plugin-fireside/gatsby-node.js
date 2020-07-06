@@ -1,4 +1,4 @@
-var {preprocessStory} = require('fireside-utils')
+var {preprocessStory} = require('@kaminrunde/fireside-utils')
 
 exports.createSchemaCustomization = ({actions}, config) => {
   const { createFieldExtension, createTypes } = actions

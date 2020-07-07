@@ -17,6 +17,15 @@ exports.createSchemaCustomization = ({actions}, config) => {
     })
   })
 
+  createFieldExtension({
+    name: 'RawStory',
+    extend: () => ({
+      resolve: async source => {
+        return JSON.stringify(source.story)
+      }
+    })
+  })
+
   const nodes = config.nodes.map(node => {
     if(typeof node === 'string') return {
       name:node, 
@@ -29,6 +38,7 @@ exports.createSchemaCustomization = ({actions}, config) => {
     ${nodes.map(node => `
     type ${node.name} implements Node {
       ${node.key}: JSON @Story @dontInfer
+      Raw${node.key}: JSON @RawStory @dontInfer
     }
     `).join('\n')}
   `)

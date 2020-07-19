@@ -31,6 +31,13 @@ export const markdown = (
   options:t.MarkdownOptions={}
 ):t.SimpleKnob => ({ type: 'markdown', prop, label, value, options })
 
+export const bool = (
+  prop:string, 
+  label:string, 
+  value:boolean, 
+  options:t.BoolOptions={}
+):t.SimpleKnob => ({ type: 'bool', prop, label, value, options })
+
 
 export const create = (
   name: string,

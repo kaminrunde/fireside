@@ -11,13 +11,11 @@ export interface KnobOptions {
   tab?: string
 }
 
-export interface StringOptions extends KnobOptions {
-  foo?: string,
-  xyz?: boolean
-}
+export interface StringOptions extends KnobOptions {}
+export interface NumberOptions extends KnobOptions {}
 
 export interface SimpleKnob {
-  type: 'string' | 'constant',
+  type: 'string' | 'constant' | 'number',
   prop: string,
   label: string,
   value: any,

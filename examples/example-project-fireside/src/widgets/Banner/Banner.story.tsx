@@ -13,9 +13,9 @@ storiesOf('cms/base/Banner', module)
     b.string('label', 'Label', 'foo',{
       tab: 'TAB-1',
       hint: 'Hello World',
-      foo: 'bar'
     }),
     b.string('otherLabel', 'Other Label', 'foo',{
       tab: 'TAB-2'
     }),
+    b.number('number', 'Number', 2)
   ]))

@@ -6,14 +6,14 @@ type Props = {
   value: string,
   onChange: (value:string) => void,
   focus: boolean,
-  options: t.StringOptions,
+  options: t.NumberOptions,
 }
 
 export default function String (props:Props) {
   return (
     <Wrapper focus={props.focus}>
       <input 
-        type='text'
+        type='number'
         value={props.value} 
         onChange={e => props.onChange(e.target.value)}
       />

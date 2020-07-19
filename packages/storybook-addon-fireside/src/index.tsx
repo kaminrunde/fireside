@@ -17,6 +17,13 @@ export const constant = (
   options:t.KnobOptions={}
 ):t.SimpleKnob => ({ type: 'constant', prop, label, value, options })
 
+export const number = (
+  prop:string, 
+  label:string, 
+  value:number, 
+  options:t.NumberOptions={}
+):t.SimpleKnob => ({ type: 'number', prop, label, value, options })
+
 
 export const create = (
   name: string,

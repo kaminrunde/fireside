@@ -14,7 +14,7 @@ export default function Markdown (props:Props) {
   return (
     <Wrapper>
       <SimpleMDE
-        id="your-custom-id"
+        id="markdown"
         onChange={props.onChange}
         value={props.value}
         options={{}}

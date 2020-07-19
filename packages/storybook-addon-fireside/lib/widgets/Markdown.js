@@ -5,7 +5,7 @@ const styled_components_1 = require("styled-components");
 const react_simplemde_editor_1 = require("react-simplemde-editor");
 function Markdown(props) {
     return (React.createElement(Wrapper, null,
-        React.createElement(react_simplemde_editor_1.default, { id: "your-custom-id", onChange: props.onChange, value: props.value, options: {} })));
+        React.createElement(react_simplemde_editor_1.default, { id: "markdown", onChange: props.onChange, value: props.value, options: {} })));
 }
 exports.default = Markdown;
 const Wrapper = styled_components_1.default.div `

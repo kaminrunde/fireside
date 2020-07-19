@@ -24,6 +24,13 @@ export const number = (
   options:t.NumberOptions={}
 ):t.SimpleKnob => ({ type: 'number', prop, label, value, options })
 
+export const markdown = (
+  prop:string, 
+  label:string, 
+  value:string, 
+  options:t.MarkdownOptions={}
+):t.SimpleKnob => ({ type: 'markdown', prop, label, value, options })
+
 
 export const create = (
   name: string,

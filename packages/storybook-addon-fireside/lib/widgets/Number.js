@@ -4,7 +4,7 @@ const React = require("react");
 const styled_components_1 = require("styled-components");
 function String(props) {
     return (React.createElement(Wrapper, { focus: props.focus },
-        React.createElement("input", { type: 'number', value: props.value, onChange: e => props.onChange(e.target.value) })));
+        React.createElement("input", { type: 'number', value: props.value, onChange: e => props.onChange(parseInt(e.target.value)) })));
 }
 exports.default = String;
 const Wrapper = styled_components_1.default.div `

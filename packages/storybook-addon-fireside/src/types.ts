@@ -13,9 +13,10 @@ export interface KnobOptions {
 
 export interface StringOptions extends KnobOptions {}
 export interface NumberOptions extends KnobOptions {}
+export interface MarkdownOptions extends KnobOptions {}
 
 export interface SimpleKnob {
-  type: 'string' | 'constant' | 'number',
+  type: 'string' | 'constant' | 'number' | 'markdown',
   prop: string,
   label: string,
   value: any,

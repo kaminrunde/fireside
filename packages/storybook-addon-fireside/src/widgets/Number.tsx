@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import * as t from '../types'
 
 type Props = {
-  value: string,
-  onChange: (value:string) => void,
+  value: number,
+  onChange: (value:number) => void,
   focus: boolean,
   options: t.NumberOptions,
 }
@@ -15,7 +15,7 @@ export default function String (props:Props) {
       <input 
         type='number'
         value={props.value} 
-        onChange={e => props.onChange(e.target.value)}
+        onChange={e => props.onChange(parseInt(e.target.value))}
       />
     </Wrapper>
   )

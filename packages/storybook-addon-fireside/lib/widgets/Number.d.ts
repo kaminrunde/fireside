@@ -1,8 +1,8 @@
 /// <reference types="react" />
 import * as t from '../types';
 declare type Props = {
-    value: string;
-    onChange: (value: string) => void;
+    value: number;
+    onChange: (value: number) => void;
     focus: boolean;
     options: t.NumberOptions;
 };

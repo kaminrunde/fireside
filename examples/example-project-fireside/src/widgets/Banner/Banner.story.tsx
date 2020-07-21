@@ -11,7 +11,7 @@ storiesOf('cms/base/Banner', module)
   .add('Builder', b.create('Banner', Component, [
     b.string('gridArea', 'Grid-Area', 'Banner'),
     b.bool('selected', 'Selected', true),
-    b.string('label', 'Label', 'foo',{
+    b.string('foo', 'Label', 'foo',{
       tab: 'TAB-1',
       hint: 'Hello World',
     }),
@@ -19,5 +19,5 @@ storiesOf('cms/base/Banner', module)
       tab: 'TAB-2'
     }),
     b.number('number', 'Number', 2),
-    b.markdown('markdown', 'Markdown', 'Foo'),
+    b.markdown('label', 'Markdown', 'Foo'),
   ]))

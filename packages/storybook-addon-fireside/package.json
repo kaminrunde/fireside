@@ -22,6 +22,7 @@
     "react-simplemde-editor": "4.0.0",
     "react-sortable-hoc": "^1.11.0",
     "rich-markdown-editor": "^10.4.0",
+    "simplemde": "^1.11.2",
     "styled-components": "^5.0.1",
     "typescript": "^3.8.3"
   },

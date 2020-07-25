@@ -58,9 +58,9 @@ export interface MarkdownOptions extends KnobOptions {
   /** see https://www.npmjs.com/package/simplemde for more info */
   tabSize?: number,
   /** see https://www.npmjs.com/package/simplemde for more info */
-  toolbar?: boolean,
+  toolbar?: any,
   /** see https://www.npmjs.com/package/simplemde for more info */
-  toolbarTips?: boolean
+  toolbarTips?: any
 }
 
 export interface SimpleKnob {

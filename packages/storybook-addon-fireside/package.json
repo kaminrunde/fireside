@@ -15,10 +15,12 @@
   "dependencies": {
     "@storybook/addons": "^5.3.17",
     "@storybook/react": "^5.3.17",
+    "array-move": "^3.0.0",
     "crypto-browserify": "^3.12.0",
     "object-path": "^0.11.4",
     "react": "^16.13.1",
     "react-simplemde-editor": "4.0.0",
+    "react-sortable-hoc": "^1.11.0",
     "rich-markdown-editor": "^10.4.0",
     "styled-components": "^5.0.1",
     "typescript": "^3.8.3"

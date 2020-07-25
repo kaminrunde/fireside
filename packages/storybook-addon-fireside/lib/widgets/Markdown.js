@@ -11,6 +11,7 @@ exports.default = Markdown;
 const Wrapper = styled_components_1.default.div `
   border: 1px solid ${props => props.focus ? '#1DA7FD' : 'lightgrey'};
   border-radius: 3px;
-  padding-left: 5px;
+  padding: 5px;
+
 `;
 //# sourceMappingURL=Markdown.js.map

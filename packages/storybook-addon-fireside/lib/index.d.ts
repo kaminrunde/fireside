@@ -28,10 +28,10 @@ export declare const constant: (prop: string, label: string, value: any, options
  * manages number props.
  * @param {string} prop name of prop. can also be in nested form. eg: "obj.prop". for more information see docs of "object-path"
  * @param {string} label displayed in storybook as prop label. should be short and descriptive. If more information is needed use the options.hint property
- * @param {string} value default value
+ * @param {number} value default value
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
- * @yields {string}
+ * @yields {number}
  * @example k.number('size', 'Your Size', 4)
  */
 export declare const number: (prop: string, label: string, value: number, options?: t.NumberOptions) => t.SimpleKnob;
@@ -50,13 +50,24 @@ export declare const markdown: (prop: string, label: string, value: string, opti
  * manages boolean props
  * @param {string} prop name of prop. can also be in nested form. eg: "obj.prop". for more information see docs of "object-path"
  * @param {string} label displayed in storybook as prop label. should be short and descriptive. If more information is needed use the options.hint property
- * @param {string} value default value
+ * @param {boolean} value default value
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
- * @yields {string}
+ * @yields {boolean}
  * @example k.bool('isPrimary', 'Is Primary', true)
  */
 export declare const bool: (prop: string, label: string, value: boolean, options?: t.BoolOptions) => t.SimpleKnob;
+/**
+ * yields a sortable list of strings
+ * @param {string} prop name of prop. can also be in nested form. eg: "obj.prop". for more information see docs of "object-path"
+ * @param {string} label displayed in storybook as prop label. should be short and descriptive. If more information is needed use the options.hint property
+ * @param {string[]} value default value
+ * @param {string} options.hint the knob description
+ * @param {string} options.tab the tabname the knob will be displayed in storybook
+ * @yields {string[]}
+ * @example k.stringList('todos', 'List of Todos', ['buy coffee', 'star fireside on github'])
+ */
+export declare const stringList: (prop: string, label: string, value: string[], options?: t.StringListOptions) => t.SimpleKnob;
 export declare const create: (name: string, component: React.ElementType, simpleKnobs: t.SimpleKnob[], controller?: t.Controller) => any;
 export declare const registerWidgetSelector: (name: string, cb: (props: object) => {
     kind: string;

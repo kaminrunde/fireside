@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registerWidgetSelector = exports.create = exports.bool = exports.markdown = exports.number = exports.constant = exports.string = void 0;
+exports.registerWidgetSelector = exports.create = exports.stringList = exports.bool = exports.markdown = exports.number = exports.constant = exports.string = void 0;
 const React = require("react");
 const manager = require("./knob-manager");
 const WidgetWrapper_1 = require("./WidgetWrapper");
@@ -32,10 +32,10 @@ exports.constant = (prop, label, value, options = {}) => ({ type: 'constant', pr
  * manages number props.
  * @param {string} prop name of prop. can also be in nested form. eg: "obj.prop". for more information see docs of "object-path"
  * @param {string} label displayed in storybook as prop label. should be short and descriptive. If more information is needed use the options.hint property
- * @param {string} value default value
+ * @param {number} value default value
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
- * @yields {string}
+ * @yields {number}
  * @example k.number('size', 'Your Size', 4)
  */
 exports.number = (prop, label, value, options = {}) => ({ type: 'number', prop, label, value, options });
@@ -54,13 +54,24 @@ exports.markdown = (prop, label, value, options = {}) => ({ type: 'markdown', pr
  * manages boolean props
  * @param {string} prop name of prop. can also be in nested form. eg: "obj.prop". for more information see docs of "object-path"
  * @param {string} label displayed in storybook as prop label. should be short and descriptive. If more information is needed use the options.hint property
- * @param {string} value default value
+ * @param {boolean} value default value
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
- * @yields {string}
+ * @yields {boolean}
  * @example k.bool('isPrimary', 'Is Primary', true)
  */
 exports.bool = (prop, label, value, options = {}) => ({ type: 'bool', prop, label, value, options });
+/**
+ * yields a sortable list of strings
+ * @param {string} prop name of prop. can also be in nested form. eg: "obj.prop". for more information see docs of "object-path"
+ * @param {string} label displayed in storybook as prop label. should be short and descriptive. If more information is needed use the options.hint property
+ * @param {string[]} value default value
+ * @param {string} options.hint the knob description
+ * @param {string} options.tab the tabname the knob will be displayed in storybook
+ * @yields {string[]}
+ * @example k.stringList('todos', 'List of Todos', ['buy coffee', 'star fireside on github'])
+ */
+exports.stringList = (prop, label, value, options = {}) => ({ type: 'stringList', prop, label, value, options });
 exports.create = (name, component, simpleKnobs, controller = {}) => (context) => {
     const knobs = manager.getKnobs(context, simpleKnobs, controller, name);
     let props = manager.getProps(knobs);

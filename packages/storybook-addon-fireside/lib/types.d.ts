@@ -9,6 +9,8 @@ export interface KnobOptions {
 }
 export interface StringOptions extends KnobOptions {
 }
+export interface StringListOptions extends KnobOptions {
+}
 export interface NumberOptions extends KnobOptions {
 }
 export interface MarkdownOptions extends KnobOptions {
@@ -16,7 +18,7 @@ export interface MarkdownOptions extends KnobOptions {
 export interface BoolOptions extends KnobOptions {
 }
 export interface SimpleKnob {
-    type: 'string' | 'constant' | 'number' | 'markdown' | 'bool';
+    type: 'string' | 'constant' | 'number' | 'markdown' | 'bool' | 'stringList';
     prop: string;
     label: string;
     value: any;

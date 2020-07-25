@@ -8,10 +8,7 @@ function Markdown(props) {
     React.useEffect(() => {
         if (!ref)
             return;
-        const simplemde = new SimpleMDE({
-            element: ref.current,
-            hideIcons: ['preview', 'side-by-side', 'fullscreen', 'image']
-        });
+        const simplemde = new SimpleMDE(Object.assign(Object.assign({ hideIcons: ['preview', 'side-by-side', 'fullscreen', 'image'], spellChecker: false }, props.options), { element: ref.current }));
         simplemde.value(props.value);
         simplemde.codemirror.on("change", function () {
             props.onChange(simplemde.value());

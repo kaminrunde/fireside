@@ -16,8 +16,10 @@ export default function Markdown (props:Props) {
   React.useEffect(() => {
     if(!ref) return
     const simplemde = new SimpleMDE({ 
+      hideIcons: ['preview', 'side-by-side', 'fullscreen', 'image'],
+      spellChecker: false,
+      ...props.options,
       element: ref.current,
-      hideIcons: ['preview', 'side-by-side', 'fullscreen', 'image']
     })
     simplemde.value(props.value)
 

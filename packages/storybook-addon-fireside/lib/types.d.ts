@@ -4,7 +4,9 @@ export declare type StoryContext = {
     id: string;
 };
 export interface KnobOptions {
+    /** hint text is displayed below the label */
     hint?: string;
+    /** renders knob in seperate tab. Knobs with the same tab are grouped together. if not defined tab will default to "DEFAULT" */
     tab?: string;
 }
 export interface StringOptions extends KnobOptions {
@@ -13,9 +15,50 @@ export interface StringListOptions extends KnobOptions {
 }
 export interface NumberOptions extends KnobOptions {
 }
-export interface MarkdownOptions extends KnobOptions {
-}
 export interface BoolOptions extends KnobOptions {
+}
+export interface MarkdownOptions extends KnobOptions {
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    autofocus?: true;
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    blockStyles?: {
+        bold?: string;
+        italic?: string;
+    };
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    forceSync?: boolean;
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    indentWithTabs?: boolean;
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    insertTexts?: any;
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    lineWrapping?: boolean;
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    parsingConfig?: any;
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    placeholder?: string;
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    promptURLs?: boolean;
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    renderingConfig?: any;
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    shortcuts?: any;
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    showIcons?: string[];
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    spellChecker?: boolean;
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    hideIcons?: string[];
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    status?: boolean | string[] | any;
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    styleSelectedText?: boolean;
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    tabSize?: number;
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    toolbar?: boolean;
+    /** see https://www.npmjs.com/package/simplemde for more info */
+    toolbarTips?: boolean;
 }
 export interface SimpleKnob {
     type: 'string' | 'constant' | 'number' | 'markdown' | 'bool' | 'stringList';

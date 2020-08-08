@@ -47,14 +47,11 @@ export default function Storybook () {
             {
               label: 'Save',
               type: 'primary',
-              onClick: () => {
-                component && loadingComponent.add(component)
-                loadingComponent.unload()
-              }
+              onClick: () => loadingComponent.add(component)
             },{
-             label: 'Abort',
-             type: 'danger',
-             onClick: () => loadingComponent.unload()
+              label: 'Abort',
+              type: 'danger',
+              onClick: () => loadingComponent.unload()
            }
           ]}
         />

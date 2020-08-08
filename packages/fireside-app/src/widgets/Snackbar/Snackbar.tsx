@@ -22,7 +22,8 @@ const Wrapper = styled.div`
   position: absolute;
   left: 0;
   width: 100%;
-  max-width: 400px;
+  max-width: 800px;
+  width: 50vw;
   bottom: 0;
   z-index: 10;
 `
@@ -40,9 +41,14 @@ const Message = styled.div`
   padding: 10px;
   > h5 {
     margin: 0;
+    font-family: 'Bellota', cursive;
+    font-size: 18px;
+    margin-bottom: 8px;
   }
   > p {
     margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
   }
 `
 

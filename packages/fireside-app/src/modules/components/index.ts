@@ -1,5 +1,5 @@
 
-// import './rules'
+import './rules'
 
 import {State} from './reducer'
 import * as a from './actions'

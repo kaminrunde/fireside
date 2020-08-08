@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function formatGrid(grid, config) {
+    if (!grid.enabled)
+        return '';
     var idDict = {};
     for (var _i = 0, _a = grid.grid; _i < _a.length; _i++) {
         var row = _a[_i];

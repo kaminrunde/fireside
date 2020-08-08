@@ -5,6 +5,7 @@ type Config = {
 }
 
 export default function formatGrid (grid:t.RawGrid, config:Config) {
+  if(!grid.enabled) return ''
   const idDict:Record<string,string> = {}
   for(let row of grid.grid) for(let col of row) {
     idDict[col] = col

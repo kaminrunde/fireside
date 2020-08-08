@@ -71,6 +71,13 @@ export const sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
           "heights": [
             "auto"
           ]
+        },
+        "LAPTOP": {
+          "enabled": false,
+          "gap": 20,
+          "grid": [],
+          "widths": ["1fr"],
+          "heights": ["auto"]
         }
       },
       "hash": "48190e4a6b7fd309fd2903787771cbc6"

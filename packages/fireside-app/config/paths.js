@@ -3,7 +3,11 @@
 const path = require('path');
 const fs = require('fs');
 const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath');
-var firesideConfig = require(`${process.env.CWD}/fireside-config`)
+
+var firesideConfig = {}
+if(process.env.NODE_ENV === 'production') {
+  firesideConfig = require(`${process.env.CWD}/fireside-config`)
+}
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebook/create-react-app/issues/637

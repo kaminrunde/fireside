@@ -4,6 +4,7 @@ import Snackbar from 'widgets/Snackbar'
 import {history} from './store'
 import Header from 'containers/Header'
 import Sidebar from 'containers/Sidebar'
+import EnforceFullscreen from 'containers/EnforceFullscreen'
 import Storybook from 'widgets/Storybook'
 
 import IndexRoute from 'routes/Index'
@@ -14,6 +15,7 @@ import Settings from 'routes/Settings'
 export default function App() {
   return (
     <div className="App">
+      <EnforceFullscreen/>
       <Header/>
       <Sidebar/>
       <Router history={history}>

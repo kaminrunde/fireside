@@ -1,6 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import {useComponents, useLoadingComponent} from 'modules/components'
+import parseTimestamp from './utils/parseTimestamp'
 
 export default function ComponentList () {
   const components = useComponents()
@@ -11,8 +12,8 @@ export default function ComponentList () {
         <div className='row' key={c.props.gridArea}>
           <div className='gridName'>
             <div className='title'>{c.props.gridArea}</div>
-            <div className='last-updated'><b>last changed:</b> 3 days</div>
-            <div className='created'><b>created:</b> 04.06.2020 10:30</div>
+            <div className='last-updated'><b>changed:</b> {parseTimestamp(c.updatedAt)}</div>
+            <div className='created'><b>created:</b> {parseTimestamp(c.createdAt)}</div>
           </div>
           <div className='name'>{c.name}</div>
           <div className='btn-update'>

@@ -59,7 +59,9 @@ function sendToFiresideApp (component:any) {
     component.id = randomBytes(12).toString('hex')
   }
   if(!component.createdAt){
-    component.createdAt = Date.now()
+    const now = Date.now()
+    component.createdAt = now
+    component.updatedAt = now
   }
   component.updatedAt = Date.now()
   const hash = createHash('md5').update(JSON.stringify({

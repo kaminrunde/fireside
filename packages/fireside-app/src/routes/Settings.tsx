@@ -14,16 +14,17 @@ export default function Settings (props:Props) {
     <Wrapper className='Settings'>
       <div className='row ms'>
         <h3>Active Media-Sizes</h3>
-        {Object.entries(ms.data).map(([name,active]) => (
+        {Object.entries(ms.data).map(([name,active], i) => (
           <div className='toggle' key={name}>
             <div className='label'>{name}</div>
             <div className='value'>
               <Toggle
                 checked={active}
-                onChange={e => ms.toggleSize(name)} />
+                onChange={e => i!==0 && ms.toggleSize(name)} />
             </div>
           </div>
         ))}
+        <hr/>
       </div>
     </Wrapper>
   )
@@ -31,4 +32,19 @@ export default function Settings (props:Props) {
 
 const Wrapper = styled.div`
   padding: 20px;
+
+  > .row {
+    > h3 {
+      font-family: 'Open Sans', sans-serif;
+    }
+  }
+
+  .toggle {
+    display: flex;
+    > .label {
+      min-width: 150px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: bold;
+    }
+  }
 `

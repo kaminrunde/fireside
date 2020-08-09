@@ -7,6 +7,7 @@ type Config = {
     label: string,
     key: string,
     gap: number,
+    icon: 'MOBILE' | 'TABLET' | 'LAPTOP' | 'DESKTOP' | 'DESKTOP_L',
     // icon: 
     //   | 'MOBILE_S' | 'MOBILE_M' | 'MOBILE_L' 
     //   | 'TABLET_S' | 'TABLET_M' | 'TABLET_L' 

@@ -3,20 +3,23 @@
   "defaultStory": "cms/base/Banner",
   "mediaSizes": [
     {
-      "label": "MOBILE M",
-      "key": "MOBILE_M",
+      "label": "mobile",
+      "key": "MOBILE",
+      "icon": "MOBILE",
       "gap": 20,
       "breakpoint": 0,
       "initialyActive": true
     },{
-      "label": "MOBILE L",
-      "key": "MOBILE_L",
+      "label": "tablet",
+      "key": "TABLET",
+      "icon": "TABLET",
       "gap": 20,
       "breakpoint": 500,
       "initialyActive": false
     },{
-      "label": "LAPTOP L",
-      "key": "LAPTOP_L",
+      "label": "laptop",
+      "key": "LAPTOP",
+      "icon": "LAPTOP",
       "gap": 20,
       "breakpoint": 800,
       "initialyActive": false

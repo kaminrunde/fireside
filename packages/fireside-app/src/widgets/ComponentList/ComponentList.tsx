@@ -45,7 +45,7 @@ const Wrapper = styled.div`
         font-size: 20px;
         line-height: 26px;
         font-weight: bold;
-        font-family: 'Bellota', cursive;
+        font-family: 'Open Sans', sans-serif;
       }
 
       > .last-updated, .created {

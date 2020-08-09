@@ -41,7 +41,7 @@ const Message = styled.div`
   padding: 10px;
   > h5 {
     margin: 0;
-    font-family: 'Bellota', cursive;
+    font-family: 'Open Sans', sans-serif;
     font-size: 18px;
     margin-bottom: 8px;
   }

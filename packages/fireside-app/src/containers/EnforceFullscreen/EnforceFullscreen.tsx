@@ -12,12 +12,13 @@ export default function EnforceFullscreen () {
   const reject = () => setRejected(true)
 
   if(full || rejected) return null
-  return (
-    <Wrapper>
-      <button className='primary' onClick={handleFullscreen}>Open Story Fullscreen</button>
-      <button className='secondary' onClick={reject}>open without fullscreen</button>
-    </Wrapper>
-  )
+  return null
+  // return (
+  //   <Wrapper>
+  //     <button className='primary' onClick={handleFullscreen}>Open Story Fullscreen</button>
+  //     <button className='secondary' onClick={reject}>open without fullscreen</button>
+  //   </Wrapper>
+  // )
 }
 
 const Wrapper = styled.div`

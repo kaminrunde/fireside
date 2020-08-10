@@ -8,6 +8,7 @@ import GridLayout from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 import {FiPlus,FiMinus,FiSettings} from 'react-icons/fi'
+import {FaArrowsAltH} from 'react-icons/fa'
 
 const GRID_MARGIN = 5
 const ROW_HEIGHT = 40
@@ -81,6 +82,13 @@ export default function Grid (props:Props) {
                 value={height} 
                 onChange={e => grid.setHeight(i, e.target.value)} 
               />
+              <div className='context'>
+                {/* <button><FaArrowsAltH/></button> */}
+                <button><FiSettings/></button>
+              </div>
+              <div className='badges'>
+                {/* <div><FaArrowsAltH/></div> */}
+              </div>
             </div>
           ))}
         </div>
@@ -100,7 +108,14 @@ export default function Grid (props:Props) {
                   key={item.i}
                   active={active === item.i} 
                   onClick={handleItemClick(item.i)}>
-                    {item.i}
+                    <span>{item.i}</span>
+                    <div className='context'>
+                      <button><FaArrowsAltH/></button>
+                      <button><FiSettings/></button>
+                    </div>
+                    <div className='badges'>
+                      {/* <div><FaArrowsAltH/></div> */}
+                    </div>
                 </Item>
               ))}
           </GridLayout>
@@ -161,6 +176,7 @@ const Wrapper = styled.div`
         font-size: 15px;
         background: none;
         border: none;
+        cursor: pointer;
         border-left: 1px solid lightgrey;
         padding-top: 3px;
         &:first-child { border-left: none;}
@@ -180,6 +196,7 @@ const Wrapper = styled.div`
         border: none;
         background: whitesmoke;
         text-align: center;
+        font-family: 'Open Sans', sans-serif;
         &:focus {
           background: white;
         }
@@ -197,6 +214,7 @@ const Wrapper = styled.div`
         height: ${ROW_HEIGHT}px;
         line-height: ${ROW_HEIGHT}px;
         text-align: center;
+        position: relative;
         > input {
           display: block;
           width: 100%;
@@ -205,8 +223,59 @@ const Wrapper = styled.div`
           border: none;
           background: whitesmoke;
           text-align: center;
+          font-family: 'Open Sans', sans-serif;
           &:focus {
             background: white;
+          }
+        }
+        > .context {
+          box-sizing: border-box;
+          border: 1px solid lightgrey;
+          border-radius: 8px;
+          display: none;
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          margin-left: 100%;
+          background: white;
+
+          > button {
+            flex: 1;
+            font-size: 15px;
+            background: none;
+            border: none;
+            padding: 0 15px;
+            cursor: pointer;
+            border-left: 1px solid lightgrey;
+            padding-top: 3px;
+            &:first-child { border-left: none;}
+          }
+        }
+
+        > .badges {
+          position: absolute;
+          right: -12px;
+          top: -5px;
+          > div {
+            border: 1px solid grey;
+            background: white;
+            border-radius: 20px;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            > svg { font-size: 12px;}
+          }
+        }
+
+        &:hover {
+          > .context {
+            display: flex;
+          }
+          > .badges {
+            display: none;
           }
         }
       }
@@ -219,6 +288,8 @@ const Wrapper = styled.div`
 
   > .buffer {
     position: absolute;
+    background: whitesmoke;
+    box-shadow: 0px -3px 5px 1px rgba(0,0,0,0.19);
     left: 0;
     right: 0;
     bottom: 0;
@@ -226,7 +297,7 @@ const Wrapper = styled.div`
     margin-top: 50px;
     display: flex;
     flex-wrap: wrap;
-    border-top: 2px solid grey;
+    border-top: 1px solid lightgrey;
   }
 `
 
@@ -234,14 +305,66 @@ const Item = styled.div`
   background: lightgrey;
   line-height: ${ROW_HEIGHT}px;
   height: ${ROW_HEIGHT}px;
+  text-align: center;
   padding: 0 10px;
   cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
 
   border-left: 8px solid transparent;
 
   ${(props:any) => props.active && `
     border-left: 8px solid #795548;
   `}
+
+  > .context {
+    box-sizing: border-box;
+    border: 1px solid lightgrey;
+    border-radius: 8px;
+    display: none;
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: white;
+    height: 40px;
+
+    > button {
+      flex: 1;
+      font-size: 15px;
+      background: none;
+      border: none;
+      padding: 0 15px;
+      cursor: pointer;
+      border-left: 1px solid lightgrey;
+      padding-top: 3px;
+      &:first-child { border-left: none;}
+    }
+  }
+
+  > .badges {
+    position: absolute;
+    left: 0px;
+    top: -10px;
+    > div {
+      border: 1px solid grey;
+      background: white;
+      border-radius: 25px;
+      width: 25px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      > svg { font-size: 17px;}
+    }
+  }
+
+  &:hover {
+    > .context {
+      display: flex;
+    }
+    > .badges {
+      display: none;
+    }
+  }
 `
 
 const BufferComponent = styled.div`
@@ -253,6 +376,7 @@ const BufferComponent = styled.div`
   cursor: pointer;
   margin: 3px;
   height: ${ROW_HEIGHT}px;
+  font-family: 'Open Sans', sans-serif;
 
   border-left: 8px solid transparent;
 

@@ -56,3 +56,19 @@ const Wrapper = styled.div`
     }
   }
 `
+
+// const plugin = ctx => ({
+//   name: 'foo',
+//   settings: {
+//     title: 'A-B Test',
+//     createRow: props => <div/>
+//   },
+//   gridConfig: {
+//     name: 'Foo',
+//     createRow: props => <div/>
+//   },
+//   gridRowConfig: {
+//     name: 'A-B Test',
+//     createRow: props => <div/>
+//   }
+// })

@@ -17,4 +17,6 @@ var preprocessComponent_1 = require("./preprocessComponent");
 Object.defineProperty(exports, "preprocessComponent", { enumerable: true, get: function () { return preprocessComponent_1.default; } });
 var formatGrid_1 = require("./formatGrid");
 Object.defineProperty(exports, "formatGrid", { enumerable: true, get: function () { return formatGrid_1.default; } });
+var createController_1 = require("./createController");
+Object.defineProperty(exports, "createController", { enumerable: true, get: function () { return createController_1.default; } });
 //# sourceMappingURL=index.js.map

@@ -1,8 +1,5 @@
 import * as t from './types'
 
-type Config = {
-  resolveController: (name:string) => t.Controller | Promise<t.Controller>
-}
 
 /**
  * Updates a component by defined controller
@@ -15,7 +12,7 @@ type Config = {
  */
 export default async function preprocessComponent(
   c:t.Component, 
-  config:Config
+  config:t.Config
 ):Promise<[t.Component, any[]]> {
   const controller = await config.resolveController(c.name)
   let updated = Object.assign({},c)

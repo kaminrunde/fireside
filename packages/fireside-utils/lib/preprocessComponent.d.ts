@@ -1,7 +1,4 @@
 import * as t from './types';
-declare type Config = {
-    resolveController: (name: string) => t.Controller | Promise<t.Controller>;
-};
 /**
  * Updates a component by defined controller
  * - versionUpdate hook is called
@@ -11,5 +8,4 @@ declare type Config = {
  * @param c Component
  * @param config Config
  */
-export default function preprocessComponent(c: t.Component, config: Config): Promise<[t.Component, any[]]>;
-export {};
+export default function preprocessComponent(c: t.Component, config: t.Config): Promise<[t.Component, any[]]>;

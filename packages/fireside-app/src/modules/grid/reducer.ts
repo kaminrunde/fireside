@@ -34,11 +34,21 @@ export default produce((state:State, action:Action) => {
     }
     case at.ADD_WIDTH: {
       const {mediaSize} = action.meta
+      if(!state[mediaSize]){
+        state[mediaSize] = {
+          gridAreas: [],
+          widths: ['1fr'],
+          heights: ['auto'],
+          gap: config.mediaSizes.find(m => m.key === mediaSize)?.gap || 0
+        }
+      }
       state[mediaSize].widths.push(action.payload)
       break
     }
     case at.REMOVE_WIDTH: {
       const {mediaSize} = action.meta
+      if(!state[mediaSize]) break
+      if(state[mediaSize].widths.length === 1) break
       state[mediaSize].widths.pop()
       break
     }

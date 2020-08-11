@@ -6,10 +6,11 @@ import useConnect, {Config} from 'hooks/useConnect'
 
 type Result = {
   isLoading: ReturnType<typeof s.isLoadingComponent>,
-  data: ReturnType<typeof s.getLoadedComponent>,
+  data: ReturnType<typeof s.getLoadedComponent> | null,
   load: typeof a.load,
   unload: typeof a.unload,
-  add: typeof a.add
+  add: typeof a.add,
+  update: typeof a.updateComponent
 }
 
 type Props = {}
@@ -25,7 +26,8 @@ const config:Config<Props,Result,State,object> = {
   mapDispatch: {
     load: a.load,
     unload: a.unload,
-    add: a.add
+    add: a.add,
+    update: a.updateComponent
   },
 }
 

@@ -7,8 +7,8 @@ export default function Snackbar () {
 
   return (
     <Wrapper className='Snackbar'>
-      {messages.data.map(msg => (
-        <Message type={msg.type}>
+      {messages.data.map((msg,i) => (
+        <Message key={i} type={msg.type}>
           <h5>{msg.title}</h5>
           <p>{msg.content}</p>
 

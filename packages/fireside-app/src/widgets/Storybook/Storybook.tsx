@@ -15,7 +15,7 @@ export default function Storybook () {
       if(typeof e.data !== 'object' || !e.data.type) return
       switch(e.data.type){
         case "fireside-update-component": {
-          setComponent({...e.data.component, fullWidth: false})
+          setComponent({...e.data.component, fullWidth: loadingComponent.data?.fullWidth || false})
           break
         }
         case "fireside-init": {
@@ -47,7 +47,9 @@ export default function Storybook () {
             {
               label: 'Save',
               type: 'primary',
-              onClick: () => loadingComponent.add(component)
+              onClick: () => loadingComponent.data 
+              ? loadingComponent.update(loadingComponent.data.props.gridArea, component)
+              : loadingComponent.add(component)
             },{
               label: 'Abort',
               type: 'danger',

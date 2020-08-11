@@ -1,11 +1,17 @@
 import {FaArrowsAltH} from 'react-icons/fa'
+import createPlugin from './createPlugin'
 
-export default ctx => ({
-  name: 'full-width-components',
+export default createPlugin<boolean>(ctx => ({
+  name: 'full-width-component',
   Badge: FaArrowsAltH,
   componentContext: {
-    // BadgeSvg: (props) => props.
-    
+    defaultValue: false,
+    key: 'fullWidth',
+    hasBadge: active => active,
+    icon: {
+      isActive: active => active,
+      onClick: active => ctx.setState(!active)
+    },
   }
-})
+}))
 

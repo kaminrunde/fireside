@@ -65,7 +65,7 @@ function getErrorCode (
   const components = $components.s.getComponents(state.components)
   for(let component of components) {
     if(component.props.gridArea === action.payload.props.gridArea){
-      return 'DUBLICATE_GRID_AREA'
+      if(component.props.gridArea !== prevId) return 'DUBLICATE_GRID_AREA'
     }
   }
   return 'OK'

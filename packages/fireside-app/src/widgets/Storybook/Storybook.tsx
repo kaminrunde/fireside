@@ -26,7 +26,7 @@ export default function Storybook () {
     }
     window.addEventListener('message', listener)
     return () => window.removeEventListener('message', listener)
-  },[])
+  },[loadingComponent.data])
 
   React.useEffect(() => {
     if(!setupFinished) return

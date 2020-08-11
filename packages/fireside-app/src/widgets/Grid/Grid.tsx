@@ -9,6 +9,7 @@ import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 import {FiPlus,FiMinus,FiSettings} from 'react-icons/fi'
 import {FaArrowsAltH} from 'react-icons/fa'
+import GridItem from './GridItem'
 
 const GRID_MARGIN = 5
 const ROW_HEIGHT = 40
@@ -26,6 +27,7 @@ export default function Grid (props:Props) {
   const [draggingName, setDraggingName] = React.useState('')
   const [active, setActive] = React.useState<null|string>(null)
   const [actionButtons, setActionButtons] = React.useState<t.ActionButton[]>([])
+  // const plugins = useComponentPlugins()
 
   const handleItemClick = (id:string) => () => {
     if(active === id) setActive(null)
@@ -51,6 +53,18 @@ export default function Grid (props:Props) {
     ])
     return () => setActionButtons([])
   }, [active, loadingComponent.load])
+
+  // set propper z-index
+  function calcZIndex () {
+    setTimeout(() => {
+      const list = Array.from(document.querySelectorAll('.react-grid-item'))
+      list.forEach((row:any) => {
+        if(!row.style) return
+        const yMatch = row.style.transform.match(/, (.*)px\)/)
+        if(yMatch) row.style.zIndex = yMatch[1]
+      })
+    }, 50)
+  }
 
   return (
     <Wrapper className='Grid'>
@@ -84,6 +98,7 @@ export default function Grid (props:Props) {
               />
               <div className='context'>
                 {/* <button><FaArrowsAltH/></button> */}
+                <button>Hello World</button>
                 <button><FiSettings/></button>
               </div>
               <div className='badges'>
@@ -98,25 +113,22 @@ export default function Grid (props:Props) {
             cols={grid.data.widths.length} 
             rowHeight={ROW_HEIGHT}
             droppingItem={{i:'insert', w:1, h:1}}
-            onLayoutChange={(layout:any) => grid.updateGrid(layout.filter((e:any) => e.i !== 'insert'))}
+            onLayoutChange={(layout:any) => {
+              grid.updateGrid(layout.filter((e:any) => e.i !== 'insert'))
+              calcZIndex()
+            }}
             margin={[GRID_MARGIN,GRID_MARGIN]}
             isDroppable
             onDrop={(target:any) => grid.addFromBuffer({...target, i:draggingName, static:true})}
             width={gridWidth.data}>
               {grid.data.gridAreas.map(item => (
-                <Item 
-                  key={item.i}
-                  active={active === item.i} 
-                  onClick={handleItemClick(item.i)}>
-                    <span>{item.i}</span>
-                    <div className='context'>
-                      <button><FaArrowsAltH/></button>
-                      <button><FiSettings/></button>
-                    </div>
-                    <div className='badges'>
-                      {/* <div><FaArrowsAltH/></div> */}
-                    </div>
-                </Item>
+                <div key={item.i}>
+                  <GridItem 
+                    rowHeight={ROW_HEIGHT}
+                    active={active === item.i} 
+                    item={item}
+                    onClick={handleItemClick(item.i)}/>
+                </div>
               ))}
           </GridLayout>
         </div>
@@ -239,16 +251,18 @@ const Wrapper = styled.div`
           bottom: 0;
           margin-left: 100%;
           background: white;
+          z-index: 999;
 
           > button {
-            flex: 1;
-            font-size: 15px;
+            width: max-content;
+            font-size: 12px;
             background: none;
             border: none;
             padding: 0 15px;
             cursor: pointer;
             border-left: 1px solid lightgrey;
             padding-top: 3px;
+            > svg {font-size: 15px;}
             &:first-child { border-left: none;}
           }
         }
@@ -298,72 +312,6 @@ const Wrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
     border-top: 1px solid lightgrey;
-  }
-`
-
-const Item = styled.div`
-  background: lightgrey;
-  line-height: ${ROW_HEIGHT}px;
-  height: ${ROW_HEIGHT}px;
-  text-align: center;
-  padding: 0 10px;
-  cursor: pointer;
-  font-family: 'Open Sans', sans-serif;
-
-  border-left: 8px solid transparent;
-
-  ${(props:any) => props.active && `
-    border-left: 8px solid #795548;
-  `}
-
-  > .context {
-    box-sizing: border-box;
-    border: 1px solid lightgrey;
-    border-radius: 8px;
-    display: none;
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: white;
-    height: 40px;
-
-    > button {
-      flex: 1;
-      font-size: 15px;
-      background: none;
-      border: none;
-      padding: 0 15px;
-      cursor: pointer;
-      border-left: 1px solid lightgrey;
-      padding-top: 3px;
-      &:first-child { border-left: none;}
-    }
-  }
-
-  > .badges {
-    position: absolute;
-    left: 0px;
-    top: -10px;
-    > div {
-      border: 1px solid grey;
-      background: white;
-      border-radius: 25px;
-      width: 25px;
-      height: 25px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      > svg { font-size: 17px;}
-    }
-  }
-
-  &:hover {
-    > .context {
-      display: flex;
-    }
-    > .badges {
-      display: none;
-    }
   }
 `
 

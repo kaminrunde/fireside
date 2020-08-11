@@ -1,18 +1,25 @@
+import * as React from 'react'
 
-type Ctx<State> = {
+export type PluginCtx<State> = {
   setState: (state:State) => void
 }
 
-export default function createPlugin<State>(plugin:(ctx:Ctx<State>) => {
+export type Plugin<State> = (ctx:PluginCtx<State>) => {
   name: string,
-  Badge: any,
-  componentContext?: {
+  Badge: React.ElementType,
+  extendComponent?: {
     defaultValue: State,
     key: string,
     hasBadge: (state:State) => boolean,
     icon?: {
       isActive: (state:State) => boolean,
       onClick: (state:State) => void
-    }
+    },
+    // settings?: {
+    //   title: string,
+    //   Component: React.ElementType
+    // }
   }
-}){ return plugin }
+}
+
+export default function createPlugin<State>(plugin:Plugin<State>){ return plugin }

@@ -46,6 +46,15 @@ export default function reducer (state:State=defaultState, action:Action):State 
       for(let id of allIds) byId[id] = state.byId[id]
       return { ...state, allIds, byId}
     }
+    case at.UPDATE_COMPONENT: {
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+        [action.meta.componentId]: action.payload
+        }
+      }
+    }
     default: return state
   }
 }

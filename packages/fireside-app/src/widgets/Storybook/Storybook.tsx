@@ -15,7 +15,7 @@ export default function Storybook () {
       if(typeof e.data !== 'object' || !e.data.type) return
       switch(e.data.type){
         case "fireside-update-component": {
-          setComponent(e.data.component)
+          setComponent({...e.data.component, fullWidth: false})
           break
         }
         case "fireside-init": {
@@ -63,10 +63,15 @@ export default function Storybook () {
 
 const Wrapper = styled.div`
   position: absolute;
+  z-index: 99999999;
   top: 60px;
   left:0;
   right:0;
   bottom:0;
   visibility: ${(props:any) => props.visible ? 'visible' : 'hidden'};
-  > iframe {width: 100%; height:100%;border: none;}
+  > iframe {
+    width: 100%; 
+    height:100%;
+    border: none;
+  }
 `

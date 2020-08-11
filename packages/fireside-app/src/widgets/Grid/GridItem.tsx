@@ -1,25 +1,37 @@
-import * as React from 'react'
-import styled from 'styled-components'
-import * as $grid from 'modules/grid'
-import {FiSettings} from 'react-icons/fi'
-import {FaArrowsAltH} from 'react-icons/fa'
+import * as React from "react";
+import styled from "styled-components";
+import * as $grid from "modules/grid";
+import { FiSettings } from "react-icons/fi";
+import { FaArrowsAltH } from "react-icons/fa";
+import { useComponent } from "modules/components";
 
 type Props = {
-  rowHeight: number,
-  active: boolean,
-  onClick: () => void,
-  item: $grid.t.GridArea
-}
+  rowHeight: number;
+  active: boolean;
+  onClick: () => void;
+  item: $grid.t.GridArea;
+};
 
-export default function GridItem (props:Props) {
+export default function GridItem(props: Props) {
+  const component = useComponent(props.item.i);
+
+  const toggleFullWidth = (e:Event) => {
+    e.preventDefault()
+    e.stopPropagation()
+    component.update({
+      ...component.data,
+      fullWidth: !component.data.fullWidth,
+    });
+  };
   return (
-    <Wrapper 
+    <Wrapper
       rowHeight={props.rowHeight}
       active={props.active}
-      onClick={props.onClick}>
-        <span>{props.item.i}</span>
-        <div className='context'>
-          {/* {componentPlugins.icons.map(row => (
+      onClick={props.onClick}
+    >
+      <span>{props.item.i}</span>
+      <div className="context">
+        {/* {componentPlugins.icons.map(row => (
             <button 
               key={row.name} 
               active={row.icon.isActive(row.icon.state)}
@@ -27,30 +39,38 @@ export default function GridItem (props:Props) {
               {row.Badge}
             </button>
           ))} */}
-          {/* <button><FaArrowsAltH/></button> */}
-          <button>Hello World</button>
-          <button><FiSettings/></button>
-        </div>
-        <div className='badges'>
-          <div>Hello World</div>
-          <div><FaArrowsAltH/></div>
-        </div>
+        <CtxButton onClick={toggleFullWidth} active={component.data.fullWidth}>
+          <FaArrowsAltH />
+        </CtxButton>
+        <CtxButton>
+          <FiSettings />
+        </CtxButton>
+      </div>
+      <div className="badges">
+        {component.data.fullWidth && (
+          <div>
+            <FaArrowsAltH />
+          </div>
+        )}
+      </div>
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.div`
   background: lightgrey;
-  line-height: ${p => p.rowHeight}px;
-  height: ${p => p.rowHeight}px;
+  line-height: ${(p) => p.rowHeight}px;
+  height: ${(p) => p.rowHeight}px;
   text-align: center;
   padding: 0 10px;
   cursor: pointer;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 
   border-left: 8px solid transparent;
 
-  ${(props:any) => props.active && `
+  ${(props: any) =>
+    props.active &&
+    `
     border-left: 8px solid #795548;
   `}
 
@@ -64,18 +84,6 @@ const Wrapper = styled.div`
     left: 0;
     background: white;
     height: 40px;
-
-    > button {
-      width: max-content;
-      font-size: 15px;
-      background: none;
-      border: none;
-      padding: 0 15px;
-      cursor: pointer;
-      border-left: 1px solid lightgrey;
-      padding-top: 3px;
-      &:first-child { border-left: none;}
-    }
   }
 
   > .badges {
@@ -94,7 +102,9 @@ const Wrapper = styled.div`
       align-items: center;
       justify-content: center;
       font-size: 9px;
-      > svg { font-size: 17px;}
+      > svg {
+        font-size: 17px;
+      }
     }
   }
 
@@ -106,4 +116,19 @@ const Wrapper = styled.div`
       display: none;
     }
   }
-`
+`;
+
+const CtxButton = styled.button`
+  width: max-content;
+  font-size: 15px;
+  background: ${(props) => (props.active ? "#4782B4" : "none")};
+  color: ${(props) => (props.active ? "white" : "black")};
+  border: none;
+  padding: 0 15px;
+  cursor: pointer;
+  border-left: 1px solid lightgrey;
+  padding-top: 3px;
+  &:first-child {
+    border-left: none;
+  }
+`;

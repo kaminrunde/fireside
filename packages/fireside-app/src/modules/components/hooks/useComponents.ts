@@ -26,7 +26,7 @@ const config:Config<Props,Result,State,object> = {
 /**
  * list of all available components
  */
-export default function useLoadingComponent ():Result {
+export default function useComponents ():Result {
   const props = {}
   const hook = useConnect<Props,Result,State,object>(props, config)
   return hook

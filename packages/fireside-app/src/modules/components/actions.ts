@@ -32,6 +32,15 @@ export const load = (componentId?:string) => ({
 })
 
 /**
+ * overwrite full commponent
+ */
+export const updateComponent = (componentId:string, component:t.Component) => ({
+  type: at.UPDATE_COMPONENT,
+  meta: {componentId},
+  payload: component
+})
+
+/**
  * closer storybook
  */
 export const unload = () => ({
@@ -43,6 +52,7 @@ export type Add = ReturnType<typeof add>
 export type Remove = ReturnType<typeof remove>
 export type Load = ReturnType<typeof load>
 export type Unload = ReturnType<typeof unload>
+export type UpdateComponet = ReturnType<typeof updateComponent>
 
 export type Action =
 | Init
@@ -50,3 +60,4 @@ export type Action =
 | Remove
 | Load
 | Unload
+| UpdateComponet

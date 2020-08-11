@@ -13,3 +13,5 @@ export const getComponents = createSelector(
   (state:State) => state.byId,
   (allIds, byId) => allIds.map(id => byId[id])
 )
+
+export const getComponent = (state:State, id:string) => state.byId[id]

@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   max-width: 800px;
   width: 50vw;
   bottom: 0;
-  z-index: 10;
+  z-index: 99999999999;
 `
 
 const Message = styled.div`

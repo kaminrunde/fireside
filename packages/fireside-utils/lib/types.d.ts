@@ -82,6 +82,7 @@ export declare type Controller<ComponentConfig, Context> = {
 export declare type Component = {
     name: string;
     id: string;
+    fullWidth: boolean;
     createdAt: number;
     updatedAt: number;
     props: {

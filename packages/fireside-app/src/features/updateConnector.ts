@@ -12,6 +12,7 @@ import * as settings from 'modules/settings'
 addRule<
 | components.a.Add
 | components.a.Remove
+| components.a.UpdateComponet
 | grid.a.AddWidth
 | grid.a.RemoveWidth
 | grid.a.SetHeight
@@ -23,6 +24,7 @@ addRule<
   target: [
     components.c.ADD,
     components.c.REMOVE,
+    components.c.UPDATE_COMPONENT,
     grid.c.ADD_WIDTH,
     grid.c.REMOVE_WIDTH,
     grid.c.SET_HEIGHT,

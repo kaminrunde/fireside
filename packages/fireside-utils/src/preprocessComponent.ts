@@ -24,7 +24,7 @@ export default async function preprocessComponent(
   }
 
   if(controller.preprocessProps){
-    updated.props = controller.preprocessProps(updated.props)
+    updated.props = await controller.preprocessProps(updated.props)
   }
 
   if(controller.createContext){

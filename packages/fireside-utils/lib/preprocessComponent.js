@@ -47,12 +47,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 function preprocessComponent(c, config) {
     return __awaiter(this, void 0, void 0, function () {
-        var controller, updated, storyEvents, _a, _b, _c, _d, _e;
-        return __generator(this, function (_f) {
-            switch (_f.label) {
+        var controller, updated, storyEvents, _a, _b, _c, _d, _e, _f;
+        return __generator(this, function (_g) {
+            switch (_g.label) {
                 case 0: return [4 /*yield*/, config.resolveController(c.name)];
                 case 1:
-                    controller = _f.sent();
+                    controller = _g.sent();
                     updated = Object.assign({}, c);
                     storyEvents = [];
                     if (!controller)
@@ -60,26 +60,30 @@ function preprocessComponent(c, config) {
                     if (controller.versionUpdate) {
                         updated.props = controller.versionUpdate(updated.props);
                     }
-                    if (controller.preprocessProps) {
-                        updated.props = controller.preprocessProps(updated.props);
-                    }
-                    if (!controller.createContext) return [3 /*break*/, 3];
+                    if (!controller.preprocessProps) return [3 /*break*/, 3];
                     _a = updated;
-                    _c = (_b = Object).assign;
-                    _d = [{}, updated.props];
-                    _e = {};
-                    return [4 /*yield*/, controller.createContext(updated.props)];
+                    return [4 /*yield*/, controller.preprocessProps(updated.props)];
                 case 2:
-                    _a.props = _c.apply(_b, _d.concat([(_e.context = _f.sent(),
-                            _e)]));
-                    _f.label = 3;
+                    _a.props = _g.sent();
+                    _g.label = 3;
                 case 3:
-                    if (!controller.createStoryEvents) return [3 /*break*/, 5];
-                    return [4 /*yield*/, controller.createStoryEvents(updated.props)];
+                    if (!controller.createContext) return [3 /*break*/, 5];
+                    _b = updated;
+                    _d = (_c = Object).assign;
+                    _e = [{}, updated.props];
+                    _f = {};
+                    return [4 /*yield*/, controller.createContext(updated.props)];
                 case 4:
-                    storyEvents = _f.sent();
-                    _f.label = 5;
-                case 5: return [2 /*return*/, [updated, storyEvents]];
+                    _b.props = _d.apply(_c, _e.concat([(_f.context = _g.sent(),
+                            _f)]));
+                    _g.label = 5;
+                case 5:
+                    if (!controller.createStoryEvents) return [3 /*break*/, 7];
+                    return [4 /*yield*/, controller.createStoryEvents(updated.props)];
+                case 6:
+                    storyEvents = _g.sent();
+                    _g.label = 7;
+                case 7: return [2 /*return*/, [updated, storyEvents]];
             }
         });
     });

@@ -64,7 +64,7 @@ export default function Storybook () {
 }
 
 const Wrapper = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: 99999999;
   top: 60px;
   left:0;

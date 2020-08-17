@@ -13,24 +13,36 @@ export default function Header () {
     toggleFullscreen(document.body)
   }
   return (
-    <Wrapper>
-      <div className='burger-menu' onClick={sidebar.isOpen ? sidebar.close : sidebar.open}>
-        {sidebar.isOpen ? <MdClose/> : <FiMenu/>}
-      </div>
-      <div className='logo'></div>
-      <div className='title'></div>
-      <ActionButtonsDisplay/>
-      <div className='fullscreen' onClick={handleFullscreenClick}>
-        <MdFullscreen/>
-      </div>
-    </Wrapper>
+    <>
+      <Offset/>,
+      <Wrapper>
+        <div className='burger-menu' onClick={sidebar.isOpen ? sidebar.close : sidebar.open}>
+          {sidebar.isOpen ? <MdClose/> : <FiMenu/>}
+        </div>
+        <div className='logo'></div>
+        <div className='title'></div>
+        <ActionButtonsDisplay/>
+        <div className='fullscreen' onClick={handleFullscreenClick}>
+          <MdFullscreen/>
+        </div>
+      </Wrapper>
+    </>
   )
 }
+
+const Offset = styled.div`
+  height: 60px;
+  width: 100%;
+`
 
 const Wrapper = styled.div`
   height: 60px;
   background: steelblue;
   display: flex;
+  position: fixed;
+  left: 0;
+  right:0;
+  top: 0;
 
   > .burger-menu {
     cursor: pointer;

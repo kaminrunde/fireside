@@ -133,6 +133,7 @@ export default function Grid (props:Props) {
           </GridLayout>
         </div>
       </div>
+      <div className='buffer-offset'/>
       <div className='buffer'>
         {components.data
         .filter(c => !grid.data.gridAreas.find(area => area.i === c.props.gridArea))
@@ -300,9 +301,15 @@ const Wrapper = styled.div`
     }
   }
 
+  > .buffer-offset {
+    height: 250px;
+    width: 100%;
+  }
+
   > .buffer {
     position: absolute;
     background: whitesmoke;
+    z-index: 999999999;
     box-shadow: 0px -3px 5px 1px rgba(0,0,0,0.19);
     left: 0;
     right: 0;

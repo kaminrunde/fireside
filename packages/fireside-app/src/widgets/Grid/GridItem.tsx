@@ -14,6 +14,7 @@ type Props = {
 
 export default function GridItem(props: Props) {
   const component = useComponent(props.item.i);
+  console.log(props.item.i, component, props)
 
   const toggleFullWidth = (e:Event) => {
     e.preventDefault()

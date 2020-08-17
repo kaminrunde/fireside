@@ -37,7 +37,7 @@ export default function Sidebar () {
 
 const Wrapper = styled.div`
   > .overlay {
-    z-index: 10;
+    z-index: 9999999998;
     position: fixed;
     left: 0;
     right: 0;
@@ -48,7 +48,7 @@ const Wrapper = styled.div`
   }
 
   > .content {
-    z-index: 11;
+    z-index: 9999999999;
     position: fixed;
     left: 0;
     top: 60px;

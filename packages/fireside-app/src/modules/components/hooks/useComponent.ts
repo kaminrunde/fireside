@@ -20,7 +20,7 @@ type DP = {
 const config:Config<Props,Result,State,DP> = {
   moduleKey: 'components',
   name: 'components/useComponent',
-  createCacheKey: () => '',
+  createCacheKey: input => input.componentId,
   mapState: (state, props) => ({
     data: s.getComponent(state, props.componentId),
   }),

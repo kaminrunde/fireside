@@ -6,7 +6,8 @@ import useConnect, {Config} from 'hooks/useConnect'
 
 type Result = {
   data: ReturnType<typeof s.getComponent>,
-  update: (component:t.Component) => ReturnType<typeof a.updateComponent>
+  update: (component:t.Component) => ReturnType<typeof a.updateComponent>,
+  toggleFullWidth: (mediaSize:string) => ReturnType<typeof a.toggleFullWidth>
 }
 
 type Props = {
@@ -14,7 +15,8 @@ type Props = {
 }
 
 type DP = {
-  update: typeof a.updateComponent
+  update: typeof a.updateComponent,
+  toggleFullWidth: typeof a.toggleFullWidth
 }
 
 const config:Config<Props,Result,State,DP> = {
@@ -25,10 +27,12 @@ const config:Config<Props,Result,State,DP> = {
     data: s.getComponent(state, props.componentId),
   }),
   mapDispatch: {
-    update: a.updateComponent
+    update: a.updateComponent,
+    toggleFullWidth: a.toggleFullWidth
   },
   transformDispatch: {
     update: (fn,sp,props) => component => fn(props.componentId, component),
+    toggleFullWidth: (fn,sp,props) => ms => fn(props.componentId, ms)
   }
 }
 

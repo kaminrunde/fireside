@@ -6,6 +6,7 @@ import { FaArrowsAltH } from "react-icons/fa";
 import { useComponent } from "modules/components";
 
 type Props = {
+  mediaSize: string;
   rowHeight: number;
   active: boolean;
   onClick: () => void;
@@ -13,17 +14,15 @@ type Props = {
 };
 
 export default function GridItem(props: Props) {
-  const component = useComponent(props.item.i);
-  console.log(props.item.i, component, props)
+  const component = useComponent(props.item.i)
 
   const toggleFullWidth = (e:Event) => {
     e.preventDefault()
     e.stopPropagation()
-    component.update({
-      ...component.data,
-      fullWidth: !component.data.fullWidth,
-    });
+    component.toggleFullWidth(props.mediaSize)
   };
+
+  const isFullWidth = component.data.fullWidth && component.data.fullWidth[props.mediaSize]
   return (
     <Wrapper
       rowHeight={props.rowHeight}
@@ -40,7 +39,7 @@ export default function GridItem(props: Props) {
               {row.Badge}
             </button>
           ))} */}
-        <CtxButton onClick={toggleFullWidth} active={component.data.fullWidth}>
+        <CtxButton onClick={toggleFullWidth} active={isFullWidth}>
           <FaArrowsAltH />
         </CtxButton>
         <CtxButton>
@@ -48,7 +47,7 @@ export default function GridItem(props: Props) {
         </CtxButton>
       </div>
       <div className="badges">
-        {component.data.fullWidth && (
+        {isFullWidth && (
           <div>
             <FaArrowsAltH />
           </div>

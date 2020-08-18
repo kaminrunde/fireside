@@ -124,6 +124,7 @@ export default function Grid (props:Props) {
               {grid.data.gridAreas.map(item => (
                 <div key={item.i}>
                   <GridItem 
+                    mediaSize={props.mediaSize}
                     rowHeight={ROW_HEIGHT}
                     active={active === item.i} 
                     item={item}

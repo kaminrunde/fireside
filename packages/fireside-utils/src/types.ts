@@ -85,7 +85,7 @@ export type Controller<ComponentConfig,Context> = {
 export type Component = {
   name: string,
   id: string,
-  fullWidth: boolean,
+  fullWidth: null | Record<string, boolean>,
   createdAt: number,
   updatedAt: number,
   props: {

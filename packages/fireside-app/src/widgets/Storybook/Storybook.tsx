@@ -15,7 +15,7 @@ export default function Storybook () {
       if(typeof e.data !== 'object' || !e.data.type) return
       switch(e.data.type){
         case "fireside-update-component": {
-          setComponent({...e.data.component, fullWidth: loadingComponent.data?.fullWidth || false})
+          setComponent({...e.data.component, fullWidth: loadingComponent.data?.fullWidth || null})
           break
         }
         case "fireside-init": {

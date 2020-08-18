@@ -1,11 +1,11 @@
 {
   "name": "@kaminrunde/example-project-fireside",
   "private": true,
-  "version": "1.0.1-alpha.16",
+  "version": "1.0.1-alpha.17",
   "dependencies": {
-    "@kaminrunde/fireside-app": "^1.0.1-alpha.16",
-    "@kaminrunde/fireside-utils": "^1.0.1-alpha.14",
-    "@kaminrunde/gatsby-plugin-fireside": "^1.0.1-alpha.14",
+    "@kaminrunde/fireside-app": "^1.0.1-alpha.17",
+    "@kaminrunde/fireside-utils": "^1.0.1-alpha.17",
+    "@kaminrunde/gatsby-plugin-fireside": "^1.0.1-alpha.17",
     "@kaminrunde/storybook-addon-fireside": "^1.0.1-alpha.11",
     "gatsby": "^2.19.7",
     "gatsby-image": "^2.2.39",

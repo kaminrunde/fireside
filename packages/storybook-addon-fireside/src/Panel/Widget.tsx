@@ -5,13 +5,13 @@ import styled from 'styled-components'
 
 
 type Props = {
-  knob: t.Knob,
+  knob: t.Knob | t.SimpleKnob,
   onUpdate: (value:any) => void
 }
 
 export default function Widget (props:Props) {
   const [value, setValue] = React.useState(props.knob.value)
-  const Component = getWidget(props.knob)
+  const Component:any = getWidget(props.knob)
   const [focus, setFocus] = React.useState(false)
 
   const update = val => {

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registerWidgetSelector = exports.create = exports.stringList = exports.bool = exports.markdown = exports.number = exports.constant = exports.string = void 0;
+exports.registerWidgetSelector = exports.create = exports.objectList = exports.stringList = exports.bool = exports.markdown = exports.number = exports.constant = exports.string = void 0;
 const React = require("react");
 const manager = require("./knob-manager");
 const WidgetWrapper_1 = require("./WidgetWrapper");
@@ -13,7 +13,8 @@ const WidgetWrapper_1 = require("./WidgetWrapper");
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
  * @yields {string}
- * @example k.string('label', 'Label', 'hello world')
+ * @example
+ * k.string('label', 'Label', 'hello world')
  */
 exports.string = (prop, label, value, options = {}) => ({ type: 'string', prop, label, value, options });
 /**
@@ -25,7 +26,8 @@ exports.string = (prop, label, value, options = {}) => ({ type: 'string', prop, 
  * @param {string} label won't be visible so leave it blank
  * @param {string} value default value. can be anything
  * @yields {string}
- * @example k.constant('__version', '', 1)
+ * @example
+ * k.constant('__version', '', 1)
  */
 exports.constant = (prop, label, value, options = {}) => ({ type: 'constant', prop, label, value, options });
 /**
@@ -36,7 +38,8 @@ exports.constant = (prop, label, value, options = {}) => ({ type: 'constant', pr
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
  * @yields {number}
- * @example k.number('size', 'Your Size', 4)
+ * @example
+ * k.number('size', 'Your Size', 4)
  */
 exports.number = (prop, label, value, options = {}) => ({ type: 'number', prop, label, value, options });
 /**
@@ -47,7 +50,8 @@ exports.number = (prop, label, value, options = {}) => ({ type: 'number', prop, 
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
  * @yields {string}
- * @example k.markdown('content', 'Your Content', '# Headline')
+ * @example
+ * k.markdown('content', 'Your Content', '# Headline')
  */
 exports.markdown = (prop, label, value, options = {}) => ({ type: 'markdown', prop, label, value, options });
 /**
@@ -58,7 +62,8 @@ exports.markdown = (prop, label, value, options = {}) => ({ type: 'markdown', pr
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
  * @yields {boolean}
- * @example k.bool('isPrimary', 'Is Primary', true)
+ * @example
+ * k.bool('isPrimary', 'Is Primary', true)
  */
 exports.bool = (prop, label, value, options = {}) => ({ type: 'bool', prop, label, value, options });
 /**
@@ -69,15 +74,36 @@ exports.bool = (prop, label, value, options = {}) => ({ type: 'bool', prop, labe
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
  * @yields {string[]}
- * @example k.stringList('todos', 'List of Todos', ['buy coffee', 'star fireside on github'])
+ * @example
+ * k.stringList('todos', 'List of Todos', ['buy coffee', 'star fireside on github'])
  */
 exports.stringList = (prop, label, value, options = {}) => ({ type: 'stringList', prop, label, value, options });
+/**
+ * yields a sortable list of objects. You have to define a schema just like you define the schema of your component.
+ * Every Knob can be used. Even further ObjectList knobs. That way you can build any deep object schema
+ * @param {string} prop name of prop. can also be in nested form. eg: "obj.prop". for more information see docs of "object-path"
+ * @param {string} label displayed in storybook as prop label. should be short and descriptive. If more information is needed use the options.hint property
+ * @param {object[]} value default value
+ * @param {string} options.hint the knob description
+ * @param {string} options.tab the tabname the knob will be displayed in storybook
+ * @yields {string[]}
+ * @example
+ * k.objectList('todos', 'List of Todos', [], {
+ *   schema: [
+ *     k.string('title', 'Title', ''),
+ *     k.markdown('description', 'Description', '')
+ *   ],
+ *   getRowName: row => row.title
+ * })
+ */
+exports.objectList = (prop, label, value, options) => ({ type: 'objectList', prop, label, value, options });
 exports.create = (name, component, simpleKnobs, controller = {}) => (context) => {
     const knobs = manager.getKnobs(context, simpleKnobs, controller, name);
     let props = manager.getProps(knobs);
     return React.createElement(WidgetWrapper_1.default, Object.assign({}, { component, props, controller }));
 };
-exports.registerWidgetSelector = (name, cb) => {
+function registerWidgetSelector(name, cb) {
     manager.addSelector(name, cb);
-};
+}
+exports.registerWidgetSelector = registerWidgetSelector;
 //# sourceMappingURL=index.js.map

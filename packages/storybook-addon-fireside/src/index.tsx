@@ -12,7 +12,8 @@ import WidgetWrapper from './WidgetWrapper'
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
  * @yields {string}
- * @example k.string('label', 'Label', 'hello world')
+ * @example 
+ * k.string('label', 'Label', 'hello world')
  */
 export const string = (
   prop:string, 
@@ -30,7 +31,8 @@ export const string = (
  * @param {string} label won't be visible so leave it blank
  * @param {string} value default value. can be anything
  * @yields {string}
- * @example k.constant('__version', '', 1)
+ * @example 
+ * k.constant('__version', '', 1)
  */
 export const constant = (
   prop:string, 
@@ -47,7 +49,8 @@ export const constant = (
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
  * @yields {number}
- * @example k.number('size', 'Your Size', 4)
+ * @example 
+ * k.number('size', 'Your Size', 4)
  */
 export const number = (
   prop:string, 
@@ -65,7 +68,8 @@ export const number = (
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
  * @yields {string}
- * @example k.markdown('content', 'Your Content', '# Headline')
+ * @example 
+ * k.markdown('content', 'Your Content', '# Headline')
  */
 export const markdown = (
   prop:string, 
@@ -82,7 +86,8 @@ export const markdown = (
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
  * @yields {boolean}
- * @example k.bool('isPrimary', 'Is Primary', true)
+ * @example 
+ * k.bool('isPrimary', 'Is Primary', true)
  */
 export const bool = (
   prop:string, 
@@ -100,7 +105,8 @@ export const bool = (
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
  * @yields {string[]}
- * @example k.stringList('todos', 'List of Todos', ['buy coffee', 'star fireside on github'])
+ * @example 
+ * k.stringList('todos', 'List of Todos', ['buy coffee', 'star fireside on github'])
  */
 export const stringList = (
   prop:string, 
@@ -108,6 +114,31 @@ export const stringList = (
   value:string[], 
   options:t.StringListOptions={}
 ):t.SimpleKnob => ({ type: 'stringList', prop, label, value, options })
+
+/**
+ * yields a sortable list of objects. You have to define a schema just like you define the schema of your component.
+ * Every Knob can be used. Even further ObjectList knobs. That way you can build any deep object schema
+ * @param {string} prop name of prop. can also be in nested form. eg: "obj.prop". for more information see docs of "object-path"
+ * @param {string} label displayed in storybook as prop label. should be short and descriptive. If more information is needed use the options.hint property
+ * @param {object[]} value default value
+ * @param {string} options.hint the knob description
+ * @param {string} options.tab the tabname the knob will be displayed in storybook
+ * @yields {string[]}
+ * @example 
+ * k.objectList('todos', 'List of Todos', [], {
+ *   schema: [
+ *     k.string('title', 'Title', ''),
+ *     k.markdown('description', 'Description', '')
+ *   ],
+ *   getRowName: row => row.title
+ * })
+ */
+export const objectList = (
+  prop:string, 
+  label:string, 
+  value:object[], 
+  options:t.ObjectListOptions
+):t.SimpleKnob => ({ type: 'objectList', prop, label, value, options })
 
 
 export const create = (
@@ -121,9 +152,10 @@ export const create = (
   return <WidgetWrapper {...{component, props, controller}}/>
 }
 
-export const registerWidgetSelector = (
-  name: string,
-  cb: (props:object) => { kind:string, story:string }
-) => {
+export function registerWidgetSelector <UserConfig>(
+  name:string, 
+  cb: (props:UserConfig) => {kind:string, story:string}
+) {
   manager.addSelector(name, cb)
 }
+

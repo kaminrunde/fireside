@@ -17,6 +17,12 @@ export interface NumberOptions extends KnobOptions {
 }
 export interface BoolOptions extends KnobOptions {
 }
+export interface ObjectListOptions extends KnobOptions {
+    /** define the schema of each row. this works the same way you define the schema of your components */
+    schema: SimpleKnob[];
+    /** this is the name of the row, that will be displayed in the sortable list */
+    getRowName: (row: any) => string;
+}
 export interface MarkdownOptions extends KnobOptions {
     /** see https://www.npmjs.com/package/simplemde for more info */
     autofocus?: true;
@@ -61,7 +67,7 @@ export interface MarkdownOptions extends KnobOptions {
     toolbarTips?: any;
 }
 export interface SimpleKnob {
-    type: 'string' | 'constant' | 'number' | 'markdown' | 'bool' | 'stringList';
+    type: 'string' | 'constant' | 'number' | 'markdown' | 'bool' | 'stringList' | 'objectList';
     prop: string;
     label: string;
     value: any;

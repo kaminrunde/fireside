@@ -1,42 +1,41 @@
+import * as rootT from '../types'
 import * as t from './types'
 import * as et from './event-types'
 
-export type ExtendComponentCb<State> = (api:t.PluginAPI<State>) => {
+export type ExtendComponent<State> = {
   badge?: {
     component: any
-    isActive: (state:State) => boolean
+    isActive: (api:t.PluginComponentAPI<State>) => boolean
   }
   icon?: {
     component: any
-    isActive: (state:State) => boolean
-    onClick: () => void
+    isActive: (api:t.PluginComponentAPI<State>) => boolean
+    onClick: (api:t.PluginComponentAPI<State>) => void
   }
   settingsModal?: {
     title: string
-    component: (state:State, setState:(state:State)=>void) => any
+    component: any
   }
 }
 
 export default function extendComponent <State>(
-  cb:ExtendComponentCb<State>, 
-  api:t.PluginAPI<State>
+  config:ExtendComponent<State>, 
 ):et.PluginEvent[] {
   let events:et.PluginEvent[] = []
-  const result = cb(api)
 
-  if(result.badge) events.push({
+  if(config.badge) events.push({
     type: 'COMPONENT_BADGE',
-    payload: result.badge
+    payload: config.badge
   })
 
-  if(result.icon) events.push({
+  if(config.icon) events.push({
     type: 'COMPONENT_ICON',
-    payload: result.icon
+    payload: config.icon
   })
 
-  if(result.settingsModal) events.push({
+  if(config.settingsModal) events.push({
     type: 'COMPONENT_SETTINGS',
-    payload: result.settingsModal
+    payload: config.settingsModal
   })
 
   return []

@@ -1,8 +1,8 @@
 import * as et from './event-types'
-import extendComponent, {ExtendComponentCb} from './extendComponent'
+import extendComponent, {ExtendComponent} from './extendComponent'
 
 type PluginContext<State> = {
-  extendComponent: (cb:ExtendComponentCb<State>) => void
+  extendComponent: (config:ExtendComponent<State>) => void
 }
 
 type PluginOptions = {}
@@ -13,9 +13,8 @@ export default function createPlugin <State>(cb:(
 )=> State):et.PluginEvent[] {
   let events:et.PluginEvent[] = []
 
-  
   const context:PluginContext<State> = {
-    extendComponent: cb => { events.push(...extendComponent(cb, {})) }
+    extendComponent: config => { events.push(...extendComponent(config)) }
   }
 
   const initialState = cb(context, {})
@@ -24,6 +23,7 @@ export default function createPlugin <State>(cb:(
 
   return events
 }
+
 
 // createPlugin<{foo:string}>(ctx => {
 //   ctx.extendComponent(api => ({

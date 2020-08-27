@@ -1,22 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-function extendComponent(cb, api) {
+function extendComponent(config) {
     var events = [];
-    var result = cb(api);
-    if (result.badge)
+    if (config.badge)
         events.push({
             type: 'COMPONENT_BADGE',
-            payload: result.badge
+            payload: config.badge
         });
-    if (result.icon)
+    if (config.icon)
         events.push({
             type: 'COMPONENT_ICON',
-            payload: result.icon
+            payload: config.icon
         });
-    if (result.settingsModal)
+    if (config.settingsModal)
         events.push({
             type: 'COMPONENT_SETTINGS',
-            payload: result.settingsModal
+            payload: config.settingsModal
         });
     return [];
 }

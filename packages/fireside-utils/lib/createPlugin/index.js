@@ -4,7 +4,7 @@ var extendComponent_1 = require("./extendComponent");
 function createPlugin(cb) {
     var events = [];
     var context = {
-        extendComponent: function (cb) { events.push.apply(events, extendComponent_1.default(cb, {})); }
+        extendComponent: function (config) { events.push.apply(events, extendComponent_1.default(config)); }
     };
     var initialState = cb(context, {});
     events.push({ type: 'INITIAL_STATE', payload: initialState });

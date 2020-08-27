@@ -6,22 +6,22 @@ export declare type ComponentBadgeEvent = {
     type: 'COMPONENT_BADGE';
     payload: {
         component: any;
-        isActive: (state: any) => boolean;
+        isActive: (api: any) => boolean;
     };
 };
 export declare type ComponentIconEvent = {
     type: 'COMPONENT_ICON';
     payload: {
         component: any;
-        isActive: (state: any) => boolean;
-        onClick: () => void;
+        isActive: (api: any) => boolean;
+        onClick: (api: any) => void;
     };
 };
 export declare type ComponentSettingsEvent = {
     type: 'COMPONENT_SETTINGS';
     payload: {
         title: string;
-        component: (state: any, setState: (state: any) => void) => any;
+        component: any;
     };
 };
 export declare type PluginEvent = InitialStateEvent | ComponentBadgeEvent | ComponentIconEvent | ComponentSettingsEvent;

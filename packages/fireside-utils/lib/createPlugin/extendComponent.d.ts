@@ -1,18 +1,18 @@
 import * as t from './types';
 import * as et from './event-types';
-export declare type ExtendComponentCb<State> = (api: t.PluginAPI<State>) => {
+export declare type ExtendComponent<State> = {
     badge?: {
         component: any;
-        isActive: (state: State) => boolean;
+        isActive: (api: t.PluginComponentAPI<State>) => boolean;
     };
     icon?: {
         component: any;
-        isActive: (state: State) => boolean;
-        onClick: () => void;
+        isActive: (api: t.PluginComponentAPI<State>) => boolean;
+        onClick: (api: t.PluginComponentAPI<State>) => void;
     };
     settingsModal?: {
         title: string;
-        component: (state: State, setState: (state: State) => void) => any;
+        component: any;
     };
 };
-export default function extendComponent<State>(cb: ExtendComponentCb<State>, api: t.PluginAPI<State>): et.PluginEvent[];
+export default function extendComponent<State>(config: ExtendComponent<State>): et.PluginEvent[];

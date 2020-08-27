@@ -31,9 +31,11 @@ export default function createPlugin<State>(plugin:Plugin<State>){ return plugin
 
 
 export const create = createPlugin((ctx, options) => {
+  ctx.setDefaultState({})
+
   ctx.extendComponent(api => ({
-    defaultValue: null,
-    key: 'fullWidth',
+    // defaultValue: null,
+    // key: 'fullWidth',
     Badge: () => null,
     hasBadge: (value, mediaSize) => Boolean(state) && state[mediaSize],
     icon: {

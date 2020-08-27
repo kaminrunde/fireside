@@ -19,4 +19,6 @@ var formatGrid_1 = require("./formatGrid");
 Object.defineProperty(exports, "formatGrid", { enumerable: true, get: function () { return formatGrid_1.default; } });
 var createController_1 = require("./createController");
 Object.defineProperty(exports, "createController", { enumerable: true, get: function () { return createController_1.default; } });
+var createPlugin_1 = require("./createPlugin");
+Object.defineProperty(exports, "createPlugin", { enumerable: true, get: function () { return createPlugin_1.default; } });
 //# sourceMappingURL=index.js.map

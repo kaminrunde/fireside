@@ -34,6 +34,9 @@ addons_1.default.register('addons:storyboard-bridge', api => {
             return;
         switch (e.data.type) {
             case 'fireside-hydrate-component': {
+                if (!e.data.component) {
+                    component.id = crypto_browserify_1.randomBytes(12).toString('hex');
+                }
                 if (e.data.component) {
                     channel.emit('storyboard-bridge/hydrate-component', e.data.component);
                 }
@@ -50,9 +53,6 @@ addons_1.default.register('addons:storyboard-bridge', api => {
     });
 });
 function sendToFiresideApp(component) {
-    if (!component.id) {
-        component.id = crypto_browserify_1.randomBytes(12).toString('hex');
-    }
     if (!component.createdAt) {
         const now = Date.now();
         component.createdAt = now;

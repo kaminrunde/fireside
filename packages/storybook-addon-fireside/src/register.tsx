@@ -36,6 +36,10 @@ addons.register('addons:storyboard-bridge', api => {
     if(typeof e.data !== 'object' || !e.data.type) return
     switch(e.data.type){
       case 'fireside-hydrate-component': {
+        if(!e.data.component) {
+          component.id = randomBytes(12).toString('hex')
+        }
+
         if(e.data.component){
           channel.emit('storyboard-bridge/hydrate-component', e.data.component)
         }
@@ -55,9 +59,6 @@ addons.register('addons:storyboard-bridge', api => {
 })
 
 function sendToFiresideApp (component:any) {
-  if(!component.id){
-    component.id = randomBytes(12).toString('hex')
-  }
   if(!component.createdAt){
     const now = Date.now()
     component.createdAt = now

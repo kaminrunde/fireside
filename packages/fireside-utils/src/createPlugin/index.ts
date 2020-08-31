@@ -1,25 +1,23 @@
-import * as et from './event-types'
+import * as t from '../types'
 import extendComponent, {ExtendComponent} from './extendComponent'
 
 type PluginContext<State> = {
   extendComponent: (config:ExtendComponent<State>) => void
 }
 
-type PluginOptions = {}
-
-export default function createPlugin <State>(cb:(
-  context: PluginContext<State>,
-  options: PluginOptions
-)=> State):et.PluginEvent[] {
-  let events:et.PluginEvent[] = []
+export default function createPlugin <State>(
+  cb:( context: PluginContext<State>, options:t.PluginOptions)=> State,
+  options: t.PluginOptions
+):t.PluginEvent[] {
+  let events:t.PluginEvent[] = []
 
   const context:PluginContext<State> = {
-    extendComponent: config => { events.push(...extendComponent(config)) }
+    extendComponent: config => { events.push(...extendComponent(config, options)) }
   }
 
-  const initialState = cb(context, {})
+  const initialState = cb(context, options)
 
-  events.push({type:'INITIAL_STATE', payload: initialState})
+  events.push({type:'INITIAL_STATE', meta: options, payload: initialState})
 
   return events
 }

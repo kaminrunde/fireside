@@ -11,6 +11,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./types"), exports);
+exports.pluginEvents = require("./createPlugin/event-types");
 var preprocessStory_1 = require("./preprocessStory");
 Object.defineProperty(exports, "preprocessStory", { enumerable: true, get: function () { return preprocessStory_1.default; } });
 var preprocessComponent_1 = require("./preprocessComponent");

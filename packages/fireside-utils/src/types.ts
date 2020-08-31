@@ -1,3 +1,25 @@
+import * as et from './createPlugin/event-types'
+
+export type PluginOptions = {
+  key: string
+}
+
+export interface PluginAPI<State> {
+  getState: () => State,
+  setState: (state:State) => void
+}
+
+export interface PluginComponentAPI<State> extends PluginAPI<State> {
+  getComponent: () => Component,
+  getCurrentMediaSize: () => string
+}
+
+export type PluginEvent = 
+| et.InitialStateEvent
+| et.ComponentBadgeEvent 
+| et.ComponentIconEvent
+| et.ComponentSettingsEvent
+
 
 export type Config = {
   resolveController?: (name:string) => Controller<any,any> | Promise<Controller<any,any>>,

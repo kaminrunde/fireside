@@ -1,11 +1,13 @@
 
 export type InitialStateEvent = {
-  type: 'INITIAL_STATE',
+  type: 'INITIAL_STATE'
+  meta: {key:string}
   payload: any
 }
 
 export type ComponentBadgeEvent = {
   type: 'COMPONENT_BADGE'
+  meta: {key:string}
   payload: {
     component: any
     isActive: (api:any) => boolean
@@ -14,6 +16,7 @@ export type ComponentBadgeEvent = {
 
 export type ComponentIconEvent = {
   type: 'COMPONENT_ICON'
+  meta: {key:string}
   payload: {
     component: any
     isActive: (api:any) => boolean
@@ -22,15 +25,10 @@ export type ComponentIconEvent = {
 }
 
 export type ComponentSettingsEvent = {
-  type: 'COMPONENT_SETTINGS',
+  type: 'COMPONENT_SETTINGS'
+  meta: {key:string}
   payload: {
     title: string
     component: any
   }
 }
-
-export type PluginEvent = 
-| InitialStateEvent
-| ComponentBadgeEvent 
-| ComponentIconEvent
-| ComponentSettingsEvent

@@ -1,6 +1,4 @@
-import * as rootT from '../types'
-import * as t from './types'
-import * as et from './event-types'
+import * as t from '../types'
 
 export type ExtendComponent<State> = {
   badge?: {
@@ -19,22 +17,26 @@ export type ExtendComponent<State> = {
 }
 
 export default function extendComponent <State>(
-  config:ExtendComponent<State>, 
-):et.PluginEvent[] {
-  let events:et.PluginEvent[] = []
+  config:ExtendComponent<State>,
+  options: t.PluginOptions 
+):t.PluginEvent[] {
+  let events:t.PluginEvent[] = []
 
   if(config.badge) events.push({
     type: 'COMPONENT_BADGE',
+    meta: options,
     payload: config.badge
   })
 
   if(config.icon) events.push({
     type: 'COMPONENT_ICON',
+    meta: options,
     payload: config.icon
   })
 
   if(config.settingsModal) events.push({
     type: 'COMPONENT_SETTINGS',
+    meta: options,
     payload: config.settingsModal
   })
 

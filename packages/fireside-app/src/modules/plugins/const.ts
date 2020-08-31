@@ -1,0 +1,1 @@
+export const SET_STATE: 'plugins/SET_STATE' = 'plugins/SET_STATE'

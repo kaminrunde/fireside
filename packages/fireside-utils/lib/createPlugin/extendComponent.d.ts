@@ -1,5 +1,4 @@
-import * as t from './types';
-import * as et from './event-types';
+import * as t from '../types';
 export declare type ExtendComponent<State> = {
     badge?: {
         component: any;
@@ -15,4 +14,4 @@ export declare type ExtendComponent<State> = {
         component: any;
     };
 };
-export default function extendComponent<State>(config: ExtendComponent<State>): et.PluginEvent[];
+export default function extendComponent<State>(config: ExtendComponent<State>, options: t.PluginOptions): t.PluginEvent[];

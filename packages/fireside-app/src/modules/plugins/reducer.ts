@@ -1,18 +1,28 @@
-// import {Plugin} from 'plugins/createPlugin'
-// import p1 from 'plugins/full-width-components'
+import {PluginEvent} from '@kaminrunde/fireside-utils'
+import p1 from 'plugins/full-width-components'
+import {Action} from './actions'
+import * as at from './const'
 
-// export type State = {
-//   data: ReturnType<Plugin<any>>[],
-//   states: Record<string, any>
-// }
 
-// export const defaultState:State = {
-//   data: [p1({setState:()=>null})],
-//   states: {
-//     'full-width-component': false
-//   }
-// }
+export type State = {
+  data: PluginEvent[],
+  states: Record<string, any>
+}
 
-// export default function reducer (state:State) {
-//   return state
-// }
+export const defaultState:State = {
+  data: [...p1],
+  states: {}
+}
+
+export default function reducer (state:State, action:Action) {
+  switch(action.type) {
+    case at.SET_STATE: return {
+      ...state,
+      states: {
+        ...state.states,
+        [action.meta.key]: action.payload
+      }
+    }
+    default: return state
+  }
+}

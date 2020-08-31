@@ -10,6 +10,7 @@ import connectorReducer from 'modules/connector'
 import componentsReducer from 'modules/components'
 import uiReducer from 'modules/ui'
 import settingsReducer from 'modules/settings'
+import pluginsReducer from 'modules/plugins'
 
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({ 
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
   router: routerReducer,
   components: componentsReducer,
   ui: uiReducer,
-  settings: settingsReducer
+  settings: settingsReducer,
+  plugins: pluginsReducer
 })
 
 

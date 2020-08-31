@@ -14,7 +14,7 @@ export const defaultState:State = {
   states: {}
 }
 
-export default function reducer (state:State, action:Action) {
+export default function reducer (state:State=defaultState, action:Action) {
   switch(action.type) {
     case at.SET_STATE: return {
       ...state,

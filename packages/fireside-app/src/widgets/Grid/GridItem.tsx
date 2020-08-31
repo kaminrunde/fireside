@@ -4,6 +4,8 @@ import * as $grid from "modules/grid";
 import { FiSettings } from "react-icons/fi";
 import { FaArrowsAltH } from "react-icons/fa";
 import { useComponent } from "modules/components";
+import { useComponentIconList } from 'modules/plugins'
+import PluginButton from './PluginButton'
 
 type Props = {
   mediaSize: string;
@@ -15,12 +17,15 @@ type Props = {
 
 export default function GridItem(props: Props) {
   const component = useComponent(props.item.i)
+  const iconList = useComponentIconList()
 
-  const toggleFullWidth = (e:Event) => {
-    e.preventDefault()
-    e.stopPropagation()
-    component.toggleFullWidth(props.mediaSize)
-  };
+  // const toggleFullWidth = (e:Event) => {
+  //   e.preventDefault()
+  //   e.stopPropagation()
+  //   component.toggleFullWidth(props.mediaSize)
+  // };
+
+  console.log(iconList)
 
   const isFullWidth = component.data.fullWidth && component.data.fullWidth[props.mediaSize]
   return (
@@ -31,20 +36,19 @@ export default function GridItem(props: Props) {
     >
       <span>{props.item.i}</span>
       <div className="context">
-        {/* {componentPlugins.icons.map(row => (
-            <button 
-              key={row.name} 
-              active={row.icon.isActive(row.icon.state)}
-              onClick={row.icon.onClick(row.icon.state)}>
-              {row.Badge}
-            </button>
-          ))} */}
-        <CtxButton onClick={toggleFullWidth} active={isFullWidth}>
+        {iconList.data.map((row,i) => (
+          <PluginButton 
+            key={i}
+            pluginKey={row.meta.key}
+            icon={row.payload}
+          />
+        ))}
+        {/* <CtxButton onClick={toggleFullWidth} active={isFullWidth}>
           <FaArrowsAltH />
         </CtxButton>
         <CtxButton>
           <FiSettings />
-        </CtxButton>
+        </CtxButton> */}
       </div>
       <div className="badges">
         {isFullWidth && (

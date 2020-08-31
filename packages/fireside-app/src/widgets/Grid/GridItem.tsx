@@ -1,11 +1,10 @@
 import * as React from "react";
 import styled from "styled-components";
 import * as $grid from "modules/grid";
-import { FiSettings } from "react-icons/fi";
-import { FaArrowsAltH } from "react-icons/fa";
-import { useComponent } from "modules/components";
-import { useComponentIconList } from 'modules/plugins'
+import { useComponentIconList, useComponentBadgeList } from 'modules/plugins'
 import PluginButton from './PluginButton'
+import PluginBadge from './PluginBadge'
+
 
 type Props = {
   mediaSize: string;
@@ -16,16 +15,9 @@ type Props = {
 };
 
 export default function GridItem(props: Props) {
-  const component = useComponent(props.item.i)
   const iconList = useComponentIconList()
-
-  // const toggleFullWidth = (e:Event) => {
-  //   e.preventDefault()
-  //   e.stopPropagation()
-  //   component.toggleFullWidth(props.mediaSize)
-  // };
-
-  const isFullWidth = component.data.fullWidth && component.data.fullWidth[props.mediaSize]
+  const badgeList = useComponentBadgeList()
+  
   return (
     <Wrapper
       rowHeight={props.rowHeight}
@@ -43,19 +35,17 @@ export default function GridItem(props: Props) {
             icon={row.payload}
           />
         ))}
-        {/* <CtxButton onClick={toggleFullWidth} active={isFullWidth}>
-          <FaArrowsAltH />
-        </CtxButton>
-        <CtxButton>
-          <FiSettings />
-        </CtxButton> */}
       </div>
       <div className="badges">
-        {isFullWidth && (
-          <div>
-            <FaArrowsAltH />
-          </div>
-        )}
+        {badgeList.data.map((row,i) => (
+          <PluginBadge
+            key={i}
+            mediaSize={props.mediaSize}
+            componentId={props.item.i}
+            pluginKey={row.meta.key}
+            badge={row.payload}
+          />
+        ))}
       </div>
     </Wrapper>
   );
@@ -95,21 +85,6 @@ const Wrapper = styled.div`
     left: 0px;
     top: -10px;
     display: flex;
-    > div {
-      margin-left: 5px;
-      border: 1px solid grey;
-      background: white;
-      border-radius: 25px;
-      padding: 0 4px;
-      height: 25px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 9px;
-      > svg {
-        font-size: 17px;
-      }
-    }
   }
 
   &:hover {
@@ -119,20 +94,5 @@ const Wrapper = styled.div`
     > .badges {
       display: none;
     }
-  }
-`;
-
-const CtxButton = styled.button`
-  width: max-content;
-  font-size: 15px;
-  background: ${(props) => (props.active ? "#4782B4" : "none")};
-  color: ${(props) => (props.active ? "white" : "black")};
-  border: none;
-  padding: 0 15px;
-  cursor: pointer;
-  border-left: 1px solid lightgrey;
-  padding-top: 3px;
-  &:first-child {
-    border-left: none;
   }
 `;

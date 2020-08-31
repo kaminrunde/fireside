@@ -11,6 +11,14 @@ export const getComponentIcons = createSelector(
   }
 )
 
+export const getComponentBadges = createSelector(
+  (state:State) => state.data,
+  plugins => {
+    const result = plugins.filter(p => p.type === 'COMPONENT_BADGE')
+    return result as pluginEvents.ComponentBadgeEvent[]
+  }
+)
+
 export const getComponentIcon = createReSelector(
   (state:State) => state.data,
   (_:State, key:string) => key,

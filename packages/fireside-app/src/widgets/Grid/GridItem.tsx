@@ -25,8 +25,6 @@ export default function GridItem(props: Props) {
   //   component.toggleFullWidth(props.mediaSize)
   // };
 
-  console.log(iconList)
-
   const isFullWidth = component.data.fullWidth && component.data.fullWidth[props.mediaSize]
   return (
     <Wrapper
@@ -38,6 +36,8 @@ export default function GridItem(props: Props) {
       <div className="context">
         {iconList.data.map((row,i) => (
           <PluginButton 
+            mediaSize={props.mediaSize}
+            componentId={props.item.i}
             key={i}
             pluginKey={row.meta.key}
             icon={row.payload}

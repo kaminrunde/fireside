@@ -1,4 +1,5 @@
 import * as s from '../selectors'
+import * as a from '../actions'
 import {State} from '../reducer'
 import useConnect, {Config} from 'hooks/useConnect'
 
@@ -10,16 +11,26 @@ type Input = {
 type Output = {
   data: ReturnType<typeof s.getState>,
   // states: ReturnType<typeof s.getStates>,
-  // setState: (state:any) => void
+  set: (state:any) => a.SetState 
 }
 
-const config:Config<Input,Output,State,object> = {
+type DP = {
+  set: typeof a.setState
+}
+
+const config:Config<Input,Output,State,DP> = {
   moduleKey: 'plugins',
   name: 'plugins/usePluginState',
   createCacheKey: input => input.key,
   mapState: (state,input) => ({
     data: s.getState(state, input.key),
-  })
+  }),
+  mapDispatch: {
+    set: a.setState
+  },
+  transformDispatch: {
+    set: (fn, sp, input) => (payload:any)  => fn(input.key, payload)
+  }
 }
 
 export default function usePluginState (key:string):Output {

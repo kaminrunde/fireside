@@ -20,7 +20,7 @@ function extendComponent(config, options) {
             meta: options,
             payload: config.settingsModal
         });
-    return [];
+    return events;
 }
 exports.default = extendComponent;
 //# sourceMappingURL=extendComponent.js.map

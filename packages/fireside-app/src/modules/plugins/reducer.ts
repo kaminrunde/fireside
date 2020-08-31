@@ -11,7 +11,9 @@ export type State = {
 
 export const defaultState:State = {
   data: [...p1],
-  states: {}
+  states: {
+    fullWidth: {}
+  }
 }
 
 export default function reducer (state:State=defaultState, action:Action) {

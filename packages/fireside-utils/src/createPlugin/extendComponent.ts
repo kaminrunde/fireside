@@ -40,5 +40,5 @@ export default function extendComponent <State>(
     payload: config.settingsModal
   })
 
-  return []
+  return events
 }

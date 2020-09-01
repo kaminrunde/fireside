@@ -1,19 +1,26 @@
 import config from 'config'
-import store from 'store'
+import {a, c} from 'modules/plugins'
+import p1 from 'plugins/full-width-components'
+import {addRule} from 'redux-ruleset'
 
-if(config.plugins.length) {
-  let buffer = []
+addRule({
+  id: 'feature/SET_PLUGINS',
+  target: '*',
+  output: c.SET_PLUGIN_EVENTS,
+  addOnce: true,
+  condition: () => Boolean(config.plugins.length),
+  consequence: () => {
+    let buffer = []
 
-  for (let plugin of config.plugins) {
-    const create = require(plugin.resolve)
-    const feed = create(plugin.options)
-    buffer.push(...feed)
+    for (let plugin of config.plugins) {
+      let create = p1
+      if(plugin.resolve !== '@kaminrunde/fireside-plugin-fullwidth-components'){
+        create = require(plugin.resolve)
+      }
+      const feed = create(plugin.options)
+      buffer.push(...feed)
+    }
+
+    return a.setPluginEvents(buffer)
   }
-
-  if(buffer.length) {
-    store.dispatch({
-      type: 'SET_PLUGINS',
-      payload: buffer
-    })
-  }
-}
+})

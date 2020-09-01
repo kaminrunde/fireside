@@ -1,4 +1,5 @@
 import './setConnector'
+import './setPlugins'
 import './updateStores'
 import './updateConnector'
 import './validateComponentAdd'

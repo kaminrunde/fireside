@@ -1,5 +1,4 @@
 import {PluginEvent} from '@kaminrunde/fireside-utils'
-import p1 from 'plugins/full-width-components'
 import {Action} from './actions'
 import * as at from './const'
 
@@ -10,14 +9,21 @@ export type State = {
 }
 
 export const defaultState:State = {
-  data: [...p1({key:"fullWidth"})],
-  states: {
-    fullWidth: {}
-  }
+  data: [],
+  states: {}
 }
 
 export default function reducer (state:State=defaultState, action:Action) {
   switch(action.type) {
+    case at.SET_PLUGIN_EVENTS: return {
+      data: action.payload,
+      states: action.payload
+        .filter(e => e.type === 'INITIAL_STATE')
+        .reduce((states, e) => {
+          states[e.meta.key] = e.payload
+          return states
+        }, {})
+    }
     case at.SET_STATE: return {
       ...state,
       states: {

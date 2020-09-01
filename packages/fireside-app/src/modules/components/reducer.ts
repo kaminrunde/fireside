@@ -55,25 +55,6 @@ export default function reducer (state:State=defaultState, action:Action):State 
         }
       }
     }
-    case at.TOGGLE_FULL_WIDTH: {
-      return {
-        ...state,
-        byId: {
-          ...state.byId,
-          [action.meta.componentId]: {
-            ...state.byId[action.meta.componentId],
-            fullWidth: (()=>{
-              let prev = state.byId[action.meta.componentId].fullWidth
-              let next = prev ? {...prev} : {}
-              next[action.meta.mediaSize] = !next[action.meta.mediaSize]
-              let isEmpty = true
-              for(let key in next) if(next[key]) isEmpty = false
-              return isEmpty ? null : next
-            })()
-          }
-        }
-      }
-    }
     default: return state
   }
 }

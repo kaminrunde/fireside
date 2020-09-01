@@ -47,18 +47,12 @@ export const unload = () => ({
   type: at.UNLOAD
 })
 
-export const toggleFullWidth = (componentId: string, mediaSize:string) => ({
-  type: at.TOGGLE_FULL_WIDTH,
-  meta: {mediaSize, componentId}
-})
-
 export type Init = ReturnType<typeof init>
 export type Add = ReturnType<typeof add>
 export type Remove = ReturnType<typeof remove>
 export type Load = ReturnType<typeof load>
 export type Unload = ReturnType<typeof unload>
 export type UpdateComponet = ReturnType<typeof updateComponent>
-export type ToggleFullWidth = ReturnType<typeof toggleFullWidth>
 
 export type Action =
 | Init
@@ -67,4 +61,3 @@ export type Action =
 | Load
 | Unload
 | UpdateComponet
-| ToggleFullWidth

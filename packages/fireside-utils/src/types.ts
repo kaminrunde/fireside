@@ -5,13 +5,13 @@ export type PluginOptions = {
 }
 
 export interface PluginAPI<State> {
-  getState: () => State,
+  state: State,
   setState: (state:State) => void
 }
 
 export interface PluginComponentAPI<State> extends PluginAPI<State> {
-  getComponent: () => Component,
-  getCurrentMediaSize: () => string
+  component: Component,
+  mediaSize: string
 }
 
 export type PluginEvent = 

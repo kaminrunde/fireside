@@ -12,30 +12,21 @@ export default createPlugin<State>(ctx => {
   ctx.extendComponent({
     badge: {
       component: FaArrowsAltH,
-      isActive: api => {
-        const state = api.getState()
-        const c = api.getComponent()
-        const ms = api.getCurrentMediaSize()
-        if(!state[c.id]) return false
-        return(!!state[c.id][ms])
+      isActive: ({state, component, mediaSize}) => {
+        if(!state[component.id]) return false
+        return(!!state[component.id][mediaSize])
       }
     },
     icon: {
       component: FaArrowsAltH,
-      isActive: api => {
-        const state = api.getState()
-        const c = api.getComponent()
-        const ms = api.getCurrentMediaSize()
-        if(!state[c.id]) return false
-        return(!!state[c.id][ms])
+      isActive: ({state, component, mediaSize}) => {
+        if(!state[component.id]) return false
+        return(!!state[component.id][mediaSize])
       },
-      onClick: api => {
-        const state = api.getState()
-        const c = api.getComponent()
-        const ms = api.getCurrentMediaSize()
-        api.setState(produce(state, draft => {
-          if(!draft[c.id]) draft[c.id] = {}
-          draft[c.id][ms] = !draft[c.id][ms]
+      onClick: ({state, component, mediaSize, setState}) => {
+        setState(produce(state, draft => {
+          if(!draft[component.id]) draft[component.id] = {}
+          draft[component.id][mediaSize] = !draft[component.id][mediaSize]
         }))
       }
     }

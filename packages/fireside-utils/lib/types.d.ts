@@ -3,12 +3,12 @@ export declare type PluginOptions = {
     key: string;
 };
 export interface PluginAPI<State> {
-    getState: () => State;
+    state: State;
     setState: (state: State) => void;
 }
 export interface PluginComponentAPI<State> extends PluginAPI<State> {
-    getComponent: () => Component;
-    getCurrentMediaSize: () => string;
+    component: Component;
+    mediaSize: string;
 }
 export declare type PluginEvent = et.InitialStateEvent | et.ComponentBadgeEvent | et.ComponentIconEvent | et.ComponentSettingsEvent;
 export declare type Config = {

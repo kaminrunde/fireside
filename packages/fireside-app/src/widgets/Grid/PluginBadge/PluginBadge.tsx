@@ -19,10 +19,10 @@ export default function PluginBadge (props:Props) {
   const component = useComponent(props.componentId)
 
   const api:PluginComponentAPI<any> = {
-    getState: () => state.data,
+    state: state.data,
     setState: (data:any) => { state.set(data) },
-    getComponent: () => component.data,
-    getCurrentMediaSize: () => props.mediaSize
+    component: component.data,
+    mediaSize: props.mediaSize
   }
 
   const isActive = props.badge.isActive(api)

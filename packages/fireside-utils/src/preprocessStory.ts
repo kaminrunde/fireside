@@ -8,7 +8,8 @@ export default async function preprocessStory (story:t.RawStory, config:t.Config
     componentsById: {},
     allComponents: story.allComponents,
     grids: {},
-    events: []
+    events: [],
+    plugins: story.plugins || {}
   }
 
   const formattedComponents = await Promise.all(

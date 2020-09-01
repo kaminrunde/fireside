@@ -9,5 +9,6 @@ export const emptyStory:t.Story = {
   hash: '',
   componentsById: {},
   allComponents: [],
-  grids: {}
+  grids: {},
+  plugins: {}
 }

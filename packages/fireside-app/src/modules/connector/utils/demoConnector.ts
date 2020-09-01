@@ -98,6 +98,13 @@ setTimeout(() => {
         ]
       }
     },
+    "plugins": {
+      "fullWidth": {
+        "123123124": {
+          "MOBILE_M": true
+        }
+      }
+    },
     "hash": "9abda7766b4164d57f1085f22f5cb673"
   })
 }, 1000)

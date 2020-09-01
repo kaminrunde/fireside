@@ -95,7 +95,6 @@ export declare type Controller<ComponentConfig, Context> = {
 export declare type Component = {
     name: string;
     id: string;
-    fullWidth: null | Record<string, boolean>;
     createdAt: number;
     updatedAt: number;
     props: {
@@ -124,6 +123,9 @@ export declare type RawStory = {
     componentsById: Record<string, Component>;
     allComponents: string[];
     grids: Record<string, RawGrid>;
+    plugins: {
+        [key: string]: any;
+    };
 };
 /**
  * RawStory is transformed in this format which can be used in apps
@@ -134,4 +136,7 @@ export declare type FormattedStory = {
     componentsById: Record<string, Component>;
     allComponents: string[];
     grids: Record<string, string>;
+    plugins: {
+        [key: string]: any;
+    };
 };

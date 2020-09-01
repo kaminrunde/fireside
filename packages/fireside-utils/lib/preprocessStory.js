@@ -49,7 +49,8 @@ function preprocessStory(story, config) {
                         componentsById: {},
                         allComponents: story.allComponents,
                         grids: {},
-                        events: []
+                        events: [],
+                        plugins: story.plugins || {}
                     };
                     return [4 /*yield*/, Promise.all(story.allComponents
                             .map(function (name) { return story.componentsById[name]; })

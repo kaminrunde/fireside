@@ -4,6 +4,7 @@ import * as connector from 'modules/connector'
 import * as grid from 'modules/grid'
 import * as components from 'modules/components'
 import * as settings from 'modules/settings'
+import * as plugins from 'modules/plugins'
 
 /**
  * When the user changes the story
@@ -19,6 +20,7 @@ addRule<
 | grid.a.SetWidth
 | grid.a.UpdateGrid
 | settings.a.ToggleMediaSize
+| plugins.a.SetState
 >({
   id: 'feature/UPDATE_CONNECTOR',
   target: [
@@ -30,7 +32,8 @@ addRule<
     grid.c.SET_HEIGHT,
     grid.c.SET_WIDTH,
     grid.c.UPDATE_GRID,
-    settings.c.TOGGLE_MEDIA_SIZE
+    settings.c.TOGGLE_MEDIA_SIZE,
+    plugins.c.SET_PLUGIN_EVENTS
   ],
   output: connector.c.UPDATE_CONNECTOR,
   delay: 500,
@@ -41,6 +44,7 @@ addRule<
     const componentList = components.s.getComponents(state.components)
     const gridDict = grid.s.getGridDict(state.grid)
     const activeMs = settings.s.getActiveMediaSizes(state.settings)
+    const pluginStates = plugins.s.getStates(state.plugins)
 
     // format components
     let allComponents:string[] = []
@@ -63,7 +67,14 @@ addRule<
       }
     }
     const VERSION:'1.0.0' = '1.0.0'
-    let story = { version: VERSION, componentsById, allComponents, grids, hash:'' }
+    let story = { 
+      version: VERSION, 
+      componentsById, 
+      allComponents, 
+      grids, 
+      hash:'',
+      plugins: pluginStates
+    }
     const hash = createHash('md5').update(JSON.stringify(story)).digest('hex')
     story.hash = hash
 

@@ -15,12 +15,20 @@ export const defaultState:State = {
 
 export default function reducer (state:State=defaultState, action:Action) {
   switch(action.type) {
+    case at.INIT: return {
+      ...state,
+      states: {
+        ...state.states,
+        ...action.payload
+      }
+    }
     case at.SET_PLUGIN_EVENTS: return {
+      ...state,
       data: action.payload,
       states: action.payload
         .filter(e => e.type === 'INITIAL_STATE')
         .reduce((states, e) => {
-          states[e.meta.key] = e.payload
+          states[e.meta.key] = state.states[e.meta.key] || e.payload
           return states
         }, {})
     }

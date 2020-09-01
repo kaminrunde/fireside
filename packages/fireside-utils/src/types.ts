@@ -107,7 +107,6 @@ export type Controller<ComponentConfig,Context> = {
 export type Component = {
   name: string,
   id: string,
-  fullWidth: null | Record<string, boolean>,
   createdAt: number,
   updatedAt: number,
   props: {
@@ -137,7 +136,8 @@ export type RawStory = {
   hash: string,
   componentsById: Record<string, Component>,
   allComponents: string[],
-  grids: Record<string, RawGrid>
+  grids: Record<string, RawGrid>,
+  plugins: {[key:string]:any}
 }
 
 /**
@@ -148,5 +148,6 @@ export type FormattedStory = {
   events: any[],
   componentsById: Record<string, Component>,
   allComponents: string[],
-  grids: Record<string, string>
+  grids: Record<string, string>,
+  plugins: {[key:string]:any}
 }

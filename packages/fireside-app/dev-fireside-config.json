@@ -24,5 +24,13 @@
       "breakpoint": 800,
       "initialyActive": false
     }
+  ],
+  "plugins": [
+    {
+      "resolve": "@kaminrunde/fireside-plugin-fullwidth-components",
+      "options": {
+        "key": "fullWidth"
+      }
+    }
   ]
 }

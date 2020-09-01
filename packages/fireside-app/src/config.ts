@@ -17,9 +17,12 @@ type Config = {
     initialyActive: boolean,
   }[],
   widgets: any[],
-  abFeature: boolean,
-  allowBackground: boolean,
-  allowStretch: boolean,
+  plugins: {
+    resolve: string,
+    options: {
+      key: string
+    }
+  }[]
 }
 
 let config:Config = {
@@ -27,9 +30,7 @@ let config:Config = {
   defaultStory: '',
   mediaSizes: [],
   widgets: [],
-  abFeature: false,
-  allowBackground: true,
-  allowStretch: true,
+  plugins: []
 }
 try {
   const userConfig:any = require('fireside-config')

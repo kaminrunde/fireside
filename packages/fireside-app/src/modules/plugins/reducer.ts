@@ -10,7 +10,7 @@ export type State = {
 }
 
 export const defaultState:State = {
-  data: [...p1],
+  data: [...p1({key:"fullWidth"})],
   states: {
     fullWidth: {}
   }

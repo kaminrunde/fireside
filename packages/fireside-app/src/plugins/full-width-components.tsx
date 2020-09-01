@@ -8,10 +8,6 @@ type State = {
   }
 }
 
-const pluginOptions = {
-  key: 'fullWidth'
-}
-
 export default createPlugin<State>(ctx => {
   ctx.extendComponent({
     badge: {
@@ -45,5 +41,5 @@ export default createPlugin<State>(ctx => {
     }
   })
   return {}
-}, pluginOptions)
+})
 

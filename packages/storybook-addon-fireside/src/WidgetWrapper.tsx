@@ -27,8 +27,8 @@ function useComponentProps (props:Props):[boolean,object] {
       if(props.controller.createContext){
         newProps.context = await props.controller.createContext(newProps)
       }
-      setFinished(true)
       setFinalProps(newProps)
+      setFinished(true)
     })()
   }, [props.controller, props.props])
 

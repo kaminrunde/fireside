@@ -1,7 +1,7 @@
-import * as React from 'react'
 import Component from './Banner'
 import { storiesOf } from '@storybook/react'
 import * as b from '@kaminrunde/storybook-addon-fireside'
+import * as controller from './request'
 
 b.registerWidgetSelector(Component.name, props => {
   return {kind:'cms/base/Banner',story: 'Builder'}
@@ -28,4 +28,4 @@ storiesOf('cms/base/Banner', module)
       ],
       getRowName: row => row.foo
     })
-  ]))
+  ], controller))

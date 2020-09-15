@@ -33,7 +33,7 @@ addRule<
     grid.c.SET_WIDTH,
     grid.c.UPDATE_GRID,
     settings.c.TOGGLE_MEDIA_SIZE,
-    plugins.c.SET_PLUGIN_EVENTS
+    plugins.c.SET_STATE
   ],
   output: connector.c.UPDATE_CONNECTOR,
   delay: 500,

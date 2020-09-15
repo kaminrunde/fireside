@@ -12,7 +12,7 @@ addons.register('addons:storyboard-bridge', api => {
   })
 
   let component = {
-    id: '',
+    id: randomBytes(12).toString('hex'),
     name: 'not-known',
     props: {}
   }

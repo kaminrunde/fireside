@@ -11,7 +11,7 @@ addons_1.default.register('addons:storyboard-bridge', api => {
         render: () => React.createElement(Panel_1.default, { channel: channel, api: api }),
     });
     let component = {
-        id: '',
+        id: crypto_browserify_1.randomBytes(12).toString('hex'),
         name: 'not-known',
         props: {}
     };

@@ -27,6 +27,10 @@ export default createPlugin<State>(ctx => {
         setState(produce(state, draft => {
           if(!draft[component.id]) draft[component.id] = {}
           draft[component.id][mediaSize] = !draft[component.id][mediaSize]
+          if(!draft[component.id][mediaSize]) delete draft[component.id][mediaSize]
+          if(Object.keys(draft[component.id]).length === 0){
+            delete draft[component.id]
+          }
         }))
       }
     }

@@ -29,8 +29,8 @@ function useComponentProps(props) {
             if (props.controller.createContext) {
                 newProps.context = yield props.controller.createContext(newProps);
             }
-            setFinished(true);
             setFinalProps(newProps);
+            setFinished(true);
         }))();
     }, [props.controller, props.props]);
     return [finished, finalProps];

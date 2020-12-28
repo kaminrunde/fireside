@@ -5,7 +5,7 @@ const widgets_1 = require("../widgets");
 const styled_components_1 = require("styled-components");
 function Widget(props) {
     const [value, setValue] = React.useState(props.knob.value);
-    const Component = widgets_1.default(props.knob);
+    const Component = widgets_1.default(props.knob, props.customKnobs);
     const [focus, setFocus] = React.useState(false);
     const update = val => {
         setValue(val);

@@ -70,7 +70,7 @@ export interface MarkdownOptions extends KnobOptions {
 }
 
 export interface SimpleKnob {
-  type: 'string' | 'constant' | 'number' | 'markdown' | 'bool' | 'stringList' | 'objectList',
+  type: 'string' | 'constant' | 'number' | 'markdown' | 'bool' | 'stringList' | 'objectList' | 'custom-knob',
   prop: string,
   label: string,
   value: any,

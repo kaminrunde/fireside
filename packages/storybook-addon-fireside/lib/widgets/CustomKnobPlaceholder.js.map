@@ -1,0 +1,1 @@
+{"version":3,"file":"CustomKnobPlaceholder.js","sourceRoot":"","sources":["../../src/widgets/CustomKnobPlaceholder.tsx"],"names":[],"mappings":";;AAAA,+BAA8B;AAE9B,SAAwB,qBAAqB,CAAE,KAAK;IAClD,IAAG,CAAC,KAAK,CAAC,OAAO,IAAI,CAAC,KAAK,CAAC,OAAO,CAAC,MAAM;QAAE,OAAO,CACjD,uDAA8B,CAC/B,CAAA;IACD,OAAO;;QAA4C,KAAK,CAAC,OAAO,CAAC,MAAM;aAAQ,CAAA;AACjF,CAAC;AALD,wCAKC"}

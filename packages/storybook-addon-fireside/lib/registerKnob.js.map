@@ -1,0 +1,1 @@
+{"version":3,"file":"registerKnob.js","sourceRoot":"","sources":["../src/registerKnob.ts"],"names":[],"mappings":";;AAAA,8CAAsC;AAEtC,MAAM,OAAO,GAAG,gBAAM,CAAC,UAAU,EAAE,CAAA;AAEnC,SAAwB,YAAY,CAAE,IAAW,EAAE,SAAa;IAC9D,OAAO,CAAC,IAAI,CAAC,wCAAwC,EAAE,IAAI,EAAE,SAAS,CAAC,CAAA;AACzE,CAAC;AAFD,+BAEC"}

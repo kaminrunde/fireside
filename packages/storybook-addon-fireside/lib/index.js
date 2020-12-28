@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registerWidgetSelector = exports.create = exports.objectList = exports.stringList = exports.bool = exports.markdown = exports.number = exports.constant = exports.string = void 0;
+exports.createCustomKnob = exports.registerWidgetSelector = exports.create = exports.objectList = exports.stringList = exports.bool = exports.markdown = exports.number = exports.constant = exports.string = void 0;
 const React = require("react");
 const manager = require("./knob-manager");
 const WidgetWrapper_1 = require("./WidgetWrapper");
@@ -86,7 +86,7 @@ exports.stringList = (prop, label, value, options = {}) => ({ type: 'stringList'
  * @param {object[]} value default value
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
- * @yields {string[]}
+ * @yields {object[]}
  * @example
  * k.objectList('todos', 'List of Todos', [], {
  *   schema: [
@@ -106,4 +106,13 @@ function registerWidgetSelector(name, cb) {
     manager.addSelector(name, cb);
 }
 exports.registerWidgetSelector = registerWidgetSelector;
+function createCustomKnob(name) {
+    return (prop, label, value, options) => ({
+        type: 'custom-knob',
+        prop,
+        label, value,
+        options: Object.assign(Object.assign({}, options), { __name: name })
+    });
+}
+exports.createCustomKnob = createCustomKnob;
 //# sourceMappingURL=index.js.map

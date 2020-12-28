@@ -12,6 +12,13 @@ type Props = {
 
 export default function Panel ({channel}:Props) {
   const {knobs,update,key, ...tabs} = useKnobs(channel)
+  const [customComponents, setCustomComponents] = React.useState<Record<string, any>>({})
+
+  React.useEffect(() => {
+    channel.on('storyboard-bridge/register-custom-knob', (name, component) => {
+      setCustomComponents(dict => ({...dict, [name]: component}))
+    })
+  }, [])
 
   return (
     <Wrapper>
@@ -20,6 +27,7 @@ export default function Panel ({channel}:Props) {
         <Widget 
           key={knob.id+key}
           knob={knob}
+          customComponents={customComponents}
           onUpdate={val => update(knob, val)}
         />
       ))}

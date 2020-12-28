@@ -18,9 +18,15 @@ const Widget_1 = require("./Widget");
 const Tabs_1 = require("./Tabs");
 function Panel({ channel }) {
     const _a = useKnobs_1.default(channel), { knobs, update, key } = _a, tabs = __rest(_a, ["knobs", "update", "key"]);
+    const [customComponents, setCustomComponents] = React.useState({});
+    React.useEffect(() => {
+        channel.on('storyboard-bridge/register-custom-knob', (name, component) => {
+            setCustomComponents(dict => (Object.assign(Object.assign({}, dict), { [name]: component })));
+        });
+    }, []);
     return (React.createElement(Wrapper, null,
         React.createElement(Tabs_1.default, { key: key, tabs: tabs }),
-        knobs.map(knob => (React.createElement(Widget_1.default, { key: knob.id + key, knob: knob, onUpdate: val => update(knob, val) })))));
+        knobs.map(knob => (React.createElement(Widget_1.default, { key: knob.id + key, knob: knob, customComponents: customComponents, onUpdate: val => update(knob, val) })))));
 }
 exports.default = Panel;
 const Wrapper = styled_components_1.default.div `

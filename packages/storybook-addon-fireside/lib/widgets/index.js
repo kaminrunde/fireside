@@ -7,7 +7,15 @@ const Markdown_1 = require("./Markdown");
 const Bool_1 = require("./Bool");
 const StringList_1 = require("./StringList");
 const ObjectList_1 = require("./ObjectList");
-function getWidget(knob) {
+const CustomKnobPlaceholder_1 = require("./CustomKnobPlaceholder");
+function getWidget(knob, customComponents) {
+    if (knob.type === 'custom-knob') {
+        // @ts-ignore
+        const result = customComponents[knob.options.__name];
+        if (!result)
+            return CustomKnobPlaceholder_1.default;
+        return result;
+    }
     return {
         string: String_1.default,
         constant: Constant_1.default,
@@ -15,7 +23,7 @@ function getWidget(knob) {
         markdown: Markdown_1.default,
         bool: Bool_1.default,
         stringList: StringList_1.default,
-        objectList: ObjectList_1.default
+        objectList: ObjectList_1.default,
     }[knob.type];
 }
 exports.default = getWidget;

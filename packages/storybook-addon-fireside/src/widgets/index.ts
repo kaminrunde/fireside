@@ -5,9 +5,19 @@ import Markdown from './Markdown'
 import Bool from './Bool'
 import StringList from './StringList'
 import ObjectList from './ObjectList'
+import CustomKnobPlaceholder from './CustomKnobPlaceholder'
 import * as t from '../types'
 
-export default function getWidget (knob:t.Knob | t.SimpleKnob) {
+export default function getWidget (
+  knob:t.Knob | t.SimpleKnob, 
+  customComponents:Record<string, any>
+) {
+  if(knob.type === 'custom-knob') {
+    // @ts-ignore
+    const result = customComponents[knob.options.__name]
+    if(!result) return CustomKnobPlaceholder
+    return result
+  }
   return {
     string: String,
     constant: Constant,
@@ -15,6 +25,6 @@ export default function getWidget (knob:t.Knob | t.SimpleKnob) {
     markdown: Markdown,
     bool: Bool,
     stringList: StringList,
-    objectList: ObjectList
+    objectList: ObjectList,
   }[knob.type]
 }

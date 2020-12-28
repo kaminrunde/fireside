@@ -123,7 +123,7 @@ export const stringList = (
  * @param {object[]} value default value
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
- * @yields {string[]}
+ * @yields {object[]}
  * @example 
  * k.objectList('todos', 'List of Todos', [], {
  *   schema: [
@@ -159,3 +159,16 @@ export function registerWidgetSelector <UserConfig>(
   manager.addSelector(name, cb)
 }
 
+export function createCustomKnob <Value, Options extends Record<string, unknown>>(name:string) {
+  return (
+    prop: string,
+    label: string,
+    value: Value,
+    options:Options&t.KnobOptions
+  ) => ({ 
+    type: 'custom-knob', 
+    prop, 
+    label, value, 
+    options: {...options, __name: name}} as any
+  )
+}

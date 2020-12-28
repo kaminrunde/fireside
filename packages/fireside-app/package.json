@@ -5,6 +5,7 @@
   "dependencies": {
     "@babel/core": "7.9.0",
     "@kaminrunde/fireside-utils": "^1.0.1-alpha.19",
+    "@kaminrunde/fireside-plugin-fullwidth-components": "^1.0.1-alpha.19",
     "@reach/router": "^1.3.3",
     "@svgr/webpack": "4.3.3",
     "@testing-library/jest-dom": "^4.2.4",

@@ -25,6 +25,7 @@
       "initialyActive": false
     }
   ],
+  "connector": "modules/connector/utils/demoConnector",
   "plugins": [
     {
       "resolve": "@kaminrunde/fireside-plugin-fullwidth-components",

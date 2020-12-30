@@ -9,23 +9,35 @@ else {
 }
 
 module.exports = function createPluginFile () {
-  var out = path.resolve(__dirname, '../src/plugins.ts')
+  var outPlugins = path.resolve(__dirname, '../src/plugins.ts')
+  var outConnector = path.resolve(__dirname, '../src/connector.ts')
 
-  var content = ''
+  /**
+   * create plugin files
+   */
+  var contentPlugins = ''
 
   if(firesideConfig.plugins) {
     firesideConfig.plugins.forEach((row,i) => {
-      content += `import plugin${i} from "${row.resolve}"\n`
+      contentPlugins += `import plugin${i} from "${row.resolve}"\n`
     })
 
-    content += '\n\nexport default {\n'
+    contentPlugins += '\n\nexport default {\n'
 
     firesideConfig.plugins.forEach((row,i) => {
-      content += `  "${row.resolve}": plugin${i},\n`
+      contentPlugins += `  "${row.resolve}": plugin${i},\n`
     })
 
-    content += '}'
+    contentPlugins += '}'
   }
 
-  fs.writeFileSync(out, content)
+  fs.writeFileSync(outPlugins, contentPlugins)
+
+  /**
+   * create connector file
+   */
+  var contentConnector = `export {default} from "${firesideConfig.connector}"`
+
+  fs.writeFileSync(outConnector, contentConnector)
+
 }

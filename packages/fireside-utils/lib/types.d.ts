@@ -1,4 +1,9 @@
 import * as et from './createPlugin/event-types';
+export declare type Connector = {
+    name: string;
+    onChange: (cb: (story?: RawStory) => void) => void;
+    setStory: (story: RawStory) => void;
+};
 export declare type PluginOptions = {
     key: string;
 };

@@ -1,5 +1,12 @@
 import * as et from './createPlugin/event-types'
 
+
+export type Connector = {
+  name: string,
+  onChange: (cb:(story?:RawStory) => void) => void,
+  setStory: (story:RawStory) => void
+}
+
 export type PluginOptions = {
   key: string
 }

@@ -8,9 +8,10 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "watch": "lerna run watch",
-    "start:example": "lerna run start --scope='demo-project'",
+    "start:example": "lerna run start --scope='example-project-fireside'",
     "start:app": "lerna run start --scope='fireside-app'",
-    "start:storybook": "lerna run storybook --scope='demo-project'",
+    "start:storybook": "lerna run storybook --scope='example-project-fireside'",
+    "build:fireside": "lerna run fireside --scope='example-project-fireside'",
     "prepare-release": "git checkout master && git pull --rebase origin master && lerna updated",
     "release": "yarn run prepare-release && lerna publish --exact",
     "prerelease": "lerna publish prerelease"

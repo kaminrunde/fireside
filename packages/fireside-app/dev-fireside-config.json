@@ -32,6 +32,12 @@
       "options": {
         "key": "fullWidth"
       }
+    },
+    {
+      "resolve": "@kaminrunde/fireside-plugin-background-rows",
+      "options": {
+        "key": "bg"
+      }
     }
   ]
 }

@@ -4,7 +4,8 @@
   "author": "Manuel Jung",
   "devDependencies": {
     "@kaminrunde/fireside-plugin-fullwidth-components": "^1.0.1-alpha.19",
-    "@kaminrunde/fireside-connector-contentful": "^1.0.1-alpha.19"
+    "@kaminrunde/fireside-connector-contentful": "^1.0.1-alpha.19",
+    "@kaminrunde/fireside-plugin-background-rows": "^1.0.1-alpha.19"
   },
   "dependencies": {
     "@babel/core": "7.9.0",

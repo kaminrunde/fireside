@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import {FiSettings} from 'react-icons/fi'
 import {useGrid} from 'modules/grid'
 import { useGridRowIconList, useGridRowBadgeList } from 'modules/plugins'
+import PluginBadge from './PluginBadge'
+import PluginButton from './PluginButton'
 
 type Props = {
   mediaSize: string,
@@ -26,12 +28,25 @@ export default function GridHeight (props:Props) {
         onChange={e => grid.setHeight(props.index, e.target.value)} 
       />
       <div className='context'>
-        {/* <button><FaArrowsAltH/></button> */}
-        <button>Hello World</button>
-        <button><FiSettings/></button>
+        {iconList.data.map((row,i) => (
+          <PluginButton
+            key={i}
+            mediaSize={props.mediaSize}
+            pluginKey={row.meta.key}
+            icon={row.payload}
+          />
+        ))}
+        <button className='settings'><FiSettings/></button>
       </div>
       <div className='badges'>
-        {/* <div><FaArrowsAltH/></div> */}
+        {badgeList.data.map((row,i) => (
+          <PluginBadge
+            key={i}
+            mediaSize={props.mediaSize}
+            pluginKey={row.meta.key}
+            badge={row.payload}
+          />
+        ))}
       </div>
     </Wrapper>
   )
@@ -69,7 +84,7 @@ const Wrapper = styled.div`
     background: white;
     z-index: 999;
 
-    > button {
+    > .settings {
       width: max-content;
       font-size: 12px;
       background: none;
@@ -87,17 +102,8 @@ const Wrapper = styled.div`
     position: absolute;
     right: -12px;
     top: -5px;
-    > div {
-      border: 1px solid grey;
-      background: white;
-      border-radius: 20px;
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      > svg { font-size: 12px;}
-    }
+    display: flex;
+    > * { margin-right: 3px;}
   }
 
   &:hover {

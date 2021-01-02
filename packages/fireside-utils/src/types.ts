@@ -21,6 +21,10 @@ export interface PluginComponentAPI<State> extends PluginAPI<State> {
   mediaSize: string
 }
 
+export interface PluginGridRowAPI<State> extends PluginAPI<State> {
+  mediaSize: string
+}
+
 export type PluginEvent = 
 | et.InitialStateEvent
 | et.ComponentBadgeEvent 

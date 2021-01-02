@@ -1,11 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var extendComponent_1 = require("./extendComponent");
+var extendGridRow_1 = require("./extendGridRow");
 function createPlugin(cb) {
     return function (options) {
         var events = [];
         var context = {
             extendComponent: function (config) { events.push.apply(events, extendComponent_1.default(config, options)); },
+            extendGridRow: function (config) { events.push.apply(events, extendGridRow_1.default(config, options)); },
             options: options
         };
         var initialState = cb(context, options);

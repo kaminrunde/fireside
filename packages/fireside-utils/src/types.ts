@@ -26,6 +26,9 @@ export type PluginEvent =
 | et.ComponentBadgeEvent 
 | et.ComponentIconEvent
 | et.ComponentSettingsEvent
+| et.GridRowBadgeEvent 
+| et.GridRowIconEvent
+| et.GridRowSettingsEvent
 
 
 export type Config = {

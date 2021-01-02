@@ -1,8 +1,10 @@
 import * as t from '../types'
 import extendComponent, {ExtendComponent} from './extendComponent'
+import extendsGridRow, {ExtendGridRow} from './extendGridRow'
 
 type PluginContext<State> = {
   extendComponent: (config:ExtendComponent<State>) => void,
+  extendGridRow: (config:ExtendGridRow<State>) => void,
   options: t.PluginOptions
 }
 
@@ -14,6 +16,7 @@ export default function createPlugin <State>(
   
     const context:PluginContext<State> = {
       extendComponent: config => { events.push(...extendComponent(config, options)) },
+      extendGridRow: config => { events.push(...extendsGridRow(config, options)) },
       options
     }
   

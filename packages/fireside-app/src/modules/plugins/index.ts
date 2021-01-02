@@ -13,6 +13,8 @@ export {default} from './reducer'
 
 export {default as useComponentIconList} from './hooks/useComponentIconList'
 export {default as useComponentBadgeList} from './hooks/useComponentBadgeList'
+export {default as useGridRowIconList} from './hooks/useGridRowIconList'
+export {default as useGridRowBadgeList} from './hooks/useGridRowBadgeList'
 export {default as usePluginState} from './hooks/usePluginState'
 
 declare global {

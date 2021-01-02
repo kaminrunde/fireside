@@ -15,7 +15,7 @@ export interface PluginComponentAPI<State> extends PluginAPI<State> {
     component: Component;
     mediaSize: string;
 }
-export declare type PluginEvent = et.InitialStateEvent | et.ComponentBadgeEvent | et.ComponentIconEvent | et.ComponentSettingsEvent;
+export declare type PluginEvent = et.InitialStateEvent | et.ComponentBadgeEvent | et.ComponentIconEvent | et.ComponentSettingsEvent | et.GridRowBadgeEvent | et.GridRowIconEvent | et.GridRowSettingsEvent;
 export declare type Config = {
     resolveController?: (name: string) => Controller<any, any> | Promise<Controller<any, any>>;
     nodes?: string[] | {

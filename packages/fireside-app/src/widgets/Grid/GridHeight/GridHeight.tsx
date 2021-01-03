@@ -30,6 +30,7 @@ export default function GridHeight (props:Props) {
       <div className='context'>
         {iconList.data.map((row,i) => (
           <PluginButton
+            row={i}
             key={i}
             mediaSize={props.mediaSize}
             pluginKey={row.meta.key}
@@ -41,6 +42,7 @@ export default function GridHeight (props:Props) {
       <div className='badges'>
         {badgeList.data.map((row,i) => (
           <PluginBadge
+            row={i}
             key={i}
             mediaSize={props.mediaSize}
             pluginKey={row.meta.key}

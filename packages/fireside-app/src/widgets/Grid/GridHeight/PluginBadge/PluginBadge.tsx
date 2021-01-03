@@ -6,6 +6,7 @@ import {PluginGridRowAPI} from '@kaminrunde/fireside-utils'
 type Props = {
   pluginKey: string,
   mediaSize: string,
+  row: number,
   badge: {
     component: any;
     isActive: (api: any) => boolean;
@@ -18,7 +19,8 @@ export default function PluginBadge (props:Props) {
   const api:PluginGridRowAPI<any> = {
     state: state.data,
     setState: (data:any) => { state.set(data) },
-    mediaSize: props.mediaSize
+    mediaSize: props.mediaSize,
+    row: props.row
   }
 
   const isActive = props.badge.isActive(api)
@@ -27,7 +29,7 @@ export default function PluginBadge (props:Props) {
 
   return (
     <Wrapper>
-      <props.badge.component/>
+      <props.badge.component {...api}/>
     </Wrapper>
   )
 }

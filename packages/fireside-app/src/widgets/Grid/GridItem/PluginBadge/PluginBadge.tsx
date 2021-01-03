@@ -31,7 +31,7 @@ export default function PluginBadge (props:Props) {
 
   return (
     <Wrapper>
-      <props.badge.component/>
+      <props.badge.component {...api}/>
     </Wrapper>
   )
 }

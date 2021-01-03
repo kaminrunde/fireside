@@ -7,6 +7,7 @@ import {PluginGridRowAPI} from '@kaminrunde/fireside-utils'
 type Props = {
   pluginKey: string,
   mediaSize: string,
+  row: number,
   icon: {
     component: any;
     isActive: (api: any) => boolean;
@@ -20,7 +21,8 @@ export default function PluginButton (props:Props) {
   const api:PluginGridRowAPI<any> = {
     state: state.data,
     setState: (data:any) => { state.set(data) },
-    mediaSize: props.mediaSize
+    mediaSize: props.mediaSize,
+    row: props.row
   }
 
   const handleClick = e => {
@@ -31,9 +33,11 @@ export default function PluginButton (props:Props) {
 
   const isActive = props.icon.isActive(api)
 
+  console.log('isActive', isActive)
+
   return (
     <Wrapper onClick={handleClick} active={isActive}>
-      <props.icon.component/>
+      <props.icon.component {...api}/>
     </Wrapper>
   )
 }
@@ -41,7 +45,8 @@ export default function PluginButton (props:Props) {
 const Wrapper = styled.button`
   width: max-content;
   font-size: 12px;
-  background: none;
+  background: ${(props) => (props.active ? "#4782B4" : "none")};
+  color: ${(props) => (props.active ? "white" : "black")};
   border: none;
   padding: 0 15px;
   cursor: pointer;

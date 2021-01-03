@@ -17,6 +17,7 @@ export interface PluginComponentAPI<State> extends PluginAPI<State> {
 }
 export interface PluginGridRowAPI<State> extends PluginAPI<State> {
     mediaSize: string;
+    row: number;
 }
 export declare type PluginEvent = et.InitialStateEvent | et.ComponentBadgeEvent | et.ComponentIconEvent | et.ComponentSettingsEvent | et.GridRowBadgeEvent | et.GridRowIconEvent | et.GridRowSettingsEvent;
 export declare type Config = {

@@ -37,7 +37,7 @@ export default function PluginComponent (props:Props) {
 
   return (
     <Wrapper onClick={handleClick} active={isActive}>
-      <props.icon.component/>
+      <props.icon.component {...api}/>
     </Wrapper>
   )
 }

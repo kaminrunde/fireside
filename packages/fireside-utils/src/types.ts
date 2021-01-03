@@ -22,7 +22,8 @@ export interface PluginComponentAPI<State> extends PluginAPI<State> {
 }
 
 export interface PluginGridRowAPI<State> extends PluginAPI<State> {
-  mediaSize: string
+  mediaSize: string,
+  row: number
 }
 
 export type PluginEvent = 

@@ -14,7 +14,7 @@ type Props = {
   }
 }
 
-export default function PluginBadge (props:Props) {
+export default React.memo(function PluginBadge (props:Props) {
   const state = usePluginState(props.pluginKey)
   const component = useComponent(props.componentId)
 
@@ -34,7 +34,7 @@ export default function PluginBadge (props:Props) {
       <props.badge.component {...api}/>
     </Wrapper>
   )
-}
+})
 
 const Wrapper = styled.div`
   margin-left: 5px;

@@ -16,7 +16,7 @@ type Props = {
   }
 }
 
-export default function PluginComponent (props:Props) {
+export default React.memo(function PluginComponent (props:Props) {
   const state = usePluginState(props.pluginKey)
   const component = useComponent(props.componentId)
 
@@ -40,7 +40,7 @@ export default function PluginComponent (props:Props) {
       <props.icon.component {...api}/>
     </Wrapper>
   )
-}
+})
 
 const Wrapper = styled.button`
   width: max-content;

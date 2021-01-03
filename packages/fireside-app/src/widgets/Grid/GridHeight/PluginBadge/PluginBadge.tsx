@@ -13,7 +13,7 @@ type Props = {
   }
 }
 
-export default function PluginBadge (props:Props) {
+export default React.memo(function PluginBadge (props:Props) {
   const state = usePluginState(props.pluginKey)
 
   const api:PluginGridRowAPI<any> = {
@@ -32,7 +32,7 @@ export default function PluginBadge (props:Props) {
       <props.badge.component {...api}/>
     </Wrapper>
   )
-}
+})
 
 const Wrapper = styled.div`
   border: 1px solid grey;

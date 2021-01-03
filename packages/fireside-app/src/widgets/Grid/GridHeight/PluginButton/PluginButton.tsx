@@ -15,7 +15,7 @@ type Props = {
   }
 }
 
-export default function PluginButton (props:Props) {
+export default React.memo(function PluginButton (props:Props) {
   const state = usePluginState(props.pluginKey)
 
   const api:PluginGridRowAPI<any> = {
@@ -33,14 +33,12 @@ export default function PluginButton (props:Props) {
 
   const isActive = props.icon.isActive(api)
 
-  console.log('isActive', isActive)
-
   return (
     <Wrapper onClick={handleClick} active={isActive}>
       <props.icon.component {...api}/>
     </Wrapper>
   )
-}
+})
 
 const Wrapper = styled.button`
   width: max-content;

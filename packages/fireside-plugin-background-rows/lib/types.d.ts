@@ -1,5 +1,7 @@
 export declare type State = {
-    [row: number]: string;
+    [mediaSize: string]: {
+        [row: number]: string;
+    };
 };
 export declare type Options = {
     key: string;

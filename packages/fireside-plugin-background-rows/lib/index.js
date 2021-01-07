@@ -18,25 +18,11 @@ exports.default = fireside_utils_1.createPlugin(function (ctx) {
     ctx.extendGridRow({
         badge: {
             component: function () { return 'B'; },
-            isActive: function (p) { return p.row in p.state; }
+            isActive: function (p) { return p.row in (p.state[p.mediaSize] || {}); }
         },
-        // icon: {
-        //   component: () => 'BG',
-        //   isActive: p => p.row in p.state,
-        //   onClick: p => {
-        //     const newState = {...p.state}
-        //     if(p.row in p.state) {
-        //       delete newState[p.row]
-        //     }
-        //     else {
-        //       newState[p.row] = 'green'
-        //     }
-        //     p.setState(newState)
-        //   }
-        // },
         settingsModal: {
             title: 'Background',
-            component: function (props) { return React.createElement(Modal_1.default, __assign({}, props, { options: ctx.options })); }
+            component: function (props) { return React.createElement(Modal_1.default, __assign({}, props.api, { options: ctx.options })); }
         }
     });
     return {};

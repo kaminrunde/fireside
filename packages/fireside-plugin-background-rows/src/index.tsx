@@ -7,25 +7,11 @@ export default createPlugin<t.State, t.Options>(ctx => {
   ctx.extendGridRow({
     badge: {
       component: () => 'B',
-      isActive: p => p.row in p.state
+      isActive: p => p.row in (p.state[p.mediaSize] || {})
     },
-    // icon: {
-    //   component: () => 'BG',
-    //   isActive: p => p.row in p.state,
-    //   onClick: p => {
-    //     const newState = {...p.state}
-    //     if(p.row in p.state) {
-    //       delete newState[p.row]
-    //     }
-    //     else {
-    //       newState[p.row] = 'green'
-    //     }
-    //     p.setState(newState)
-    //   }
-    // },
     settingsModal: {
       title: 'Background',
-      component: props => <Modal {...props} options={ctx.options}/>
+      component: props => <Modal {...props.api} options={ctx.options}/>
     }
   })
   return {}

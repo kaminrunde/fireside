@@ -19,13 +19,24 @@ type Props = {
 }
 
 export default function Component (props:Props) {
-  const state = usePluginState(props.component.pluginKey)
+  const pluginState = usePluginState(props.component.pluginKey)
+  const [state, setState] = React.useState(pluginState.data)
+  const initialRender = React.useRef(true)
 
   const api:PluginGridRowAPI<any> = {
-    state: state.data,
-    setState: (data:any) => { state.set(data) },
+    state: state,
+    setState: setState,
     ...props.extraArgs as any
   }
+
+  React.useEffect(() => {
+    if(initialRender.current) {
+      initialRender.current = false
+      return
+    }
+    pluginState.set(state)
+  }, [state])
+  
   return (
     <Wrapper>
       <h4 className='title'>{props.component.title}</h4>

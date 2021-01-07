@@ -9,12 +9,31 @@ type Props = PluginGridRowAPI<t.State> & {
 }
 
 export default function Modal (props:Props) {
+
+  const handleColorClick = (color:string) => () => {
+    props.setState({
+      ...props.state,
+      [props.mediaSize]: {
+        ...props.state[props.mediaSize],
+        [props.row]: color
+      }
+    })
+  }
+
+
+  const optIsActive = (color:string) => {
+    if(!props.state[props.mediaSize]) return
+    return props.state[props.mediaSize][props.row] === color
+  }
+
   return (
     <Wrapper>
       {props.options.colors.map(c => (
         <Opt 
+          onClick={handleColorClick(c.label)}
           key={c.color}
           bg={c.color}
+          active={optIsActive(c.label)}
         />
       ))}
     </Wrapper>
@@ -29,12 +48,12 @@ const Wrapper = styled.div`
 
 const Opt = styled.div.attrs(p => ({
   style: {
-    background: p.bg
+    background: p.bg,
   }
 }))`
   width: 50px;
   height: 50px;
   border-radius: 5px;
-  border: 1px solid black;
+  border: ${p => p.active ? '6' : '1'}px solid black;
   cursor: pointer;
 `

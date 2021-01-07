@@ -1,7 +1,9 @@
 
 
 export type State = {
-  [row:number]: string
+  [mediaSize:string]: {
+    [row:number]: string
+  }
 }
 
 export type Options = {

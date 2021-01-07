@@ -1,6 +1,7 @@
 import { PluginGridRowAPI } from '@kaminrunde/fireside-utils';
-declare type State = {
-    [row: number]: string;
+import * as t from './types';
+declare type Props = PluginGridRowAPI<t.State> & {
+    options: t.Options;
 };
-export default function Modal(props: PluginGridRowAPI<State>): any;
+export default function Modal(props: Props): any;
 export {};

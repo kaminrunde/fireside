@@ -5,19 +5,19 @@ function extendGridRow(config, options) {
     if (config.badge)
         events.push({
             type: 'GRID_ROW_BADGE',
-            meta: options,
+            meta: { key: options.key },
             payload: config.badge
         });
     if (config.icon)
         events.push({
             type: 'GRID_ROW_ICON',
-            meta: options,
+            meta: { key: options.key },
             payload: config.icon
         });
     if (config.settingsModal)
         events.push({
             type: 'GRID_ROW_SETTINGS',
-            meta: options,
+            meta: { key: options.key },
             payload: config.settingsModal
         });
     return events;

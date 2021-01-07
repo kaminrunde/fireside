@@ -11,31 +11,32 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var React = require("react");
 var fireside_utils_1 = require("@kaminrunde/fireside-utils");
 var Modal_1 = require("./Modal");
 exports.default = fireside_utils_1.createPlugin(function (ctx) {
     ctx.extendGridRow({
         badge: {
-            component: function () { return null; },
+            component: function () { return 'B'; },
             isActive: function (p) { return p.row in p.state; }
         },
-        icon: {
-            component: function () { return 'BG'; },
-            isActive: function (p) { return p.row in p.state; },
-            onClick: function (p) {
-                var newState = __assign({}, p.state);
-                if (p.row in p.state) {
-                    delete newState[p.row];
-                }
-                else {
-                    newState[p.row] = 'green';
-                }
-                p.setState(newState);
-            }
-        },
+        // icon: {
+        //   component: () => 'BG',
+        //   isActive: p => p.row in p.state,
+        //   onClick: p => {
+        //     const newState = {...p.state}
+        //     if(p.row in p.state) {
+        //       delete newState[p.row]
+        //     }
+        //     else {
+        //       newState[p.row] = 'green'
+        //     }
+        //     p.setState(newState)
+        //   }
+        // },
         settingsModal: {
             title: 'Background',
-            component: Modal_1.default
+            component: function (props) { return React.createElement(Modal_1.default, __assign({}, props, { options: ctx.options })); }
         }
     });
     return {};

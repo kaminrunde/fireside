@@ -2,9 +2,10 @@ import * as React from 'react'
 import styled from 'styled-components'
 import {FiSettings} from 'react-icons/fi'
 import {useGrid} from 'modules/grid'
-import { useGridRowIconList, useGridRowBadgeList } from 'modules/plugins'
+import { useGridRowIconList, useGridRowBadgeList, useGridRowSettingList } from 'modules/plugins'
 import PluginBadge from './PluginBadge'
 import PluginButton from './PluginButton'
+import PluginModal from '../PluginModal'
 
 type Props = {
   mediaSize: string,
@@ -19,6 +20,17 @@ export default function GridHeight (props:Props) {
   const grid = useGrid(props.mediaSize)
   const iconList = useGridRowIconList()
   const badgeList = useGridRowBadgeList()
+  const settingsList = useGridRowSettingList()
+  const [showModal, setShowModal] = React.useState(false)
+
+
+  const pluginComponents = React.useMemo(() => {
+    return settingsList.data.map(row => ({
+      title: row.payload.title,
+      component: row.payload.component,
+      pluginKey: row.meta.key
+    }))
+  }, settingsList.data)
 
   return (
     <Wrapper>
@@ -30,19 +42,21 @@ export default function GridHeight (props:Props) {
       <div className='context'>
         {iconList.data.map((row,i) => (
           <PluginButton
-            row={i}
+            row={props.index}
             key={i}
             mediaSize={props.mediaSize}
             pluginKey={row.meta.key}
             icon={row.payload}
           />
         ))}
-        <button className='settings'><FiSettings/></button>
+        {settingsList.data.length > 0 && (
+          <button className='settings' onClick={() => setShowModal(true)}><FiSettings/></button>
+        )}
       </div>
       <div className='badges'>
         {badgeList.data.map((row,i) => (
           <PluginBadge
-            row={i}
+            row={props.index}
             key={i}
             mediaSize={props.mediaSize}
             pluginKey={row.meta.key}
@@ -50,6 +64,17 @@ export default function GridHeight (props:Props) {
           />
         ))}
       </div>
+      {showModal && (
+        <PluginModal 
+          onClose={() => setShowModal(false)}
+          title={`Grid row [${props.index}]`}
+          components={pluginComponents}
+          extraArgs={{
+            mediaSize: props.mediaSize,
+            row: props.index
+          }}
+        />
+      )}
     </Wrapper>
   )
 }

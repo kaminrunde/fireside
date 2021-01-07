@@ -16,27 +16,27 @@ export type ExtendComponent<State> = {
   }
 }
 
-export default function extendComponent <State>(
+export default function extendComponent <State,Options extends t.PluginOptions>(
   config:ExtendComponent<State>,
-  options: t.PluginOptions 
+  options: Options
 ):t.PluginEvent[] {
   let events:t.PluginEvent[] = []
 
   if(config.badge) events.push({
     type: 'COMPONENT_BADGE',
-    meta: options,
+    meta: {key:options.key},
     payload: config.badge
   })
 
   if(config.icon) events.push({
     type: 'COMPONENT_ICON',
-    meta: options,
+    meta: {key:options.key},
     payload: config.icon
   })
 
   if(config.settingsModal) events.push({
     type: 'COMPONENT_SETTINGS',
-    meta: options,
+    meta: {key:options.key},
     payload: config.settingsModal
   })
 

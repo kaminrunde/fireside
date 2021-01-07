@@ -16,27 +16,27 @@ export type ExtendGridRow<State> = {
   }
 }
 
-export default function extendGridRow <State>(
+export default function extendGridRow <State, Options extends t.PluginOptions>(
   config:ExtendGridRow<State>,
-  options: t.PluginOptions 
+  options: Options
 ):t.PluginEvent[] {
   let events:t.PluginEvent[] = []
 
   if(config.badge) events.push({
     type: 'GRID_ROW_BADGE',
-    meta: options,
+    meta: {key:options.key},
     payload: config.badge
   })
 
   if(config.icon) events.push({
     type: 'GRID_ROW_ICON',
-    meta: options,
+    meta: {key:options.key},
     payload: config.icon
   })
 
   if(config.settingsModal) events.push({
     type: 'GRID_ROW_SETTINGS',
-    meta: options,
+    meta: {key:options.key},
     payload: config.settingsModal
   })
 

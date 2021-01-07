@@ -14,4 +14,4 @@ export declare type ExtendComponent<State> = {
         component: any;
     };
 };
-export default function extendComponent<State>(config: ExtendComponent<State>, options: t.PluginOptions): t.PluginEvent[];
+export default function extendComponent<State, Options extends t.PluginOptions>(config: ExtendComponent<State>, options: Options): t.PluginEvent[];

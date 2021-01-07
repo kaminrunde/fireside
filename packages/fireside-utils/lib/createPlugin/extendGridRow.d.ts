@@ -14,4 +14,4 @@ export declare type ExtendGridRow<State> = {
         component: any;
     };
 };
-export default function extendGridRow<State>(config: ExtendGridRow<State>, options: t.PluginOptions): t.PluginEvent[];
+export default function extendGridRow<State, Options extends t.PluginOptions>(config: ExtendGridRow<State>, options: Options): t.PluginEvent[];

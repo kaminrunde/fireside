@@ -1,2 +1,3 @@
-declare const _default: (options: import("@kaminrunde/fireside-utils").PluginOptions) => import("@kaminrunde/fireside-utils").PluginEvent[];
+import * as t from './types';
+declare const _default: (options: t.Options) => import("@kaminrunde/fireside-utils").PluginEvent[];
 export default _default;

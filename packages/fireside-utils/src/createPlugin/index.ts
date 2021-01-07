@@ -2,19 +2,19 @@ import * as t from '../types'
 import extendComponent, {ExtendComponent} from './extendComponent'
 import extendsGridRow, {ExtendGridRow} from './extendGridRow'
 
-type PluginContext<State> = {
+type PluginContext<State,Options> = {
   extendComponent: (config:ExtendComponent<State>) => void,
   extendGridRow: (config:ExtendGridRow<State>) => void,
-  options: t.PluginOptions
+  options: Options
 }
 
-export default function createPlugin <State>(
-  cb:( context: PluginContext<State>, options:t.PluginOptions)=> State
-):(options:t.PluginOptions) => t.PluginEvent[] {
+export default function createPlugin <State, Options extends t.PluginOptions>(
+  cb:( context: PluginContext<State, Options>, options:Options)=> State
+):(options:Options) => t.PluginEvent[] {
   return options => {
     let events:t.PluginEvent[] = []
   
-    const context:PluginContext<State> = {
+    const context:PluginContext<State, Options> = {
       extendComponent: config => { events.push(...extendComponent(config, options)) },
       extendGridRow: config => { events.push(...extendsGridRow(config, options)) },
       options

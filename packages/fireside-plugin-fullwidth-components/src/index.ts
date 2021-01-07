@@ -8,7 +8,7 @@ type State = {
   }
 }
 
-export default createPlugin<State>(ctx => {
+export default createPlugin<State, {key:string}>(ctx => {
   ctx.extendComponent({
     badge: {
       component: FaArrowsAltH,

@@ -5,19 +5,19 @@ function extendComponent(config, options) {
     if (config.badge)
         events.push({
             type: 'COMPONENT_BADGE',
-            meta: options,
+            meta: { key: options.key },
             payload: config.badge
         });
     if (config.icon)
         events.push({
             type: 'COMPONENT_ICON',
-            meta: options,
+            meta: { key: options.key },
             payload: config.icon
         });
     if (config.settingsModal)
         events.push({
             type: 'COMPONENT_SETTINGS',
-            meta: options,
+            meta: { key: options.key },
             payload: config.settingsModal
         });
     return events;

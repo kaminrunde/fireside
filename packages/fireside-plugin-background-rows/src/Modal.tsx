@@ -10,21 +10,22 @@ type Props = PluginGridRowAPI<t.State> & {
 
 export default function Modal (props:Props) {
   return (
-    <span>
-      Hello World
-    </span>
-    // <Wrapper>
-    //   {props.options.colors.map(c => (
-    //     <Opt 
-    //       key={c.color}
-    //       bg={c.color}
-    //     />
-    //   ))}
-    // </Wrapper>
+    <Wrapper>
+      {props.options.colors.map(c => (
+        <Opt 
+          key={c.color}
+          bg={c.color}
+        />
+      ))}
+    </Wrapper>
   )
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+`
 
 const Opt = styled.div.attrs(p => ({
   style: {
@@ -35,4 +36,5 @@ const Opt = styled.div.attrs(p => ({
   height: 50px;
   border-radius: 5px;
   border: 1px solid black;
+  cursor: pointer;
 `

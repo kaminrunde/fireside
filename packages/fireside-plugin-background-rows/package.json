@@ -20,10 +20,10 @@
   "devDependencies": {
     "react": "^16.8.0",
     "react-icons": "^4.1.0",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.2.1",
+    "typescript": "3.9.5"
   },
   "dependencies": {
-    "@kaminrunde/fireside-utils": "^1.0.1-alpha.19",
-    "typescript": "3.9.5"
+    "@kaminrunde/fireside-utils": "^1.0.1-alpha.19"
   }
 }

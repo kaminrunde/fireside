@@ -23,7 +23,7 @@ exports.default = fireside_utils_1.createPlugin(function (ctx) {
         },
         settingsModal: {
             title: 'Background',
-            component: function (props) { return React.createElement(Modal_1.default, __assign({}, props.api, { options: ctx.options })); }
+            component: function (props) { return React.createElement(Modal_1.default, __assign({}, props, { options: ctx.options })); }
         }
     });
     return {};

@@ -40,7 +40,7 @@ export default function Component (props:Props) {
   return (
     <Wrapper>
       <h4 className='title'>{props.component.title}</h4>
-      <props.component.component api={api}/>
+      <props.component.component {...api}/>
     </Wrapper>
   )
 }

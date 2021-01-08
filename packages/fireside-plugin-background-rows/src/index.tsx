@@ -12,7 +12,7 @@ export default createPlugin<t.State, t.Options>(ctx => {
     },
     settingsModal: {
       title: 'Background',
-      component: props => <Modal {...props.api} options={ctx.options}/>
+      component: props => <Modal {...props} options={ctx.options}/>
     }
   })
   return {}

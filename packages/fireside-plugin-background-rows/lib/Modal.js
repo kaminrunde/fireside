@@ -17,10 +17,21 @@ var __assign = (this && this.__assign) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var styled_components_1 = require("styled-components");
+var immer_1 = require("immer");
 function Modal(props) {
     var handleColorClick = function (color) { return function () {
-        var _a, _b;
-        props.setState(__assign(__assign({}, props.state), (_a = {}, _a[props.mediaSize] = __assign(__assign({}, props.state[props.mediaSize]), (_b = {}, _b[props.row] = color, _b)), _a)));
+        var state = immer_1.default(props.state, function (state) {
+            var _a, _b;
+            if (state[props.mediaSize] && state[props.mediaSize][props.row] === color) {
+                delete state[props.mediaSize][props.row];
+                if (!Object.keys(state[props.mediaSize]).length) {
+                    delete state[props.mediaSize];
+                }
+                return state;
+            }
+            return __assign(__assign({}, state), (_a = {}, _a[props.mediaSize] = __assign(__assign({}, state[props.mediaSize]), (_b = {}, _b[props.row] = color, _b)), _a));
+        });
+        props.setState(state);
     }; };
     var optIsActive = function (color) {
         if (!props.state[props.mediaSize])

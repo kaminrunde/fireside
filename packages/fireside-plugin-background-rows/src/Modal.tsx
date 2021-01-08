@@ -2,6 +2,7 @@ import * as React from 'react'
 import {PluginGridRowAPI} from '@kaminrunde/fireside-utils'
 import styled from 'styled-components'
 import * as t from './types'
+import produce from 'immer'
 
 
 type Props = PluginGridRowAPI<t.State> & {
@@ -11,13 +12,25 @@ type Props = PluginGridRowAPI<t.State> & {
 export default function Modal (props:Props) {
 
   const handleColorClick = (color:string) => () => {
-    props.setState({
-      ...props.state,
-      [props.mediaSize]: {
-        ...props.state[props.mediaSize],
-        [props.row]: color
+    const state = produce(props.state, state => {
+
+      if(state[props.mediaSize] && state[props.mediaSize][props.row] === color) {
+        delete state[props.mediaSize][props.row]
+        if(!Object.keys(state[props.mediaSize]).length) {
+          delete state[props.mediaSize]
+        }
+        return state
+      } 
+      
+      return {
+        ...state,
+        [props.mediaSize]: {
+          ...state[props.mediaSize],
+          [props.row]: color
+        }
       }
     })
+    props.setState(state)
   }
 
 

@@ -14,10 +14,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var fireside_utils_1 = require("@kaminrunde/fireside-utils");
 var Modal_1 = require("./Modal");
+var Badge_1 = require("./Badge");
 exports.default = fireside_utils_1.createPlugin(function (ctx) {
     ctx.extendGridRow({
         badge: {
-            component: function () { return 'B'; },
+            component: function (props) { return React.createElement(Badge_1.default, __assign({}, props, { options: ctx.options })); },
             isActive: function (p) { return p.row in (p.state[p.mediaSize] || {}); }
         },
         settingsModal: {

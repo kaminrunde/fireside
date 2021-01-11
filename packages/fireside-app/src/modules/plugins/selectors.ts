@@ -35,6 +35,14 @@ export const getGridRowBadges = createSelector(
   }
 )
 
+export const getSettingsPageComponents = createSelector(
+  (state:State) => state.data,
+  plugins => {
+    const result = plugins.filter(p => p.type === 'SETTINGS_PAGE_ROW')
+    return result as pluginEvents.SettingsPageRowEvent[]
+  }
+)
+
 export const getGridRowSettingComponents = createSelector(
   (state:State) => state.data,
   plugins => {

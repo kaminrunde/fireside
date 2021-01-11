@@ -147,6 +147,7 @@ export default function Grid (props:Props) {
 }
 
 const Wrapper = styled.div`
+  padding: 0 5px;
   position: relative;
   width: 100%;
   height: calc(100vh - 60px);

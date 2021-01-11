@@ -67,3 +67,35 @@ export declare type GridRowSettingsEvent = {
         component: any;
     };
 };
+export declare type SettingsPageRowEvent = {
+    type: 'SETTINGS_PAGE_ROW';
+    meta: {
+        key: string;
+    };
+    payload: {
+        title: string;
+        component: any;
+    };
+};
+export declare type CreatePageNavigationEvent = {
+    type: 'CREATE_PAGE_NAVIGATION';
+    meta: {
+        key: string;
+        slug: string;
+    };
+    payload: {
+        icon?: any;
+        label: any;
+    };
+};
+export declare type CreatePagePageEvent = {
+    type: 'CREATE_PAGE_PAGE';
+    meta: {
+        key: string;
+        slug: string;
+    };
+    payload: {
+        title: string;
+        component: any;
+    };
+};

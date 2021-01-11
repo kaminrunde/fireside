@@ -13,6 +13,7 @@
   "author": "Manuel Jung",
   "license": "MIT",
   "dependencies": {
+    "slugify": "^1.4.6",
     "typescript": "^3.9.5"
   },
   "repository": {

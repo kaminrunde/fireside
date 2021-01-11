@@ -19,7 +19,9 @@ export interface PluginGridRowAPI<State> extends PluginAPI<State> {
     mediaSize: string;
     row: number;
 }
-export declare type PluginEvent = et.InitialStateEvent | et.ComponentBadgeEvent | et.ComponentIconEvent | et.ComponentSettingsEvent | et.GridRowBadgeEvent | et.GridRowIconEvent | et.GridRowSettingsEvent;
+export interface SettingsPageAPI<State> extends PluginAPI<State> {
+}
+export declare type PluginEvent = et.InitialStateEvent | et.ComponentBadgeEvent | et.ComponentIconEvent | et.ComponentSettingsEvent | et.GridRowBadgeEvent | et.GridRowIconEvent | et.GridRowSettingsEvent | et.SettingsPageRowEvent | et.CreatePageNavigationEvent | et.CreatePagePageEvent;
 export declare type Config = {
     resolveController?: (name: string) => Controller<any, any> | Promise<Controller<any, any>>;
     nodes?: string[] | {

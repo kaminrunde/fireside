@@ -60,3 +60,30 @@ export type GridRowSettingsEvent = {
     component: any
   }
 }
+
+export type SettingsPageRowEvent = {
+  type: 'SETTINGS_PAGE_ROW'
+  meta: {key:string}
+  payload: {
+    title: string
+    component: any
+  }
+}
+
+export type CreatePageNavigationEvent = {
+  type: 'CREATE_PAGE_NAVIGATION'
+  meta: {key:string, slug: string}
+  payload: {
+    icon?: any
+    label: any
+  }
+}
+
+export type CreatePagePageEvent = {
+  type: 'CREATE_PAGE_PAGE'
+  meta: {key:string, slug: string}
+  payload: {
+    title: string
+    component: any
+  }
+}

@@ -26,6 +26,10 @@ export interface PluginGridRowAPI<State> extends PluginAPI<State> {
   row: number
 }
 
+export interface SettingsPageAPI<State> extends PluginAPI<State> {
+  
+}
+
 export type PluginEvent = 
 | et.InitialStateEvent
 | et.ComponentBadgeEvent 
@@ -34,6 +38,9 @@ export type PluginEvent =
 | et.GridRowBadgeEvent 
 | et.GridRowIconEvent
 | et.GridRowSettingsEvent
+| et.SettingsPageRowEvent
+| et.CreatePageNavigationEvent
+| et.CreatePagePageEvent
 
 
 export type Config = {

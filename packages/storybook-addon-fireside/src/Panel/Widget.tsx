@@ -12,7 +12,7 @@ type Props = {
 
 export default function Widget (props:Props) {
   const [value, setValue] = React.useState(props.knob.value)
-  const Component:any = getWidget(props.knob, props.customKnobs)
+  const Component:any = getWidget(props.knob, props.customComponents)
   const [focus, setFocus] = React.useState(false)
 
   const update = val => {

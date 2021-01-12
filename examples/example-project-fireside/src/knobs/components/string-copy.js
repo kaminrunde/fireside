@@ -1,10 +1,13 @@
-import registerKnob from '@kaminrunde/storybook-addon-fireside/lib/registerKnob'
+// import registerKnob from '@kaminrunde/storybook-addon-fireside/lib/registerKnob'
 // import styled from 'styled-components'
 // import * as React from 'react'
+const registerKnob = require('@kaminrunde/storybook-addon-fireside/lib/registerKnob')
 
+
+console.log('######################## call #######################')
 registerKnob('string', function String (props) {
   return (
-    null
+    'hello world'
     // <Wrapper focus={props.focus}>
     //   <input 
     //     type='text'

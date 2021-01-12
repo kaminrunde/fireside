@@ -8,6 +8,7 @@ export interface KnobOptions {
     hint?: string;
     /** renders knob in seperate tab. Knobs with the same tab are grouped together. if not defined tab will default to "DEFAULT" */
     tab?: string;
+    validate?: (value: any) => void | null | false | string;
 }
 export interface StringOptions extends KnobOptions {
 }

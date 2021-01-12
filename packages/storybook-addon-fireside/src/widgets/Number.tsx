@@ -7,6 +7,7 @@ type Props = {
   onChange: (value:number) => void,
   focus: boolean,
   options: t.NumberOptions,
+  hasError: boolean,
 }
 
 export default function String (props:Props) {

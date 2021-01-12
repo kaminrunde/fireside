@@ -21,16 +21,26 @@ export default function Widget (props:Props) {
 
   if(props.knob.type === 'constant') return null
 
+  const error = props.knob.options.validate
+    ? props.knob.options.validate(value)
+    : null
+
   return (
     <Wrapper onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}>
       <h3 className='label'>{props.knob.label}</h3>
       {props.knob.options.hint && (
         <div className='hint'>{props.knob.options.hint}</div>
       )}
+      {error && (
+        <div className='error'>
+          {error}
+        </div>
+      )}
       <Component 
         value={value}
         onChange={update}
         focus={focus}
+        hasError={!!error}
         options={props.knob.options}
       />
     </Wrapper>
@@ -48,5 +58,13 @@ const Wrapper = styled.div`
   > .hint {
     color: grey;
     line-height: 18px;
+  }
+  > .error {
+    font-size: 16px;
+    letter-spacing: 1px;
+    line-height: 20px;
+    color: #ff5722;
+    margin-top: -5px;
+    margin-bottom: 5px;
   }
 `

@@ -1,4 +1,9 @@
 import * as et from './createPlugin/event-types';
+export declare type Connector = {
+    name: string;
+    onChange: (cb: (story?: RawStory) => void) => void;
+    setStory: (story: RawStory) => void;
+};
 export declare type PluginOptions = {
     key: string;
 };
@@ -10,7 +15,13 @@ export interface PluginComponentAPI<State> extends PluginAPI<State> {
     component: Component;
     mediaSize: string;
 }
-export declare type PluginEvent = et.InitialStateEvent | et.ComponentBadgeEvent | et.ComponentIconEvent | et.ComponentSettingsEvent;
+export interface PluginGridRowAPI<State> extends PluginAPI<State> {
+    mediaSize: string;
+    row: number;
+}
+export interface SettingsPageAPI<State> extends PluginAPI<State> {
+}
+export declare type PluginEvent = et.InitialStateEvent | et.ComponentBadgeEvent | et.ComponentIconEvent | et.ComponentSettingsEvent | et.GridRowBadgeEvent | et.GridRowIconEvent | et.GridRowSettingsEvent | et.SettingsPageRowEvent | et.CreatePageNavigationEvent | et.CreatePagePageEvent;
 export declare type Config = {
     resolveController?: (name: string) => Controller<any, any> | Promise<Controller<any, any>>;
     nodes?: string[] | {

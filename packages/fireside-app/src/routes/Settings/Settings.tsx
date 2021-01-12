@@ -5,6 +5,8 @@ import Toggle from 'react-toggle'
 import "react-toggle/style.css"
 import MediaIcon from 'components/MediaIcon'
 import config from 'config'
+import {useSettingsPageComponents} from 'modules/plugins'
+import Component from './Component'
 
 type Props = {
   path: string
@@ -12,6 +14,7 @@ type Props = {
 
 export default function Settings (props:Props) {
   const ms = useActiveMediaSizes()
+  const pluginComponents = useSettingsPageComponents()
   return (
     <Wrapper className='Settings'>
       <div className='row ms'>
@@ -33,6 +36,13 @@ export default function Settings (props:Props) {
         })}
         <hr/>
       </div>
+      {pluginComponents.data.map(row => (
+        <div className='row ms'>
+          <h3>{row.payload.title}</h3>
+          <Component component={row.payload.component} pluginKey={row.meta.key} />
+          <hr/>
+        </div>
+      ))}
     </Wrapper>
   )
 }
@@ -43,6 +53,9 @@ const Wrapper = styled.div`
   > .row {
     > h3 {
       font-family: 'Open Sans', sans-serif;
+    }
+    > hr {
+      margin: 40px 0;
     }
   }
 
@@ -56,19 +69,3 @@ const Wrapper = styled.div`
     }
   }
 `
-
-// const plugin = ctx => ({
-//   name: 'foo',
-//   settings: {
-//     title: 'A-B Test',
-//     createRow: props => <div/>
-//   },
-//   gridConfig: {
-//     name: 'Foo',
-//     createRow: props => <div/>
-//   },
-//   gridRowConfig: {
-//     name: 'A-B Test',
-//     createRow: props => <div/>
-//   }
-// })

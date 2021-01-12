@@ -6,6 +6,7 @@ type Props = {
   value: boolean,
   onChange: (value:boolean) => void,
   focus: boolean,
+  hasError: boolean,
   options: t.BoolOptions,
 }
 

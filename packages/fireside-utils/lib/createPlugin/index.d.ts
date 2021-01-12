@@ -1,8 +1,14 @@
 import * as t from '../types';
 import { ExtendComponent } from './extendComponent';
-declare type PluginContext<State> = {
+import { ExtendGridRow } from './extendGridRow';
+import { ExtendSettingsPage } from './extendSettingsPage';
+import { CreatePage } from './createPage';
+declare type PluginContext<State, Options> = {
     extendComponent: (config: ExtendComponent<State>) => void;
-    options: t.PluginOptions;
+    extendGridRow: (config: ExtendGridRow<State>) => void;
+    extendSettingsPage: (config: ExtendSettingsPage<State>) => void;
+    createPage: (config: CreatePage<State>) => void;
+    options: Options;
 };
-export default function createPlugin<State>(cb: (context: PluginContext<State>, options: t.PluginOptions) => State): (options: t.PluginOptions) => t.PluginEvent[];
+export default function createPlugin<State, Options extends t.PluginOptions>(cb: (context: PluginContext<State, Options>, options: Options) => State): (options: Options) => t.PluginEvent[];
 export {};

@@ -1,6 +1,6 @@
 {
   "name": "@kaminrunde/fireside-utils",
-  "version": "1.0.1-alpha.19",
+  "version": "1.0.1-alpha.21",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -13,6 +13,7 @@
   "author": "Manuel Jung",
   "license": "MIT",
   "dependencies": {
+    "slugify": "^1.4.6",
     "typescript": "^3.9.5"
   },
   "repository": {

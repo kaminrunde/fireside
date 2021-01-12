@@ -1,5 +1,12 @@
 import * as et from './createPlugin/event-types'
 
+
+export type Connector = {
+  name: string,
+  onChange: (cb:(story?:RawStory) => void) => void,
+  setStory: (story:RawStory) => void
+}
+
 export type PluginOptions = {
   key: string
 }
@@ -14,11 +21,26 @@ export interface PluginComponentAPI<State> extends PluginAPI<State> {
   mediaSize: string
 }
 
+export interface PluginGridRowAPI<State> extends PluginAPI<State> {
+  mediaSize: string,
+  row: number
+}
+
+export interface SettingsPageAPI<State> extends PluginAPI<State> {
+  
+}
+
 export type PluginEvent = 
 | et.InitialStateEvent
 | et.ComponentBadgeEvent 
 | et.ComponentIconEvent
 | et.ComponentSettingsEvent
+| et.GridRowBadgeEvent 
+| et.GridRowIconEvent
+| et.GridRowSettingsEvent
+| et.SettingsPageRowEvent
+| et.CreatePageNavigationEvent
+| et.CreatePagePageEvent
 
 
 export type Config = {

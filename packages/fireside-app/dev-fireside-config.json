@@ -25,11 +25,23 @@
       "initialyActive": false
     }
   ],
+  "connector": "modules/connector/utils/demoConnector",
   "plugins": [
     {
       "resolve": "@kaminrunde/fireside-plugin-fullwidth-components",
       "options": {
         "key": "fullWidth"
+      }
+    },
+    {
+      "resolve": "@kaminrunde/fireside-plugin-background-rows",
+      "options": {
+        "key": "bg",
+        "colors": [
+          { "color": "green", "label": "green"},
+          { "color": "silver", "label": "silver"},
+          { "color": "grey", "label": "grey"}
+        ]
       }
     }
   ]

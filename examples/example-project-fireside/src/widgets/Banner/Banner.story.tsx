@@ -10,7 +10,9 @@ b.registerWidgetSelector(Component.name, props => {
 
 storiesOf('cms/base/Banner', module)
   .add('Builder', b.create('Banner', Component, [
-    b.string('gridArea', 'Grid-Area', 'Banner'),
+    b.string('gridArea', 'Grid-Area', 'Banner', {
+      validate: s => !s && 'a value is needed'
+    }),
     b.bool('selected', 'Selected', true),
     string('foo', 'Label', 'foo',{
       tab: 'TAB-1',

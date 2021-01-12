@@ -8,6 +8,7 @@ type Props = {
   onChange: (value:string) => void,
   focus: boolean,
   options: t.MarkdownOptions,
+  hasError: boolean,
 }
 
 export default function Markdown (props:Props) {

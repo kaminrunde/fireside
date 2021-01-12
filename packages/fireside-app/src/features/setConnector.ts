@@ -1,7 +1,6 @@
 import {addRule} from 'redux-ruleset'
 import * as $connector from 'modules/connector'
-// import connector from 'modules/connector/utils/demoConnector'
-import connector from 'modules/connector/utils/contentfulConnector'
+import connector from 'connector'
 import {LOCATION_CHANGE} from "redux-first-history"
 
 addRule({

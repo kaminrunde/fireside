@@ -13,10 +13,14 @@ function Widget(props) {
     };
     if (props.knob.type === 'constant')
         return null;
+    const error = props.knob.options.validate
+        ? props.knob.options.validate(value)
+        : null;
     return (React.createElement(Wrapper, { onFocus: () => setFocus(true), onBlur: () => setFocus(false) },
         React.createElement("h3", { className: 'label' }, props.knob.label),
         props.knob.options.hint && (React.createElement("div", { className: 'hint' }, props.knob.options.hint)),
-        React.createElement(Component, { value: value, onChange: update, focus: focus, options: props.knob.options })));
+        error && (React.createElement("div", { className: 'error' }, error)),
+        React.createElement(Component, { value: value, onChange: update, focus: focus, hasError: !!error, options: props.knob.options })));
 }
 exports.default = Widget;
 const Wrapper = styled_components_1.default.div `
@@ -30,6 +34,14 @@ const Wrapper = styled_components_1.default.div `
   > .hint {
     color: grey;
     line-height: 18px;
+  }
+  > .error {
+    font-size: 16px;
+    letter-spacing: 1px;
+    line-height: 20px;
+    color: #ff5722;
+    margin-top: -5px;
+    margin-bottom: 5px;
   }
 `;
 //# sourceMappingURL=Widget.js.map

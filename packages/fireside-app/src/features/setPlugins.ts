@@ -1,7 +1,7 @@
 import config from 'config'
 import {a, c} from 'modules/plugins'
-import p1 from 'plugins/full-width-components'
 import {addRule} from 'redux-ruleset'
+import plugins from 'plugins'
 
 addRule({
   id: 'feature/SET_PLUGINS',
@@ -13,10 +13,7 @@ addRule({
     let buffer = []
 
     for (let plugin of config.plugins) {
-      let create = p1
-      if(plugin.resolve !== '@kaminrunde/fireside-plugin-fullwidth-components'){
-        create = require(plugin.resolve)
-      }
+      let create = plugins[plugin.resolve]
       const feed = create(plugin.options)
       buffer.push(...feed)
     }
@@ -24,3 +21,4 @@ addRule({
     return a.setPluginEvents(buffer)
   }
 })
+

@@ -1,14 +1,13 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import {usePluginState} from 'modules/plugins'
-import {PluginComponentAPI} from '@kaminrunde/fireside-utils'
-import { useComponent } from "modules/components";
+import {PluginGridRowAPI} from '@kaminrunde/fireside-utils'
 
 
 type Props = {
   pluginKey: string,
-  componentId: string,
   mediaSize: string,
+  row: number,
   icon: {
     component: any;
     isActive: (api: any) => boolean;
@@ -16,15 +15,14 @@ type Props = {
   }
 }
 
-export default function PluginComponent (props:Props) {
+export default React.memo(function PluginButton (props:Props) {
   const state = usePluginState(props.pluginKey)
-  const component = useComponent(props.componentId)
 
-  const api:PluginComponentAPI<any> = {
+  const api:PluginGridRowAPI<any> = {
     state: state.data,
     setState: (data:any) => { state.set(data) },
-    component: component.data,
-    mediaSize: props.mediaSize
+    mediaSize: props.mediaSize,
+    row: props.row
   }
 
   const handleClick = e => {
@@ -37,14 +35,14 @@ export default function PluginComponent (props:Props) {
 
   return (
     <Wrapper onClick={handleClick} active={isActive}>
-      <props.icon.component/>
+      <props.icon.component {...api}/>
     </Wrapper>
   )
-}
+})
 
 const Wrapper = styled.button`
   width: max-content;
-  font-size: 15px;
+  font-size: 12px;
   background: ${(props) => (props.active ? "#4782B4" : "none")};
   color: ${(props) => (props.active ? "white" : "black")};
   border: none;
@@ -52,7 +50,6 @@ const Wrapper = styled.button`
   cursor: pointer;
   border-left: 1px solid lightgrey;
   padding-top: 3px;
-  &:first-child {
-    border-left: none;
-  }
+  > svg {font-size: 15px;}
+  &:first-child { border-left: none;}
 `

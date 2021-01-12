@@ -11,6 +11,14 @@ export interface KnobOptions {
   hint?: string,
   /** renders knob in seperate tab. Knobs with the same tab are grouped together. if not defined tab will default to "DEFAULT" */
   tab?: string
+  /** 
+   * if an error string is returned, the error is displayed below the headline
+   * @example
+   * k.string('foo', 'Foo', '', {
+   *   validate: s => !s && 'a value is required'
+   * })
+   */,
+  validate?: (value:any) => void | null | false | string
 }
 
 export interface StringOptions extends KnobOptions {}

@@ -11,6 +11,14 @@ export const getComponentIcons = createSelector(
   }
 )
 
+export const getGridRowIcons = createSelector(
+  (state:State) => state.data,
+  plugins => {
+    const result = plugins.filter(p => p.type === 'GRID_ROW_ICON')
+    return result as pluginEvents.GridRowIconEvent[]
+  }
+)
+
 export const getComponentBadges = createSelector(
   (state:State) => state.data,
   plugins => {
@@ -19,11 +27,29 @@ export const getComponentBadges = createSelector(
   }
 )
 
-export const getComponentIcon = createReSelector(
+export const getGridRowBadges = createSelector(
   (state:State) => state.data,
-  (_:State, key:string) => key,
-  (plugins, key) => plugins.find(p => p.meta.key === key)
-)((_, key) => key)
+  plugins => {
+    const result = plugins.filter(p => p.type === 'GRID_ROW_BADGE')
+    return result as pluginEvents.GridRowBadgeEvent[]
+  }
+)
+
+export const getSettingsPageComponents = createSelector(
+  (state:State) => state.data,
+  plugins => {
+    const result = plugins.filter(p => p.type === 'SETTINGS_PAGE_ROW')
+    return result as pluginEvents.SettingsPageRowEvent[]
+  }
+)
+
+export const getGridRowSettingComponents = createSelector(
+  (state:State) => state.data,
+  plugins => {
+    const result = plugins.filter(p => p.type === 'GRID_ROW_SETTINGS')
+    return result as pluginEvents.GridRowSettingsEvent[]
+  }
+)
 
 export const getState = (state:State, key:string) => state.states[key]
 

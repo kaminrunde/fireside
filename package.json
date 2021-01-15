@@ -14,9 +14,7 @@
     "build:fireside": "lerna run fireside --scope='example-project-fireside'",
     "prepare-release": "git checkout master && git pull --rebase origin master && lerna updated",
     "release": "yarn run prepare-release && lerna publish --exact",
-    "prerelease": "lerna publish prerelease",
-    "changed": "lerna changed",
-    "changed-prerelease": "npm run changed && npm run prerelease"
+    "prerelease": "lerna publish prerelease"
   },
   "repository": {
     "type": "git",

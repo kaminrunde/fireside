@@ -4,5 +4,6 @@ import Markdown from './Markdown';
 import Bool from './Bool';
 import StringList from './StringList';
 import ObjectList from './ObjectList';
+import Select from './Select';
 import * as t from '../types';
-export default function getWidget(knob: t.Knob | t.SimpleKnob): typeof String | (() => any) | typeof Number | typeof Markdown | typeof Bool | typeof StringList | typeof ObjectList;
+export default function getWidget(knob: t.Knob | t.SimpleKnob): (() => any) | typeof String | typeof Number | typeof Markdown | typeof Bool | typeof StringList | typeof ObjectList | typeof Select;

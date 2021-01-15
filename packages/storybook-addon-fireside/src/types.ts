@@ -31,6 +31,13 @@ export interface ObjectListOptions extends KnobOptions {
   /** this is the name of the row, that will be displayed in the sortable list */
   getRowName: (row:any) => string
 }
+export interface SelectOptions extends KnobOptions {
+  /** all available options. label is displayed in dopdown and value will be the knob value  */
+  options: {
+    label: string
+    value: string
+  }[]
+}
 
 export interface MarkdownOptions extends KnobOptions {
   /** see https://www.npmjs.com/package/simplemde for more info */
@@ -78,7 +85,7 @@ export interface MarkdownOptions extends KnobOptions {
 }
 
 export interface SimpleKnob {
-  type: 'string' | 'constant' | 'number' | 'markdown' | 'bool' | 'stringList' | 'objectList',
+  type: 'string' | 'constant' | 'number' | 'markdown' | 'bool' | 'stringList' | 'objectList' | 'select',
   prop: string,
   label: string,
   value: any,

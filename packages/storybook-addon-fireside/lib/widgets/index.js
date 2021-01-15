@@ -7,6 +7,7 @@ const Markdown_1 = require("./Markdown");
 const Bool_1 = require("./Bool");
 const StringList_1 = require("./StringList");
 const ObjectList_1 = require("./ObjectList");
+const Select_1 = require("./Select");
 function getWidget(knob) {
     return {
         string: String_1.default,
@@ -15,7 +16,8 @@ function getWidget(knob) {
         markdown: Markdown_1.default,
         bool: Bool_1.default,
         stringList: StringList_1.default,
-        objectList: ObjectList_1.default
+        objectList: ObjectList_1.default,
+        select: Select_1.default
     }[knob.type];
 }
 exports.default = getWidget;

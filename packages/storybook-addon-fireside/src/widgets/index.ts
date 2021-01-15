@@ -5,6 +5,7 @@ import Markdown from './Markdown'
 import Bool from './Bool'
 import StringList from './StringList'
 import ObjectList from './ObjectList'
+import Select from './Select'
 import * as t from '../types'
 
 export default function getWidget (knob:t.Knob | t.SimpleKnob) {
@@ -15,6 +16,7 @@ export default function getWidget (knob:t.Knob | t.SimpleKnob) {
     markdown: Markdown,
     bool: Bool,
     stringList: StringList,
-    objectList: ObjectList
+    objectList: ObjectList,
+    select: Select
   }[knob.type]
 }

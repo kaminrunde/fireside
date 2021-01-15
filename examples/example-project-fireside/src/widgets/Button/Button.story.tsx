@@ -14,6 +14,13 @@ storiesOf('cms/base/Button', module)
     b.string('label', 'Label', 'foo', {
       hint: 'Das ist der label'
     }),
+    b.select('position', 'Position', 'left', {
+      options: [
+        { label: 'left', value: 'left' },
+        { label: 'center', value: 'center' },
+        { label: 'right', value: 'right' },
+      ]
+    })
   ],{
     versionUpdate: props => {
       let newProps = props

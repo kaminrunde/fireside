@@ -1,7 +1,16 @@
 import addons from '@storybook/addons'
 
-const channel = addons.getChannel()
+
 
 export default function registerKnob (name:string, component:any) {
-  channel.emit('storyboard-bridge/register-custom-knob', name, component)
+  // @ts-ignore
+  if(!window.__customKnobs) window.__customKnobs = {}
+  // @ts-ignore
+  window.__customKnobs[name] = component
+
+  // @ts-ignore
+  if(window.__addCustomKnob){
+    // @ts-ignore
+    window.__addCustomKnob(name, component)
+  }
 }

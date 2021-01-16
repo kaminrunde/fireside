@@ -15,10 +15,14 @@ export default function Panel ({channel}:Props) {
   const [customComponents, setCustomComponents] = React.useState<Record<string, any>>({})
 
   React.useEffect(() => {
-    channel.on('storyboard-bridge/register-custom-knob', (name, component) => {
+    // @ts-ignore
+    if(window.__customKnobs) setCustomComponents(window.__customKnobs)
+    // @ts-ignore
+    window.__addCustomKnob = (name, component) => 
       setCustomComponents(dict => ({...dict, [name]: component}))
-    })
   }, [])
+
+  console.log(customComponents)
 
   return (
     <Wrapper>

@@ -2,7 +2,7 @@ import Component from './Banner'
 import { storiesOf } from '@storybook/react'
 import * as b from '@kaminrunde/storybook-addon-fireside'
 import * as controller from './request'
-import {string} from '../../knobs/knobs'
+import * as c from '../../storybook/knobs/knobs'
 
 b.registerWidgetSelector(Component.name, props => {
   return {kind:'cms/base/Banner',story: 'Builder'}
@@ -14,7 +14,7 @@ storiesOf('cms/base/Banner', module)
       validate: s => !s && 'a value is needed'
     }),
     b.bool('selected', 'Selected', true),
-    string('foo', 'Label', 'foo',{
+    c.string('foo', 'Label', 'foo',{
       tab: 'TAB-1',
       hint: 'Hello World',
       foo: 'bar'

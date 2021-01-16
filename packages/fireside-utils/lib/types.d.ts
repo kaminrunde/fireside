@@ -98,7 +98,7 @@ export declare type Controller<ComponentConfig, Context> = {
      *   }]
      * }
      */
-    createStoryEvents?: (componentConfig: ComponentConfig) => Array<any>;
+    createStoryEvents?: (componentConfig: ComponentConfig) => Array<any> | Promise<Array<any>>;
 };
 /**
  * Basic building block for stories

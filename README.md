@@ -56,6 +56,11 @@ Lerna copies root license (`LICENSE`) into package location, no need to do this 
 
 <https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line>
 
+Required scopes:
+
+- `repo*` 
+- `write:packages` 
+
 > To authenticate by logging in to npm, use the npm login command, replacing USERNAME with your GitHub username, TOKEN with your [personal access token](https://github.com/settings/tokens), and PUBLIC-EMAIL-ADDRESS with your email address.
 
 ```bash

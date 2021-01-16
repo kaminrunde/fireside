@@ -6,6 +6,7 @@ import Bool from './Bool'
 import StringList from './StringList'
 import ObjectList from './ObjectList'
 import CustomKnobPlaceholder from './CustomKnobPlaceholder'
+import Select from './Select'
 import * as t from '../types'
 
 export default function getWidget (
@@ -26,5 +27,6 @@ export default function getWidget (
     bool: Bool,
     stringList: StringList,
     objectList: ObjectList,
+    select: Select
   }[knob.type]
 }

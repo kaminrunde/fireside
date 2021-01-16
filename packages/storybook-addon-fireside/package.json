@@ -1,6 +1,6 @@
 {
   "name": "@kaminrunde/storybook-addon-fireside",
-  "version": "1.0.1-alpha.19",
+  "version": "1.0.1-alpha.27",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -19,6 +19,7 @@
     "crypto-browserify": "^3.12.0",
     "object-path": "^0.11.4",
     "react": "^16.13.1",
+    "react-icons": "^4.1.0",
     "react-simplemde-editor": "4.0.0",
     "react-sortable-hoc": "^1.11.0",
     "rich-markdown-editor": "^10.4.0",

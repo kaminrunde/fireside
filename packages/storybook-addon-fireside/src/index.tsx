@@ -11,6 +11,7 @@ import WidgetWrapper from './WidgetWrapper'
  * @param {string} value default value
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
+ * @param {Function} options.validate validate the value. if this functions returns a string the form-filed will be hilighted
  * @yields {string}
  * @example 
  * k.string('label', 'Label', 'hello world')
@@ -48,6 +49,7 @@ export const constant = (
  * @param {number} value default value
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
+ * @param {Function} options.validate validate the value. if this functions returns a string the form-filed will be hilighted
  * @yields {number}
  * @example 
  * k.number('size', 'Your Size', 4)
@@ -67,6 +69,7 @@ export const number = (
  * @param {string} value default value
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
+ * @param {Function} options.validate validate the value. if this functions returns a string the form-filed will be hilighted
  * @yields {string}
  * @example 
  * k.markdown('content', 'Your Content', '# Headline')
@@ -85,6 +88,7 @@ export const markdown = (
  * @param {boolean} value default value
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
+ * @param {Function} options.validate validate the value. if this functions returns a string the form-filed will be hilighted
  * @yields {boolean}
  * @example 
  * k.bool('isPrimary', 'Is Primary', true)
@@ -104,6 +108,7 @@ export const bool = (
  * @param {string[]} value default value
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
+ * @param {Function} options.validate validate the value. if this functions returns a string the form-filed will be hilighted
  * @yields {string[]}
  * @example 
  * k.stringList('todos', 'List of Todos', ['buy coffee', 'star fireside on github'])
@@ -124,6 +129,7 @@ export const stringList = (
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
  * @yields {object[]}
+ * @param {Function} options.validate validate the value. if this functions returns a string the form-filed will be hilighted
  * @example 
  * k.objectList('todos', 'List of Todos', [], {
  *   schema: [
@@ -139,6 +145,31 @@ export const objectList = (
   value:object[], 
   options:t.ObjectListOptions
 ):t.SimpleKnob => ({ type: 'objectList', prop, label, value, options })
+
+/**
+ * same as string but with predefined options. useful if you only want to have specific options
+ * @param {string} prop name of prop. can also be in nested form. eg: "obj.prop". for more information see docs of "object-path"
+ * @param {string} label displayed in storybook as prop label. should be short and descriptive. If more information is needed use the options.hint property
+ * @param {object[]} value default value
+ * @param {string} options.hint the knob description
+ * @param {string} options.tab the tabname the knob will be displayed in storybook
+ * @param {Function} options.validate validate the value. if this functions returns a string the form-filed will be hilighted
+ * @yields {string[]}
+ * @example 
+ * k.select('position', 'Position', 'left', {
+  *   options: [
+  *     { label: 'left', value: 'left' },
+  *     { label: 'center', value: 'center' },
+  *     { label: 'right', value: 'right' },
+  *   ]
+  * })
+  */
+ export const select = (
+   prop:string, 
+   label:string, 
+   value:string, 
+   options:t.SelectOptions
+ ):t.SimpleKnob => ({ type: 'select', prop, label, value, options })
 
 
 export const create = (

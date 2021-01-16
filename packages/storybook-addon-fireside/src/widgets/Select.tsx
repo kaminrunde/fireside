@@ -1,0 +1,86 @@
+import * as React from 'react'
+import styled from 'styled-components'
+import {FaChevronDown, FaChevronUp} from 'react-icons/fa'
+import * as t from '../types'
+
+type Props = {
+  value: string,
+  onChange: (value:string) => void,
+  focus: boolean,
+  options: t.SelectOptions,
+  hasError: boolean,
+}
+
+export default function Select (props:Props) {
+  const [open, setOpen] = React.useState(props.focus)
+
+  React.useEffect(() => {
+    if(!props.focus) setOpen(false)
+  }, [props.focus])
+
+  const handleClick = () => {
+    setOpen(!open)
+  }
+  
+  return (
+    <Wrapper tabIndex='1' focus={props.focus}>
+      <div className='value' onClick={handleClick}>
+        {props.value}
+        {open ? <FaChevronUp/> : <FaChevronDown />}
+      </div>
+
+      {open && (
+        <div className='options'>
+          {props.options.options.map(row => (
+            <Row 
+              key={row.label} 
+              selected={row.value === props.value}
+              onClick={() => props.onChange(row.value)}
+            >
+              {row.label}
+            </Row>
+          ))}
+        </div>
+      )}
+    </Wrapper>
+  )
+}
+
+const Wrapper = styled.div`
+  position: relative;
+  > .value {
+    border: 1px solid ${props => props.focus ? '#1DA7FD' : 'lightgrey'};
+    border-radius: 3px;
+    padding: 0 8px;
+    line-height: 30px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    
+    > svg {
+      font-size: 12px;
+      margin-top: 10px;
+    }
+  }
+
+
+  > .options {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+    margin-top: 8px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+  }
+`
+
+const Row = styled.div`
+  padding-left: 5px;
+  line-height: 30px;
+  &:hover {
+    background: whitesmoke;
+    cursor: pointer;
+  }
+  ${p => p.selected && `&&& {background: silver;}`}
+`

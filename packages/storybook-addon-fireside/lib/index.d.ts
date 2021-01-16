@@ -87,8 +87,8 @@ export declare const stringList: (prop: string, label: string, value: string[], 
  * @param {object[]} value default value
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
+ * @yields {object[]}
  * @param {Function} options.validate validate the value. if this functions returns a string the form-filed will be hilighted
- * @yields {string[]}
  * @example
  * k.objectList('todos', 'List of Todos', [], {
  *   schema: [

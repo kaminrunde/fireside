@@ -75,7 +75,7 @@ export interface MarkdownOptions extends KnobOptions {
     toolbarTips?: any;
 }
 export interface SimpleKnob {
-    type: 'string' | 'constant' | 'number' | 'markdown' | 'bool' | 'stringList' | 'objectList' | 'select';
+    type: 'string' | 'constant' | 'number' | 'markdown' | 'bool' | 'stringList' | 'objectList' | 'select' | 'custom-knob';
     prop: string;
     label: string;
     value: any;

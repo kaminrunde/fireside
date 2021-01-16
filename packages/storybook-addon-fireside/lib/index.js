@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registerWidgetSelector = exports.create = exports.select = exports.objectList = exports.stringList = exports.bool = exports.markdown = exports.number = exports.constant = exports.string = void 0;
+exports.createCustomKnob = exports.registerWidgetSelector = exports.create = exports.select = exports.objectList = exports.stringList = exports.bool = exports.markdown = exports.number = exports.constant = exports.string = void 0;
 const React = require("react");
 const manager = require("./knob-manager");
 const WidgetWrapper_1 = require("./WidgetWrapper");
@@ -91,8 +91,8 @@ exports.stringList = (prop, label, value, options = {}) => ({ type: 'stringList'
  * @param {object[]} value default value
  * @param {string} options.hint the knob description
  * @param {string} options.tab the tabname the knob will be displayed in storybook
+ * @yields {object[]}
  * @param {Function} options.validate validate the value. if this functions returns a string the form-filed will be hilighted
- * @yields {string[]}
  * @example
  * k.objectList('todos', 'List of Todos', [], {
  *   schema: [

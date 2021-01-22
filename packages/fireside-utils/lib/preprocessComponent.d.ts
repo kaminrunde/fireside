@@ -8,4 +8,4 @@ import * as t from './types';
  * @param c Component
  * @param config Config
  */
-export default function preprocessComponent(c: t.Component, config: t.Config): Promise<[t.Component, any[]]>;
+export default function preprocessComponent(c: t.Component, gridContext: t.GridContext, config: t.Config): Promise<[t.Component, any[]]>;

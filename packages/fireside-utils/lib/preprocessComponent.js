@@ -45,7 +45,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @param c Component
  * @param config Config
  */
-function preprocessComponent(c, config) {
+function preprocessComponent(c, gridContext, config) {
     return __awaiter(this, void 0, void 0, function () {
         var controller, updated, storyEvents, _a, _b, _c, _d, _e, _f;
         return __generator(this, function (_g) {
@@ -72,7 +72,7 @@ function preprocessComponent(c, config) {
                     _d = (_c = Object).assign;
                     _e = [{}, updated.props];
                     _f = {};
-                    return [4 /*yield*/, controller.createContext(updated.props)];
+                    return [4 /*yield*/, controller.createContext(updated.props, gridContext)];
                 case 4:
                     _b.props = _d.apply(_c, _e.concat([(_f.context = _g.sent(),
                             _f)]));

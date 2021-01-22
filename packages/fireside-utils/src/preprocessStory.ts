@@ -1,6 +1,7 @@
 import * as t from './types'
 import preprocessComponent from './preprocessComponent'
 import formatGrid from './formatGrid'
+import createComponentGridContexts from './createComponentGridContexts'
 
 export default async function preprocessStory (story:t.RawStory, config:t.Config) {
   const formatted:t.FormattedStory = {
@@ -12,16 +13,20 @@ export default async function preprocessStory (story:t.RawStory, config:t.Config
     plugins: story.plugins || {}
   }
 
+  const gridContexts = createComponentGridContexts(story)
+
   const formattedComponents = await Promise.all(
     story.allComponents
       .map(name => story.componentsById[name])
-      .map(c => preprocessComponent(c, {
+      .map(c => preprocessComponent(c, gridContexts[c.id], {
         resolveController: config.resolveController
       }))
   )
 
+
   formattedComponents.forEach(([c,events],i) => {
-    formatted.componentsById[story.allComponents[i]] = c
+    const id = story.allComponents[i]
+    formatted.componentsById[id] = {...c, gridContext: gridContexts[id] }
     formatted.events.push(...events)
   })
 

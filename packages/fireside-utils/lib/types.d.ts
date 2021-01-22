@@ -82,7 +82,7 @@ export declare type Controller<ComponentConfig, Context> = {
      *   return await fetchProductSuggestions(componentConfig.productId)
      * }
      */
-    createContext?: (componentConfig: ComponentConfig) => Context | Promise<Context>;
+    createContext?: (componentConfig: ComponentConfig, gridContext: GridContext) => Context | Promise<Context>;
     /**
      * Sometimes you want to some context to the whole story. E.g your component adds something
      * to your redux-store and you want to hydrate it. In "createStoryEvents" you can return a
@@ -111,6 +111,7 @@ export declare type Component = {
     props: {
         gridArea: string;
     };
+    gridContext: GridContext;
 };
 /**
  * Format in which grid will be saved in fireside connector (e.g Contentful)
@@ -149,5 +150,19 @@ export declare type FormattedStory = {
     grids: Record<string, string>;
     plugins: {
         [key: string]: any;
+    };
+};
+export declare type GridContext = {
+    minRow: number;
+    maxRow: number;
+    byMediaSize: {
+        [ms: string]: {
+            row: number;
+            col: number;
+            totalRows: number;
+            totalCols: number;
+            colStretch: number;
+            rowStretch: number;
+        };
     };
 };

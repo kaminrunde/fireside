@@ -50,12 +50,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var preprocessComponent_1 = require("./preprocessComponent");
 var formatGrid_1 = require("./formatGrid");
 var createComponentGridContexts_1 = require("./createComponentGridContexts");
+var versionUpdate_1 = require("./versionUpdate");
 function preprocessStory(story, config) {
     return __awaiter(this, void 0, void 0, function () {
         var formatted, gridContexts, formattedComponents;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    story = versionUpdate_1.default(story);
                     formatted = {
                         hash: story.hash,
                         componentsById: {},

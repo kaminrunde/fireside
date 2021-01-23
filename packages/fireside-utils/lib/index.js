@@ -24,4 +24,6 @@ var createController_1 = require("./createController");
 Object.defineProperty(exports, "createController", { enumerable: true, get: function () { return createController_1.default; } });
 var createPlugin_1 = require("./createPlugin");
 Object.defineProperty(exports, "createPlugin", { enumerable: true, get: function () { return createPlugin_1.default; } });
+var versionUpdate_1 = require("./versionUpdate");
+Object.defineProperty(exports, "versionUpdate", { enumerable: true, get: function () { return versionUpdate_1.default; } });
 //# sourceMappingURL=index.js.map

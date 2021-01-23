@@ -119,7 +119,6 @@ export declare type Component = {
  */
 export declare type RawGrid = {
     enabled: boolean;
-    ms: number;
     gap: number;
     grid: string[][];
     widths: string[];
@@ -130,7 +129,7 @@ export declare type RawGrid = {
  * Can be transformed further with fireside-utils
  */
 export declare type RawStory = {
-    version: '1.0.0';
+    version: '1.0.0' | '2.0.0';
     hash: string;
     componentsById: Record<string, Component>;
     allComponents: string[];

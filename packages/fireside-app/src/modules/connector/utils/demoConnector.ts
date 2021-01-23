@@ -16,58 +16,59 @@ const connector:t.Connector = {
 setTimeout(() => {
   if(!globalCb) return
   globalCb({
+    "version": "1.0.0",
     "componentsById": {
-      "Banner-1": {
-        "id": "1",
+      "Banner": {
+        "id": "79fc3d04795b176be15a059f",
         "name": "Banner",
         "props": {
-          "gridArea": "Banner-1",
-          "label": "Banner 1",
-          "otherLabel": "foo"
-        }
+          "gridArea": "Banner",
+          "selected": true,
+          "foo": "foo",
+          "otherLabel": "foo",
+          "number": 2,
+          "label": "Foo",
+          "todos": [
+            "buy coffee",
+            "star fireside on github"
+          ],
+          "objects": []
+        },
+        "createdAt": 1611440639583,
+        "updatedAt": 1611440639647,
+        "hash": "dd52501f6938c3d82658391f67bcd405"
       },
-      "Button-1": {
-        "id": "3",
+      "Button": {
+        "id": "5fee7b8a1006898ecf06b7c9",
         "name": "Button",
         "props": {
-          "gridArea": "Button-1",
-          "label": "Button 1"
-        }
-      },
-      "Banner-2": {
-        "id": "2",
-        "name": "Banner",
-        "props": {
-          "gridArea": "Banner-2",
-          "label": "Banner 2",
-          "otherLabel": "foo"
-        }
+          "gridArea": "Button",
+          "__version": 1,
+          "label": "foo",
+          "position": "left"
+        },
+        "createdAt": 1611440639583,
+        "updatedAt": 1611440646020,
+        "hash": "fed34f0d927fb9a84adc5a0fe90749e9"
       }
     },
     "allComponents": [
-      "Banner-1",
-      "Button-1",
-      "Banner-2"
+      "Banner",
+      "Button"
     ],
     "grids": {
-      "MOBILE_M": {
+      "MOBILE": {
         "enabled": true,
         "gap": 20,
         "grid": [
           [
-            "Banner-1",
-            "Banner-1",
-            "."
+            "Banner"
           ],
           [
-            "Button-1",
-            "Button-1",
-            "Button-1"
+            "Button"
           ]
         ],
         "widths": [
-          "1fr",
-          "1fr",
           "1fr"
         ],
         "heights": [
@@ -75,38 +76,43 @@ setTimeout(() => {
           "auto"
         ]
       },
-      "MOBILE_L": {
-        "enabled": true,
+      "TABLET": {
+        "enabled": false,
         "gap": 20,
         "grid": [
           [
-            "Banner-1",
             "."
-          ],
-          [
-            "Button-1",
-            "Button-1"
           ]
         ],
         "widths": [
-          "1fr",
           "1fr"
         ],
         "heights": [
-          "auto",
+          "auto"
+        ]
+      },
+      "LAPTOP": {
+        "enabled": false,
+        "gap": 20,
+        "grid": [
+          [
+            "."
+          ]
+        ],
+        "widths": [
+          "1fr"
+        ],
+        "heights": [
           "auto"
         ]
       }
     },
+    "hash": "5f079b14a06fd9c3cee534c3ab319d04",
     "plugins": {
-      "fullWidth": {
-        "123123124": {
-          "MOBILE_M": true
-        }
-      }
-    },
-    "hash": "9abda7766b4164d57f1085f22f5cb673"
-  })
+      "fullWidth": {},
+      "bg": {}
+    }
+  } as t.Story)
 }, 1000)
 
 export default connector

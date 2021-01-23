@@ -48,7 +48,7 @@ export default function Storybook () {
               label: 'Save',
               type: 'primary',
               onClick: () => loadingComponent.data 
-              ? loadingComponent.update(loadingComponent.data.props.gridArea, component)
+              ? loadingComponent.update(loadingComponent.data.id, component)
               : loadingComponent.add(component)
             },{
               label: 'Abort',

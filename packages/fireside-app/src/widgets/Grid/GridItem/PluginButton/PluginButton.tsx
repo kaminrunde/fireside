@@ -32,8 +32,11 @@ export default React.memo(function PluginComponent (props:Props) {
     e.stopPropagation()
     props.icon.onClick(api)
   }
+  
+  if(!component.data) return null
 
   const isActive = props.icon.isActive(api)
+
 
   return (
     <Wrapper onClick={handleClick} active={isActive}>

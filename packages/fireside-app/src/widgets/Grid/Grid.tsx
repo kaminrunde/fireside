@@ -28,6 +28,15 @@ export default function Grid (props:Props) {
   const [active, setActive] = React.useState<null|string>(null)
   const [actionButtons, setActionButtons] = React.useState<t.ActionButton[]>([])
   // const plugins = useComponentPlugins()
+  console.log(grid)
+
+  const labels = React.useMemo(() => {
+    let dict:Record<string, string> = {}
+    for (let c of components.data) {
+      dict[c.id] = c.props.gridArea
+    }
+    return dict
+  }, [components.data])
 
   const handleItemClick = (id:string) => () => {
     if(active === id) setActive(null)
@@ -114,6 +123,7 @@ export default function Grid (props:Props) {
                     rowHeight={ROW_HEIGHT}
                     active={active === item.i} 
                     item={item}
+                    label={labels[item.i]}
                     onClick={handleItemClick(item.i)}/>
                 </div>
               ))}
@@ -123,21 +133,21 @@ export default function Grid (props:Props) {
       <div className='buffer-offset'/>
       <div className='buffer'>
         {components.data
-        .filter(c => !grid.data.gridAreas.find(area => area.i === c.props.gridArea))
+        .filter(c => !grid.data.gridAreas.find(area => area.i === c.id))
         .map(c => (
           <BufferComponent 
-            data-name={c.props.gridArea}
+            data-name={c.id}
             className='component' 
             draggable 
-            active={active === c.props.gridArea}
+            active={active === c.id}
             onDragStart={(e:any) => {
-              setDraggingName(c.props.gridArea)
+              setDraggingName(c.id)
               e.dataTransfer.setData("text/plain", "")
             }}
-            onClick={handleItemClick(c.props.gridArea)}
+            onClick={handleItemClick(c.id)}
             onDragEnd={() => setDraggingName('')}
             unselectable="on" 
-            key={c.props.gridArea}>
+            key={c.id}>
               {c.props.gridArea}
           </BufferComponent>
         ))}

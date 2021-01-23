@@ -34,14 +34,14 @@ export default function reducer (state:State=defaultState, action:Action):State 
     }
     case at.ADD: return {
       ...state,
-      allIds: [...state.allIds, action.payload.props.gridArea],
+      allIds: [...state.allIds, action.payload.id],
       byId: {
         ...state.byId,
-        [action.payload.props.gridArea]: action.payload
+        [action.payload.id]: action.payload
       }
     }
     case at.REMOVE: {
-      let allIds = state.allIds.filter(id => id !== action.payload.props.gridArea)
+      let allIds = state.allIds.filter(id => id !== action.payload.id)
       let byId:Record<string,t.Component> = {}
       for(let id of allIds) byId[id] = state.byId[id]
       return { ...state, allIds, byId}

@@ -3,6 +3,7 @@ import * as at from './const'
 import * as a from './actions'
 import * as t from './types'
 import * as s from './selectors'
+import {versionUpdate} from '@kaminrunde/fireside-utils'
 
 addRule<a.SetConnector>({
   id: 'connector/MANAGE_UPDATE',
@@ -12,6 +13,7 @@ addRule<a.SetConnector>({
   consequence: (action, {dispatch}) => {
     const connector = action.payload
     connector.onChange((story?:t.Story) => {
+      if(story) story = versionUpdate(story)
       dispatch(a.updateStory(story))
     })
     return () => null

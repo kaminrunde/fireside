@@ -55,7 +55,7 @@ export const init = (grids:{
     let areas:Record<string,t.GridArea> = {}
     for(let y=0; y<rows.length;y++) for (let x=0; x<rows[y].length; x++) {
       const area = rows[y][x]
-      if(area === '.') continue
+      if(area === '.' || !area) continue
       components[area] = true
       if(!areas[area]) areas[area] = { x, y, w:1, h:1, i:area }
       else {

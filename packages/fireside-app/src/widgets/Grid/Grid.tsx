@@ -28,6 +28,7 @@ export default function Grid (props:Props) {
   const [active, setActive] = React.useState<null|string>(null)
   const [actionButtons, setActionButtons] = React.useState<t.ActionButton[]>([])
   // const plugins = useComponentPlugins()
+  console.log(grid)
 
   const labels = React.useMemo(() => {
     let dict:Record<string, string> = {}

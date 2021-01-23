@@ -142,7 +142,6 @@ export type Component = {
  */
 export type RawGrid = {
   enabled: boolean,
-  ms: number,
   gap: number,
   grid: string[][],
   widths: string[],
@@ -154,7 +153,7 @@ export type RawGrid = {
  * Can be transformed further with fireside-utils
  */
 export type RawStory = {
-  version: '1.0.0',
+  version: '1.0.0' | '2.0.0',
   hash: string,
   componentsById: Record<string, Component>,
   allComponents: string[],

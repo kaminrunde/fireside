@@ -5,7 +5,7 @@ export const SET_CONNECTOR:'connector/SET_CONNECTOR' = 'connector/SET_CONNECTOR'
 export const UPDATE_CONNECTOR:'connector/UPDATE_CONNECTOR' = 'connector/UPDATE_CONNECTOR'
 
 export const emptyStory:t.Story = {
-  version: '1.0.0',
+  version: '2.0.0',
   hash: '',
   componentsById: {},
   allComponents: [],

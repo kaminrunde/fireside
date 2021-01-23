@@ -1,8 +1,10 @@
 import * as t from './types'
 import preprocessComponent from './preprocessComponent'
 import formatGrid from './formatGrid'
+import versionUpdate from './versionUpdate'
 
 export default async function preprocessStory (story:t.RawStory, config:t.Config) {
+  story = versionUpdate(story)
   const formatted:t.FormattedStory = {
     hash: story.hash,
     componentsById: {},

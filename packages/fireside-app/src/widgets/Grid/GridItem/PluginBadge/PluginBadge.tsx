@@ -25,6 +25,8 @@ export default React.memo(function PluginBadge (props:Props) {
     mediaSize: props.mediaSize
   }
 
+  if(!component.data) return null
+
   const isActive = props.badge.isActive(api)
   
   if(!isActive) return null

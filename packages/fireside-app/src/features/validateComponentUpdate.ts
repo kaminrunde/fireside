@@ -31,13 +31,6 @@ addRule<$components.a.UpdateComponet>({
     const prevId = context.get('prevId') || null
     const errorCode = getErrorCode(prevId, action, state)
 
-    if(errorCode === 'DIFFERENT_GRID_AREA') return $snackbar.a.addMessage({
-      title: ' You cannot change Grid-Area',
-      type: 'warning',
-      content: `Changing Grid-Areas will be supported in a later update. For now `
-      + `you have delete your component and write it again with another grid-area`
-    })
-
     if(errorCode === 'DUBLICATE_GRID_AREA') return $snackbar.a.addMessage({
       title: 'Dublicate Grid-Area',
       type: 'warning',
@@ -61,7 +54,6 @@ function getErrorCode (
   if(action.payload.props.gridArea.match(/[^A-Za-z0-9_-]+/)){
     return 'WRONG_CHAR'
   }
-  if(prevId !== action.payload.props.gridArea) return 'DIFFERENT_GRID_AREA'
   const components = $components.s.getComponents(state.components)
   for(let component of components) {
     if(component.props.gridArea === action.payload.props.gridArea){

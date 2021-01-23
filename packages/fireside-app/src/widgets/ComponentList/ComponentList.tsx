@@ -9,7 +9,7 @@ export default function ComponentList () {
   return (
     <Wrapper className='ComponentList'>
       {components.data.map(c => (
-        <div className='row' key={c.props.gridArea}>
+        <div className='row' key={c.id}>
           <div className='gridName'>
             <div className='title'>{c.props.gridArea}</div>
             <div className='last-updated'><b>changed:</b> {parseTimestamp(c.updatedAt)}</div>
@@ -17,7 +17,7 @@ export default function ComponentList () {
           </div>
           <div className='name'>{c.name}</div>
           <div className='btn-update'>
-            <button onClick={() => loading.load(c.props.gridArea)}>update</button>
+            <button onClick={() => loading.load(c.id)}>update</button>
           </div>
           <div className='btn-remove'>
             <button onClick={() => components.removeComponent(c)}>remove</button>

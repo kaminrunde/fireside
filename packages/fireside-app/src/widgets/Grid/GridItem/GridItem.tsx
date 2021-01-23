@@ -11,6 +11,7 @@ type Props = {
   rowHeight: number;
   active: boolean;
   onClick: () => void;
+  label: string;
   item: $grid.t.GridArea;
 };
 
@@ -24,7 +25,7 @@ export default function GridItem(props: Props) {
       active={props.active}
       onClick={props.onClick}
     >
-      <span>{props.item.i}</span>
+      <span>{props.label}</span>
       <div className="context">
         {iconList.data.map((row,i) => (
           <PluginButton 

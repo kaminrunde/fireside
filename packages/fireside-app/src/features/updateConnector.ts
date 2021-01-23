@@ -50,8 +50,8 @@ addRule<
     let allComponents:string[] = []
     let componentsById:Record<string, components.t.Component> = {}
     componentList.forEach(c => {
-      allComponents.push(c.props.gridArea)
-      componentsById[c.props.gridArea] = c
+      allComponents.push(c.id)
+      componentsById[c.id] = c
     })
 
     // format grids
@@ -66,7 +66,7 @@ addRule<
         heights: heights
       }
     }
-    const VERSION:'1.0.0' = '1.0.0'
+    const VERSION:'2.0.0' = '2.0.0'
     let story = { 
       version: VERSION, 
       componentsById, 

@@ -12,7 +12,7 @@ import * as t from './types'
  */
 export default async function preprocessComponent(
   c:t.Component,
-  gridContext: t.GridContext,
+  getGridContext: () => t.GridContext,
   config:t.Config
 ):Promise<[t.Component, any[]]> {
   const controller = await config.resolveController(c.name)
@@ -30,7 +30,7 @@ export default async function preprocessComponent(
 
   if(controller.createContext){
     updated.props = Object.assign({}, updated.props, {
-      context: await controller.createContext(updated.props, gridContext)
+      context: await controller.createContext(updated.props, {getGridContext})
     })
   }
 

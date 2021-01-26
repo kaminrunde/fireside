@@ -15,12 +15,16 @@ export default async function preprocessStory (story:t.RawStory, config:t.Config
     plugins: story.plugins || {}
   }
 
-  const gridContexts = createComponentGridContexts(story)
+  let cachedGridContexts:ReturnType<typeof createComponentGridContexts>
+  const getGridContexts = (id:string) => {
+    if(!cachedGridContexts) cachedGridContexts = createComponentGridContexts(story)
+    return cachedGridContexts[id]
+  }
 
   const formattedComponents = await Promise.all(
     story.allComponents
       .map(name => story.componentsById[name])
-      .map(c => preprocessComponent(c, gridContexts[c.id], {
+      .map(c => preprocessComponent(c, () => getGridContexts(c.id), {
         resolveController: config.resolveController
       }))
   )
@@ -28,7 +32,7 @@ export default async function preprocessStory (story:t.RawStory, config:t.Config
 
   formattedComponents.forEach(([c,events],i) => {
     const id = story.allComponents[i]
-    formatted.componentsById[id] = {...c, gridContext: gridContexts[id] }
+    formatted.componentsById[id] = c
     formatted.events.push(...events)
   })
 

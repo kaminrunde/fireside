@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -53,7 +42,7 @@ var createComponentGridContexts_1 = require("./createComponentGridContexts");
 var versionUpdate_1 = require("./versionUpdate");
 function preprocessStory(story, config) {
     return __awaiter(this, void 0, void 0, function () {
-        var formatted, gridContexts, formattedComponents;
+        var formatted, cachedGridContexts, getGridContexts, formattedComponents;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -66,10 +55,14 @@ function preprocessStory(story, config) {
                         events: [],
                         plugins: story.plugins || {}
                     };
-                    gridContexts = createComponentGridContexts_1.default(story);
+                    getGridContexts = function (id) {
+                        if (!cachedGridContexts)
+                            cachedGridContexts = createComponentGridContexts_1.default(story);
+                        return cachedGridContexts[id];
+                    };
                     return [4 /*yield*/, Promise.all(story.allComponents
                             .map(function (name) { return story.componentsById[name]; })
-                            .map(function (c) { return preprocessComponent_1.default(c, gridContexts[c.id], {
+                            .map(function (c) { return preprocessComponent_1.default(c, function () { return getGridContexts(c.id); }, {
                             resolveController: config.resolveController
                         }); }))];
                 case 1:
@@ -78,7 +71,7 @@ function preprocessStory(story, config) {
                         var _b;
                         var c = _a[0], events = _a[1];
                         var id = story.allComponents[i];
-                        formatted.componentsById[id] = __assign(__assign({}, c), { gridContext: gridContexts[id] });
+                        formatted.componentsById[id] = c;
                         (_b = formatted.events).push.apply(_b, events);
                     });
                     Object.entries(story.grids)

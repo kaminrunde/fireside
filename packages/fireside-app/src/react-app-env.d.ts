@@ -75,6 +75,7 @@ declare module 'redux-ruleset' {
 
 declare module 'styled-components' {
   const module:any;
+  export const css:any;
   export default module;
 }
 

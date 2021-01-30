@@ -11,6 +11,7 @@ import componentsReducer from 'modules/components'
 import uiReducer from 'modules/ui'
 import settingsReducer from 'modules/settings'
 import pluginsReducer from 'modules/plugins'
+import modalReducer from 'modules/modal'
 
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({ 
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
   components: componentsReducer,
   ui: uiReducer,
   settings: settingsReducer,
-  plugins: pluginsReducer
+  plugins: pluginsReducer,
+  modal: modalReducer
 })
 
 

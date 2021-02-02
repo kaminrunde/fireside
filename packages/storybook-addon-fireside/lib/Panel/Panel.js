@@ -20,8 +20,10 @@ function Panel({ channel }) {
     const _a = useKnobs_1.default(channel), { knobs, update, key } = _a, tabs = __rest(_a, ["knobs", "update", "key"]);
     const [customComponents, setCustomComponents] = React.useState({});
     React.useEffect(() => {
+        // @ts-ignore
         if (window.__customKnobs)
             setCustomComponents(window.__customKnobs);
+        // @ts-ignore
         window.__addCustomKnob = (name, component) => setCustomComponents(dict => (Object.assign(Object.assign({}, dict), { [name]: component })));
     }, []);
     console.log(customComponents);

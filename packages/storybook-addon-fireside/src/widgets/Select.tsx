@@ -78,6 +78,7 @@ const Wrapper = styled.div`
 const Row = styled.div`
   padding-left: 5px;
   line-height: 30px;
+  background: white;
   &:hover {
     background: whitesmoke;
     cursor: pointer;

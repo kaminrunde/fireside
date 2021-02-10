@@ -13,7 +13,7 @@ type Props = {
 export default function Widget (props:Props) {
   const [value, setValue] = React.useState(props.knob.value)
   const Component:any = getWidget(props.knob, props.customComponents)
-  const [focus, setFocus] = React.useState(false)
+  const [handle, focus, ref] = useFocus()
 
   const update = val => {
     setValue(val)
@@ -27,7 +27,7 @@ export default function Widget (props:Props) {
     : null
 
   return (
-    <Wrapper onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}>
+    <Wrapper ref={ref} onClick={handle}>
       <h3 className='label'>{props.knob.label}</h3>
       {props.knob.options.hint && (
         <div className='hint'>{props.knob.options.hint}</div>
@@ -69,3 +69,35 @@ const Wrapper = styled.div`
     margin-bottom: 5px;
   }
 `
+
+
+function useFocus ():[
+  ()=>void, 
+  boolean,
+  React.MutableRefObject<HTMLElement | null>,
+  ()=>void
+] {
+  const [activeEl, setActiveEl] = React.useState<null|HTMLElement>(null)
+  const ref = React.useRef<null|HTMLElement>(null)
+  const handle = () => {
+    if(activeEl || !ref.current) return
+    setActiveEl(ref.current)
+  }
+
+  React.useEffect(() => {
+    if(!activeEl) return
+    const elIsInDropdown = ({parentElement: el}:any) => {
+      return el ? el === activeEl || elIsInDropdown(el) : false
+    }
+    const listener = e => {
+      if(!elIsInDropdown(e.target)){
+        window.removeEventListener('click', listener)
+        setActiveEl(null)
+      }
+    }
+    window.addEventListener('click', listener)
+    return () => window.removeEventListener('click', listener)
+  }, [activeEl])
+
+  return [handle, !!activeEl, ref, () => setActiveEl(null)]
+}

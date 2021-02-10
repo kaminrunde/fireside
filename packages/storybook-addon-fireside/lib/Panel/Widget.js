@@ -6,7 +6,7 @@ const styled_components_1 = require("styled-components");
 function Widget(props) {
     const [value, setValue] = React.useState(props.knob.value);
     const Component = widgets_1.default(props.knob, props.customComponents);
-    const [focus, setFocus] = React.useState(false);
+    const [handle, focus, ref] = useFocus();
     const update = val => {
         setValue(val);
         props.onUpdate(val);
@@ -16,7 +16,7 @@ function Widget(props) {
     const error = props.knob.options.validate
         ? props.knob.options.validate(value)
         : null;
-    return (React.createElement(Wrapper, { onFocus: () => setFocus(true), onBlur: () => setFocus(false) },
+    return (React.createElement(Wrapper, { ref: ref, onClick: handle },
         React.createElement("h3", { className: 'label' }, props.knob.label),
         props.knob.options.hint && (React.createElement("div", { className: 'hint' }, props.knob.options.hint)),
         error && (React.createElement("div", { className: 'error' }, error)),
@@ -44,4 +44,29 @@ const Wrapper = styled_components_1.default.div `
     margin-bottom: 5px;
   }
 `;
+function useFocus() {
+    const [activeEl, setActiveEl] = React.useState(null);
+    const ref = React.useRef(null);
+    const handle = () => {
+        if (activeEl || !ref.current)
+            return;
+        setActiveEl(ref.current);
+    };
+    React.useEffect(() => {
+        if (!activeEl)
+            return;
+        const elIsInDropdown = ({ parentElement: el }) => {
+            return el ? el === activeEl || elIsInDropdown(el) : false;
+        };
+        const listener = e => {
+            if (!elIsInDropdown(e.target)) {
+                window.removeEventListener('click', listener);
+                setActiveEl(null);
+            }
+        };
+        window.addEventListener('click', listener);
+        return () => window.removeEventListener('click', listener);
+    }, [activeEl]);
+    return [handle, !!activeEl, ref, () => setActiveEl(null)];
+}
 //# sourceMappingURL=Widget.js.map

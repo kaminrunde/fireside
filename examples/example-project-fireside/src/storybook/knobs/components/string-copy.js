@@ -15,7 +15,7 @@ registerKnob('string', function String (props) {
 })
 
 const Wrapper = styled.div`
-  border: 1px solid green;
+  border: 1px solid ${p => p.focus ? 'green' : 'lightgrey'};
   border-radius: 3px;
   padding-left: 5px;
   > input {

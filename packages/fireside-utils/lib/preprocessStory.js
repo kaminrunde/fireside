@@ -42,7 +42,7 @@ var createComponentGridContexts_1 = require("./createComponentGridContexts");
 var versionUpdate_1 = require("./versionUpdate");
 function preprocessStory(story, config) {
     return __awaiter(this, void 0, void 0, function () {
-        var formatted, formattedComponents, gridAreaDict, id;
+        var formatted, cachedGridContexts, getGridContexts, formattedComponents, gridAreaDict, id;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:

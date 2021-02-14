@@ -21,11 +21,16 @@ export default function Select (props:Props) {
   const handleClick = () => {
     setOpen(!open)
   }
+
+  const label = React.useMemo(() => {
+    const match = props.options.options.find(opt => opt.value === props.value)
+    return match ? match.label : props.value
+  }, [props.value, props.options.options])
   
   return (
     <Wrapper tabIndex='1' focus={props.focus}>
       <div className='value' onClick={handleClick}>
-        {props.value}
+        {label}
         {open ? <FaChevronUp/> : <FaChevronDown />}
       </div>
 

@@ -12,9 +12,13 @@ function Select(props) {
     const handleClick = () => {
         setOpen(!open);
     };
+    const label = React.useMemo(() => {
+        const match = props.options.options.find(opt => opt.value === props.value);
+        return match ? match.label : props.value;
+    }, [props.value, props.options.options]);
     return (React.createElement(Wrapper, { tabIndex: '1', focus: props.focus },
         React.createElement("div", { className: 'value', onClick: handleClick },
-            props.value,
+            label,
             open ? React.createElement(fa_1.FaChevronUp, null) : React.createElement(fa_1.FaChevronDown, null)),
         open && (React.createElement("div", { className: 'options' }, props.options.options.map(row => (React.createElement(Row, { key: row.label, selected: row.value === props.value, onClick: () => props.onChange(row.value) }, row.label)))))));
 }
@@ -50,6 +54,7 @@ const Wrapper = styled_components_1.default.div `
 const Row = styled_components_1.default.div `
   padding-left: 5px;
   line-height: 30px;
+  background: white;
   &:hover {
     background: whitesmoke;
     cursor: pointer;

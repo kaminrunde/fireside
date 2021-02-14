@@ -24,8 +24,8 @@ export default function App() {
         <GridRoute path='/grid/:mediaSize' mediaSize=''/>
         <Settings path='/settings' />
       </Router>
-      <Snackbar/>
       <Storybook/>
+      <Snackbar/>
       <Modal/>
     </div>
   )

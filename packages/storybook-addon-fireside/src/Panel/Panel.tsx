@@ -40,5 +40,5 @@ export default function Panel ({channel}:Props) {
 }
 
 const Wrapper = styled.div`
-
+  padding-bottom: 300px;
 `

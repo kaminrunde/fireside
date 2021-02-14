@@ -36,33 +36,17 @@ function formatGrid(grid, config) {
         ("grid-template-rows:" + grid.heights.join(' ') + ";") +
         ("grid-gap:" + grid.gap + "px;");
     if (unusedIds.length) {
-        result += '> ' + unusedIds.map(function (s) { return "." + s; }).join(',') + '{display:none;}';
+        result += '>' + unusedIds.map(function (id) { return "." + config.gridAreas[id]; }).join(',>') + '{display:none;}';
     }
     for (var _e = 0, usedIds_1 = usedIds; _e < usedIds_1.length; _e++) {
-        var name_3 = usedIds_1[_e];
+        var id = usedIds_1[_e];
         result +=
-            ">." + name_3 + "{" +
-                ("grid-area:" + gridAreas[name_3] + ";") +
+            ">." + config.gridAreas[id] + "{" +
+                ("grid-area:" + gridAreas[id] + ";") +
                 "display:flex;" +
                 "}";
     }
     return result;
 }
 exports.default = formatGrid;
-// function createCss (story:t.RawStory) {
-//   return `
-//     @media(min-width:400px){
-//       grid-template-rows: auto auto auto;
-//       grid-template-columns: 1fr 1fr;
-//       grid-gap: 20px;
-//       > .Button-1 {
-//         grid-area: 1 / 1 / 1 / 1;
-//         display: flex;
-//       }
-//       > .Button-2, .Button-3 {
-//         display: none;
-//       }
-//     }
-//   `
-// }
 //# sourceMappingURL=formatGrid.js.map

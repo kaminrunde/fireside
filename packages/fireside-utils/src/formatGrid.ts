@@ -2,6 +2,7 @@ import * as t from './types'
 
 type Config = {
   allIds: string[]
+  gridAreas: Record<string, string>
 }
 
 export default function formatGrid (grid:t.RawGrid, config:Config) {
@@ -36,36 +37,16 @@ export default function formatGrid (grid:t.RawGrid, config:Config) {
     `grid-gap:${grid.gap}px;`
 
   if (unusedIds.length) {
-    result += '> ' + unusedIds.map(s => `.${s}`).join(',') + '{display:none;}'
+    result += '>' + unusedIds.map(id => `.${config.gridAreas[id]}`).join(',>') + '{display:none;}'
   }
 
-  for(let name of usedIds){
+  for(let id of usedIds){
     result += 
-      `>.${name}{` +
-        `grid-area:${gridAreas[name]};` +
+      `>.${config.gridAreas[id]}{` +
+        `grid-area:${gridAreas[id]};` +
         `display:flex;` +
       `}`
   }
 
   return result
 }
-
-
-// function createCss (story:t.RawStory) {
-//   return `
-//     @media(min-width:400px){
-//       grid-template-rows: auto auto auto;
-//       grid-template-columns: 1fr 1fr;
-//       grid-gap: 20px;
-
-//       > .Button-1 {
-//         grid-area: 1 / 1 / 1 / 1;
-//         display: flex;
-//       }
-
-//       > .Button-2, .Button-3 {
-//         display: none;
-//       }
-//     }
-//   `
-// }

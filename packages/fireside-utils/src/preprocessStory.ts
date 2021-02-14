@@ -36,9 +36,13 @@ export default async function preprocessStory (story:t.RawStory, config:t.Config
     formatted.events.push(...events)
   })
 
+  const gridAreaDict:Record<string,string> = {}
+  for(let id in story.componentsById) gridAreaDict[id] = story.componentsById[id].props.gridArea
+
   Object.entries(story.grids)
     .map(([key, val]) => [key, formatGrid(val, {
       allIds: story.allComponents,
+      gridAreas: gridAreaDict
     })] as [string, ReturnType<typeof formatGrid>])
     .forEach(([key, val]) => {
       formatted.grids[key] = val

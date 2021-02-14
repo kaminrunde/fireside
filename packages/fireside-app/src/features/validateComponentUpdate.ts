@@ -9,27 +9,29 @@ addRule<$components.a.UpdateComponet>({
   position: 'INSTEAD',
   condition: (action, {getState, context}) => {
     const state = getState()
-    const prevId = context.get('prevId') || null
-    const errorCode = getErrorCode(prevId, action, state)
+    const prevGridArea = context.get('prevGridArea') || null
+    const errorCode = getErrorCode(prevGridArea, action, state)
     return errorCode === 'OK' ? false : true
   },
-  addWhen: function* (next, {context}) {
+  addWhen: function* (next, {context, getState}) {
     const action = yield next($components.c.LOAD)
     if(action.payload) {
-      context.set('prevId', action.payload)
+      const state = getState()
+      const component = $components.s.getComponent(state.components, action.payload)
+      context.set('prevGridArea', component.props.gridArea)
       return 'ADD_RULE'
     }
     else return 'REAPPLY_ADD_WHEN'
   },
   addUntil: function* (next, {context}) {
     yield next($components.c.UNLOAD)
-    context.set('prevId', null)
+    context.set('prevGridArea', null)
     return 'RECREATE_RULE'
   },
   consequence: (action, {getState, context}) => {
     const state = getState()
-    const prevId = context.get('prevId') || null
-    const errorCode = getErrorCode(prevId, action, state)
+    const prevGridArea = context.get('prevGridArea') || null
+    const errorCode = getErrorCode(prevGridArea, action, state)
 
     if(errorCode === 'DUBLICATE_GRID_AREA') return $snackbar.a.addMessage({
       title: 'Dublicate Grid-Area',
@@ -47,17 +49,18 @@ addRule<$components.a.UpdateComponet>({
 })
 
 function getErrorCode (
-  prevId: string | null,
+  prevGridArea: string | null,
   action:$components.a.UpdateComponet, 
   state:RootState
 ):'OK' | 'DUBLICATE_GRID_AREA' | 'WRONG_CHAR' | 'DIFFERENT_GRID_AREA' {
   if(action.payload.props.gridArea.match(/[^A-Za-z0-9_-]+/)){
     return 'WRONG_CHAR'
   }
+  
   const components = $components.s.getComponents(state.components)
   for(let component of components) {
     if(component.props.gridArea === action.payload.props.gridArea){
-      if(component.props.gridArea !== prevId) return 'DUBLICATE_GRID_AREA'
+      if(component.props.gridArea !== prevGridArea) return 'DUBLICATE_GRID_AREA'
     }
   }
   return 'OK'

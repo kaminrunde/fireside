@@ -33,6 +33,6 @@ function Panel({ channel }) {
 }
 exports.default = Panel;
 const Wrapper = styled_components_1.default.div `
-
+  padding-bottom: 300px;
 `;
 //# sourceMappingURL=Panel.js.map

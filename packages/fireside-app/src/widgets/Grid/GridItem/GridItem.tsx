@@ -54,9 +54,10 @@ export default function GridItem(props: Props) {
 
 const Wrapper = styled.div`
   background: lightgrey;
-  line-height: ${(p) => p.rowHeight}px;
-  height: ${(p) => p.rowHeight}px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
   padding: 0 10px;
   cursor: pointer;
   font-family: "Open Sans", sans-serif;

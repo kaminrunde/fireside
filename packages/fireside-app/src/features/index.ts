@@ -1,3 +1,4 @@
+import './ensureCanDelete'
 import './setConnector'
 import './setPlugins'
 import './updateStores'

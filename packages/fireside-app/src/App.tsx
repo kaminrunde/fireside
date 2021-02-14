@@ -4,6 +4,7 @@ import Snackbar from 'widgets/Snackbar'
 import {history} from './store'
 import Header from 'containers/Header'
 import Sidebar from 'containers/Sidebar'
+import Modal from 'containers/Modal'
 import EnforceFullscreen from 'containers/EnforceFullscreen'
 import Storybook from 'widgets/Storybook'
 
@@ -23,8 +24,9 @@ export default function App() {
         <GridRoute path='/grid/:mediaSize' mediaSize=''/>
         <Settings path='/settings' />
       </Router>
-      <Snackbar/>
       <Storybook/>
+      <Snackbar/>
+      <Modal/>
     </div>
   )
 }

@@ -8,14 +8,15 @@ type Props = {
 }
 
 export default function WidgetWrapper (props:Props) {
-  const [setupFinished, componentProps] = useComponentProps(props)
+  const [setupFinished, componentProps,key] = useComponentProps(props)
   if(!setupFinished) return null
-  return <props.component {...componentProps}/>
+  return <props.component key={key} {...componentProps}/>
 }
 
-function useComponentProps (props:Props):[boolean,object] {
+function useComponentProps (props:Props):[boolean,object,number] {
   const [finished, setFinished] = React.useState(false)
   const [finalProps, setFinalProps] = React.useState(props.props)
+  const [key, setKey] = React.useState(0)
 
   React.useEffect(() => {
     (async () => {
@@ -29,8 +30,9 @@ function useComponentProps (props:Props):[boolean,object] {
       }
       setFinalProps(newProps)
       setFinished(true)
+      setKey(key => key+1)
     })()
   }, [props.controller, props.props])
 
-  return [finished,finalProps]
+  return [finished,finalProps,key]
 }

@@ -22,8 +22,6 @@ export default function Panel ({channel}:Props) {
       setCustomComponents(dict => ({...dict, [name]: component}))
   }, [])
 
-  console.log(customComponents)
-
   return (
     <Wrapper>
       <Tabs key={key} tabs={tabs} />

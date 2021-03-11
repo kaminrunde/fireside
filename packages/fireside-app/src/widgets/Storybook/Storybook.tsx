@@ -71,9 +71,16 @@ const Wrapper = styled.div`
   right:0;
   bottom:0;
   visibility: ${(props:any) => props.visible ? 'visible' : 'hidden'};
+  background: white;
   > iframe {
     width: 100%; 
     height:100%;
     border: none;
+    margin: 0 auto;
+
+    /* contentfull bug fix */
+    @media (min-width: 600px) and (max-width: 610px) {
+      width: 599px;
+    }
   }
 `

@@ -40,6 +40,7 @@ const Wrapper = styled.div`
   background: steelblue;
   display: flex;
   position: fixed;
+  z-index: 99999;
   left: 0;
   right:0;
   top: 0;

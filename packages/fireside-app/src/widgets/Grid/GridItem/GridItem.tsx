@@ -13,6 +13,8 @@ type Props = {
   onClick: () => void;
   label: string;
   item: $grid.t.GridArea;
+  onMouseEnter: () => void
+  onMouseLeave: () => void
 };
 
 export default function GridItem(props: Props) {
@@ -24,8 +26,10 @@ export default function GridItem(props: Props) {
       rowHeight={props.rowHeight}
       active={props.active}
       onClick={props.onClick}
+      onMouseEnter={props.onMouseEnter}
+      onMouseLeave={props.onMouseLeave}
     >
-      <span>{props.label}</span>
+      <div className='label'>{props.label}</div>
       <div className="context">
         {iconList.data.map((row,i) => (
           <PluginButton 
@@ -60,6 +64,7 @@ const Wrapper = styled.div`
   height: 100%;
   padding: 0 10px;
   cursor: pointer;
+  position: relative;
   font-family: "Open Sans", sans-serif;
 
   border-left: 8px solid transparent;
@@ -69,6 +74,19 @@ const Wrapper = styled.div`
     `
     border-left: 8px solid #795548;
   `}
+
+  > .label {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    text-align: center;
+    padding: 0 5px;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   > .context {
     box-sizing: border-box;

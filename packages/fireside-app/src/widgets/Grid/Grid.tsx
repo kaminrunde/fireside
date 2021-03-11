@@ -30,12 +30,14 @@ export default function Grid (props:Props) {
   const [actionButtons, setActionButtons] = React.useState<t.ActionButton[]>([])
   const [hoverItem, setHoverItem] = React.useState<null|$grid.t.GridArea>(null)
 
-  const labels = React.useMemo(() => {
-    let dict:Record<string, string> = {}
+  const [labels, componentNames] = React.useMemo(() => {
+    let labelDict:Record<string, string> = {}
+    let nameDict:Record<string, string> = {}
     for (let c of components.data) {
-      dict[c.id] = c.props.gridArea
+      labelDict[c.id] = c.props.gridArea
+      nameDict[c.id] = c.name
     }
-    return dict
+    return [labelDict, nameDict]
   }, [components.data])
 
   const handleItemClick = (id:string) => () => {
@@ -158,7 +160,13 @@ export default function Grid (props:Props) {
 
       {hoverItem && (
         <div className='hover-info'>
-          <MdInfoOutline/> {labels[hoverItem.i]}
+          <div className='info'>
+            <MdInfoOutline/> 
+          </div>
+          <div className='labels'>
+            <span className='area'>{labels[hoverItem.i]}</span>
+            <span className='name'>{componentNames[hoverItem.i]}</span>
+          </div>
         </div>
       )}
     </Wrapper>
@@ -286,12 +294,28 @@ const Wrapper = styled.div`
     color: white;
     font-family: "Open Sans", sans-serif;
     padding: 5px 10px;
+    padding-right: 20px;
     font-size: 14px;
     z-index: 9999999999;
+    display: flex;
 
-    > svg {
-      margin-bottom: -2px;
-      margin-right: 5px;
+    > .info {
+      width: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      > svg {
+        font-size: 16px;
+      }
+    }
+
+    > .labels {
+      flex: 1;
+      > span { display: block; }
+      > .name {
+        font-size: 18px;
+      }
     }
   }
 `

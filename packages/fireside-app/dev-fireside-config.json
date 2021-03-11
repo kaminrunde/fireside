@@ -3,25 +3,43 @@
   "defaultStory": "cms/base/Banner",
   "mediaSizes": [
     {
-      "label": "mobile",
-      "key": "MOBILE",
+      "label": "PHONE",
+      "key": "XS",
       "icon": "MOBILE",
-      "gap": 20,
+      "gap": 10,
       "breakpoint": 0,
       "initialyActive": true
-    },{
-      "label": "tablet",
-      "key": "TABLET",
+    },
+    {
+      "label": "PHONE LANDSCAPE",
+      "key": "SM",
       "icon": "TABLET",
-      "gap": 20,
-      "breakpoint": 500,
+      "gap": 15,
+      "breakpoint": 576,
       "initialyActive": false
-    },{
-      "label": "laptop",
-      "key": "LAPTOP",
+    },
+    {
+      "label": "TABLET",
+      "key": "MD",
       "icon": "LAPTOP",
+      "gap": 15,
+      "breakpoint": 768,
+      "initialyActive": false
+    },
+    {
+      "label": "DESKTOP",
+      "key": "LG",
+      "icon": "DESKTOP",
       "gap": 20,
-      "breakpoint": 800,
+      "breakpoint": 992,
+      "initialyActive": false
+    },
+    {
+      "label": "DESKTOP LARGE",
+      "key": "XL",
+      "icon": "DESKTOP",
+      "gap": 20,
+      "breakpoint": 1200,
       "initialyActive": false
     }
   ],

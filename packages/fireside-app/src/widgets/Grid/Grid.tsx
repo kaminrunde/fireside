@@ -186,6 +186,11 @@ const Wrapper = styled.div`
   position: relative;
   padding-bottom: 200px;
 
+  .react-grid-layout {
+    padding-bottom: 50px;
+    box-sizing: content-box;
+  }
+
   > .drag {
     width: 500px;
     height: 40px;

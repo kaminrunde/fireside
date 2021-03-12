@@ -1,6 +1,6 @@
 {
   "storybookUrl": "http://localhost:6006/",
-  "defaultStory": "cms/base/Banner",
+  "defaultStory": "cms/base/Banner/Builder",
   "mediaSizes": [
     {
       "label": "mobile",

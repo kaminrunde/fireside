@@ -29,7 +29,7 @@ export default function IndexRoute (props:Props) {
 const Wrapper = styled.div`
   > .loading {
     width: 100%;
-    height: 300px;
+    height: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;

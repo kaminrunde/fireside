@@ -2,17 +2,18 @@ import * as React from 'react'
 import * as t from '../types'
 import getWidget from '../widgets'
 import styled from 'styled-components'
+import useCustomComponents from './useCustomComponents'
 
 
 type Props = {
   knob: t.Knob | t.SimpleKnob,
-  customComponents: Record<string, any>,
   onUpdate: (value:any) => void
 }
 
 export default function Widget (props:Props) {
+  const customComponents = useCustomComponents()
   const [value, setValue] = React.useState(props.knob.value)
-  const Component:any = getWidget(props.knob, props.customComponents)
+  const Component:any = getWidget(props.knob, customComponents)
   const [handle, focus, ref] = useFocus()
 
   const update = val => {

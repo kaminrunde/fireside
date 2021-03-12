@@ -16,6 +16,7 @@ const styled_components_1 = require("styled-components");
 const useKnobs_1 = require("./hooks/useKnobs");
 const Widget_1 = require("./Widget");
 const Tabs_1 = require("./Tabs");
+const useCustomComponents_1 = require("./useCustomComponents");
 function Panel({ channel }) {
     const _a = useKnobs_1.default(channel), { knobs, update, key } = _a, tabs = __rest(_a, ["knobs", "update", "key"]);
     const [customComponents, setCustomComponents] = React.useState({});
@@ -26,10 +27,10 @@ function Panel({ channel }) {
         // @ts-ignore
         window.__addCustomKnob = (name, component) => setCustomComponents(dict => (Object.assign(Object.assign({}, dict), { [name]: component })));
     }, []);
-    console.log(customComponents);
-    return (React.createElement(Wrapper, null,
-        React.createElement(Tabs_1.default, { key: key, tabs: tabs }),
-        knobs.map(knob => (React.createElement(Widget_1.default, { key: knob.id + key, knob: knob, customComponents: customComponents, onUpdate: val => update(knob, val) })))));
+    return (React.createElement(useCustomComponents_1.CustomComponentsProvider, { value: customComponents },
+        React.createElement(Wrapper, null,
+            React.createElement(Tabs_1.default, { key: key, tabs: tabs }),
+            knobs.map(knob => (React.createElement(Widget_1.default, { key: knob.id + key, knob: knob, onUpdate: val => update(knob, val) }))))));
 }
 exports.default = Panel;
 const Wrapper = styled_components_1.default.div `

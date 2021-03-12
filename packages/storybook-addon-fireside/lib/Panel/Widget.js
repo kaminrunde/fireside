@@ -3,9 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const widgets_1 = require("../widgets");
 const styled_components_1 = require("styled-components");
+const useCustomComponents_1 = require("./useCustomComponents");
 function Widget(props) {
+    const customComponents = useCustomComponents_1.default();
     const [value, setValue] = React.useState(props.knob.value);
-    const Component = widgets_1.default(props.knob, props.customComponents);
+    const Component = widgets_1.default(props.knob, customComponents);
     const [handle, focus, ref] = useFocus();
     const update = val => {
         setValue(val);

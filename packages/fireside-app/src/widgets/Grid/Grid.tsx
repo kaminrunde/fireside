@@ -1,5 +1,5 @@
 import * as React from 'react'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import ActionButtons, {t} from 'widgets/ActionButtons'
 import * as $grid from 'modules/grid'
 import {useLoadingComponent, useComponents} from 'modules/components'
@@ -28,7 +28,10 @@ export default function Grid (props:Props) {
   const [draggingName, setDraggingName] = React.useState('')
   const [active, setActive] = React.useState<null|string>(null)
   const [actionButtons, setActionButtons] = React.useState<t.ActionButton[]>([])
-  const [hoverItem, setHoverItem] = React.useState<null|$grid.t.GridArea>(null)
+  const [
+    [hoverComponentId,hoverComponentToTop], 
+    setHoverComponentId
+  ] = React.useState<[string|null,boolean]>([null,false])
 
   const [labels, componentNames] = React.useMemo(() => {
     let labelDict:Record<string, string> = {}
@@ -125,8 +128,8 @@ export default function Grid (props:Props) {
                     rowHeight={ROW_HEIGHT}
                     active={active === item.i} 
                     item={item}
-                    onMouseEnter={() => setHoverItem(item)}
-                    onMouseLeave={() => setHoverItem(null)}
+                    onMouseEnter={() => setHoverComponentId([item.i, false])}
+                    onMouseLeave={() => setHoverComponentId([null, false])}
                     label={labels[item.i]}
                     onClick={handleItemClick(item.i)}/>
                 </div>
@@ -150,6 +153,8 @@ export default function Grid (props:Props) {
             }}
             onClick={handleItemClick(c.id)}
             onDragEnd={() => setDraggingName('')}
+            onMouseEnter={() => setHoverComponentId([c.id, true])}
+            onMouseLeave={() => setHoverComponentId([null, false])}
             unselectable="on" 
             key={c.id}>
               {c.props.gridArea}
@@ -158,16 +163,16 @@ export default function Grid (props:Props) {
         <div className='offset'/>
       </div>
 
-      {hoverItem && (
-        <div className='hover-info'>
+      {hoverComponentId && (
+        <HoverInfo top={hoverComponentToTop}>
           <div className='info'>
             <MdInfoOutline/> 
           </div>
           <div className='labels'>
-            <span className='area'>{labels[hoverItem.i]}</span>
-            <span className='name'>{componentNames[hoverItem.i]}</span>
+            <span className='area'>{labels[hoverComponentId]}</span>
+            <span className='name'>{componentNames[hoverComponentId]}</span>
           </div>
-        </div>
+        </HoverInfo>
       )}
     </Wrapper>
   )
@@ -285,37 +290,37 @@ const Wrapper = styled.div`
       width: 100%;
     }
   }
+`
 
-  > .hover-info {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background: #607d8b;
-    color: white;
-    font-family: "Open Sans", sans-serif;
-    padding: 5px 10px;
-    padding-right: 20px;
-    font-size: 14px;
-    z-index: 9999999999;
+const HoverInfo = styled.div`
+  position: fixed;
+  ${p => p.top ? css`top:20px;` : css`bottom:20px;`}
+  left: 20px;
+  background: #607d8b;
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  padding: 5px 10px;
+  padding-right: 20px;
+  font-size: 14px;
+  z-index: 9999999999;
+  display: flex;
+
+  > .info {
+    width: 20px;
     display: flex;
-
-    > .info {
-      width: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 10px;
-      > svg {
-        font-size: 16px;
-      }
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    > svg {
+      font-size: 16px;
     }
+  }
 
-    > .labels {
-      flex: 1;
-      > span { display: block; }
-      > .name {
-        font-size: 18px;
-      }
+  > .labels {
+    flex: 1;
+    > span { display: block; }
+    > .name {
+      font-size: 18px;
     }
   }
 `

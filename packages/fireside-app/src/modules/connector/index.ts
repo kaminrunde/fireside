@@ -12,3 +12,5 @@ declare global {
   interface RootState { connector: State }
   interface ModuleActions { connector: a.Action }
 }
+
+export { default as useLoadingStatus } from './hooks/useLoadingStatus'

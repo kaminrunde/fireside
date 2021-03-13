@@ -15,6 +15,8 @@ type Props = {
   } | {
     mediaSize: string,
     componentId: string
+  } | {
+    mediaSize: string
   }
 }
 

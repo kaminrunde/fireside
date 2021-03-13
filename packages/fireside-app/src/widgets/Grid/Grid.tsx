@@ -7,10 +7,11 @@ import useGridWidth from './hooks/useGridWidth'
 import GridLayout from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
-import {FiPlus,FiMinus,FiSettings} from 'react-icons/fi'
+import {FiPlus,FiMinus} from 'react-icons/fi'
 import GridItem from './GridItem'
 import GridHeight from './GridHeight'
 import {MdInfoOutline} from 'react-icons/md'
+import SettingsButton from './SettingsButton'
 
 const GRID_MARGIN = 5
 const ROW_HEIGHT = 40
@@ -89,7 +90,7 @@ export default function Grid (props:Props) {
         <div className='context'>
           <button onClick={() => grid.removeWidth()}><FiMinus/></button>
           <button onClick={() => grid.addWidth()}><FiPlus/></button>
-          <button><FiSettings/></button>
+          <SettingsButton mediaSize={props.mediaSize} />
         </div>
         {grid.data.widths.map((width,i) => (
           <div className='width' key={i}>

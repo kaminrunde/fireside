@@ -14,6 +14,14 @@ export default produce((state:State, action:Action) => {
     case at.INIT: {
       return action.payload
     }
+    case at.CLEAR_GRID: {
+      delete state[action.payload]
+      break
+    }
+    case at.COPY_GRID: {
+      state[action.meta.to] = state[action.meta.from]
+      break
+    }
     case at.UPDATE_GRID: {
       const {mediaSize} = action.meta
       if(!state[mediaSize]){

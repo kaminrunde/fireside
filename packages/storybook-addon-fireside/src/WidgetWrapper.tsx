@@ -39,10 +39,10 @@ function useComponentProps (props:Props):[boolean,object,number] {
       let newProps:any = {...props.props}
 
       if(props.controller.preprocessProps){
-        newProps = await props.controller.preprocessProps(newProps, {getGridContext})
+        newProps = await props.controller.preprocessProps(newProps)
       }
       if(props.controller.createContext){
-        newProps.context = await props.controller.createContext(newProps)
+        newProps.context = await props.controller.createContext(newProps, {getGridContext})
       }
       setFinalProps(newProps)
       setFinished(true)

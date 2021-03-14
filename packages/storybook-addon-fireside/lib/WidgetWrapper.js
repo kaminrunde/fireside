@@ -41,10 +41,10 @@ function useComponentProps(props) {
         (() => __awaiter(this, void 0, void 0, function* () {
             let newProps = Object.assign({}, props.props);
             if (props.controller.preprocessProps) {
-                newProps = yield props.controller.preprocessProps(newProps, { getGridContext });
+                newProps = yield props.controller.preprocessProps(newProps);
             }
             if (props.controller.createContext) {
-                newProps.context = yield props.controller.createContext(newProps);
+                newProps.context = yield props.controller.createContext(newProps, { getGridContext });
             }
             setFinalProps(newProps);
             setFinished(true);

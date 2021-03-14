@@ -22,13 +22,29 @@ function useComponentProps(props) {
     const [finalProps, setFinalProps] = React.useState(props.props);
     const [key, setKey] = React.useState(0);
     React.useEffect(() => {
+        const getGridContext = () => {
+            const context = { minRow: 0, maxRow: 0, byMediaSize: {} };
+            const proxy = new Proxy(context.byMediaSize, {
+                get: () => ({
+                    row: 0,
+                    col: 0,
+                    totalRows: 1,
+                    totalCols: 1,
+                    colStretch: 1,
+                    rowStretch: 1,
+                }),
+                has: () => true
+            });
+            context.byMediaSize = proxy;
+            return context;
+        };
         (() => __awaiter(this, void 0, void 0, function* () {
             let newProps = Object.assign({}, props.props);
             if (props.controller.preprocessProps) {
                 newProps = yield props.controller.preprocessProps(newProps);
             }
             if (props.controller.createContext) {
-                newProps.context = yield props.controller.createContext(newProps);
+                newProps.context = yield props.controller.createContext(newProps, { getGridContext });
             }
             setFinalProps(newProps);
             setFinished(true);

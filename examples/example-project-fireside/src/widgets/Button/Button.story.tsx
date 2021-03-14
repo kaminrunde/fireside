@@ -2,6 +2,7 @@ import * as React from 'react'
 import Component from './Button'
 import { storiesOf } from '@storybook/react'
 import * as b from '@kaminrunde/storybook-addon-fireside'
+import controller from './request'
 
 b.registerWidgetSelector(Component.name, props => {
   return {kind:'cms/base/Button',story: 'Builder'}
@@ -21,17 +22,4 @@ storiesOf('cms/base/Button', module)
     b.string('label', 'Label', 'foo', {
       hint: 'Das ist der label'
     }),
-  ],{
-    versionUpdate: props => {
-      let newProps = props
-      if(!props.__version){
-        newProps = {...newProps}
-        newProps.__version = 1
-        newProps.label = newProps.label + '-version-1-'
-      }
-      return newProps
-    },
-    createContext: async props => {
-      return {foo:'bar'}
-    }
-  }))
+  ],controller))

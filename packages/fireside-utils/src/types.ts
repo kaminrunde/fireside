@@ -104,7 +104,10 @@ export type Controller<ComponentConfig,Context> = {
    *   return await fetchProductSuggestions(componentConfig.productId)
    * }
    */
-  createContext?: (componentConfig:ComponentConfig) => Context | Promise<Context>,
+  createContext?: (
+    componentConfig:ComponentConfig, 
+    opt: { getGridContext:() => GridContext }
+  ) => Context | Promise<Context>,
   /**
    * Sometimes you want to some context to the whole story. E.g your component adds something
    * to your redux-store and you want to hydrate it. In "createStoryEvents" you can return a
@@ -171,4 +174,19 @@ export type FormattedStory = {
   allComponents: string[],
   grids: Record<string, string>,
   plugins: {[key:string]:any}
+}
+
+export type GridContext = {
+  minRow: number
+  maxRow: number
+  byMediaSize: {
+    [ms:string]: {
+      row: number
+      col: number
+      totalRows: number
+      totalCols: number
+      colStretch: number
+      rowStretch: number
+    }
+  }
 }

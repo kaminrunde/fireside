@@ -38,10 +38,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var preprocessComponent_1 = require("./preprocessComponent");
 var formatGrid_1 = require("./formatGrid");
+var createComponentGridContexts_1 = require("./createComponentGridContexts");
 var versionUpdate_1 = require("./versionUpdate");
 function preprocessStory(story, config) {
     return __awaiter(this, void 0, void 0, function () {
-        var formatted, formattedComponents, gridAreaDict, id;
+        var formatted, cachedGridContexts, getGridContexts, formattedComponents, gridAreaDict, id;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -54,9 +55,14 @@ function preprocessStory(story, config) {
                         events: [],
                         plugins: story.plugins || {}
                     };
+                    getGridContexts = function (id) {
+                        if (!cachedGridContexts)
+                            cachedGridContexts = createComponentGridContexts_1.default(story);
+                        return cachedGridContexts[id];
+                    };
                     return [4 /*yield*/, Promise.all(story.allComponents
                             .map(function (name) { return story.componentsById[name]; })
-                            .map(function (c) { return preprocessComponent_1.default(c, {
+                            .map(function (c) { return preprocessComponent_1.default(c, function () { return getGridContexts(c.id); }, {
                             resolveController: config.resolveController
                         }); }))];
                 case 1:
@@ -64,7 +70,8 @@ function preprocessStory(story, config) {
                     formattedComponents.forEach(function (_a, i) {
                         var _b;
                         var c = _a[0], events = _a[1];
-                        formatted.componentsById[story.allComponents[i]] = c;
+                        var id = story.allComponents[i];
+                        formatted.componentsById[id] = c;
                         (_b = formatted.events).push.apply(_b, events);
                     });
                     gridAreaDict = {};

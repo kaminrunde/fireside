@@ -11,7 +11,8 @@ exports.createSchemaCustomization = ({actions}, config) => {
         try {
           return await preprocessStory(node.story, config)
         } catch (e) {
-          throw new Error(e.stack)
+          console.error(e, e.stack)
+          throw new Error(e)
         }
       }
     })

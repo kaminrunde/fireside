@@ -33,7 +33,7 @@ export default function SettingsButton (props:Props) {
     </button>
     {open && (
       <PluginModal 
-        title='Settings'
+        title='Grid-Settings'
         onClose={() => setOpen(false)}
         components={[]}
         extraArgs={props}

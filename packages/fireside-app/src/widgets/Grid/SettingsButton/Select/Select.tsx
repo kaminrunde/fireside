@@ -68,7 +68,7 @@ const Wrapper = styled.div`
     margin-top: 10px;
     font-family: 'Open Sans', sans-serif;
     background: white;
-    z-index: 9;
+    z-index: 999999999;
     > * {
       padding: 10px;
       font-size: 14px;

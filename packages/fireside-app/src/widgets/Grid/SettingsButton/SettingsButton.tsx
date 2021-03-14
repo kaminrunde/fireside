@@ -41,6 +41,15 @@ export default function SettingsButton (props:Props) {
         <ModalContent>
           <div className='row'>
             <div className='label'>
+              Reset the entire Grid. All grid areas are send to buffer and the widths are removed
+            </div>
+            <button onClick={grid.clearGrid}>
+              Clear Grid
+            </button>
+          </div>
+
+          <div className='row'>
+            <div className='label'>
               Copy entire grid from selected media-size. Current grid will be removed
             </div>
             <Select
@@ -58,10 +67,6 @@ export default function SettingsButton (props:Props) {
               Copy
             </button>
           </div>
-
-          <button className='clear' onClick={grid.clearGrid}>
-            Clear Grid
-          </button>
         </ModalContent>
       </PluginModal>
     )}

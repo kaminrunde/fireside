@@ -58,9 +58,11 @@ const Wrapper = styled.div`
 
     > .name {
       margin: 0 30px;
-      font-size: 24px;
+      font-size: 18px;
       display: flex;
       height: auto;
+      line-break: loose;
+      word-break: break-all;
       align-items: center;
       font-family: 'Open Sans', sans-serif;
     }

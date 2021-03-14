@@ -77,19 +77,17 @@ channel.on('storyboard-bridge/hydrate-component', (component) => {
     let context = selector(component.props);
     context.kind = context.kind.replace(/\//g, '-').toLowerCase();
     context.id = `${context.kind}--${context.story}`.toLowerCase();
-    if (currentStoryId === context.id) {
-        const props = currentController.versionUpdate
-            ? currentController.versionUpdate(component.props)
-            : component.props;
-        currentKnobs.forEach(knob => {
-            const hydratedValue = objPath.get(props, knob.prop);
-            knob.value = hydratedValue || knob.value;
-        });
-        channel.emit('storyboard-bridge/set-knobs', currentKnobs);
-        channel.emit('storyboard-bridge/update-component-props', getProps(currentKnobs));
-        react_1.forceReRender();
-    }
-    else {
+    const props = currentController.versionUpdate
+        ? currentController.versionUpdate(component.props)
+        : component.props;
+    currentKnobs.forEach(knob => {
+        const hydratedValue = objPath.get(props, knob.prop);
+        knob.value = hydratedValue || knob.value;
+    });
+    channel.emit('storyboard-bridge/set-knobs', currentKnobs);
+    channel.emit('storyboard-bridge/update-component-props', getProps(currentKnobs));
+    react_1.forceReRender();
+    if (currentStoryId !== context.id) {
         hydratedProps = component.props;
         channel.emit('storyboard-bridge/select-story', context);
     }

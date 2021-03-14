@@ -1,15 +1,17 @@
 import * as React from 'react'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import ActionButtons, {t} from 'widgets/ActionButtons'
-import {useGrid} from 'modules/grid'
+import * as $grid from 'modules/grid'
 import {useLoadingComponent, useComponents} from 'modules/components'
 import useGridWidth from './hooks/useGridWidth'
 import GridLayout from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
-import {FiPlus,FiMinus,FiSettings} from 'react-icons/fi'
+import {FiPlus,FiMinus} from 'react-icons/fi'
 import GridItem from './GridItem'
 import GridHeight from './GridHeight'
+import {MdInfoOutline} from 'react-icons/md'
+import SettingsButton from './SettingsButton'
 
 const GRID_MARGIN = 5
 const ROW_HEIGHT = 40
@@ -20,22 +22,26 @@ type Props = {
 }
 
 export default function Grid (props:Props) {
-  const grid = useGrid(props.mediaSize)
+  const grid = $grid.useGrid(props.mediaSize)
   const loadingComponent = useLoadingComponent()
   const components = useComponents()
   const gridWidth = useGridWidth()
   const [draggingName, setDraggingName] = React.useState('')
   const [active, setActive] = React.useState<null|string>(null)
   const [actionButtons, setActionButtons] = React.useState<t.ActionButton[]>([])
-  // const plugins = useComponentPlugins()
-  console.log(grid)
+  const [
+    [hoverComponentId,hoverComponentToTop], 
+    setHoverComponentId
+  ] = React.useState<[string|null,boolean]>([null,false])
 
-  const labels = React.useMemo(() => {
-    let dict:Record<string, string> = {}
+  const [labels, componentNames] = React.useMemo(() => {
+    let labelDict:Record<string, string> = {}
+    let nameDict:Record<string, string> = {}
     for (let c of components.data) {
-      dict[c.id] = c.props.gridArea
+      labelDict[c.id] = c.props.gridArea
+      nameDict[c.id] = c.name
     }
-    return dict
+    return [labelDict, nameDict]
   }, [components.data])
 
   const handleItemClick = (id:string) => () => {
@@ -84,7 +90,7 @@ export default function Grid (props:Props) {
         <div className='context'>
           <button onClick={() => grid.removeWidth()}><FiMinus/></button>
           <button onClick={() => grid.addWidth()}><FiPlus/></button>
-          <button><FiSettings/></button>
+          <SettingsButton mediaSize={props.mediaSize} />
         </div>
         {grid.data.widths.map((width,i) => (
           <div className='width' key={i}>
@@ -123,6 +129,8 @@ export default function Grid (props:Props) {
                     rowHeight={ROW_HEIGHT}
                     active={active === item.i} 
                     item={item}
+                    onMouseEnter={() => setHoverComponentId([item.i, false])}
+                    onMouseLeave={() => setHoverComponentId([null, false])}
                     label={labels[item.i]}
                     onClick={handleItemClick(item.i)}/>
                 </div>
@@ -146,12 +154,27 @@ export default function Grid (props:Props) {
             }}
             onClick={handleItemClick(c.id)}
             onDragEnd={() => setDraggingName('')}
+            onMouseEnter={() => setHoverComponentId([c.id, true])}
+            onMouseLeave={() => setHoverComponentId([null, false])}
             unselectable="on" 
             key={c.id}>
               {c.props.gridArea}
           </BufferComponent>
         ))}
+        <div className='offset'/>
       </div>
+
+      {hoverComponentId && (
+        <HoverInfo top={hoverComponentToTop}>
+          <div className='info'>
+            <MdInfoOutline/> 
+          </div>
+          <div className='labels'>
+            <span className='area'>{labels[hoverComponentId]}</span>
+            <span className='name'>{componentNames[hoverComponentId]}</span>
+          </div>
+        </HoverInfo>
+      )}
     </Wrapper>
   )
 }
@@ -163,6 +186,11 @@ const Wrapper = styled.div`
   height: calc(100vh - 60px);
   position: relative;
   padding-bottom: 200px;
+
+  .react-grid-layout {
+    padding-bottom: 50px;
+    box-sizing: content-box;
+  }
 
   > .drag {
     width: 500px;
@@ -227,12 +255,12 @@ const Wrapper = styled.div`
   }
 
   > .buffer-offset {
-    height: 250px;
+    height: 450px;
     width: 100%;
   }
 
   > .buffer {
-    position: absolute;
+    position: fixed;
     background: whitesmoke;
     z-index: 999999999;
     box-shadow: 0px -3px 5px 1px rgba(0,0,0,0.19);
@@ -240,23 +268,80 @@ const Wrapper = styled.div`
     right: 0;
     bottom: 0;
     height: 200px;
-    margin-top: 50px;
-    display: flex;
-    flex-wrap: wrap;
+    overflow: auto;
+    padding: 20px 20px 50px 20px;
     border-top: 1px solid lightgrey;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 5px;
+
+    @media (min-width: 800px) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    @media (min-width: 1100px) {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    @media (min-width: 1400px) {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+
+    @media (min-width: 1700px) {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+
+    > .offset {
+      height: 80px;
+      width: 100%;
+    }
+  }
+`
+
+const HoverInfo = styled.div`
+  position: fixed;
+  ${p => p.top ? css`top:20px;` : css`bottom:20px;`}
+  left: 20px;
+  background: #607d8b;
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  padding: 5px 10px;
+  padding-right: 20px;
+  font-size: 14px;
+  z-index: 9999999999;
+  display: flex;
+
+  > .info {
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    > svg {
+      font-size: 16px;
+    }
+  }
+
+  > .labels {
+    flex: 1;
+    > span { display: block; }
+    > .name {
+      font-size: 18px;
+    }
   }
 `
 
 const BufferComponent = styled.div`
-  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: steelblue;
-  width: 300px;
+  width: 100%;
   color: white;
-  text-align: center;
   cursor: pointer;
-  margin: 3px;
   height: ${ROW_HEIGHT}px;
   font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
 
   border-left: 8px solid transparent;
 

@@ -4,6 +4,7 @@ import useKnobs from './hooks/useKnobs'
 import Widget from './Widget'
 import Tabs from './Tabs'
 import * as t from '../types'
+import {CustomComponentsProvider} from './useCustomComponents'
 
 type Props = {
   channel: t.Channel,
@@ -23,17 +24,18 @@ export default function Panel ({channel}:Props) {
   }, [])
 
   return (
-    <Wrapper>
-      <Tabs key={key} tabs={tabs} />
-      {knobs.map(knob => (
-        <Widget 
-          key={knob.id+key}
-          knob={knob}
-          customComponents={customComponents}
-          onUpdate={val => update(knob, val)}
-        />
-      ))}
-    </Wrapper>
+    <CustomComponentsProvider value={customComponents}>
+      <Wrapper>
+        <Tabs key={key} tabs={tabs} />
+        {knobs.map(knob => (
+          <Widget 
+            key={knob.id+key}
+            knob={knob}
+            onUpdate={val => update(knob, val)}
+          />
+        ))}
+      </Wrapper>
+    </CustomComponentsProvider>
   )
 }
 

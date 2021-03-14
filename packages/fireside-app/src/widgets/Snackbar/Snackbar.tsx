@@ -19,7 +19,7 @@ export default function Snackbar () {
 }
 
 const Wrapper = styled.div`
-  position: absolute;
+  position: fixed;
   left: 0;
   width: 100%;
   max-width: 800px;

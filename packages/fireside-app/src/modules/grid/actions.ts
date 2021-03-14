@@ -43,6 +43,16 @@ export const toBuffer = (mediaSize:string, gridArea:t.GridArea) => ({
   payload: gridArea
 })
 
+export const copyGrid = (from:string, to:string) => ({
+  type: at.COPY_GRID,
+  meta: {from, to}
+})
+
+export const clearGrid = (mediaSize:string) => ({
+  type: at.CLEAR_GRID,
+  payload: mediaSize
+})
+
 export const init = (grids:{
   [mediaSize:string]: {
     grid: string[][],
@@ -91,6 +101,8 @@ export type SetHeight = ReturnType<typeof setHeight>
 export type AddFromBuffer = ReturnType<typeof addFromBuffer>
 export type ToBuffer = ReturnType<typeof toBuffer>
 export type Init = ReturnType<typeof init>
+export type CopyGrid = ReturnType<typeof copyGrid>
+export type ClearGrid = ReturnType<typeof clearGrid>
 
 export type Action =
 | Init
@@ -101,3 +113,5 @@ export type Action =
 | SetHeight
 | AddFromBuffer
 | ToBuffer
+| CopyGrid
+| ClearGrid

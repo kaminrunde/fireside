@@ -58,7 +58,10 @@ export default function Storybook () {
           ]}
         />
       )}
-      <iframe ref={ref} src={config.storybookUrl} />
+
+      <div className='iframe-wrapper'>
+        <iframe ref={ref} src={config.storybookUrl} title='Storybook'/>
+      </div>
     </Wrapper>
   )
 }
@@ -71,9 +74,21 @@ const Wrapper = styled.div`
   right:0;
   bottom:0;
   visibility: ${(props:any) => props.visible ? 'visible' : 'hidden'};
-  > iframe {
-    width: 100%; 
-    height:100%;
-    border: none;
+  background: white;
+
+  > .iframe-wrapper {
+
+    height: 100%;
+    width: 100%;
+    /* contentfull bug fix */
+    @media (min-width: 600px) and (max-width: 710px) {
+      width: 599px;
+      margin: 0 auto;
+    }
+    > iframe {
+      width: 100%; 
+      height:100%;
+      border: none;
+    }
   }
 `

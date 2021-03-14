@@ -16,6 +16,8 @@ type Result = {
   updateGrid: (areas:t.GridArea[]) => a.UpdateGrid,
   addFromBuffer: (area:t.GridArea) => a.AddFromBuffer,
   toBuffer: (area:t.GridArea) => a.ToBuffer
+  clearGrid: () => a.ClearGrid
+  copyGridFrom: (mediaSize:string) => a.CopyGrid
   // updateGridArea: typeof a.updateGridArea
 }
 
@@ -26,7 +28,9 @@ type DP = {
   setHeight: typeof a.setHeight,
   updateGrid: typeof a.updateGrid,
   addFromBuffer: typeof a.addFromBuffer,
-  toBuffer: typeof a.toBuffer
+  toBuffer: typeof a.toBuffer,
+  clearGrid: typeof a.clearGrid,
+  copyGridFrom: typeof a.copyGrid
 }
 
 type Props = {
@@ -47,7 +51,9 @@ const config:Config<Props,Result,State,DP> = {
     setHeight: a.setHeight,
     updateGrid: a.updateGrid,
     addFromBuffer: a.addFromBuffer,
-    toBuffer: a.toBuffer
+    toBuffer: a.toBuffer,
+    copyGridFrom: a.copyGrid,
+    clearGrid: a.clearGrid
   },
   transformDispatch: {
     addWidth: (fn,sp,props) => width => fn(props.mediaSize, width),
@@ -56,7 +62,9 @@ const config:Config<Props,Result,State,DP> = {
     setHeight: (fn,sp,props) => (index,height) => fn(props.mediaSize,index,height),
     updateGrid: (fn,sp,props) => areas => fn(props.mediaSize,areas),
     addFromBuffer: (fn,sp,props) => area => fn(props.mediaSize,area),
-    toBuffer: (fn,sp,props) => area => fn(props.mediaSize, area)
+    toBuffer: (fn,sp,props) => area => fn(props.mediaSize, area),
+    copyGridFrom: (fn,sp,props) => mediaSize  => fn(mediaSize, props.mediaSize),
+    clearGrid: (fn,sp,props) => () => fn(props.mediaSize),
   }
 }
 

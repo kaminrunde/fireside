@@ -11,15 +11,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 function WidgetWrapper(props) {
-    const [setupFinished, componentProps] = useComponentProps(props);
+    const [setupFinished, componentProps, key] = useComponentProps(props);
     if (!setupFinished)
         return null;
-    return React.createElement(props.component, Object.assign({}, componentProps));
+    return React.createElement(props.component, Object.assign({ key: key }, componentProps));
 }
 exports.default = WidgetWrapper;
 function useComponentProps(props) {
     const [finished, setFinished] = React.useState(false);
     const [finalProps, setFinalProps] = React.useState(props.props);
+    const [key, setKey] = React.useState(0);
     React.useEffect(() => {
         (() => __awaiter(this, void 0, void 0, function* () {
             let newProps = Object.assign({}, props.props);
@@ -31,8 +32,9 @@ function useComponentProps(props) {
             }
             setFinalProps(newProps);
             setFinished(true);
+            setKey(key => key + 1);
         }))();
     }, [props.controller, props.props]);
-    return [finished, finalProps];
+    return [finished, finalProps, key];
 }
 //# sourceMappingURL=WidgetWrapper.js.map

@@ -19,7 +19,10 @@ const connector:t.Connector = {
   }
 }
 
+console.log('start')
+
 initContentfulExtension((_sdk:any) => {
+  console.log('init')
   sdk = _sdk
   try {
     // @ts-ignore

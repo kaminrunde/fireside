@@ -11,12 +11,15 @@ type Props = {
     component: any,
     pluginKey: string
   }[],
+  children?: any,
   extraArgs: {
     mediaSize: string,
     row: number
   } | {
     mediaSize: string,
     componentId: string
+  } | {
+    mediaSize: string
   }
 }
 
@@ -28,6 +31,7 @@ export default function PluginModal (props:Props) {
         <h3 className='title'>{props.title}</h3>
         <div className='close-wrapper' onClick={props.onClose}><MdClose/></div>
         <div className='components'>
+          {props.children}
           {props.components.map((c,i) => (
             <Component 
               key={i}
@@ -57,7 +61,7 @@ const Wrapper = styled.div`
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      max-width: 500px;
+      max-width: 600px;
       max-height: 80vh;
       width: 100%;
       margin: 0 auto;
@@ -94,6 +98,7 @@ const Wrapper = styled.div`
     > .components {
       overflow-y: scroll;
       max-height: 70vh;
+      padding-bottom: 100px;
     }
   }
 

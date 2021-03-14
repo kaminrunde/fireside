@@ -1,15 +1,15 @@
 {
   "name": "@kaminrunde/fireside-app",
-  "version": "1.0.1-alpha.43",
+  "version": "1.0.1-alpha.44",
   "author": "Manuel Jung",
   "devDependencies": {
-    "@kaminrunde/fireside-connector-contentful": "^1.0.1-alpha.31",
-    "@kaminrunde/fireside-plugin-background-rows": "^1.0.1-alpha.31",
-    "@kaminrunde/fireside-plugin-fullwidth-components": "^1.0.1-alpha.31"
+    "@kaminrunde/fireside-connector-contentful": "^1.0.1-alpha.44",
+    "@kaminrunde/fireside-plugin-background-rows": "^1.0.1-alpha.44",
+    "@kaminrunde/fireside-plugin-fullwidth-components": "^1.0.1-alpha.44"
   },
   "dependencies": {
     "@babel/core": "7.9.0",
-    "@kaminrunde/fireside-utils": "^1.0.1-alpha.31",
+    "@kaminrunde/fireside-utils": "^1.0.1-alpha.44",
     "@reach/router": "^1.3.3",
     "@svgr/webpack": "4.3.3",
     "@testing-library/jest-dom": "^4.2.4",

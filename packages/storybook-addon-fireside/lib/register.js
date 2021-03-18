@@ -15,6 +15,39 @@ addons_1.default.register('addons:storyboard-bridge', api => {
         name: 'not-known',
         props: {}
     };
+    if (window.localStorage.getItem('debugFireside')) {
+        channel.on("channelCreated", e => console.log("channelCreated", e));
+        channel.on("getCurrentStory", e => console.log("getCurrentStory", e));
+        channel.on("setCurrentStory", e => console.log("setCurrentStory", e));
+        channel.on("getStories", e => console.log("getStories", e));
+        channel.on("setStories", e => console.log("setStories", e));
+        channel.on("storiesConfigured", e => console.log("storiesConfigured", e));
+        channel.on("selectStory", e => console.log("selectStory", e));
+        channel.on("previewKeydown", e => console.log("previewKeydown", e));
+        channel.on("storyAdded", e => console.log("storyAdded", e));
+        channel.on("storyChanged", e => console.log("storyChanged", e));
+        channel.on("storyUnchanged", e => console.log("storyUnchanged", e));
+        channel.on("forceReRender", e => console.log("forceReRender", e));
+        channel.on("registerSubscription", e => console.log("registerSubscription", e));
+        channel.on("storyInit", e => console.log("storyInit", e));
+        channel.on("storyRender", e => console.log("storyRender", e));
+        channel.on("storyRendered", e => console.log("storyRendered", e));
+        channel.on("storyMissing", e => console.log("storyMissing", e));
+        channel.on("storyErrored", e => console.log("storyErrored", e));
+        channel.on("storyThrewException", e => console.log("storyThrewException", e));
+        channel.on("storiesCollapseAll", e => console.log("storiesCollapseAll", e));
+        channel.on("storiesExpandAll", e => console.log("storiesExpandAll", e));
+        channel.on("docsRendered", e => console.log("docsRendered", e));
+        channel.on("navigateUrl", e => console.log("navigateUrl", e));
+        channel.on('storyboard-bridge/set-knobs', e => console.log('storyboard-bridge/set-knobs', e));
+        channel.on('storyboard-bridge/set-knob-value', e => console.log('storyboard-bridge/set-knob-value', e));
+        channel.on('storyboard-bridge/select-story', e => console.log('storyboard-bridge/select-story', e));
+        channel.on('storyboard-bridge/story-selected', e => console.log('storyboard-bridge/story-selected', e));
+        channel.on('storyboard-bridge/hydrate-component', e => console.log('storyboard-bridge/hydrate-component', e));
+        channel.on('storyboard-bridge/update-component-name', e => console.log('storyboard-bridge/update-component-name', e));
+        channel.on('storyboard-bridge/update-component-props', e => console.log('storyboard-bridge/update-component-props', e));
+        channel.on('storyboard-bridge/init-knob-manager', e => console.log('storyboard-bridge/init-knob-manager', e));
+    }
     channel.on('storyboard-bridge/select-story', context => {
         api.selectStory(context.kind, context.story);
     });
@@ -32,7 +65,6 @@ addons_1.default.register('addons:storyboard-bridge', api => {
     window.addEventListener('message', (e) => {
         if (typeof e.data !== 'object' || !e.data.type)
             return;
-        console.log('e.data', e.data);
         switch (e.data.type) {
             case 'fireside-hydrate-component': {
                 if (!e.data.component) {

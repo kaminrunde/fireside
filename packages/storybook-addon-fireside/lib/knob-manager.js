@@ -75,8 +75,7 @@ channel.on('storyboard-bridge/hydrate-component', (component) => {
         throw new Error('you forgot to implement "registerWidgetSelector" for widget ' + component.name);
     }
     let context = selector(component.props);
-    context.kind = context.kind.replace(/\//g, '-').toLowerCase();
-    context.id = `${context.kind}--${context.story}`.toLowerCase();
+    context.id = `${context.kind.replace(/\//g, '-').toLowerCase()}--${context.story}`.toLowerCase();
     const props = currentController.versionUpdate
         ? currentController.versionUpdate(component.props)
         : component.props;

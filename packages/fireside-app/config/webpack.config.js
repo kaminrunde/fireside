@@ -274,7 +274,12 @@ module.exports = function(webpackEnv) {
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
       // https://github.com/facebook/create-react-app/issues/253
-      modules: ['node_modules', paths.appNodeModules, process.env.CWD + '/node_modules'].concat(
+      modules: [
+        'node_modules', 
+        paths.appNodeModules, 
+        process.env.CWD + '/node_modules',
+        process.env.CWD + '/fireside-plugins',
+      ].concat(
         modules.additionalModulePaths || []
       ),
       // These are the reasonable defaults supported by the Node ecosystem.
@@ -287,7 +292,7 @@ module.exports = function(webpackEnv) {
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes('ts')),
       alias: {
-        'fireside-config': isEnvProduction
+        'fireside-config': isEnvProduction || process.env.FIRESIDE_TEST
           ? process.env.CWD+'/fireside-config'
           : path.resolve(__dirname,'../dev-fireside-config'),
         // Support React Native Web

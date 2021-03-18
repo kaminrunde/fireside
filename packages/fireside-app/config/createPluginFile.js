@@ -1,7 +1,12 @@
 var path = require('path')
 var fs = require('fs')
 var firesideConfig = {}
-if(process.env.NODE_ENV === 'production') {
+
+if(process.env.FIRESIDE_TEST) {
+  firesideConfig = require(`${process.env.CWD}/fireside-config`)
+  firesideConfig.connector = "modules/connector/utils/testConnector"
+}
+else if(process.env.NODE_ENV === 'production') {
   firesideConfig = require(`${process.env.CWD}/fireside-config`)
 }
 else {
@@ -19,7 +24,7 @@ module.exports = function createPluginFile () {
 
   if(firesideConfig.plugins) {
     firesideConfig.plugins.forEach((row,i) => {
-      contentPlugins += `import plugin${i} from "${row.resolve}"\n`
+      contentPlugins += `//@ts-ignore\nimport plugin${i} from "${row.resolve}"\n`
     })
 
     contentPlugins += '\n\nexport default {\n'

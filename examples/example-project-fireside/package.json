@@ -55,6 +55,7 @@
   "license": "MIT",
   "scripts": {
     "fireside": "fireside-build",
+    "fireside:test": "fireside-test",
     "storyboard": "NODE_PATH=src eject-app-test",
     "build": "gatsby build",
     "storybook": "NODE_ENV=production NODE_PATH=src start-storybook -p 6006 -c src/storybook",

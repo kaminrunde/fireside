@@ -101,7 +101,8 @@
     "test-types": "tsc --noEmit"
   },
   "bin": {
-    "fireside-build": "./scripts/fireside-build.js"
+    "fireside-build": "./scripts/fireside-build.js",
+    "fireside-test": "./scripts/fireside-test.js"
   },
   "eslintConfig": {
     "extends": "react-app"

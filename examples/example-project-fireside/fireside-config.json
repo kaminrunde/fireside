@@ -32,6 +32,11 @@
       "options": {
         "key": "fullWidth"
       }
+    },{
+      "resolve": "fireside-plugin-component-gap",
+      "options": {
+        "key": "componentGap"
+      }
     }
   ]
 }

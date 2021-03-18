@@ -14,7 +14,7 @@ export default function Header () {
   }
   return (
     <>
-      <Offset/>,
+      <Offset/>
       <Wrapper>
         <div className='burger-menu' onClick={sidebar.isOpen ? sidebar.close : sidebar.open}>
           {sidebar.isOpen ? <MdClose/> : <FiMenu/>}

@@ -4,6 +4,7 @@ exports.addSelector = exports.getProps = exports.getKnobs = void 0;
 const objPath = require("object-path");
 const addons_1 = require("@storybook/addons");
 const react_1 = require("@storybook/react");
+const csf_1 = require("@storybook/csf");
 const knobStore = {};
 const contextStore = {};
 const selectorStore = {};
@@ -71,12 +72,11 @@ channel.on('storyboard-bridge/set-knob-value', ({ knobId, payload }) => {
 });
 channel.on('storyboard-bridge/hydrate-component', (component) => {
     const selector = selectorStore[component.name];
-    console.log(component.name, selectorStore);
     if (!selector) {
         throw new Error('you forgot to implement "registerWidgetSelector" for widget ' + component.name);
     }
     let context = selector(component.props);
-    context.id = `${context.kind.replace(/\//g, '-').toLowerCase()}--${context.story}`.toLowerCase();
+    context.id = csf_1.toId(context.kind, context.story);
     const props = currentController.versionUpdate
         ? currentController.versionUpdate(component.props)
         : component.props;

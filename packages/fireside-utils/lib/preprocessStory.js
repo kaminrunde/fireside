@@ -42,9 +42,9 @@ var createComponentGridContexts_1 = require("./createComponentGridContexts");
 var versionUpdate_1 = require("./versionUpdate");
 function preprocessStory(story, config) {
     return __awaiter(this, void 0, void 0, function () {
-        var formatted, cachedGridContexts, getGridContexts, formattedComponents, gridAreaDict, id;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var formatted, usedComponentIds, ms, _i, _a, row, _b, row_1, id, cachedGridContexts, getGridContexts, formattedComponents, gridAreaDict, id;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
                     story = versionUpdate_1.default(story);
                     formatted = {
@@ -55,18 +55,29 @@ function preprocessStory(story, config) {
                         events: [],
                         plugins: story.plugins || {}
                     };
+                    usedComponentIds = {};
+                    for (ms in story.grids) {
+                        for (_i = 0, _a = story.grids[ms].grid; _i < _a.length; _i++) {
+                            row = _a[_i];
+                            for (_b = 0, row_1 = row; _b < row_1.length; _b++) {
+                                id = row_1[_b];
+                                usedComponentIds[id] = true;
+                            }
+                        }
+                    }
                     getGridContexts = function (id) {
                         if (!cachedGridContexts)
                             cachedGridContexts = createComponentGridContexts_1.default(story);
                         return cachedGridContexts[id];
                     };
                     return [4 /*yield*/, Promise.all(story.allComponents
+                            .filter(function (name) { return usedComponentIds[name]; })
                             .map(function (name) { return story.componentsById[name]; })
                             .map(function (c) { return preprocessComponent_1.default(c, function () { return getGridContexts(c.id); }, {
                             resolveController: config.resolveController
                         }); }))];
                 case 1:
-                    formattedComponents = _a.sent();
+                    formattedComponents = _c.sent();
                     formattedComponents.forEach(function (_a, i) {
                         var _b;
                         var c = _a[0], events = _a[1];

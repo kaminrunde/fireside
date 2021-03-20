@@ -2,6 +2,7 @@ import * as t from './types'
 import objPath = require('object-path')
 import addons from '@storybook/addons'
 import { forceReRender } from '@storybook/react'
+import { toId } from '@storybook/csf'
 
 const knobStore:{[id:string]:t.Knob} = {}
 const contextStore:{[id:string]:t.StoryContext} = {}
@@ -80,12 +81,11 @@ channel.on('storyboard-bridge/set-knob-value', ({knobId,payload}) => {
 
 channel.on('storyboard-bridge/hydrate-component', (component:t.Component) => {
   const selector = selectorStore[component.name]
-  console.log(component.name, selectorStore)
   if(!selector){
     throw new Error('you forgot to implement "registerWidgetSelector" for widget '+component.name)
   }
   let context:t.StoryContext = selector(component.props)
-  context.id = `${context.kind.replace(/\//g, '-').toLowerCase()}--${context.story}`.toLowerCase()
+  context.id = toId(context.kind, context.story)
   const props = currentController.versionUpdate 
     ? currentController.versionUpdate(component.props) 
     : component.props

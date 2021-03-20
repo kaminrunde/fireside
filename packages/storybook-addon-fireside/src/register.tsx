@@ -51,9 +51,12 @@ addons.register('addons:storyboard-bridge', api => {
     channel.on('storyboard-bridge/init-knob-manager', e => console.log('storyboard-bridge/init-knob-manager', e))
   }
 
-
   channel.on('storyboard-bridge/select-story', context => {
-    api.selectStory(context.kind, context.story)
+    const storyId = api.storyId(context.kind, context.story)
+    if(window.localStorage.getItem('debugFireside')) {
+      console.log('createStoryId', storyId)
+    }
+    api.selectStory(storyId)
   })
   channel.on('storyboard-bridge/update-component-name', name => {
     component.name = name

@@ -80,6 +80,7 @@ channel.on('storyboard-bridge/set-knob-value', ({knobId,payload}) => {
 
 channel.on('storyboard-bridge/hydrate-component', (component:t.Component) => {
   const selector = selectorStore[component.name]
+  console.log(component.name, selectorStore)
   if(!selector){
     throw new Error('you forgot to implement "registerWidgetSelector" for widget '+component.name)
   }

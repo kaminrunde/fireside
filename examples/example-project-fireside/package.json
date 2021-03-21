@@ -1,9 +1,9 @@
 {
   "name": "@kaminrunde/example-project-fireside",
   "private": true,
-  "version": "1.0.1-alpha.47",
+  "version": "1.0.1-alpha.48",
   "dependencies": {
-    "@kaminrunde/fireside-app": "^1.0.1-alpha.47",
+    "@kaminrunde/fireside-app": "^1.0.1-alpha.48",
     "@kaminrunde/fireside-connector-contentful": "^1.0.1-alpha.47",
     "@kaminrunde/fireside-plugin-fullwidth-components": "^1.0.1-alpha.47",
     "@kaminrunde/fireside-utils": "^1.0.1-alpha.47",

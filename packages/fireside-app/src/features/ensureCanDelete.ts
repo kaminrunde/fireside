@@ -17,9 +17,8 @@ addRule<$components.a.Remove>({
   condition: (action, {getState}) => {
     const id = action.payload.id
     const state = getState()
-    const grids = $grid.s.getGridDict(state.grid)
-    const json = JSON.stringify(grids)
-    return json.includes(`"${id}"`)
+    const usedComponents = $grid.s.getUsedComponents(state.grid)
+    return usedComponents.has(id)
   },
   consequence: () => $snackbar.a.addMessage({
     type: 'warning',

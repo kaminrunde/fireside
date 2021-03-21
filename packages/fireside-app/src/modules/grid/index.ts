@@ -12,6 +12,7 @@ export {default} from './reducer'
 
 
 export {default as useGrid} from './hooks/useGrid'
+export {default as useUsedComponents} from './hooks/useUsedComponents'
 
 declare global {
   interface RootState { grid: State }

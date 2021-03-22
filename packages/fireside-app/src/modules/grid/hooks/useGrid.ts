@@ -61,11 +61,7 @@ const config:Config<Props,Result,State,DP> = {
     removeWidth: (fn,sp,props) => () => fn(props.mediaSize),
     setWidth: (fn,sp,props) => (index,width) => fn(props.mediaSize,index,width),
     setHeight: (fn,sp,props) => (index,height) => fn(props.mediaSize,index,height),
-    updateGrid: (fn,sp,props) => areas => {
-      // TODO: research.. when navigating from components to XS fn is undefined
-      if(!fn) return store.dispatch(a.updateGrid(props.mediaSize, areas))
-      return fn(props.mediaSize,areas)
-    },
+    updateGrid: (fn,sp,props) => areas => fn(props.mediaSize,areas),
     addFromBuffer: (fn,sp,props) => area => fn(props.mediaSize,area),
     toBuffer: (fn,sp,props) => area => fn(props.mediaSize, area),
     copyGridFrom: (fn,sp,props) => mediaSize  => fn(mediaSize, props.mediaSize),

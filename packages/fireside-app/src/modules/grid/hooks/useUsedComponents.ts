@@ -11,7 +11,7 @@ type Props = {}
 
 const config:Config<Props,Result,State,never> = {
   moduleKey: 'grid',
-  name: 'grid/useGrid',
+  name: 'grid/useUsedComponents',
   createCacheKey: () => '',
   mapState: state => ({
     data: s.getUsedComponents(state)

@@ -11,7 +11,7 @@ function ObjectList(props) {
     const [activeRowIndex, setActiveRowIndex] = React.useState(null);
     const isActive = typeof activeRowIndex === 'number';
     return (React.createElement(Wrapper, null,
-        isActive && (React.createElement("div", { className: 'edit' }, props.options.schema.map(knob => (React.createElement(Widget_1.default, { knob: knob, onUpdate: val => props.onChange(immer_1.default(props.value, value => {
+        isActive && (React.createElement("div", { className: 'edit' }, props.options.schema.map(knob => (React.createElement(Widget_1.default, { knob: Object.assign(Object.assign({}, knob), { value: objPath.get(props.value[activeRowIndex], knob.prop) }), onUpdate: val => props.onChange(immer_1.default(props.value, value => {
                 objPath.set(value[activeRowIndex], knob.prop, val);
             })) }))))),
         isActive || React.createElement(SortableList, { items: props.value, getName: props.options.getRowName, onSortEnd: ({ oldIndex, newIndex }) => {

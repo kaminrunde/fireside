@@ -25,7 +25,9 @@ storiesOf('cms/base/Banner', module)
     b.number('number', 'Number', 2),
     b.markdown('label', 'Markdown', 'Foo'),
     b.stringList('todos', 'List of Todos', ['buy coffee', 'star fireside on github']),
-    b.objectList('objects', 'Objects', [], {
+    b.objectList('objects', 'Objects', [
+      {foo: 'initial-foo', other: {num: 10}}
+    ], {
       schema: [
         b.string('foo', 'Foo', 'bar'),
         b.number('other.num', 'Number', 2),

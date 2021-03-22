@@ -18,13 +18,14 @@ type Props = {
 export default function ObjectList (props:Props) {
   const [activeRowIndex, setActiveRowIndex] = React.useState<number|null>(null)
   const isActive = typeof activeRowIndex === 'number'
+
   return (
     <Wrapper>
       {isActive && (
         <div className='edit'>
           {props.options.schema.map(knob => (
             <Widget
-              knob={knob}
+              knob={{...knob, value: objPath.get(props.value[activeRowIndex], knob.prop)}}
               onUpdate={val => props.onChange(produce(props.value, value => {
                 objPath.set(value[activeRowIndex], knob.prop, val)
               }))}

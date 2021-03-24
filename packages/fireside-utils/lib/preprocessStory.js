@@ -81,8 +81,7 @@ function preprocessStory(story, config) {
                     formattedComponents.forEach(function (_a, i) {
                         var _b;
                         var c = _a[0], events = _a[1];
-                        var id = story.allComponents[i];
-                        formatted.componentsById[id] = c;
+                        formatted.componentsById[c.id] = c;
                         (_b = formatted.events).push.apply(_b, events);
                     });
                     gridAreaDict = {};

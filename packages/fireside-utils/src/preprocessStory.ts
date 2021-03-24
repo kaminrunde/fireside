@@ -9,7 +9,7 @@ export default async function preprocessStory(story: t.RawStory, config: t.Confi
   const formatted: t.FormattedStory = {
     hash: story.hash,
     componentsById: {},
-    allComponents: story.allComponents,
+    allComponents: [],
     grids: {},
     events: [],
     plugins: story.plugins || {}
@@ -42,6 +42,7 @@ export default async function preprocessStory(story: t.RawStory, config: t.Confi
 
   formattedComponents.forEach(([c, events], i) => {
     formatted.componentsById[c.id] = c
+    formatted.allComponents.push(c.id)
     formatted.events.push(...events)
   })
 

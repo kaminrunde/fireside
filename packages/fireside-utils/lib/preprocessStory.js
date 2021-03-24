@@ -50,7 +50,7 @@ function preprocessStory(story, config) {
                     formatted = {
                         hash: story.hash,
                         componentsById: {},
-                        allComponents: story.allComponents,
+                        allComponents: [],
                         grids: {},
                         events: [],
                         plugins: story.plugins || {}
@@ -82,6 +82,7 @@ function preprocessStory(story, config) {
                         var _b;
                         var c = _a[0], events = _a[1];
                         formatted.componentsById[c.id] = c;
+                        formatted.allComponents.push(c.id);
                         (_b = formatted.events).push.apply(_b, events);
                     });
                     gridAreaDict = {};

@@ -2,11 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 function createComponentGridContexts(story) {
     var dict = {};
+    var areaByIdDict = {};
+    for (var id in story.componentsById) {
+        areaByIdDict[story.componentsById[id].props.gridArea] = id;
+    }
+    var byMediaSize = {};
     for (var id in story.componentsById) {
         var component = story.componentsById[id];
         var minRow = 100000000;
         var maxRow = 0;
-        var byMediaSize = {};
         for (var ms in story.grids) {
             var grid = story.grids[ms];
             var totalRows = grid.heights.length;
@@ -17,8 +21,8 @@ function createComponentGridContexts(story) {
             var rowStretch = 1;
             // calc
             for (var y = 0; y < grid.grid.length; y++)
-                for (var x = void 0; x < grid.grid[y].length; x++) {
-                    if (grid.grid[y][x] !== component.props.gridArea)
+                for (var x = 0; x < grid.grid[y].length; x++) {
+                    if (grid.grid[y][x] !== areaByIdDict[component.props.gridArea])
                         continue;
                     if (row === -1)
                         row = y;
@@ -33,7 +37,9 @@ function createComponentGridContexts(story) {
                     if (maxRow < y)
                         maxRow = y;
                 }
-            byMediaSize[ms] = { totalRows: totalRows, totalCols: totalCols, row: row, col: col, colStretch: colStretch, rowStretch: rowStretch };
+            if (row !== -1) {
+                byMediaSize[ms] = { totalRows: totalRows, totalCols: totalCols, row: row, col: col, colStretch: colStretch, rowStretch: rowStretch };
+            }
         }
         dict[id] = { minRow: minRow, maxRow: maxRow, byMediaSize: byMediaSize };
     }

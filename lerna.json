@@ -3,7 +3,7 @@
     "examples/*",
     "packages/*"
   ],
-  "version": "1.0.1-alpha.59",
+  "version": "1.0.1-alpha.60",
   "command": {
     "publish": {
       "allowBranch": "master",

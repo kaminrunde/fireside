@@ -33,7 +33,7 @@ export default function createComponentGridContexts (story:t.RawStory):Record<st
           rowStretch++
         }
         if(col === -1) {
-          row = x
+          col = x
         }
         else if(x >= col+colStretch) {
           colStretch++

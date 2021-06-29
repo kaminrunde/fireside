@@ -31,7 +31,7 @@ function createComponentGridContexts(story) {
                         rowStretch++;
                     }
                     if (col === -1) {
-                        row = x;
+                        col = x;
                     }
                     else if (x >= col + colStretch) {
                         colStretch++;

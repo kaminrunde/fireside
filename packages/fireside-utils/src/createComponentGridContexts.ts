@@ -8,10 +8,10 @@ export default function createComponentGridContexts (story:t.RawStory):Record<st
     areaByIdDict[story.componentsById[id].props.gridArea] = id
   }
 
-  let byMediaSize:t.GridContext['byMediaSize'] = {}
-  let minRow = 100000000
-  let maxRow = 0
   for(const id in story.componentsById) {
+    let minRow = 100000000
+    let maxRow = 0
+    let byMediaSize:t.GridContext['byMediaSize'] = {}
     const component = story.componentsById[id]
     for(const ms in story.grids) {
       if(!story.grids[ms].enabled) continue
@@ -44,10 +44,11 @@ export default function createComponentGridContexts (story:t.RawStory):Record<st
         if(maxRow < y) maxRow = y
       }
       if(row !== -1) {
-        byMediaSize[ms] = { totalRows, totalCols, row, col, colStretch, rowStretch }
+        byMediaSize[ms] = Object.freeze({ totalRows, totalCols, row, col, colStretch, rowStretch })
       }
     }
     dict[id] = { minRow, maxRow, byMediaSize }
+
   }
 
   return dict

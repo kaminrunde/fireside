@@ -9,10 +9,10 @@ export default function createComponentGridContexts (story:t.RawStory):Record<st
   }
 
   let byMediaSize:t.GridContext['byMediaSize'] = {}
+  let minRow = 100000000
+  let maxRow = 0
   for(const id in story.componentsById) {
     const component = story.componentsById[id]
-    let minRow = 100000000
-    let maxRow = 0
     for(const ms in story.grids) {
       const grid = story.grids[ms]
       const totalRows = grid.heights.length
@@ -26,8 +26,18 @@ export default function createComponentGridContexts (story:t.RawStory):Record<st
       // calc
       for(let y=0; y<grid.grid.length; y++) for(let x=0; x<grid.grid[y].length; x++) {
         if(grid.grid[y][x] !== areaByIdDict[component.props.gridArea]) continue
-        if(row === -1) row = y; else rowStretch++
-        if(col === -1) col = x; else colStretch++
+        if(row === -1) {
+          row = y
+        }
+        else if(y >= row+rowStretch) {
+          rowStretch++
+        }
+        if(col === -1) {
+          row = x
+        }
+        else if(x >= col+colStretch) {
+          colStretch++
+        }
         if(minRow > y) minRow = y
         if(maxRow < y) maxRow = y
       }

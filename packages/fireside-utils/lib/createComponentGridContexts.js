@@ -7,10 +7,10 @@ function createComponentGridContexts(story) {
         areaByIdDict[story.componentsById[id].props.gridArea] = id;
     }
     var byMediaSize = {};
+    var minRow = 100000000;
+    var maxRow = 0;
     for (var id in story.componentsById) {
         var component = story.componentsById[id];
-        var minRow = 100000000;
-        var maxRow = 0;
         for (var ms in story.grids) {
             var grid = story.grids[ms];
             var totalRows = grid.heights.length;
@@ -24,14 +24,18 @@ function createComponentGridContexts(story) {
                 for (var x = 0; x < grid.grid[y].length; x++) {
                     if (grid.grid[y][x] !== areaByIdDict[component.props.gridArea])
                         continue;
-                    if (row === -1)
+                    if (row === -1) {
                         row = y;
-                    else
+                    }
+                    else if (y >= row + rowStretch) {
                         rowStretch++;
-                    if (col === -1)
-                        col = x;
-                    else
+                    }
+                    if (col === -1) {
+                        row = x;
+                    }
+                    else if (x >= col + colStretch) {
                         colStretch++;
+                    }
                     if (minRow > y)
                         minRow = y;
                     if (maxRow < y)

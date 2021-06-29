@@ -11,7 +11,6 @@ function createComponentGridContexts(story) {
     var maxRow = 0;
     for (var id in story.componentsById) {
         var component = story.componentsById[id];
-        var debug = areaByIdDict[component.props.gridArea] === '3cddb87e2c2026e494757c5f';
         for (var ms in story.grids) {
             if (!story.grids[ms].enabled)
                 continue;
@@ -48,8 +47,6 @@ function createComponentGridContexts(story) {
                 byMediaSize[ms] = { totalRows: totalRows, totalCols: totalCols, row: row, col: col, colStretch: colStretch, rowStretch: rowStretch };
             }
         }
-        if (debug)
-            console.log(byMediaSize);
         dict[id] = { minRow: minRow, maxRow: maxRow, byMediaSize: byMediaSize };
     }
     return dict;

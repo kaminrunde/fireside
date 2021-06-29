@@ -13,7 +13,6 @@ export default function createComponentGridContexts (story:t.RawStory):Record<st
   let maxRow = 0
   for(const id in story.componentsById) {
     const component = story.componentsById[id]
-    let debug = areaByIdDict[component.props.gridArea] === '3cddb87e2c2026e494757c5f'
     for(const ms in story.grids) {
       if(!story.grids[ms].enabled) continue
       const grid = story.grids[ms]
@@ -48,7 +47,6 @@ export default function createComponentGridContexts (story:t.RawStory):Record<st
         byMediaSize[ms] = { totalRows, totalCols, row, col, colStretch, rowStretch }
       }
     }
-    if(debug) console.log(byMediaSize)
     dict[id] = { minRow, maxRow, byMediaSize }
   }
 

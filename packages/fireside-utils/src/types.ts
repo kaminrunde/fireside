@@ -123,7 +123,7 @@ export type Controller<ComponentConfig,Context> = {
    *   }]
    * }
    */
-  createStoryEvents?: (componentConfig:ComponentConfig) => Array<any> | Promise<Array<any>>,
+  createStoryEvents?: (componentConfig:ComponentConfig & {context:Context}) => Array<any> | Promise<Array<any>>,
 }
 
 /**

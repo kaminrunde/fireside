@@ -84,6 +84,7 @@ export interface SimpleKnob {
 export interface Knob extends SimpleKnob {
     id: string;
     story: StoryContext;
+    defaultValue: any;
 }
 export declare type Controller = {
     versionUpdate?: Function;
@@ -96,7 +97,7 @@ export declare type Component = {
     name: string;
     props: object;
 };
-declare type Event = 'storyboard-bridge/set-knobs' | 'storyboard-bridge/set-knob-value' | 'storyboard-bridge/select-story' | 'storyboard-bridge/story-selected' | 'storyboard-bridge/hydrate-component' | 'storyboard-bridge/update-component-name' | 'storyboard-bridge/update-component-props' | 'storyboard-bridge/init-knob-manager';
+declare type Event = 'storyboard-bridge/set-knobs' | 'storyboard-bridge/set-knob-value' | 'storyboard-bridge/select-story' | 'storyboard-bridge/story-selected' | 'storyboard-bridge/hydrate-component' | 'storyboard-bridge/update-component-name' | 'storyboard-bridge/update-component-props' | 'storyboard-bridge/init-knob-manager' | 'storyboard-bridge/clear-props';
 export declare type Channel = {
     emit: (event: Event, options?: any) => void;
     on: (event: Event, cb: (val: any) => void) => void;

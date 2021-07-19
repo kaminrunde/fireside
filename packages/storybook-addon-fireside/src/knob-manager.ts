@@ -26,7 +26,8 @@ export function getKnobs (
     else return knobStore[id] = {
       ...simpleKnob,
       id: id,
-      story: context
+      story: context,
+      defaultValue: simpleKnob.value
     }
   })
   if(hydratedProps) {
@@ -71,6 +72,16 @@ export function addSelector (name:string, cb:Function) {
   selectorStore[name] = cb
 }
 
+function clearKnobs () {
+  for(const id in knobStore) knobStore[id].value = knobStore[id].defaultValue
+  forceReRender()
+  channel.emit('storyboard-bridge/set-knobs', currentKnobs)
+}
+
+channel.on('storyboard-bridge/clear-props', () => {
+  clearKnobs()
+})
+
 channel.on('storyboard-bridge/set-knob-value', ({knobId,payload}) => {
   const knob = knobStore[knobId]
   if(!knob) throw new Error('#1 something strange happen')
@@ -84,6 +95,7 @@ channel.on('storyboard-bridge/hydrate-component', (component:t.Component) => {
   if(!selector){
     throw new Error('you forgot to implement "registerWidgetSelector" for widget '+component.name)
   }
+  clearKnobs()
   let context:t.StoryContext = selector(component.props)
   context.id = toId(context.kind, context.story)
   const props = currentController.versionUpdate 

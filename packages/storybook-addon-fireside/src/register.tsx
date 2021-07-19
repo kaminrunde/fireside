@@ -8,7 +8,7 @@ addons.register('addons:storyboard-bridge', api => {
   const channel:t.Channel = addons.getChannel()
   addons.addPanel('addons:storyboard-bridge', {
     title: 'Eigenschaften',
-    render: () => <Panel channel={channel} api={api} />,
+    render: () => <Panel channel={channel} api={api}/>,
   })
 
   let component = {
@@ -76,6 +76,7 @@ addons.register('addons:storyboard-bridge', api => {
       case 'fireside-hydrate-component': {
         if(!e.data.component) {
           component.id = randomBytes(12).toString('hex')
+          channel.emit('storyboard-bridge/clear-props')
         }
 
         if(e.data.component){

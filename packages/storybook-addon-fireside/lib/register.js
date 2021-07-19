@@ -73,6 +73,7 @@ addons_1.default.register('addons:storyboard-bridge', api => {
             case 'fireside-hydrate-component': {
                 if (!e.data.component) {
                     component.id = crypto_browserify_1.randomBytes(12).toString('hex');
+                    channel.emit('storyboard-bridge/clear-props');
                 }
                 if (e.data.component) {
                     channel.emit('storyboard-bridge/hydrate-component', e.data.component);

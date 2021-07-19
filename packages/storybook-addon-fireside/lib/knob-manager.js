@@ -20,7 +20,7 @@ function getKnobs(context, simpleKnobs, controller, name) {
         if (knobStore[id])
             return knobStore[id];
         else
-            return knobStore[id] = Object.assign(Object.assign({}, simpleKnob), { id: id, story: context });
+            return knobStore[id] = Object.assign(Object.assign({}, simpleKnob), { id: id, story: context, defaultValue: simpleKnob.value });
     });
     if (hydratedProps) {
         const props = controller.versionUpdate
@@ -62,6 +62,15 @@ function addSelector(name, cb) {
     selectorStore[name] = cb;
 }
 exports.addSelector = addSelector;
+function clearKnobs() {
+    for (const id in knobStore)
+        knobStore[id].value = knobStore[id].defaultValue;
+    react_1.forceReRender();
+    channel.emit('storyboard-bridge/set-knobs', currentKnobs);
+}
+channel.on('storyboard-bridge/clear-props', () => {
+    clearKnobs();
+});
 channel.on('storyboard-bridge/set-knob-value', ({ knobId, payload }) => {
     const knob = knobStore[knobId];
     if (!knob)
@@ -75,6 +84,7 @@ channel.on('storyboard-bridge/hydrate-component', (component) => {
     if (!selector) {
         throw new Error('you forgot to implement "registerWidgetSelector" for widget ' + component.name);
     }
+    clearKnobs();
     let context = selector(component.props);
     context.id = csf_1.toId(context.kind, context.story);
     const props = currentController.versionUpdate

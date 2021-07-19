@@ -95,6 +95,7 @@ export interface SimpleKnob {
 export interface Knob extends SimpleKnob {
   id: string,
   story: StoryContext
+  defaultValue: any
 }
 
 export type Controller = {
@@ -119,6 +120,7 @@ type Event =
 | 'storyboard-bridge/update-component-name'
 | 'storyboard-bridge/update-component-props'
 | 'storyboard-bridge/init-knob-manager'
+| 'storyboard-bridge/clear-props'
 export type Channel = {
   emit: (event:Event, options?:any) => void,
   on: (event:Event, cb:(val:any)=>void) => void,

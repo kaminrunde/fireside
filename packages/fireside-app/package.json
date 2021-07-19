@@ -1,6 +1,6 @@
 {
   "name": "@kaminrunde/fireside-app",
-  "version": "1.0.1-alpha.61",
+  "version": "1.0.1-alpha.62",
   "author": "Manuel Jung",
   "devDependencies": {
     "@kaminrunde/fireside-connector-contentful": "^1.0.1-alpha.61",

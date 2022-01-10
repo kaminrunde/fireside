@@ -9,6 +9,7 @@ export default function Storybook () {
   const [component, setComponent] = React.useState<components.t.Component|null>(null)
   const [setupFinished, setSetupFinished] = React.useState(false)
   const loadingComponent = components.useLoadingComponent()
+  const [storybookUrl, setStorybookUrl] = React.useState('')
   
   React.useEffect(() => {
     const listener = (e:any) => {
@@ -38,6 +39,13 @@ export default function Storybook () {
       defaultStory: config.defaultStory
     }, '*')
   }, [setupFinished, loadingComponent.isLoading, loadingComponent.data])
+
+  React.useEffect(() => {
+    const match = window.location.search.match(/storybookUrl=([^&]+)/)
+
+    if(match) setStorybookUrl(decodeURIComponent(match[1]))
+    else setStorybookUrl(config.storybookUrl)
+  }, [])
   
   return (
     <Wrapper className='Storybook' visible={loadingComponent.isLoading}>
@@ -60,7 +68,9 @@ export default function Storybook () {
       )}
 
       <div className='iframe-wrapper'>
-        <iframe ref={ref} src={config.storybookUrl} title='Storybook'/>
+        {storybookUrl && (
+          <iframe ref={ref} src={storybookUrl} title='Storybook'/>
+        )}
       </div>
     </Wrapper>
   )

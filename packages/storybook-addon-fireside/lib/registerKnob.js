@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function registerKnob(name, component) {
+    if (typeof window === 'undefined')
+        return;
     // @ts-ignore
     if (!window.__customKnobs)
         window.__customKnobs = {};

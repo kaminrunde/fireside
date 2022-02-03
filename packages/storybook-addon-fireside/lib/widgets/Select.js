@@ -18,7 +18,7 @@ function Select(props) {
     }, [props.value, props.options.options]);
     return (React.createElement(Wrapper, { tabIndex: '1', focus: props.focus },
         React.createElement("div", { className: 'value', onClick: handleClick },
-            label,
+            label || '-',
             open ? React.createElement(fa_1.FaChevronUp, null) : React.createElement(fa_1.FaChevronDown, null)),
         open && (React.createElement("div", { className: 'options' }, props.options.options.map(row => (React.createElement(Row, { key: row.label, selected: row.value === props.value, onClick: () => props.onChange(row.value) }, row.label)))))));
 }

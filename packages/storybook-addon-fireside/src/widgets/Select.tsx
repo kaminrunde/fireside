@@ -30,7 +30,7 @@ export default function Select (props:Props) {
   return (
     <Wrapper tabIndex='1' focus={props.focus}>
       <div className='value' onClick={handleClick}>
-        {label}
+        {label || '-'}
         {open ? <FaChevronUp/> : <FaChevronDown />}
       </div>
 

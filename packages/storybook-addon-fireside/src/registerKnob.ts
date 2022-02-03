@@ -3,6 +3,7 @@ import addons from '@storybook/addons'
 
 
 export default function registerKnob (name:string, component:any) {
+  if(typeof window === 'undefined') return
   // @ts-ignore
   if(!window.__customKnobs) window.__customKnobs = {}
   // @ts-ignore

@@ -122,8 +122,9 @@ exports.objectList = (prop, label, value, options) => ({ type: 'objectList', pro
   * })
   */
 exports.select = (prop, label, value, options) => ({ type: 'select', prop, label, value, options });
-exports.create = (name, component, simpleKnobs, controller = {}) => (context) => {
-    const knobs = manager.getKnobs(context, simpleKnobs, controller, name);
+exports.create = (name, component, simpleKnobs, controller = {}) => (args, context) => {
+    const [, update] = React.useState(0);
+    const knobs = manager.getKnobs(context, simpleKnobs, controller, name, () => update(i => i + 1));
     let props = manager.getProps(knobs);
     return React.createElement(WidgetWrapper_1.default, Object.assign({}, { component, props, controller }));
 };

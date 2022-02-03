@@ -3,18 +3,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.addSelector = exports.getProps = exports.getKnobs = void 0;
 const objPath = require("object-path");
 const addons_1 = require("@storybook/addons");
-const react_1 = require("@storybook/react");
+// import { forceReRender } from '@storybook/react'
 const csf_1 = require("@storybook/csf");
 const knobStore = {};
 const contextStore = {};
 const selectorStore = {};
+let forceReRender = () => null;
 let currentStoryId = '';
 let currentKnobs = [];
 let currentController = {};
 const channel = addons_1.default.getChannel();
 let hydratedProps = null;
-function getKnobs(context, simpleKnobs, controller, name) {
+function getKnobs(context, simpleKnobs, controller, name, rerender) {
     contextStore[context.id] = context;
+    forceReRender = rerender;
     const knobs = simpleKnobs.map(simpleKnob => {
         const id = `${context.kind}--${context.story}--${simpleKnob.prop}`;
         if (knobStore[id])
@@ -65,7 +67,7 @@ exports.addSelector = addSelector;
 function clearKnobs() {
     for (const id in knobStore)
         knobStore[id].value = knobStore[id].defaultValue;
-    react_1.forceReRender();
+    forceReRender();
     channel.emit('storyboard-bridge/set-knobs', currentKnobs);
 }
 channel.on('storyboard-bridge/clear-props', () => {
@@ -77,7 +79,7 @@ channel.on('storyboard-bridge/set-knob-value', ({ knobId, payload }) => {
         throw new Error('#1 something strange happen');
     knob.value = payload;
     channel.emit('storyboard-bridge/update-component-props', getProps(currentKnobs));
-    react_1.forceReRender();
+    forceReRender();
 });
 channel.on('storyboard-bridge/hydrate-component', (component) => {
     const selector = selectorStore[component.name];
@@ -96,7 +98,7 @@ channel.on('storyboard-bridge/hydrate-component', (component) => {
     });
     channel.emit('storyboard-bridge/set-knobs', currentKnobs);
     channel.emit('storyboard-bridge/update-component-props', getProps(currentKnobs));
-    react_1.forceReRender();
+    forceReRender();
     if (currentStoryId !== context.id) {
         hydratedProps = component.props;
         channel.emit('storyboard-bridge/select-story', context);

@@ -177,8 +177,9 @@ export const create = (
   component: React.ElementType, 
   simpleKnobs: t.SimpleKnob[],
   controller:t.Controller={}
-):any => (context:t.StoryContext) => {
-  const knobs = manager.getKnobs(context, simpleKnobs, controller, name)
+):any => (args:any, context:t.StoryContext) => {
+  const [,update] = React.useState(0)
+  const knobs = manager.getKnobs(context, simpleKnobs, controller, name, () => update(i => i+1))
   let props = manager.getProps(knobs)
   return <WidgetWrapper {...{component, props, controller}}/>
 }
@@ -197,9 +198,9 @@ export function createCustomKnob <Value, Options extends Record<string, unknown>
     value: Value,
     options:Options&t.KnobOptions
   ) => ({ 
-    type: 'custom-knob', 
-    prop, 
-    label, value, 
+    type: 'custom-knob',
+    prop,
+    label, value,
     options: {...options, __name: name}} as any
   )
 }

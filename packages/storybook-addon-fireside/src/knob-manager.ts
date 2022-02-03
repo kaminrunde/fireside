@@ -1,25 +1,29 @@
 import * as t from './types'
 import objPath = require('object-path')
 import addons from '@storybook/addons'
-import { forceReRender } from '@storybook/react'
+// import { forceReRender } from '@storybook/react'
 import { toId } from '@storybook/csf'
 
 const knobStore:{[id:string]:t.Knob} = {}
 const contextStore:{[id:string]:t.StoryContext} = {}
 const selectorStore:{[id:string]: Function} = {}
+let forceReRender:()=>void = () => null
 let currentStoryId = ''
 let currentKnobs = []
 let currentController:t.Controller = {}
 const channel:t.Channel = addons.getChannel()
 let hydratedProps:null|object = null
 
+
 export function getKnobs (
   context: t.StoryContext,
   simpleKnobs: t.SimpleKnob[],
   controller: t.Controller,
-  name: string
+  name: string,
+  rerender:()=>void
 ) {
   contextStore[context.id] = context
+  forceReRender = rerender
   const knobs = simpleKnobs.map(simpleKnob => {
     const id = `${context.kind}--${context.story}--${simpleKnob.prop}`
     if(knobStore[id]) return knobStore[id]

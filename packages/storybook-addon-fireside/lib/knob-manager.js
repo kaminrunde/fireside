@@ -89,20 +89,25 @@ channel.on('storyboard-bridge/hydrate-component', (component) => {
     clearKnobs();
     let context = selector(component.props);
     context.id = csf_1.toId(context.kind, context.story);
-    const props = currentController.versionUpdate
-        ? currentController.versionUpdate(component.props)
-        : component.props;
-    currentKnobs.forEach(knob => {
-        const hydratedValue = objPath.get(props, knob.prop);
-        knob.value = hydratedValue || knob.value;
-    });
-    channel.emit('storyboard-bridge/set-knobs', currentKnobs);
-    channel.emit('storyboard-bridge/update-component-props', getProps(currentKnobs));
-    forceReRender();
+    const hydrate = () => {
+        const props = currentController.versionUpdate
+            ? currentController.versionUpdate(component.props)
+            : component.props;
+        currentKnobs.forEach(knob => {
+            const hydratedValue = objPath.get(props, knob.prop);
+            knob.value = hydratedValue || knob.value;
+        });
+        channel.emit('storyboard-bridge/set-knobs', currentKnobs);
+        channel.emit('storyboard-bridge/update-component-props', getProps(currentKnobs));
+        forceReRender();
+    };
     if (currentStoryId !== context.id) {
         hydratedProps = component.props;
         channel.emit('storyboard-bridge/select-story', context);
+        setTimeout(() => hydrate(), 500);
     }
+    else
+        hydrate();
 });
 channel.emit('storyboard-bridge/init-knob-manager');
 //# sourceMappingURL=knob-manager.js.map

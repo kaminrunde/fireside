@@ -2,7 +2,7 @@ import {Connector} from '@kaminrunde/fireside-utils'
 import { init as initContentfulExtension } from "contentful-ui-extensions-sdk"
 
 let sdk:null|any = null
-let initValue:any = null
+let initValue:any = 'empty'
 let globalCb:any = (val) => {
   initValue = val
 }
@@ -11,7 +11,7 @@ const connector:Connector = {
   name: 'contentful',
   onChange: cb => {
     globalCb = cb
-    if(initValue) cb(initValue)
+    if(initValue !== 'empty') cb(initValue)
   },
   setStory: story => {
     console.log(story)

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var contentful_ui_extensions_sdk_1 = require("contentful-ui-extensions-sdk");
 var sdk = null;
-var initValue = null;
+var initValue = 'empty';
 var globalCb = function (val) {
     initValue = val;
 };
@@ -10,7 +10,7 @@ var connector = {
     name: 'contentful',
     onChange: function (cb) {
         globalCb = cb;
-        if (initValue)
+        if (initValue !== 'empty')
             cb(initValue);
     },
     setStory: function (story) {

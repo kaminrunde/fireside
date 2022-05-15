@@ -14,7 +14,8 @@ export default function Component (props:Props) {
 
   const api:SettingsPageAPI<any> = {
     state: state,
-    setState: setState
+    setState: setState,
+    story: pluginState.story
   }
 
   React.useEffect(() => {

@@ -3,7 +3,7 @@ import * as t from '../types'
 export type ExtendSettingsPage<State> = {
   row?: {
     title: string
-    component: any
+    component: (api:t.SettingsPageAPI<State>) => any
   }
 }
 

@@ -10,6 +10,7 @@ export declare type PluginOptions = {
 export interface PluginAPI<State> {
     state: State;
     setState: (state: State) => void;
+    story: RawStory;
 }
 export interface PluginComponentAPI<State> extends PluginAPI<State> {
     component: Component;

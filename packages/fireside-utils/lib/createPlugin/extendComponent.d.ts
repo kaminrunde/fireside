@@ -11,7 +11,7 @@ export declare type ExtendComponent<State> = {
     };
     settingsModal?: {
         title: string;
-        component: any;
+        component: (api: t.PluginComponentAPI<State>) => void;
     };
 };
 export default function extendComponent<State, Options extends t.PluginOptions>(config: ExtendComponent<State>, options: Options): t.PluginEvent[];

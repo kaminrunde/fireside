@@ -12,7 +12,7 @@ export type ExtendComponent<State> = {
   }
   settingsModal?: {
     title: string
-    component: any
+    component: (api:t.PluginComponentAPI<State>) => void
   }
 }
 

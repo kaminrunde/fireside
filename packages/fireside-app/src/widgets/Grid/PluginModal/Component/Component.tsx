@@ -29,6 +29,7 @@ export default function Component (props:Props) {
   const api:PluginGridRowAPI<any> = {
     state: state,
     setState: setState,
+    story: pluginState.story,
     ...props.extraArgs as any
   }
 

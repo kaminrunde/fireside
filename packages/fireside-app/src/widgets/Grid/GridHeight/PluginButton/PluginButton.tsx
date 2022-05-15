@@ -22,7 +22,8 @@ export default React.memo(function PluginButton (props:Props) {
     state: state.data,
     setState: (data:any) => { state.set(data) },
     mediaSize: props.mediaSize,
-    row: props.row
+    row: props.row,
+    story: state.story
   }
 
   const handleClick = e => {

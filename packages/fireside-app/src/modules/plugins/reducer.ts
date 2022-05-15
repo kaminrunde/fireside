@@ -1,19 +1,29 @@
 import {PluginEvent} from '@kaminrunde/fireside-utils'
 import {Action} from './actions'
 import * as at from './const'
+import {RawStory} from '@kaminrunde/fireside-utils'
 
 
 export type State = {
+  storyWithoutPlugins: RawStory
   data: PluginEvent[],
   states: Record<string, any>
 }
 
 export const defaultState:State = {
+  storyWithoutPlugins: {
+    allComponents: [],
+    componentsById: {},
+    grids: {},
+    hash: 'INIT',
+    plugins: {},
+    version: '2.0.0'
+  },
   data: [],
   states: {}
 }
 
-export default function reducer (state:State=defaultState, action:Action) {
+export default function reducer (state:State=defaultState, action:Action):State {
   switch(action.type) {
     case at.INIT: return {
       ...state,
@@ -37,6 +47,19 @@ export default function reducer (state:State=defaultState, action:Action) {
       states: {
         ...state.states,
         [action.meta.key]: action.payload
+      }
+    }
+    case at.SET_STORY: {
+      if(action.payload.hash === state.storyWithoutPlugins.hash) return state
+      let invalidate = false
+      if(action.payload.allComponents !== state.storyWithoutPlugins.allComponents) invalidate = true
+      if(action.payload.componentsById !== state.storyWithoutPlugins.componentsById) invalidate = true
+      if(action.payload.grids !== state.storyWithoutPlugins.grids) invalidate = true
+      if(!invalidate) return state
+      const {plugins, ...story} = action.payload
+      return {
+        ...state,
+        storyWithoutPlugins: {...story, plugins: {}}
       }
     }
     default: return state

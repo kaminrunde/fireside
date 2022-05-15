@@ -1,5 +1,5 @@
 import * as at from './const'
-import {PluginEvent} from '@kaminrunde/fireside-utils'
+import {PluginEvent, RawStory} from '@kaminrunde/fireside-utils'
 
 export const init = (states:{[key:string]:any}) => ({
   type: at.INIT,
@@ -12,6 +12,11 @@ export const setState = (key:string, state:any) => ({
   payload: state
 })
 
+export const setStory = (story:RawStory) => ({
+  type: at.SET_STORY,
+  payload: story
+})
+
 export const setPluginEvents = (events:PluginEvent[]) => ({
   type: at.SET_PLUGIN_EVENTS,
   payload: events
@@ -20,8 +25,10 @@ export const setPluginEvents = (events:PluginEvent[]) => ({
 export type Init = ReturnType<typeof init>
 export type SetState = ReturnType<typeof setState>
 export type SetPluginEvents = ReturnType<typeof setPluginEvents>
+export type SetStory = ReturnType<typeof setStory>
 
 export type Action = 
 | Init
 | SetState
 | SetPluginEvents
+| SetStory

@@ -55,5 +55,7 @@ export const getState = (state:State, key:string) => state.states[key]
 
 export const getStates = (state:State) => state.states
 
+export const getStoryWithoutPlugins = (state:State) => state.storyWithoutPlugins
+
 
 // export const getComponentState = (state:State, pluginId:string) => state.states[pluginId]

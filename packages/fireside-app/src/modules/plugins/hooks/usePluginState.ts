@@ -10,6 +10,7 @@ type Input = {
 
 type Output = {
   data: ReturnType<typeof s.getState>,
+  story: ReturnType<typeof s.getStoryWithoutPlugins>
   // states: ReturnType<typeof s.getStates>,
   set: (state:any) => a.SetState 
 }
@@ -24,6 +25,7 @@ const config:Config<Input,Output,State,DP> = {
   createCacheKey: input => input.key,
   mapState: (state,input) => ({
     data: s.getState(state, input.key),
+    story: s.getStoryWithoutPlugins(state),
   }),
   mapDispatch: {
     set: a.setState

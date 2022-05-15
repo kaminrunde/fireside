@@ -36,7 +36,7 @@ addRule<
     plugins.c.SET_STATE
   ],
   output: connector.c.UPDATE_CONNECTOR,
-  delay: 500,
+  delay: 200,
   concurrency: 'LAST',
   consequence: (_, {getState}) => {
     const state = getState()

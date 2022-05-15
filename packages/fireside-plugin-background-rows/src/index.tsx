@@ -15,6 +15,6 @@ export default createPlugin<t.State, t.Options>(ctx => {
       component: props => <Modal {...props} options={ctx.options}/>
     }
   })
+
   return {}
 })
-

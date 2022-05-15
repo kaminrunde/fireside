@@ -7,6 +7,7 @@ type Props = {
   component: {
     title: string,
     component: any,
+    isActive?: (api:PluginGridRowAPI<any>) => boolean
     pluginKey: string
   },
   extraArgs: {
@@ -38,6 +39,10 @@ export default function Component (props:Props) {
     }
     pluginState.set(state)
   }, [state])
+
+  if(props.component.isActive && !props.component.isActive(api)) {
+    return null
+  }
   
   return (
     <Wrapper>

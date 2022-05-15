@@ -28,6 +28,7 @@ export default function GridHeight (props:Props) {
     return settingsList.data.map(row => ({
       title: row.payload.title,
       component: row.payload.component,
+      isActive: row.payload.isActive,
       pluginKey: row.meta.key
     }))
   }, settingsList.data)

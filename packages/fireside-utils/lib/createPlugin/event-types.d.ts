@@ -65,6 +65,7 @@ export declare type GridRowSettingsEvent = {
     payload: {
         title: string;
         component: any;
+        isActive?: (api: any) => boolean;
     };
 };
 export declare type SettingsPageRowEvent = {

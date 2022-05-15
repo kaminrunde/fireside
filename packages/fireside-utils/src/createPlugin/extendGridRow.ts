@@ -2,17 +2,18 @@ import * as t from '../types'
 
 export type ExtendGridRow<State> = {
   badge?: {
-    component: any
+    component: (props:t.PluginGridRowAPI<State>) => any
     isActive: (api:t.PluginGridRowAPI<State>) => boolean
   }
   icon?: {
-    component: any
+    component: (props:t.PluginGridRowAPI<State>) => any
     isActive: (api:t.PluginGridRowAPI<State>) => boolean
     onClick: (api:t.PluginGridRowAPI<State>) => void
   }
   settingsModal?: {
     title: string
-    component: any
+    isActive?: (api:t.PluginGridRowAPI<State>) => boolean
+    component: (props:t.PluginGridRowAPI<State>) => any
   }
 }
 

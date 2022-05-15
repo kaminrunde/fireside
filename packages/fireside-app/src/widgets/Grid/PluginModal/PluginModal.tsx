@@ -2,6 +2,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 import {MdClose} from 'react-icons/md'
 import Component from './Component'
+import {PluginGridRowAPI} from '@kaminrunde/fireside-utils'
 
 type Props = {
   title: string,
@@ -9,6 +10,7 @@ type Props = {
   components: {
     title: string,
     component: any,
+    isActive?: (api:PluginGridRowAPI<any>) => boolean
     pluginKey: string
   }[],
   children?: any,

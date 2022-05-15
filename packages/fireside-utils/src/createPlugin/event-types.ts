@@ -58,6 +58,7 @@ export type GridRowSettingsEvent = {
   payload: {
     title: string
     component: any
+    isActive?: (api:any) => boolean
   }
 }
 

@@ -52,14 +52,9 @@
       }
     },
     {
-      "resolve": "@kaminrunde/fireside-plugin-background-rows",
+      "resolve": "@kaminrunde/fireside-plugin-ab-test",
       "options": {
-        "key": "bg",
-        "colors": [
-          { "color": "green", "label": "green"},
-          { "color": "silver", "label": "silver"},
-          { "color": "grey", "label": "grey"}
-        ]
+        "key": "abTest"
       }
     }
   ]

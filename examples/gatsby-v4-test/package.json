@@ -14,7 +14,8 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "storybook": "NODE_ENV=production NODE_PATH=src start-storybook -p 6006 -c src/storybook",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "fireside:build": "fireside-build"
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.16.7",
@@ -23,6 +24,7 @@
     "@kaminrunde/fireside-app": "^1.1.1-alpha.5",
     "@kaminrunde/fireside-connector-contentful": "^1.1.1-alpha.5",
     "@kaminrunde/fireside-plugin-fullwidth-components": "^1.1.1-alpha.1",
+    "@kaminrunde/fireside-plugin-ab-test": "^1.1.1-alpha.1",
     "@kaminrunde/fireside-utils": "^1.0.1-alpha.63",
     "@kaminrunde/gatsby-plugin-fireside": "^1.1.1-alpha.1",
     "@kaminrunde/storybook-addon-fireside": "^1.1.1-alpha.4",

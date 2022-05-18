@@ -37,6 +37,11 @@
       "options": {
         "key": "componentGap"
       }
+    },{
+      "resolve": "@kaminrunde/fireside-plugin-ab-test",
+      "options": {
+        "key": "abTest"
+      }
     }
   ]
 }

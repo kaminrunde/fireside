@@ -22,13 +22,35 @@ export const setPluginEvents = (events:PluginEvent[]) => ({
   payload: events
 })
 
+export const showModal = (config: {
+  title: string
+  actionButtons: {
+    label: string
+    type: 'primary' | 'secondary'
+    onClick: () => void
+  },
+  content: any
+  persist?: boolean
+}) => ({
+  type: at.SHOW_MODAL,
+  payload: config
+})
+
+export const closeModal = () => ({
+  type: at.CLOSE_MODAL,
+})
+
 export type Init = ReturnType<typeof init>
 export type SetState = ReturnType<typeof setState>
 export type SetPluginEvents = ReturnType<typeof setPluginEvents>
 export type SetStory = ReturnType<typeof setStory>
+export type ShowModal = ReturnType<typeof showModal>
+export type CloseModal = ReturnType<typeof closeModal>
 
 export type Action = 
 | Init
 | SetState
 | SetPluginEvents
 | SetStory
+| ShowModal
+| CloseModal

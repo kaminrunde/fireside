@@ -12,6 +12,14 @@ export interface KnobOptions {
   /** renders knob in seperate tab. Knobs with the same tab are grouped together. if not defined tab will default to "DEFAULT" */
   tab?: string
   /** 
+   * whether or not the knob should be displayed. recieves the other props as arguments 
+   * @example
+   * k.string('foo', 'Foo', '', {
+   *   condition: props => Boolean(props.otherProp)
+   * })
+   */
+  shouldDisplay?: (props:any) => boolean
+  /** 
    * if an error string is returned, the error is displayed below the headline
    * @example
    * k.string('foo', 'Foo', '', {

@@ -18,7 +18,7 @@ const Widget_1 = require("./Widget");
 const Tabs_1 = require("./Tabs");
 const useCustomComponents_1 = require("./useCustomComponents");
 function Panel({ channel }) {
-    const _a = useKnobs_1.default(channel), { knobs, update, key } = _a, tabs = __rest(_a, ["knobs", "update", "key"]);
+    const _a = useKnobs_1.default(channel), { knobs, props, update, key } = _a, tabs = __rest(_a, ["knobs", "props", "update", "key"]);
     const [customComponents, setCustomComponents] = React.useState({});
     React.useEffect(() => {
         // @ts-ignore
@@ -30,7 +30,13 @@ function Panel({ channel }) {
     return (React.createElement(useCustomComponents_1.CustomComponentsProvider, { value: customComponents },
         React.createElement(Wrapper, null,
             React.createElement(Tabs_1.default, { key: key, tabs: tabs }),
-            knobs.map(knob => (React.createElement(Widget_1.default, { key: knob.id + key, knob: knob, onUpdate: val => update(knob, val) }))))));
+            knobs
+                .filter(knob => {
+                if (!knob.options.shouldDisplay)
+                    return true;
+                return knob.options.shouldDisplay(props);
+            })
+                .map(knob => (React.createElement(Widget_1.default, { key: knob.id + key, knob: knob, onUpdate: val => update(knob, val) }))))));
 }
 exports.default = Panel;
 const Wrapper = styled_components_1.default.div `

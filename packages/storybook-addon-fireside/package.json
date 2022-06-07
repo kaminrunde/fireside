@@ -1,6 +1,6 @@
 {
   "name": "@kaminrunde/storybook-addon-fireside",
-  "version": "1.1.1-alpha.4",
+  "version": "1.1.1-alpha.6",
   "description": "",
   "main": "lib/index.js",
   "scripts": {

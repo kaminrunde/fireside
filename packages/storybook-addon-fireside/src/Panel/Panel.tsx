@@ -5,6 +5,7 @@ import Widget from './Widget'
 import Tabs from './Tabs'
 import * as t from '../types'
 import {CustomComponentsProvider} from './useCustomComponents'
+import objPath = require('object-path')
 
 type Props = {
   channel: t.Channel,
@@ -12,7 +13,7 @@ type Props = {
 }
 
 export default function Panel ({channel}:Props) {
-  const {knobs,update,key, ...tabs} = useKnobs(channel)
+  const {knobs,props,update,key, ...tabs} = useKnobs(channel)
   const [customComponents, setCustomComponents] = React.useState<Record<string, any>>({})
 
   React.useEffect(() => {
@@ -27,7 +28,12 @@ export default function Panel ({channel}:Props) {
     <CustomComponentsProvider value={customComponents}>
       <Wrapper>
         <Tabs key={key} tabs={tabs} />
-        {knobs.map(knob => (
+        {knobs
+        .filter(knob => {
+          if(!knob.options.shouldDisplay) return true
+          return knob.options.shouldDisplay(props)
+        })
+        .map(knob => (
           <Widget 
             key={knob.id+key}
             knob={knob}

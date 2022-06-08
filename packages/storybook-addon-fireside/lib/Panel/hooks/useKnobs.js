@@ -1,14 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
+const objPath = require("object-path");
 function useKnobs(channel) {
     const [knobs, setKnobs] = React.useState([]);
+    const [props, setProps] = React.useState({});
     const allKnobs = React.useRef([]);
     const [key, setKey] = React.useState(1);
     const [tabs, setTabs] = React.useState([]);
     const [activeTab, setActiveTab] = React.useState('DEFAULT');
     React.useEffect(() => {
-        channel.on('storyboard-bridge/set-knobs', knobs => {
+        channel.on('storyboard-bridge/set-knobs', (knobs) => {
             // setAllKnobs(knobs)
             allKnobs.current = knobs;
             const tabsSet = new Set();
@@ -18,7 +20,11 @@ function useKnobs(channel) {
             let activeTab = 'DEFAULT';
             if (!tabsSet.has('DEFAULT') && tabs[0])
                 activeTab = tabs[0];
-            const filteredKnobs = calculateKnobs(knobs, activeTab);
+            let filteredKnobs = calculateKnobs(knobs, activeTab);
+            const props = {};
+            for (const knob of knobs)
+                objPath.set(props, knob.prop, knob.value);
+            setProps(props);
             setKnobs(filteredKnobs);
             setTabs(tabs);
             setActiveTab(activeTab);
@@ -32,12 +38,17 @@ function useKnobs(channel) {
     };
     return {
         knobs,
+        props,
         update: (knob, value) => {
             knob.value = value;
             channel.emit('storyboard-bridge/set-knob-value', {
                 knobId: knob.id,
                 payload: value
             });
+            const props = {};
+            for (const knob of allKnobs.current)
+                objPath.set(props, knob.prop, knob.value);
+            setProps(props);
         },
         key: key.toString(),
         tabs,

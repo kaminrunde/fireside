@@ -1,6 +1,7 @@
 import * as t from '../../types';
 declare type Output = {
     knobs: t.Knob[];
+    props: Record<string, any>;
     update: Function;
     key: string;
     tabs: string[];

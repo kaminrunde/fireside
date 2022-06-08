@@ -23,6 +23,10 @@ export const Banner = b.create(
       validate: s => !s && 'a value is needed'
     }),
     b.bool('selected', 'Selected', true),
+    b.bool('selected2', 'Selected2', true),
+    b.string('maybe', 'Maybe', '', {
+      shouldDisplay: props => props.selected
+    }),
     c.string('foo', 'Label', 'foo',{
       tab: 'TAB-1',
       hint: 'Hello World',

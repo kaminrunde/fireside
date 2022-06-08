@@ -6,6 +6,7 @@ import * as utils from './utils'
 
 export default createPlugin<t.State, t.PluginOptions>(ctx => {
   let modalConfirmed = false
+  let pw = ''
 
   ctx.extendSettingsPage({
     row: {
@@ -13,6 +14,10 @@ export default createPlugin<t.State, t.PluginOptions>(ctx => {
       component: api => {
 
         const activate = () => {
+          if(ctx.options.password && pw !== ctx.options.password) {
+            alert('wrong password')
+            return
+          }
           modalConfirmed = true
           api.setState({
             components: {},
@@ -25,8 +30,18 @@ export default createPlugin<t.State, t.PluginOptions>(ctx => {
         }
         return (
           <div>
-            <button onClick={activate}>activate ab-test</button>
-            <button onClick={deactivate}>deactivate ab-test</button>
+            <button onClick={api.state ? deactivate : activate} style={styles.btn(Boolean(api.state))}>
+              {api.state ? 'on' : 'off'}
+            </button>
+            {ctx.options.password && !api.state && (
+              <input 
+                style={styles.input()} 
+                type='text' 
+                defaultValue={pw}
+                placeholder='password' 
+                onChange={e => pw = e.target.value}
+              />
+            )}
           </div>
         )
       }
@@ -127,5 +142,11 @@ const styles = {
     background: active ? 'green' : 'lightgrey',
     fontSize: 18,
     cursor: 'pointer',
+  }),
+  input: () => ({
+    border: '1px solid grey',
+    padding: '11px 20px',
+    marginLeft: '10px',
+    borderRadius: '2px'
   })
 }

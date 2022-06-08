@@ -54,7 +54,8 @@
     {
       "resolve": "@kaminrunde/fireside-plugin-ab-test",
       "options": {
-        "key": "abTest"
+        "key": "abTest",
+        "password": "foo"
       }
     }
   ]

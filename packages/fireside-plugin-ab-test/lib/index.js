@@ -6,11 +6,16 @@ var immer_1 = require("immer");
 var utils = require("./utils");
 exports.default = fireside_utils_1.createPlugin(function (ctx) {
     var modalConfirmed = false;
+    var pw = '';
     ctx.extendSettingsPage({
         row: {
             title: 'AB-TEST',
             component: function (api) {
                 var activate = function () {
+                    if (ctx.options.password && pw !== ctx.options.password) {
+                        alert('wrong password');
+                        return;
+                    }
                     modalConfirmed = true;
                     api.setState({
                         components: {},
@@ -22,8 +27,8 @@ exports.default = fireside_utils_1.createPlugin(function (ctx) {
                     api.setState(undefined);
                 };
                 return (React.createElement("div", null,
-                    React.createElement("button", { onClick: activate }, "activate ab-test"),
-                    React.createElement("button", { onClick: deactivate }, "deactivate ab-test")));
+                    React.createElement("button", { onClick: api.state ? deactivate : activate, style: styles.btn(Boolean(api.state)) }, api.state ? 'on' : 'off'),
+                    ctx.options.password && !api.state && (React.createElement("input", { style: styles.input(), type: 'text', defaultValue: pw, placeholder: 'password', onChange: function (e) { return pw = e.target.value; } }))));
             }
         }
     });
@@ -110,6 +115,12 @@ var styles = {
         background: active ? 'green' : 'lightgrey',
         fontSize: 18,
         cursor: 'pointer',
+    }); },
+    input: function () { return ({
+        border: '1px solid grey',
+        padding: '11px 20px',
+        marginLeft: '10px',
+        borderRadius: '2px'
     }); }
 };
 //# sourceMappingURL=index.js.map

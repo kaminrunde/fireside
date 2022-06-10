@@ -11,6 +11,14 @@ export type PluginOptions = {
   key: string
 }
 
+export type PluginActions = {
+  alert: (ctx:{
+    title: string
+    description?: string
+    options?: string[]
+  }) => Promise<string | null>
+}
+
 export interface PluginAPI<State> {
   state: State,
   setState: (state:State) => void

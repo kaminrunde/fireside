@@ -10,12 +10,13 @@ type PluginContext<State,Options> = {
   extendSettingsPage: (config:ExtendSettingsPage<State>) => void
   createPage: (config:CreatePage<State>) => void
   options: Options
+  actions: t.PluginActions
 }
 
 export default function createPlugin <State, Options extends t.PluginOptions>(
   cb:( context: PluginContext<State, Options>, options:Options)=> State
-):(options:Options) => t.PluginEvent[] {
-  return options => {
+):(options:Options, actions:t.PluginActions) => t.PluginEvent[] {
+  return (options, actions) => {
     let events:t.PluginEvent[] = []
   
     const context:PluginContext<State, Options> = {
@@ -23,7 +24,8 @@ export default function createPlugin <State, Options extends t.PluginOptions>(
       extendGridRow: config => { events.push(...extendGridRow(config, options)) },
       extendSettingsPage: config => { events.push(...extendSettingsPage(config, options)) },
       createPage: config => { events.push(...createPage(config, options)) },
-      options
+      options,
+      actions
     }
   
     const initialState = cb(context, options)

@@ -9,6 +9,7 @@ declare type PluginContext<State, Options> = {
     extendSettingsPage: (config: ExtendSettingsPage<State>) => void;
     createPage: (config: CreatePage<State>) => void;
     options: Options;
+    actions: t.PluginActions;
 };
-export default function createPlugin<State, Options extends t.PluginOptions>(cb: (context: PluginContext<State, Options>, options: Options) => State): (options: Options) => t.PluginEvent[];
+export default function createPlugin<State, Options extends t.PluginOptions>(cb: (context: PluginContext<State, Options>, options: Options) => State): (options: Options, actions: t.PluginActions) => t.PluginEvent[];
 export {};

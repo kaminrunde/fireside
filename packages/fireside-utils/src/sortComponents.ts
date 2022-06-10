@@ -32,9 +32,9 @@ export default function sortComponents (story:t.RawStory) {
     }
   }
 
-  const sortedComponents = story.allComponents.sort((a,b) => {
+  // const sortedComponents = story.allComponents.sort((a,b) => {
 
-  })
+  // })
 
   return story
 }

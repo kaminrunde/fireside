@@ -31,8 +31,8 @@ function sortComponents(story) {
         for (var ms in story.grids) {
         }
     }
-    var sortedComponents = story.allComponents.sort(function (a, b) {
-    });
+    // const sortedComponents = story.allComponents.sort((a,b) => {
+    // })
     return story;
 }
 exports.default = sortComponents;

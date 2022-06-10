@@ -7,6 +7,13 @@ export declare type Connector = {
 export declare type PluginOptions = {
     key: string;
 };
+export declare type PluginActions = {
+    alert: (ctx: {
+        title: string;
+        description?: string;
+        options?: string[];
+    }) => Promise<string | null>;
+};
 export interface PluginAPI<State> {
     state: State;
     setState: (state: State) => void;

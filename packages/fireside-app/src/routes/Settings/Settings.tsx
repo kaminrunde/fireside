@@ -36,8 +36,8 @@ export default function Settings (props:Props) {
         })}
         <hr/>
       </div>
-      {pluginComponents.data.map(row => (
-        <div className='row ms'>
+      {pluginComponents.data.map((row,i) => (
+        <div className='row ms' key={i}>
           <h3>{row.payload.title}</h3>
           <Component component={row.payload.component} pluginKey={row.meta.key} />
           <hr/>

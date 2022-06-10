@@ -13,7 +13,9 @@ exports.default = fireside_utils_1.createPlugin(function (ctx) {
             component: function (api) {
                 var activate = function () {
                     if (ctx.options.password && pw !== ctx.options.password) {
-                        alert('wrong password');
+                        ctx.actions.alert({
+                            title: 'Wrong Password'
+                        });
                         return;
                     }
                     modalConfirmed = true;

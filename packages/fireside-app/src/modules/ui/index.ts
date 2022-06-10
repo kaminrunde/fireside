@@ -9,6 +9,7 @@ export {a,c,s}
 export {default} from './reducer'
 
 export {default as useSidebar} from './hooks/useSidebar'
+export {default as useAlertBox} from './hooks/useAlertBox'
 
 declare global {
   interface RootState { ui: State }

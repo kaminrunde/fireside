@@ -11,6 +11,7 @@ import Storybook from 'widgets/Storybook'
 import IndexRoute from 'routes/Index'
 import GridRoute from 'routes/Grid'
 import Settings from 'routes/Settings'
+import AlertBox from 'widgets/AlertBox/AlertBox'
 
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
       <Storybook/>
       <Snackbar/>
       <Modal/>
+      <AlertBox />
     </div>
   )
 }

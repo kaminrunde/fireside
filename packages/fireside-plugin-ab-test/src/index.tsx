@@ -15,7 +15,9 @@ export default createPlugin<t.State, t.PluginOptions>(ctx => {
 
         const activate = () => {
           if(ctx.options.password && pw !== ctx.options.password) {
-            alert('wrong password')
+            ctx.actions.alert({
+              title: 'Wrong Password'
+            })
             return
           }
           modalConfirmed = true

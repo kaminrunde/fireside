@@ -43,6 +43,14 @@ export const getSettingsPageComponents = createSelector(
   }
 )
 
+export const getStaticComponents = createSelector(
+  (state:State) => state.data,
+  plugins => {
+    const result = plugins.filter(p => p.type === 'CREATE_STATIC_COMPONENT')
+    return result as pluginEvents.CreateStaticComponentEvent[]
+  }
+)
+
 export const getGridRowSettingComponents = createSelector(
   (state:State) => state.data,
   plugins => {

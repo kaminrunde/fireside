@@ -12,6 +12,7 @@ import IndexRoute from 'routes/Index'
 import GridRoute from 'routes/Grid'
 import Settings from 'routes/Settings'
 import AlertBox from 'widgets/AlertBox/AlertBox'
+import StaticComponents from 'widgets/StaticComponents/StaticComponents'
 
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
       <Storybook/>
       <Snackbar/>
       <Modal/>
+      <StaticComponents/>
       <AlertBox />
     </div>
   )

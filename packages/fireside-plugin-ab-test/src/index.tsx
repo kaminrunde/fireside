@@ -26,9 +26,16 @@ export default createPlugin<t.State, t.PluginOptions>(ctx => {
             byId: {}
           })
         }
-        const deactivate = () => {
-          modalConfirmed = false
-          api.setState(undefined)
+        const deactivate = async () => {
+          const result = await ctx.actions.alert({
+            title: 'Remove AB-Test',
+            description: 'This will complete remove the ab-test logic. The components will persist. Please remove the components you don\'t want any longer manually afterwars',
+            options: ['ABORT', 'OK']
+          })
+          if(result === 'OK') {
+            modalConfirmed = false
+            api.setState(undefined)
+          }
         }
         return (
           <div>
@@ -105,6 +112,37 @@ export default createPlugin<t.State, t.PluginOptions>(ctx => {
     }
   })
 
+  ctx.createStaticComponent({
+    component: api => {
+      // if(!api.state) return null
+      if(modalConfirmed) return null
+
+      const handleSubmit = () => {
+        if(pw !== ctx.options.password) return
+        modalConfirmed = true
+        api.setState(api.state)
+      }
+
+      return (
+        <div>
+          <div style={styles.staticOverlay()} />
+          <div style={styles.staticWrapper()}>
+            <h3 style={{textAlign:'center', fontFamily: "'Open Sans', sans-serif"}}>Running AB-Test</h3>
+            <input 
+              onChange={e => pw = e.target.value}
+              style={styles.staticInput()} 
+              placeholder='password' 
+            />
+            <br/>
+            <button 
+              onClick={handleSubmit}
+              style={styles.staticButton()}>Submit</button>
+          </div>
+        </div>
+      )
+    }
+  })
+
   // ctx.createModal({
   //   isActive: ({state}) => state.active && !modalConfirmed,
   //   component: api => {
@@ -150,5 +188,37 @@ const styles = {
     padding: '11px 20px',
     marginLeft: '10px',
     borderRadius: '2px'
+  }),
+  staticOverlay: () => ({
+    position: 'fixed',
+    left: '0px',
+    top: '0px',
+    right: '0px',
+    bottom: '0px',
+    background: 'rgba(0,0,0,0.4)',
+    zIndex: 9999999999999999
+  }),
+  staticWrapper: () => ({
+    position: 'fixed',
+    left: '50%',
+    top: '100px',
+    padding: '40px 60px',
+    background: 'white',
+    transform: 'translateX(-50%)',
+    zIndex: 9999999999999999
+  }),
+  staticInput: () => ({
+    padding: '8px',
+    border: '1px solid grey',
+    borderRadius: '5px',
+    marginBottom: '20px'
+  }),
+  staticButton: () => ({
+    display: 'block',
+    width: '100%',
+    padding: '10px',
+    border: 'none',
+    background: 'lightgrey',
+    cursor: 'pointer'
   })
 }

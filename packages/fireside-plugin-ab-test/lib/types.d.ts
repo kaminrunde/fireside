@@ -14,5 +14,5 @@ export declare type State = {
 export declare type PluginOptions = {
     key: string;
     password?: string;
-    blacklist?: string[];
+    maxComponents?: number;
 };

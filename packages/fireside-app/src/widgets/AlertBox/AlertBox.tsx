@@ -8,13 +8,23 @@ export default function AlertBox () {
 
   if(!alertBox.modal) return null
 
+  const options = alertBox.modal.options || ['OK']
+
   return (
     <Wrapper>
-      <div className='box'>
-        <div className='close-wrapper' onClick={() => alertBox.close('abort')}><MdClose/></div>
-        {alertBox.modal.title}
-      </div>
       <div className='overlay' />
+      <div className='box'>
+        <div className='close-wrapper' onClick={() => alertBox.close('ABORT')}><MdClose/></div>
+        <h3>{alertBox.modal.title}</h3>
+        {alertBox.modal.description && <p>{alertBox.modal.description}</p>}
+        <Options single={options.length === 1}>
+          {options.map(opt => (
+            <button key={opt} onClick={() => alertBox.close(opt)}>
+              {opt}
+            </button>
+          ))}
+        </Options>
+      </div>
     </Wrapper>
   )
 }
@@ -27,19 +37,19 @@ const Wrapper = styled.div`
     right: 0;
     bottom: 0;
     background: rgba(0,0,0,0.4);
-    z-index: 9;
+    z-index: 9999999999999999999999998;
   }
 
   > .box {
     position: fixed;
     top: 80px;
-    width: 400px;
-    padding: 50px;
+    width: 500px;
+    padding: 30px 20px;
     left: 50%;
     transform: translateX(-50%);
     background: white;
     border: 1px solid grey;
-    z-index: 10;
+    z-index: 9999999999999999999999999;
     box-shadow: 5px 5px 15px 5px #000000;
     border-radius: 3px;
 
@@ -60,6 +70,44 @@ const Wrapper = styled.div`
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
+      }
+    }
+
+    > h3 {
+      margin: 0;
+      text-align: center;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    > p {
+      text-align: center;
+      font-family: 'Roboto', sans-serif;
+    }
+  }
+`
+
+const Options = styled.div`
+  display: flex;
+  margin-top: 40px;
+  padding: 0 50px;
+  justify-content: ${p => p.single ? 'center' : 'space-between'};
+
+  > button {
+    border: none;
+    position: relative;
+    padding: 15px;
+    font-family: 'Roboto', sans-serif;
+    cursor: pointer;
+
+    &:hover {
+      &:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.2);
       }
     }
   }

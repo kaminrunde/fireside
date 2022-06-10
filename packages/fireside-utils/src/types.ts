@@ -39,6 +39,10 @@ export interface SettingsPageAPI<State> extends PluginAPI<State> {
   
 }
 
+export interface StaticComponentAPI<State> extends PluginAPI<State> {
+  
+}
+
 export type PluginEvent = 
 | et.InitialStateEvent
 | et.ComponentBadgeEvent 
@@ -50,6 +54,7 @@ export type PluginEvent =
 | et.SettingsPageRowEvent
 | et.CreatePageNavigationEvent
 | et.CreatePagePageEvent
+| et.CreateStaticComponentEvent
 
 
 export type Config = {

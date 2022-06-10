@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var extendComponent_1 = require("./extendComponent");
 var extendGridRow_1 = require("./extendGridRow");
 var extendSettingsPage_1 = require("./extendSettingsPage");
+var createStaticComponent_1 = require("./createStaticComponent");
 var createPage_1 = require("./createPage");
 function createPlugin(cb) {
     return function (options, actions) {
@@ -12,6 +13,7 @@ function createPlugin(cb) {
             extendGridRow: function (config) { events.push.apply(events, extendGridRow_1.default(config, options)); },
             extendSettingsPage: function (config) { events.push.apply(events, extendSettingsPage_1.default(config, options)); },
             createPage: function (config) { events.push.apply(events, createPage_1.default(config, options)); },
+            createStaticComponent: function (config) { events.push.apply(events, createStaticComponent_1.default(config, options)); },
             options: options,
             actions: actions
         };

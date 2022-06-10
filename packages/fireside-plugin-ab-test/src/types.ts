@@ -17,5 +17,5 @@ export type State = {
 export type PluginOptions = {
   key: string
   password?: string
-  blacklist?: string[]
+  maxComponents?: number
 }

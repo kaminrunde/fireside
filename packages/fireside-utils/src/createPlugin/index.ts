@@ -2,6 +2,7 @@ import * as t from '../types'
 import extendComponent, {ExtendComponent} from './extendComponent'
 import extendGridRow, {ExtendGridRow} from './extendGridRow'
 import extendSettingsPage, {ExtendSettingsPage} from './extendSettingsPage'
+import createStaticComponent, {CreateStaticComponent} from './createStaticComponent'
 import createPage, {CreatePage} from './createPage'
 
 type PluginContext<State,Options> = {
@@ -9,6 +10,7 @@ type PluginContext<State,Options> = {
   extendGridRow: (config:ExtendGridRow<State>) => void
   extendSettingsPage: (config:ExtendSettingsPage<State>) => void
   createPage: (config:CreatePage<State>) => void
+  createStaticComponent: (config:CreateStaticComponent<State>) => void
   options: Options
   actions: t.PluginActions
 }
@@ -24,6 +26,7 @@ export default function createPlugin <State, Options extends t.PluginOptions>(
       extendGridRow: config => { events.push(...extendGridRow(config, options)) },
       extendSettingsPage: config => { events.push(...extendSettingsPage(config, options)) },
       createPage: config => { events.push(...createPage(config, options)) },
+      createStaticComponent: config => { events.push(...createStaticComponent(config, options)) },
       options,
       actions
     }

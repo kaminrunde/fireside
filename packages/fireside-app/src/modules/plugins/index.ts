@@ -18,6 +18,7 @@ export {default as useGridRowBadgeList} from './hooks/useGridRowBadgeList'
 export {default as useGridRowSettingList} from './hooks/useGridRowSettingList'
 export {default as useSettingsPageComponents} from './hooks/useSettingsPageComponents'
 export {default as usePluginState} from './hooks/usePluginState'
+export {default as useStaticComponents} from './hooks/useStaticComponents'
 
 declare global {
   interface RootState { plugins: State }

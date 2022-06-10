@@ -88,3 +88,12 @@ export type CreatePagePageEvent = {
     component: any
   }
 }
+
+export type CreateStaticComponentEvent = {
+  type: 'CREATE_STATIC_COMPONENT'
+  meta: {key:string}
+  payload: {
+    isActive?: (api:any) => boolean
+    component: any
+  }
+}

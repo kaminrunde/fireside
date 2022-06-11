@@ -100,7 +100,7 @@ exports.default = fireside_utils_1.createPlugin(function (ctx) {
                 var _a, _b;
                 var setVariation = function (v) { return function () {
                     var state = api.state, mediaSize = api.mediaSize, row = api.row, story = api.story;
-                    api.setState(immer_1.produce(state, function (state) {
+                    var newState = immer_1.produce(state, function (state) {
                         if (!state.components[mediaSize])
                             state.components[mediaSize] = {
                                 A: [],
@@ -121,7 +121,16 @@ exports.default = fireside_utils_1.createPlugin(function (ctx) {
                             state.components[mediaSize][v].push(row);
                         }
                         utils.updateStateByComponents(state, story);
-                    }));
+                    });
+                    var maxComponents = ctx.options.maxComponents;
+                    if (maxComponents && Object.keys(newState.byId).length > maxComponents) {
+                        ctx.actions.alert({
+                            title: 'Limit reached',
+                            description: "You can only add up to " + maxComponents + " components as an ab-test"
+                        });
+                        return;
+                    }
+                    api.setState(newState);
                 }; };
                 var state = api.state, mediaSize = api.mediaSize, row = api.row;
                 var mode = ((_a = state.components[mediaSize]) === null || _a === void 0 ? void 0 : _a.A.includes(row)) ? 'A'
@@ -136,7 +145,8 @@ exports.default = fireside_utils_1.createPlugin(function (ctx) {
     });
     ctx.createStaticComponent({
         component: function (api) {
-            // if(!api.state) return null
+            if (!api.state)
+                return null;
             if (modalConfirmed)
                 return null;
             var handleSubmit = function () {
@@ -154,16 +164,36 @@ exports.default = fireside_utils_1.createPlugin(function (ctx) {
                     React.createElement("button", { onClick: handleSubmit, style: styles.staticButton() }, "Submit"))));
         }
     });
-    // ctx.createModal({
-    //   isActive: ({state}) => state.active && !modalConfirmed,
-    //   component: api => {
-    //   }
-    // })
-    // return undefined
-    // return {
-    //   components: {},
-    //   byId: {}
-    // }
+    var lastStoryHash = '';
+    ctx.onStoryUpdate(function (api) {
+        if (!api.state)
+            return;
+        if (lastStoryHash === api.story.hash)
+            return;
+        lastStoryHash = api.story.hash;
+        var newState = immer_1.produce(api.state, function (state) {
+            var _loop_1 = function (ms) {
+                if (!api.story.grids[ms].enabled) {
+                    delete state.components[ms];
+                    return "continue";
+                }
+                var maxRowIndex = api.story.grids[ms].grid.length - 1;
+                if (maxRowIndex === -1) {
+                    state.components[ms] = { A: [], B: [] };
+                }
+                console.log(maxRowIndex, api.state.components[ms]);
+                state.components[ms].A = state.components[ms].A.filter(function (n) { return n <= maxRowIndex; });
+                state.components[ms].B = state.components[ms].B.filter(function (n) { return n <= maxRowIndex; });
+            };
+            for (var ms in state.components) {
+                _loop_1(ms);
+            }
+            utils.updateStateByComponents(state, api.story);
+        });
+        if (JSON.stringify(newState) !== JSON.stringify(api.state)) {
+            api.setState(newState);
+        }
+    });
     return undefined;
 });
 var styles = {

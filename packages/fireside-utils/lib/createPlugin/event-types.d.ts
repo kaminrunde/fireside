@@ -110,3 +110,10 @@ export declare type CreateStaticComponentEvent = {
         component: any;
     };
 };
+export declare type OnStoryUpdateEvent = {
+    type: 'ON_STORY_UPDATE';
+    meta: {
+        key: string;
+    };
+    payload: (api: any) => void;
+};

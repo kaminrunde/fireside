@@ -55,7 +55,8 @@
       "resolve": "@kaminrunde/fireside-plugin-ab-test",
       "options": {
         "key": "abTest",
-        "password": "foo"
+        "password": "foo",
+        "maxComponents": 1
       }
     }
   ]

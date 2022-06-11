@@ -1,5 +1,6 @@
 import {createHash} from 'crypto-browserify'
 import {addRule} from 'redux-ruleset'
+import {OnStoryUpdateAPI} from '@kaminrunde/fireside-utils'
 import * as connector from 'modules/connector'
 import * as grid from 'modules/grid'
 import * as components from 'modules/components'
@@ -75,8 +76,27 @@ addRule<
       hash:'',
       plugins: pluginStates
     }
-    const hash = createHash('md5').update(JSON.stringify(story)).digest('hex')
+
+    let hash = createHash('md5').update(JSON.stringify(story)).digest('hex')
     story.hash = hash
+
+    // notify plugins
+    const callbacks = plugins.s.getStoryCallbacksEvents(state.plugins)
+
+    for(const cb of callbacks) {
+      const api:OnStoryUpdateAPI<any> = {
+        story: story,
+        state: plugins.s.getState(state.plugins, cb.meta.key),
+        setState: (state:any) => {
+          story.plugins[cb.meta.key] = state
+        }
+      }
+      cb.payload(api)
+    }
+
+    hash = createHash('md5').update(JSON.stringify(story)).digest('hex')
+    story.hash = hash
+
 
     // do not update if hash did not change
     if(story.hash === prevStory?.hash){

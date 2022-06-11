@@ -74,7 +74,7 @@ export default createPlugin<t.State, t.PluginOptions>(ctx => {
       component: function RowModalRow (api) {
         const setVariation = (v:'A'|'B'|'AB') => () => {
           const {state, mediaSize,row, story} = api
-          api.setState(produce(state, state => {
+          const newState = produce(state, state => {
             if(!state.components[mediaSize]) state.components[mediaSize] = {
               A: [],
               B: []
@@ -94,7 +94,16 @@ export default createPlugin<t.State, t.PluginOptions>(ctx => {
               state.components[mediaSize][v].push(row)
             }
             utils.updateStateByComponents(state, story)
-          }))
+          })
+          const maxComponents = ctx.options.maxComponents
+          if(maxComponents && Object.keys(newState.byId).length > maxComponents) {
+            ctx.actions.alert({
+              title: 'Limit reached',
+              description: `You can only add up to ${maxComponents} components as an ab-test`
+            })
+            return
+          }
+          api.setState(newState)
         }
 
         const {state, mediaSize,row} = api
@@ -114,7 +123,7 @@ export default createPlugin<t.State, t.PluginOptions>(ctx => {
 
   ctx.createStaticComponent({
     component: api => {
-      // if(!api.state) return null
+      if(!api.state) return null
       if(modalConfirmed) return null
 
       const handleSubmit = () => {
@@ -143,17 +152,34 @@ export default createPlugin<t.State, t.PluginOptions>(ctx => {
     }
   })
 
-  // ctx.createModal({
-  //   isActive: ({state}) => state.active && !modalConfirmed,
-  //   component: api => {
+  let lastStoryHash = ''
+  ctx.onStoryUpdate(api => {
+    if(!api.state) return
+    if(lastStoryHash === api.story.hash) return
+    lastStoryHash = api.story.hash
 
-  //   }
-  // })
-  // return undefined
-  // return {
-  //   components: {},
-  //   byId: {}
-  // }
+    const newState = produce(api.state, state => {
+      for(const ms in state.components) {
+        if(!api.story.grids[ms].enabled) {
+          delete state.components[ms]
+          continue
+        }
+        const maxRowIndex = api.story.grids[ms].grid.length -1
+        if(maxRowIndex === -1) {
+          state.components[ms] = {A:[],B:[]}
+        }
+        console.log(maxRowIndex, api.state.components[ms])
+        state.components[ms].A = state.components[ms].A.filter(n => n <= maxRowIndex)
+        state.components[ms].B = state.components[ms].B.filter(n => n <= maxRowIndex)
+      }
+
+      utils.updateStateByComponents(state, api.story)
+    })
+    if(JSON.stringify(newState) !== JSON.stringify(api.state)) {
+      api.setState(newState)
+    }
+  })
+
   return undefined
 })
 

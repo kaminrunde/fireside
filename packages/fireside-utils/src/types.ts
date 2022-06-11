@@ -43,6 +43,10 @@ export interface StaticComponentAPI<State> extends PluginAPI<State> {
   
 }
 
+export interface OnStoryUpdateAPI<State> extends PluginAPI<State> {
+  
+}
+
 export type PluginEvent = 
 | et.InitialStateEvent
 | et.ComponentBadgeEvent 
@@ -55,6 +59,7 @@ export type PluginEvent =
 | et.CreatePageNavigationEvent
 | et.CreatePagePageEvent
 | et.CreateStaticComponentEvent
+| et.OnStoryUpdateEvent
 
 
 export type Config = {

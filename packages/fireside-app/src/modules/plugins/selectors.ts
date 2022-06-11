@@ -51,6 +51,14 @@ export const getStaticComponents = createSelector(
   }
 )
 
+export const getStoryCallbacksEvents = createSelector(
+  (state:State) => state.data,
+  plugins => {
+    const result = plugins.filter(p => p.type === 'ON_STORY_UPDATE')
+    return result as pluginEvents.OnStoryUpdateEvent[]
+  }
+)
+
 export const getGridRowSettingComponents = createSelector(
   (state:State) => state.data,
   plugins => {

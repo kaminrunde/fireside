@@ -37,12 +37,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var preprocessComponent_1 = require("./preprocessComponent");
-var formatGrid_1 = require("./formatGrid");
 var createComponentGridContexts_1 = require("./createComponentGridContexts");
 var versionUpdate_1 = require("./versionUpdate");
 function preprocessStory(story, config) {
     return __awaiter(this, void 0, void 0, function () {
-        var formatted, usedComponentIds, ms, _i, _a, row, _b, row_1, id, cachedGridContexts, getGridContexts, formattedComponents, gridAreaDict, id;
+        var formatted, usedComponentIds, ms, _i, _a, row, _b, row_1, id, cachedGridContexts, getGridContexts, formattedComponents;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
@@ -51,7 +50,7 @@ function preprocessStory(story, config) {
                         hash: story.hash,
                         componentsById: {},
                         allComponents: [],
-                        grids: {},
+                        grids: story.grids,
                         events: [],
                         plugins: story.plugins || {}
                     };
@@ -84,21 +83,6 @@ function preprocessStory(story, config) {
                         formatted.componentsById[c.id] = c;
                         formatted.allComponents.push(c.id);
                         (_b = formatted.events).push.apply(_b, events);
-                    });
-                    gridAreaDict = {};
-                    for (id in story.componentsById)
-                        gridAreaDict[id] = story.componentsById[id].props.gridArea;
-                    Object.entries(story.grids)
-                        .map(function (_a) {
-                        var key = _a[0], val = _a[1];
-                        return [key, formatGrid_1.default(val, {
-                                allIds: story.allComponents,
-                                gridAreas: gridAreaDict
-                            })];
-                    })
-                        .forEach(function (_a) {
-                        var key = _a[0], val = _a[1];
-                        formatted.grids[key] = val;
                     });
                     return [2 /*return*/, formatted];
             }

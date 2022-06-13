@@ -6,14 +6,14 @@ import * as ui from '../modules/ui'
 import {ModalConfig} from '../modules/ui/types'
 import store from 'store'
 
-let clearAlertBoxCb = (result:string) => null
+let clearAlertBoxCb:((s:string)=>void)[] = []
 addRule({
   id: 'feature/OBSERVE_CLEAR_ALERT_BOX',
   target: ui.c.HIDE_MODAL,
   output: '#observe',
   addOnce: true,
   consequence: (action:ui.a.HideModal) => {
-    clearAlertBoxCb(action.payload)
+    for(const cb of clearAlertBoxCb) cb(action.payload)
   }
 })
 
@@ -32,7 +32,7 @@ addRule({
         if(state.ui.modal) return
         store.dispatch(ui.a.showModal(ctx))
         return new Promise(resolve => {
-          clearAlertBoxCb = resolve
+          clearAlertBoxCb.push(resolve)
         })
       }
     }

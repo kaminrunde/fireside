@@ -1,6 +1,5 @@
 import * as t from './types'
 import preprocessComponent from './preprocessComponent'
-import formatGrid from './formatGrid'
 import createComponentGridContexts from './createComponentGridContexts'
 import versionUpdate from './versionUpdate'
 
@@ -10,7 +9,7 @@ export default async function preprocessStory(story: t.RawStory, config: t.Confi
     hash: story.hash,
     componentsById: {},
     allComponents: [],
-    grids: {},
+    grids: story.grids,
     events: [],
     plugins: story.plugins || {}
   }
@@ -45,19 +44,6 @@ export default async function preprocessStory(story: t.RawStory, config: t.Confi
     formatted.allComponents.push(c.id)
     formatted.events.push(...events)
   })
-
-  const gridAreaDict: Record<string, string> = {}
-  for (let id in story.componentsById) gridAreaDict[id] = story.componentsById[id].props.gridArea
-
-  Object.entries(story.grids)
-    .map(([key, val]) => [key, formatGrid(val, {
-      allIds: story.allComponents,
-      gridAreas: gridAreaDict
-    })] as [string, ReturnType<typeof formatGrid>])
-    .forEach(([key, val]) => {
-      formatted.grids[key] = val
-    })
-
 
   return formatted
 }

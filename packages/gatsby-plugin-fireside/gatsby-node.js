@@ -9,7 +9,9 @@ exports.createSchemaCustomization = ({actions}, config) => {
       resolve: async node => {
         if(!node.story) return null
         try {
-          return await preprocessStory(node.story, config)
+          let story = await preprocessStory(node.story, config)
+          if(config.transformStory) story = config.transformStory(story)
+          return story
         } catch (e) {
           console.error(e, e.stack)
           throw new Error(e)

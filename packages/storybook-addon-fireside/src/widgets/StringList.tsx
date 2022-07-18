@@ -110,7 +110,7 @@ const SortableList = SortableContainer(({items, onDelete, onUpdate}) => {
     <ul>
       {items.map((value, index) => (
         <SortableItem 
-          key={`item-${value}`} 
+          key={`item-${value+index}`} 
           index={index} 
           value={value} 
           onDelete={() => onDelete(index)}

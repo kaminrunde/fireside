@@ -75,7 +75,7 @@ const SortableItem = react_sortable_hoc_1.SortableElement(({ value, onDelete, on
         React.createElement("div", { className: 'delete', onMouseDown: () => setPendingDelete(true) }, "D")));
 });
 const SortableList = react_sortable_hoc_1.SortableContainer(({ items, onDelete, onUpdate }) => {
-    return (React.createElement("ul", null, items.map((value, index) => (React.createElement(SortableItem, { key: `item-${value}`, index: index, value: value, onDelete: () => onDelete(index), onUpdate: (val) => onUpdate(index, val) })))));
+    return (React.createElement("ul", null, items.map((value, index) => (React.createElement(SortableItem, { key: `item-${value + index}`, index: index, value: value, onDelete: () => onDelete(index), onUpdate: (val) => onUpdate(index, val) })))));
 });
 const Wrapper = styled_components_1.default.div `
   > ul {

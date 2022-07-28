@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import GlobalStyle from './GlobalStyle'
 import MDXStyle from './MDXStyle'
 import {Helmet} from 'react-helmet'
+import {Link} from 'gatsby'
 
 export default () => function Layout (props:{children:any}) {
   return (
@@ -11,26 +12,26 @@ export default () => function Layout (props:{children:any}) {
       <Helmet>
         <link rel="preconnect" href="https://fonts.googleapis.com"/>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='true'/>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Open+Sans:wght@300;500&display=swap" rel="stylesheet"/>
       </Helmet>
       <header />
       <div className='content'>
         <aside>
-          <h3>Introduction</h3>
-          <div>Overview</div>
-          <div>Component Lifecycle</div>
-          <div>Setup</div>
-          <h3>Controllers</h3>
-          <div>Add Context</div>
-          <div>Transform Shape</div>
-          <div>Add Events to Story</div>
-          <div>Version Handling</div>
-          <h3>Knobs</h3>
-          <div>Existing Knobs</div>
-          <div>Create own Knob</div>
-          <h3>Plugins</h3>
-          <div>Add Plugins</div>
-          <div>Create Own Plugin</div>
+          <h3><Link to='/docs/introduction'>Introduction</Link></h3>
+          <h4><Link to='/docs/introduction'>Overview</Link></h4>
+          <h4><Link to='/docs/introduction'>Component Lifecycle</Link></h4>
+          <h4><Link to='/docs/introduction'>Setup</Link></h4>
+          <h3><Link to='/docs/introduction'>Controllers</Link></h3>
+          <h4><Link to='/docs/introduction'>Add Context</Link></h4>
+          <h4><Link to='/docs/introduction'>Transform Shape</Link></h4>
+          <h4><Link to='/docs/introduction'>Add Events to Story</Link></h4>
+          <h4><Link to='/docs/introduction'>Version Handling</Link></h4>
+          <h3><Link to='/docs/introduction'>Knobs</Link></h3>
+          <h4><Link to='/docs/introduction'>Existing Knobs</Link></h4>
+          <h4><Link to='/docs/introduction'>Create own Knob</Link></h4>
+          <h3><Link to='/docs/introduction'>Plugins</Link></h3>
+          <h4><Link to='/docs/introduction'>Add Plugins</Link></h4>
+          <h4><Link to='/docs/introduction'>Create Own Plugin</Link></h4>
         </aside>
         <MDXStyle>{props.children}</MDXStyle>
       </div>      
@@ -56,7 +57,6 @@ const Wrapper = styled.div`
       width: 300px;
       margin-right: 20px;
       min-height: 300px;
-      border: 1px solid grey;
       border-radius: 8px;
       padding: 10px;
       padding-bottom: 50px;
@@ -65,8 +65,16 @@ const Wrapper = styled.div`
         margin: 10px 0;
       }
 
-      div {
+      h4 {
+        margin: 5px 0;
         margin-left: 10px;
+      }
+
+      h3, h4 {
+        a { 
+          text-decoration: none; 
+          &:hover { color: #ba5eb6; cursor: pointer; }
+        }
       }
       
       @media (min-width: 1100px) {

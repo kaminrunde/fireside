@@ -18,20 +18,20 @@ export default () => function Layout (props:{children:any}) {
       <div className='content'>
         <aside>
           <h3><Link to='/docs/introduction'>Introduction</Link></h3>
-          <h4><Link to='/docs/introduction'>Overview</Link></h4>
-          <h4><Link to='/docs/introduction'>Component Lifecycle</Link></h4>
-          <h4><Link to='/docs/introduction'>Setup</Link></h4>
-          <h3><Link to='/docs/introduction'>Controllers</Link></h3>
-          <h4><Link to='/docs/introduction'>Add Context</Link></h4>
-          <h4><Link to='/docs/introduction'>Transform Shape</Link></h4>
-          <h4><Link to='/docs/introduction'>Add Events to Story</Link></h4>
-          <h4><Link to='/docs/introduction'>Version Handling</Link></h4>
-          <h3><Link to='/docs/introduction'>Knobs</Link></h3>
-          <h4><Link to='/docs/introduction'>Existing Knobs</Link></h4>
-          <h4><Link to='/docs/introduction'>Create own Knob</Link></h4>
-          <h3><Link to='/docs/introduction'>Plugins</Link></h3>
-          <h4><Link to='/docs/introduction'>Add Plugins</Link></h4>
-          <h4><Link to='/docs/introduction'>Create Own Plugin</Link></h4>
+          <h4><Link to='/docs/introduction-overview'>Overview</Link></h4>
+          <h4><Link to='/docs/introduction-componentlifecycle'>Component Lifecycle</Link></h4>
+          <h4><Link to='/docs/introduction-setup'>Setup</Link></h4>
+          <h3><Link to='/docs/controllers'>Controllers</Link></h3>
+          <h4><Link to='/docs/controllers-addcontext'>Add Context</Link></h4>
+          <h4><Link to='/docs/controllers-transformshape'>Transform Shape</Link></h4>
+          <h4><Link to='/docs/controllers-addeventstostory'>Add Events to Story</Link></h4>
+          <h4><Link to='/docs/controllers'>Version Handling</Link></h4>
+          <h3><Link to='/docs/controllers'>Knobs</Link></h3>
+          <h4><Link to='/docs/controllers'>Existing Knobs</Link></h4>
+          <h4><Link to='/docs/controllers'>Create own Knob</Link></h4>
+          <h3><Link to='/docs/controllers'>Plugins</Link></h3>
+          <h4><Link to='/docs/controllers'>Add Plugins</Link></h4>
+          <h4><Link to='/docs/controllers'>Create Own Plugin</Link></h4>
         </aside>
         <MDXStyle>{props.children}</MDXStyle>
       </div>      

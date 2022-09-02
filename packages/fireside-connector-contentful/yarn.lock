@@ -2,13 +2,6 @@
 # yarn lockfile v1
 
 
-"@kaminrunde/fireside-utils@^1.0.1-alpha.19":
-  version "1.0.1-alpha.19"
-  resolved "https://npm.pkg.github.com/download/@kaminrunde/fireside-utils/1.0.1-alpha.19/802dbb521f3c0074a974e244b29e8b13eb8adc8d71efbb6c23cd27d5faa84ae9#df3ab05851021dcce239e60db00b2c0abfce8b02"
-  integrity sha512-QXzKkIfuLqd44G63vr6cQL/vQtbBE7qfimn7e4ip1cjQWBmKB12mErsBt1wnngH3TvOJ6Ji0H1m3Ya/yYKDnCQ==
-  dependencies:
-    typescript "^3.9.5"
-
 contentful-ui-extensions-sdk@^3.15.0:
   version "3.26.1"
   resolved "https://registry.yarnpkg.com/contentful-ui-extensions-sdk/-/contentful-ui-extensions-sdk-3.26.1.tgz#5847c163c36f9ddc3659f89fc1f80fcef7aa2f30"
@@ -18,8 +11,3 @@ typescript@3.9.5:
   version "3.9.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.5.tgz#586f0dba300cde8be52dd1ac4f7e1009c1b13f36"
   integrity sha512-hSAifV3k+i6lEoCJ2k6R2Z/rp/H3+8sdmcn5NrS3/3kE7+RyZXm9aqvxWqjEXHAd8b0pShatpcdMTvEdvAJltQ==
-
-typescript@^3.9.5:
-  version "3.9.7"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
-  integrity sha512-BLbiRkiBzAwsjut4x/dsibSTB6yWpwT5qWmC2OfuCg3GgVQCSgMs4vEctYPhsaGtd0AeuuHMkjZ2h2WG8MSzRw==

@@ -110,6 +110,7 @@ export default createPlugin<t.State, t.PluginOptions>(ctx => {
         const mode = state.components[mediaSize]?.A.includes(row) ? 'A'
                    : state.components[mediaSize]?.B.includes(row) ? 'B'
                    : 'AB'
+                   
         return (
           <div style={styles.btnWrapper()}>
             <button style={styles.btn(mode === 'A')} onClick={setVariation('A')}>A</button>

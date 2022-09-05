@@ -110,7 +110,7 @@ const Wrapper = styled.div`
     bottom: 0;
     margin-left: 100%;
     background: white;
-    z-index: 99998;
+    z-index: 99997;
 
     > .settings {
       width: max-content;

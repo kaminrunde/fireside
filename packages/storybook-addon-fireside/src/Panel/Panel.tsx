@@ -5,7 +5,6 @@ import Widget from './Widget'
 import Tabs from './Tabs'
 import * as t from '../types'
 import {CustomComponentsProvider} from './useCustomComponents'
-import objPath = require('object-path')
 
 type Props = {
   channel: t.Channel,
@@ -23,6 +22,7 @@ export default function Panel ({channel}:Props) {
     window.__addCustomKnob = (name, component) => 
       setCustomComponents(dict => ({...dict, [name]: component}))
   }, [])
+
 
   return (
     <CustomComponentsProvider value={customComponents}>

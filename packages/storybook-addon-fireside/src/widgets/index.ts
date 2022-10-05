@@ -3,8 +3,8 @@ import Constant from './Constant'
 import Number from './Number'
 import Markdown from './Markdown'
 import Bool from './Bool'
-import StringList from './StringList'
-import ObjectList from './ObjectList'
+// import StringList from './StringList'
+// import ObjectList from './ObjectList'
 import CustomKnobPlaceholder from './CustomKnobPlaceholder'
 import Select from './Select'
 import * as t from '../types'
@@ -25,8 +25,8 @@ export default function getWidget (
     number: Number,
     markdown: Markdown,
     bool: Bool,
-    stringList: StringList,
-    objectList: ObjectList,
+    stringList: CustomKnobPlaceholder,// StringList,
+    objectList: CustomKnobPlaceholder,// ObjectList,
     select: Select
   }[knob.type]
 }

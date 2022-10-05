@@ -5,8 +5,8 @@ const Constant_1 = require("./Constant");
 const Number_1 = require("./Number");
 const Markdown_1 = require("./Markdown");
 const Bool_1 = require("./Bool");
-const StringList_1 = require("./StringList");
-const ObjectList_1 = require("./ObjectList");
+// import StringList from './StringList'
+// import ObjectList from './ObjectList'
 const CustomKnobPlaceholder_1 = require("./CustomKnobPlaceholder");
 const Select_1 = require("./Select");
 function getWidget(knob, customComponents) {
@@ -23,8 +23,8 @@ function getWidget(knob, customComponents) {
         number: Number_1.default,
         markdown: Markdown_1.default,
         bool: Bool_1.default,
-        stringList: StringList_1.default,
-        objectList: ObjectList_1.default,
+        stringList: CustomKnobPlaceholder_1.default,
+        objectList: CustomKnobPlaceholder_1.default,
         select: Select_1.default
     }[knob.type];
 }

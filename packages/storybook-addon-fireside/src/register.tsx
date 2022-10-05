@@ -1,8 +1,10 @@
-// import {createHash, randomBytes} from 'crypto-browserify'
+import { v4 as uuidv4 } from 'uuid'
 import * as React from 'react'
-import addons, {EventMap} from '@storybook/addons'
+import addons from '@storybook/addons'
 import * as t from './types'
 import Panel from './Panel'
+const hashit = require('hash-it')
+
 
 addons.register('addons:storyboard-bridge', api => {
   const channel:t.Channel = addons.getChannel()
@@ -12,8 +14,7 @@ addons.register('addons:storyboard-bridge', api => {
   })
 
   let component = {
-    id: Math.random().toString(),
-    // id: randomBytes(12).toString('hex'),
+    id: uuidv4(),
     name: 'not-known',
     props: {}
   }
@@ -76,8 +77,7 @@ addons.register('addons:storyboard-bridge', api => {
     switch(e.data.type){
       case 'fireside-hydrate-component': {
         if(!e.data.component) {
-          component.id = Math.random().toString()
-          // component.id = randomBytes(12).toString('hex')
+          component.id = uuidv4()
           channel.emit('storyboard-bridge/clear-props')
         }
 
@@ -108,12 +108,11 @@ function sendToFiresideApp (component:any) {
     component.updatedAt = now
   }
   component.updatedAt = Date.now()
-  const hash = Math.random().toString()
-  // const hash = createHash('md5').update(JSON.stringify({
-  //   props: component.props,
-  //   name: component.name,
-  //   id: component.id
-  // })).digest('hex')
+  const hash = hashit({
+    props: component.props,
+    name: component.name,
+    id: component.id
+  })
   window.parent.postMessage({
     type: 'fireside-update-component',
     component: { ...component, hash }

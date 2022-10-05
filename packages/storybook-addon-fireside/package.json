@@ -16,16 +16,15 @@
     "@storybook/addons": "^6.4.14",
     "@storybook/react": "^6.4.14",
     "array-move": "^4.0.0",
-    "crypto-browserify": "^3.12.0",
+    "hash-it": "^5.0.2",
     "immer": "^9.0.12",
     "object-path": "^0.11.4",
     "react-icons": "^4.1.0",
-    "react-simplemde-editor": "4.0.0",
     "react-sortable-hoc": "1.0.0",
-    "rich-markdown-editor": "^10.4.0",
     "simplemde": "^1.11.2",
     "styled-components": "^5.3.6",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/node": "^12.12.31"

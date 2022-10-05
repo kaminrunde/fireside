@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// import {createHash, randomBytes} from 'crypto-browserify'
+const uuid_1 = require("uuid");
 const React = require("react");
 const addons_1 = require("@storybook/addons");
 const Panel_1 = require("./Panel");
+const hashit = require('hash-it');
 addons_1.default.register('addons:storyboard-bridge', api => {
     const channel = addons_1.default.getChannel();
     addons_1.default.addPanel('addons:storyboard-bridge', {
@@ -11,8 +12,7 @@ addons_1.default.register('addons:storyboard-bridge', api => {
         render: () => React.createElement(Panel_1.default, { channel: channel, api: api, key: 'fireside' }),
     });
     let component = {
-        id: Math.random().toString(),
-        // id: randomBytes(12).toString('hex'),
+        id: uuid_1.v4(),
         name: 'not-known',
         props: {}
     };
@@ -73,8 +73,7 @@ addons_1.default.register('addons:storyboard-bridge', api => {
         switch (e.data.type) {
             case 'fireside-hydrate-component': {
                 if (!e.data.component) {
-                    component.id = Math.random().toString();
-                    // component.id = randomBytes(12).toString('hex')
+                    component.id = uuid_1.v4();
                     channel.emit('storyboard-bridge/clear-props');
                 }
                 if (e.data.component) {
@@ -101,12 +100,11 @@ function sendToFiresideApp(component) {
         component.updatedAt = now;
     }
     component.updatedAt = Date.now();
-    const hash = Math.random().toString();
-    // const hash = createHash('md5').update(JSON.stringify({
-    //   props: component.props,
-    //   name: component.name,
-    //   id: component.id
-    // })).digest('hex')
+    const hash = hashit({
+        props: component.props,
+        name: component.name,
+        id: component.id
+    });
     window.parent.postMessage({
         type: 'fireside-update-component',
         component: Object.assign(Object.assign({}, component), { hash })

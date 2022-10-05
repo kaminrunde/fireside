@@ -5,7 +5,7 @@ import Widget from '../Panel/Widget'
 import * as t from '../types'
 import produce from 'immer'
 import objPath = require('object-path')
-const arrayMove =  require('array-move')
+import {arrayMoveImmutable} from 'array-move'
 
 type Props = {
   value: object[],
@@ -37,7 +37,7 @@ export default function ObjectList (props:Props) {
         items={props.value} 
         getName={props.options.getRowName}
         onSortEnd={({oldIndex,newIndex}) => {
-          props.onChange(arrayMove(props.value, oldIndex, newIndex))
+          props.onChange(arrayMoveImmutable(props.value, oldIndex, newIndex))
         }}
         onDelete={index => {
           props.onChange(props.value.filter((_,i) => i !== index))

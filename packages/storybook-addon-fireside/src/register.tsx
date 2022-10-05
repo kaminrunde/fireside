@@ -8,7 +8,6 @@ addons.register('addons:storyboard-bridge', api => {
   const channel:t.Channel = addons.getChannel()
   addons.addPanel('addons:storyboard-bridge', {
     title: 'Eigenschaften',
-    // render: () => <div key='fireside'>Fireside</div>
     render: () => <Panel channel={channel} api={api} key='fireside'/>,
   })
 

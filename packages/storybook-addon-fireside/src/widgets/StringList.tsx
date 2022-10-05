@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {SortableContainer, SortableElement} from 'react-sortable-hoc'
 import * as t from '../types'
 import produce from 'immer'
-const arrayMove =  require('array-move')
+import {arrayMoveImmutable} from 'array-move'
 
 
 type Props = {
@@ -20,7 +20,7 @@ export default function StringList (props:Props) {
       <SortableList 
         items={props.value} 
         onSortEnd={({oldIndex,newIndex}) => {
-          props.onChange(arrayMove(props.value, oldIndex, newIndex))
+          props.onChange(arrayMoveImmutable(props.value, oldIndex, newIndex))
         }}
         onDelete={index => {
           props.onChange(props.value.filter((_,i) => i !== index))

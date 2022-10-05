@@ -6,7 +6,7 @@ const react_sortable_hoc_1 = require("react-sortable-hoc");
 const Widget_1 = require("../Panel/Widget");
 const immer_1 = require("immer");
 const objPath = require("object-path");
-const arrayMove = require('array-move');
+const array_move_1 = require("array-move");
 function ObjectList(props) {
     const [activeRowIndex, setActiveRowIndex] = React.useState(null);
     const isActive = typeof activeRowIndex === 'number';
@@ -15,7 +15,7 @@ function ObjectList(props) {
                 objPath.set(value[activeRowIndex], knob.prop, val);
             })) }))))),
         isActive || React.createElement(SortableList, { items: props.value, getName: props.options.getRowName, onSortEnd: ({ oldIndex, newIndex }) => {
-                props.onChange(arrayMove(props.value, oldIndex, newIndex));
+                props.onChange(array_move_1.arrayMoveImmutable(props.value, oldIndex, newIndex));
             }, onDelete: index => {
                 props.onChange(props.value.filter((_, i) => i !== index));
             }, onUpdate: (index) => {

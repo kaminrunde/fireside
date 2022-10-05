@@ -4,11 +4,11 @@ const React = require("react");
 const styled_components_1 = require("styled-components");
 const react_sortable_hoc_1 = require("react-sortable-hoc");
 const immer_1 = require("immer");
-const arrayMove = require('array-move');
+const array_move_1 = require("array-move");
 function StringList(props) {
     return (React.createElement(Wrapper, null,
         React.createElement(SortableList, { items: props.value, onSortEnd: ({ oldIndex, newIndex }) => {
-                props.onChange(arrayMove(props.value, oldIndex, newIndex));
+                props.onChange(array_move_1.arrayMoveImmutable(props.value, oldIndex, newIndex));
             }, onDelete: index => {
                 props.onChange(props.value.filter((_, i) => i !== index));
             }, onUpdate: (index, val) => {

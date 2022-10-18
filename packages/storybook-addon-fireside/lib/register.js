@@ -104,7 +104,7 @@ function sendToFiresideApp(component) {
         props: component.props,
         name: component.name,
         id: component.id
-    });
+    }).toString();
     window.parent.postMessage({
         type: 'fireside-update-component',
         component: Object.assign(Object.assign({}, component), { hash })

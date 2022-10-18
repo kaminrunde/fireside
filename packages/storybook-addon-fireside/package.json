@@ -21,7 +21,6 @@
     "object-path": "^0.11.4",
     "react-icons": "^4.1.0",
     "react-sortable-hoc": "1.0.0",
-    "simplemde": "^1.11.2",
     "styled-components": "^5.3.6",
     "typescript": "^3.8.3",
     "uuid": "^9.0.0"

@@ -12,7 +12,7 @@ type Props = {
 
 export default function Bool (props:Props) {
   return (
-    <Wrapper on={props.value} onClick={() =>props.onChange(!props.value)}>
+    <Wrapper onClick={() =>props.onChange(!props.value)}>
       {props.value ? 'ON' : 'OFF'}
     </Wrapper>
   )

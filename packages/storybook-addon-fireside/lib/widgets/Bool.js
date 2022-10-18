@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const styled_components_1 = require("styled-components");
 function Bool(props) {
-    return (React.createElement(Wrapper, { on: props.value, onClick: () => props.onChange(!props.value) }, props.value ? 'ON' : 'OFF'));
+    return (React.createElement(Wrapper, { onClick: () => props.onChange(!props.value) }, props.value ? 'ON' : 'OFF'));
 }
 exports.default = Bool;
 const Wrapper = styled_components_1.default.button `

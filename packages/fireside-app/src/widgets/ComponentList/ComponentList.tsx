@@ -19,6 +19,9 @@ export default function ComponentList () {
           </div>
           <div className='name'>{c.name}</div>
           <div className='button-list'>
+          <div className='btn-duplicate'>
+              <button onClick={() => components.duplicateComponent(c)}>duplicate</button>
+            </div>
             <div className='btn-update'>
               <button onClick={() => loading.load(c.id)}>update</button>
             </div>
@@ -111,7 +114,7 @@ const Row = styled.div`
       display: flex;
     }
     
-    > .btn-update, .btn-remove {
+    > .btn-update, .btn-remove, .btn-duplicate {
       margin: 0 5px;
       display: flex;
       height: auto;
@@ -131,6 +134,7 @@ const Row = styled.div`
 
       &.btn-update > button {background: #8bc34a;}
       &.btn-remove > button {background: #ff5722;}
+      &.btn-duplicate > button {background: #41e2ff;}
     }
   }
 

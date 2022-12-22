@@ -1,6 +1,7 @@
 import * as at from './const'
 import * as t from './types'
 import {Action} from './actions'
+import { v4 } from 'uuid'
 
 export type State = {
   byId: Record<string,t.Component>,
@@ -40,6 +41,25 @@ export default function reducer (state:State=defaultState, action:Action):State 
         [action.payload.id]: action.payload
       }
     }
+    case at.DUPLICATE: {
+      const id = v4()
+      const now = Date.now()
+      return {
+      ...state,
+      allIds: [...state.allIds, id],
+      byId: {
+        ...state.byId,
+        [id]: {
+          name: action.payload.name + "_copy",
+          id: id,
+          createdAt: now,
+          updatedAt: now,
+          props: {
+              gridArea: action.payload.props.gridArea,
+          }
+        }
+      }
+    }}
     case at.REMOVE: {
       let allIds = state.allIds.filter(id => id !== action.payload.id)
       let byId:Record<string,t.Component> = {}

@@ -7,6 +7,7 @@ import useConnect, {Config} from 'hooks/useConnect'
 type Result = {
   data: ReturnType<typeof s.getComponents>,
   removeComponent: typeof a.remove
+  duplicateComponent: typeof a.duplicate,
 }
 
 type Props = {}
@@ -19,7 +20,8 @@ const config:Config<Props,Result,State,object> = {
     data: s.getComponents(state),
   }),
   mapDispatch: {
-    removeComponent: a.remove
+    removeComponent: a.remove,
+    duplicateComponent: a.duplicate,
   }
 }
 

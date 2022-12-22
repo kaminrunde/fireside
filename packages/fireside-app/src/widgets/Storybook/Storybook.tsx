@@ -10,7 +10,6 @@ export default function Storybook () {
   const [setupFinished, setSetupFinished] = React.useState(false)
   const loadingComponent = components.useLoadingComponent()
   const [storybookUrl, setStorybookUrl] = React.useState('')
-  
   React.useEffect(() => {
     const listener = (e:any) => {
       if(typeof e.data !== 'object' || !e.data.type) return

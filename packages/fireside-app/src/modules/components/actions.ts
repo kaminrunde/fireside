@@ -15,6 +15,14 @@ export const add = (component:t.Component) => ({
 })
 
 /**
+ * add component from storybook to component list
+ */
+ export const duplicate = (component:t.Component) => ({
+  type: at.DUPLICATE,
+  payload: component
+})
+
+/**
  * remove component completly
  */
 export const remove = (component:t.Component) => ({
@@ -49,6 +57,7 @@ export const unload = () => ({
 
 export type Init = ReturnType<typeof init>
 export type Add = ReturnType<typeof add>
+export type Duplicate = ReturnType<typeof duplicate>
 export type Remove = ReturnType<typeof remove>
 export type Load = ReturnType<typeof load>
 export type Unload = ReturnType<typeof unload>
@@ -57,6 +66,7 @@ export type UpdateComponet = ReturnType<typeof updateComponent>
 export type Action =
 | Init
 | Add
+| Duplicate
 | Remove
 | Load
 | Unload

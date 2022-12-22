@@ -13,6 +13,7 @@ import * as plugins from 'modules/plugins'
  */
 addRule<
 | components.a.Add
+| components.a.Duplicate
 | components.a.Remove
 | components.a.UpdateComponet
 | grid.a.AddWidth
@@ -26,6 +27,7 @@ addRule<
   id: 'feature/UPDATE_CONNECTOR',
   target: [
     components.c.ADD,
+    components.c.DUPLICATE,
     components.c.REMOVE,
     components.c.UPDATE_COMPONENT,
     grid.c.ADD_WIDTH,

@@ -15,7 +15,7 @@ export const add = (component:t.Component) => ({
 })
 
 /**
- * add component from storybook to component list
+ * duplicate a component 
  */
  export const duplicate = (component:t.Component) => ({
   type: at.DUPLICATE,

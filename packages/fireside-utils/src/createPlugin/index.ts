@@ -5,11 +5,13 @@ import extendSettingsPage, {ExtendSettingsPage} from './extendSettingsPage'
 import createStaticComponent, {CreateStaticComponent} from './createStaticComponent'
 import createPage, {CreatePage} from './createPage'
 import onStoryUpdate, {OnStoryUpdate} from './onStoryUpdate'
+import extendComponentButtonList, { ExtendComponentButtonList } from './extendComponentButtonList'
 
 type PluginContext<State,Options> = {
   extendComponent: (config:ExtendComponent<State>) => void
   extendGridRow: (config:ExtendGridRow<State>) => void
   extendSettingsPage: (config:ExtendSettingsPage<State>) => void
+  extendComponentButtonList: (config: ExtendComponentButtonList<State>) => void
   createPage: (config:CreatePage<State>) => void
   createStaticComponent: (config:CreateStaticComponent<State>) => void
   onStoryUpdate: (cb:OnStoryUpdate<State>) => void
@@ -27,6 +29,7 @@ export default function createPlugin <State, Options extends t.PluginOptions>(
       extendComponent: config => { events.push(...extendComponent(config, options)) },
       extendGridRow: config => { events.push(...extendGridRow(config, options)) },
       extendSettingsPage: config => { events.push(...extendSettingsPage(config, options)) },
+      extendComponentButtonList: config => { events.push(...extendComponentButtonList(config, options))},
       createPage: config => { events.push(...createPage(config, options)) },
       createStaticComponent: config => { events.push(...createStaticComponent(config, options)) },
       onStoryUpdate: config => { events.push(...onStoryUpdate(config, options)) },

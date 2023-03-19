@@ -67,6 +67,14 @@ export const getGridRowSettingComponents = createSelector(
   }
 )
 
+export const getExtendedComponentButtonList = createSelector(
+  (state: State) => state.data,
+  (plugins) => {
+    const result = plugins.filter((p) => p.type === 'EXTEND_COMPONENT_BUTTON_LIST');
+    return result as pluginEvents.ExtendComponentButtonListEvent[];
+  }
+)
+
 export const getState = (state:State, key:string) => state.states[key]
 
 export const getStates = (state:State) => state.states

@@ -11,6 +11,7 @@
   "dependencies": {
     "@babel/core": "7.9.0",
     "@kaminrunde/fireside-plugin-ab-test": "^1.1.1-alpha.14",
+    "@kaminrunde/fireside-plugin-copy-component": "^1.1.1-alpha.14",
     "@kaminrunde/fireside-utils": "^1.1.1-alpha.7",
     "@reach/router": "^1.3.3",
     "@svgr/webpack": "4.3.3",

@@ -58,6 +58,12 @@
         "password": "foo",
         "maxComponents": 1
       }
+    },
+    {
+      "resolve": "@kaminrunde/fireside-plugin-copy-component",
+      "options": {
+        "key": "copyComponent"
+      }
     }
   ]
 }

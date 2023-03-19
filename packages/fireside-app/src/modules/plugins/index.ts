@@ -19,6 +19,7 @@ export {default as useGridRowSettingList} from './hooks/useGridRowSettingList'
 export {default as useSettingsPageComponents} from './hooks/useSettingsPageComponents'
 export {default as usePluginState} from './hooks/usePluginState'
 export {default as useStaticComponents} from './hooks/useStaticComponents'
+export {default as useExtendedButtonList} from './hooks/useExtendedButtonList'
 
 declare global {
   interface RootState { plugins: State }

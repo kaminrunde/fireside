@@ -1,56 +1,68 @@
-import * as React from 'react'
-import styled from 'styled-components'
-import {useComponents, useLoadingComponent} from 'modules/components'
-import parseTimestamp from './utils/parseTimestamp'
-import {useUsedComponents} from 'modules/grid'
+import * as React from "react";
+import styled from "styled-components";
+import { useComponents, useLoadingComponent } from "modules/components";
+import parseTimestamp from "./utils/parseTimestamp";
+import { useUsedComponents } from "modules/grid";
+import ExtendedButtonRowList from "./ExtendedButtonRowList";
+import ExtendedButtonBottomList from "./ExtendedButtonBottomList";
 
-export default function ComponentList () {
-  const components = useComponents()
-  const loading = useLoadingComponent()
-  const usedComponents = useUsedComponents()
+export default function ComponentList() {
+  const components = useComponents();
+  const loading = useLoadingComponent();
+  const usedComponents = useUsedComponents();
   return (
-    <Wrapper className='ComponentList'>
-      {components.data.map(c => (
+    <Wrapper className="ComponentList">
+      {components.data.map((c) => (
         <Row key={c.id} inUse={usedComponents.data.has(c.id)}>
-          <div className='gridName'>
-            <div className='title'>{c.props.gridArea}</div>
-            <div className='last-updated'><b>changed:</b> {parseTimestamp(c.updatedAt)}</div>
-            <div className='created'><b>created:</b> {parseTimestamp(c.createdAt)}</div>
+          <div className="gridName">
+            <div className="title">{c.props.gridArea}</div>
+            <div className="last-updated">
+              <b>changed:</b> {parseTimestamp(c.updatedAt)}
+            </div>
+            <div className="created">
+              <b>created:</b> {parseTimestamp(c.createdAt)}
+            </div>
           </div>
-          <div className='name'>{c.name}</div>
-          <div className='button-list'>
-            <div className='btn-update'>
+          <div className="name">{c.name}</div>
+          <div className="button-list">
+            <ExtendedButtonRowList c={c} />
+            <div className="btn-update">
               <button onClick={() => loading.load(c.id)}>update</button>
             </div>
-            <div className='btn-remove'>
-              <button onClick={() => components.removeComponent(c)}>remove</button>
+            <div className="btn-remove">
+              <button onClick={() => components.removeComponent(c)}>
+                remove
+              </button>
             </div>
           </div>
         </Row>
       ))}
-
-      <button className='add' onClick={() => loading.load()}>
-        Add Component
-      </button>
+      <div className="globalBtns">
+        <ExtendedButtonBottomList />
+        <button className="add" onClick={() => loading.load()}>
+          Add Component
+        </button>
+      </div>
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.div`
+  > .globalBtns {
+    display: flex;
+    justify-content: flex-end;
 
-  > .add {
-    display: black;
-    width: calc(100% - 20px);
-    margin: 10px;
-    font-size: 24px;
-    border: none;
-    background: #8bc34a;
-    padding: 15px;
-    text-transform: uppercase;
-    color: whitesmoke;
-    cursor: pointer;
+    > .add {
+      height: 40px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      color: whitesmoke;
+      background: #8bc34a;
+      cursor: pointer;
+    }
   }
-`
+`;
 
 const Row = styled.div`
   padding-bottom: 10px;
@@ -66,12 +78,13 @@ const Row = styled.div`
       font-size: 20px;
       line-height: 26px;
       font-weight: bold;
-      font-family: 'Open Sans', sans-serif;
-      color: ${p => p.inUse ? '#555' : '#ff5722'};
+      font-family: "Open Sans", sans-serif;
+      color: ${(p) => (p.inUse ? "#555" : "#ff5722")};
     }
 
-    > .last-updated, .created {
-      font-family: 'Roboto', sans-serif;
+    > .last-updated,
+    .created {
+      font-family: "Roboto", sans-serif;
       color: grey;
       font-size: 12px;
     }
@@ -85,7 +98,7 @@ const Row = styled.div`
     line-break: loose;
     word-break: break-all;
     align-items: center;
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Open Sans", sans-serif;
   }
 
   &:hover {
@@ -102,7 +115,7 @@ const Row = styled.div`
 
   > .button-list {
     position: absolute;
-    top: 10px;
+    top: 0;
     right: 0;
     display: none;
 
@@ -110,8 +123,9 @@ const Row = styled.div`
       position: static;
       display: flex;
     }
-    
-    > .btn-update, .btn-remove {
+
+    > .btn-update,
+    .btn-remove {
       margin: 0 5px;
       display: flex;
       height: auto;
@@ -120,7 +134,7 @@ const Row = styled.div`
         border: none;
         background: none;
         font-size: 16px;
-        font-family: 'Roboto', sans-serif;
+        font-family: "Roboto", sans-serif;
         padding: 10px;
         color: whitesmoke;
         cursor: pointer;
@@ -129,9 +143,20 @@ const Row = styled.div`
         text-transform: uppercase;
       }
 
-      &.btn-update > button {background: #8bc34a;}
-      &.btn-remove > button {background: #ff5722;}
+      &.btn-update > button {
+        background: #8bc34a;
+
+        &:hover {
+          background-color: #93d14d;
+        }
+      }
+      &.btn-remove > button {
+        background: #ff5722;
+
+        &:hover {
+          background-color: #fc6f44;
+        }
+      }
     }
   }
-
-`
+`;

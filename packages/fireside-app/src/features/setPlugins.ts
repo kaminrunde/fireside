@@ -1,49 +1,42 @@
-import config from 'config'
-import {a, c} from 'modules/plugins'
-import {addRule} from 'redux-ruleset'
-import plugins from 'plugins'
-import * as ui from '../modules/ui'
-import {ModalConfig} from '../modules/ui/types'
-import store from 'store'
+import config from "config";
+import { a, c } from "modules/plugins";
+import { addRule } from "redux-ruleset";
+import plugins from "plugins";
+import * as ui from "../modules/ui";
+import { addComponentToComponentList, alert } from "./exportedPluginActions";
 
-let clearAlertBoxCb:((s:string)=>void)[] = []
+let clearAlertBoxCb: ((s: string) => void)[] = [];
 addRule({
-  id: 'feature/OBSERVE_CLEAR_ALERT_BOX',
+  id: "feature/OBSERVE_CLEAR_ALERT_BOX",
   target: ui.c.HIDE_MODAL,
-  output: '#observe',
+  output: "#observe",
   addOnce: true,
-  consequence: (action:ui.a.HideModal) => {
-    for(const cb of clearAlertBoxCb) cb(action.payload)
-  }
-})
+  consequence: (action: ui.a.HideModal) => {
+    for (const cb of clearAlertBoxCb) cb(action.payload);
+  },
+});
 
 addRule({
-  id: 'feature/SET_PLUGINS',
-  target: '*',
+  id: "feature/SET_PLUGINS",
+  target: "*",
   output: c.SET_PLUGIN_EVENTS,
   addOnce: true,
   condition: () => Boolean(config.plugins.length),
-  consequence: (_, {getState}) => {
-    let buffer = []
+  consequence: (_, { getState }) => {
+    let buffer = [];
+    const state = getState();
 
     const actions = {
-      alert: (ctx:ModalConfig) => {
-        const state = getState()
-        if(state.ui.modal) return
-        store.dispatch(ui.a.showModal(ctx))
-        return new Promise(resolve => {
-          clearAlertBoxCb.push(resolve)
-        })
-      }
-    }
+      alert: (ctx) => alert(state, clearAlertBoxCb, ctx),
+      addComponentToComponentList: addComponentToComponentList,
+    };
 
     for (let plugin of config.plugins) {
-      let create = plugins[plugin.resolve]
-      const feed = create(plugin.options, actions)
-      buffer.push(...feed)
+      let create = plugins[plugin.resolve];
+      const feed = create(plugin.options, actions);
+      buffer.push(...feed);
     }
 
-    return a.setPluginEvents(buffer)
-  }
-})
-
+    return a.setPluginEvents(buffer);
+  },
+});

@@ -13,6 +13,7 @@ export declare type PluginActions = {
         description?: string;
         options?: string[];
     }) => Promise<string | null>;
+    addComponentToComponentList: (component: any) => void;
 };
 export interface PluginAPI<State> {
     state: State;
@@ -33,7 +34,7 @@ export interface StaticComponentAPI<State> extends PluginAPI<State> {
 }
 export interface OnStoryUpdateAPI<State> extends PluginAPI<State> {
 }
-export declare type PluginEvent = et.InitialStateEvent | et.ComponentBadgeEvent | et.ComponentIconEvent | et.ComponentSettingsEvent | et.GridRowBadgeEvent | et.GridRowIconEvent | et.GridRowSettingsEvent | et.SettingsPageRowEvent | et.CreatePageNavigationEvent | et.CreatePagePageEvent | et.CreateStaticComponentEvent | et.OnStoryUpdateEvent;
+export declare type PluginEvent = et.InitialStateEvent | et.ComponentBadgeEvent | et.ComponentIconEvent | et.ComponentSettingsEvent | et.GridRowBadgeEvent | et.GridRowIconEvent | et.GridRowSettingsEvent | et.SettingsPageRowEvent | et.CreatePageNavigationEvent | et.CreatePagePageEvent | et.CreateStaticComponentEvent | et.OnStoryUpdateEvent | et.ExtendComponentButtonListEvent;
 export declare type Config = {
     resolveController?: (name: string) => Controller<any, any> | Promise<Controller<any, any>>;
     nodes?: string[] | {

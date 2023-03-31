@@ -18,6 +18,12 @@ export type PluginActions = {
     options?: string[]
   }) => Promise<string | null>
   addComponentToComponentList: (component) => void
+  triggerSnackbarEvent: (message: {
+    type: 'info' | 'warning' | 'error',
+    title: string,
+    content: string
+  }) => void
+  updateStory: (story: RawStory) => void
 }
 
 export interface PluginAPI<State> {

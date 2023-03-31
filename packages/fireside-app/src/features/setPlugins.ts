@@ -3,7 +3,12 @@ import { a, c } from "modules/plugins";
 import { addRule } from "redux-ruleset";
 import plugins from "plugins";
 import * as ui from "../modules/ui";
-import { addComponentToComponentList, alert } from "./exportedPluginActions";
+import {
+  addComponentToComponentList,
+  alert,
+  triggerSnackbarEvent,
+  updateStory,
+} from "./exportedPluginActions";
 
 let clearAlertBoxCb: ((s: string) => void)[] = [];
 addRule({
@@ -29,6 +34,8 @@ addRule({
     const actions = {
       alert: (ctx) => alert(state, clearAlertBoxCb, ctx),
       addComponentToComponentList: addComponentToComponentList,
+      triggerSnackbarEvent: triggerSnackbarEvent,
+      updateStory: updateStory,
     };
 
     for (let plugin of config.plugins) {

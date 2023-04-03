@@ -55,7 +55,7 @@ export default createPlugin((ctx) => {
             "copy-storybook-story-timestamp"
           );
 
-          if (!timestamp && isOlderThanXMins(timestamp)) {
+          if (!timestamp || isOlderThanXMins(timestamp)) {
             ctx.actions.triggerSnackbarEvent({
               type: "warning",
               title: "Cannot paste component",
@@ -89,6 +89,13 @@ export default createPlugin((ctx) => {
             "copy-storybook-story-timestamp",
             new Date().toString()
           );
+
+          ctx.actions.triggerSnackbarEvent({
+            type: "info",
+            title: "Story copied",
+            content:
+              "The story was copied. You can now paste it into another story.",
+          });
         };
 
         return (

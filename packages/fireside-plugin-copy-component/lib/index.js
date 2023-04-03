@@ -45,7 +45,7 @@ exports.default = fireside_utils_1.createPlugin(function (ctx) {
                 var modalConfirmed = false;
                 var showInfoModal = function () {
                     var timestamp = localStorage.getItem("copy-storybook-story-timestamp");
-                    if (!timestamp && utils_1.isOlderThanXMins(timestamp)) {
+                    if (!timestamp || utils_1.isOlderThanXMins(timestamp)) {
                         ctx.actions.triggerSnackbarEvent({
                             type: "warning",
                             title: "Cannot paste component",
@@ -72,6 +72,11 @@ exports.default = fireside_utils_1.createPlugin(function (ctx) {
                 var copyWholeStoryLocalStorage = function (story) {
                     localStorage.setItem("copy-storybook-story", JSON.stringify(story));
                     localStorage.setItem("copy-storybook-story-timestamp", new Date().toString());
+                    ctx.actions.triggerSnackbarEvent({
+                        type: "info",
+                        title: "Story copied",
+                        content: "The story was copied. You can now paste it into another story.",
+                    });
                 };
                 return (React.createElement("div", null,
                     React.createElement("button", { onClick: function () { return copyWholeStoryLocalStorage(api.story); }, style: styles.btn() }, "Copy whole story"),

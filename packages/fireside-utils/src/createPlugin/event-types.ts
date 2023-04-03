@@ -103,3 +103,14 @@ export type OnStoryUpdateEvent = {
   meta: {key:string}
   payload: (api:any) => void
 }
+
+export type ExtendComponentButtonListEvent = {
+  type: "EXTEND_COMPONENT_BUTTON_LIST";
+  meta: { key: string };
+  payload: {
+    onClickFn: (arg?: any) => any
+    btnLabel: string
+    btnPlacement: 'component' | 'global'
+    btnRenderCondition: boolean | ((...args: any) => boolean)
+  };
+}

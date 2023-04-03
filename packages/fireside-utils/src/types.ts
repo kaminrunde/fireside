@@ -17,6 +17,13 @@ export type PluginActions = {
     description?: string
     options?: string[]
   }) => Promise<string | null>
+  addComponentToComponentList: (component) => void
+  triggerSnackbarEvent: (message: {
+    type: 'info' | 'warning' | 'error',
+    title: string,
+    content: string
+  }) => void
+  updateStory: (story: RawStory) => void
 }
 
 export interface PluginAPI<State> {
@@ -60,6 +67,7 @@ export type PluginEvent =
 | et.CreatePagePageEvent
 | et.CreateStaticComponentEvent
 | et.OnStoryUpdateEvent
+| et.ExtendComponentButtonListEvent;
 
 
 export type Config = {

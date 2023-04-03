@@ -7,7 +7,7 @@ import * as $plugins from 'modules/plugins'
 
 addRule<$connector.a.UpdateStory>({
   id: 'feature/UPDATE_STORES',
-  target: $connector.c.UPDATE_STORY,
+  target: [$connector.c.UPDATE_STORY, $plugins.c.SET_STORY],
   output: [
     $grid.c.INIT, 
     $components.c.INIT, 

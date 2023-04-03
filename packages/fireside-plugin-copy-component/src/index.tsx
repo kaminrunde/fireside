@@ -50,7 +50,7 @@ export default createPlugin((ctx) => {
       component: (api) => {
         let modalConfirmed = false;
 
-        const showInfoModal = () => {
+        const showInfoModal = async () => {
           const timestamp = localStorage.getItem(
             "copy-storybook-story-timestamp"
           );
@@ -62,24 +62,25 @@ export default createPlugin((ctx) => {
               content: "Please copy a component first",
             });
           } else if (!modalConfirmed) {
-            ctx.actions.alert({
+            const result = await ctx.actions.alert({
               title: "Insert whole story",
               description:
                 "This will insert the whole story into the current story. This will overwrite the current story",
             });
-            modalConfirmed = true;
-          } else {
-            const story = JSON.parse(
-              localStorage.getItem("copy-storybook-story")
-            );
-            ctx.actions.updateStory(story);
+            if (result === "OK") {
+              const story = JSON.parse(
+                localStorage.getItem("copy-storybook-story")
+              );
+              ctx.actions.updateStory(story);
 
-            ctx.actions.triggerSnackbarEvent({
-              type: "info",
-              title: "Story inserted",
-              content:
-                "The story was inserted and the current story was overriden",
-            });
+              ctx.actions.triggerSnackbarEvent({
+                type: "info",
+                title: "Story inserted",
+                content:
+                  "The story was inserted and the current story was overriden",
+              });
+              modalConfirmed = false;
+            }
           }
         };
 

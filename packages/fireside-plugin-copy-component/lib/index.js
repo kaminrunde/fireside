@@ -108,7 +108,6 @@ exports.default = fireside_utils_1.createPlugin(function (ctx) {
                                         title: "Story inserted",
                                         content: "The story was inserted and the current story was overriden",
                                     });
-                                    modalConfirmed = false;
                                 }
                                 _a.label = 3;
                             case 3: return [2 /*return*/];

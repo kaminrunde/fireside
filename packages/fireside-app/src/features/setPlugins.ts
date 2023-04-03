@@ -15,7 +15,6 @@ addRule({
   id: "feature/OBSERVE_CLEAR_ALERT_BOX",
   target: ui.c.HIDE_MODAL,
   output: "#observe",
-  addOnce: true,
   consequence: (action: ui.a.HideModal) => {
     for (const cb of clearAlertBoxCb) cb(action.payload);
   },

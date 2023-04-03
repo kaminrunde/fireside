@@ -54,7 +54,6 @@ export default createPlugin((ctx) => {
           const timestamp = localStorage.getItem(
             "copy-storybook-story-timestamp"
           );
-
           if (!timestamp || isOlderThanXMins(timestamp)) {
             ctx.actions.triggerSnackbarEvent({
               type: "warning",
@@ -79,7 +78,6 @@ export default createPlugin((ctx) => {
                 content:
                   "The story was inserted and the current story was overriden",
               });
-              modalConfirmed = false;
             }
           }
         };

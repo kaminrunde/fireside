@@ -88,7 +88,11 @@ channel.on('storyboard-bridge/hydrate-component', (component) => {
     }
     clearKnobs();
     let context = selector(component.props);
-    context.id = csf_1.toId(context.kind, context.story);
+    // transform of the story name to match the storybook id
+    // storybook is doing this, when the story is registered
+    // based on the exported storyname
+    context.id = csf_1.toId(context.kind, startCase(context.story));
+    // context.id = toId(context.kind, context.story)
     const hydrate = () => {
         const props = currentController.versionUpdate
             ? currentController.versionUpdate(component.props)
@@ -110,4 +114,10 @@ channel.on('storyboard-bridge/hydrate-component', (component) => {
         hydrate();
 });
 channel.emit('storyboard-bridge/init-knob-manager');
+const startCase = (str) => {
+    return str
+        .replace(/([a-z])([A-Z])/g, '$1 $2')
+        .replace(/(\s|_)+/g, ' ')
+        .replace(/(^\w{1})|(\s+\w{1})/g, (match) => match.toUpperCase());
+};
 //# sourceMappingURL=knob-manager.js.map

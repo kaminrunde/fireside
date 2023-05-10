@@ -29,8 +29,9 @@ export default function reducer (state:State=defaultState, action:Action):State 
       ...state,
       states: {
         ...state.states,
-        ...action.payload
-      }
+        ...action.payload.plugins
+      },
+      storyWithoutPlugins: {... action.payload, plugins: action.payload.plugins || {}}
     }
     case at.SET_PLUGIN_EVENTS: return {
       ...state,

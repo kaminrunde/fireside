@@ -1,9 +1,9 @@
 import * as at from './const'
 import {PluginEvent, RawStory} from '@kaminrunde/fireside-utils'
 
-export const init = (states:{[key:string]:any}) => ({
+export const init = (story:RawStory) => ({
   type: at.INIT,
-  payload: states
+  payload: story
 })
 
 export const setState = (key:string, state:any) => ({

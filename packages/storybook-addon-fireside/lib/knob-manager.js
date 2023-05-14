@@ -92,7 +92,7 @@ channel.on('storyboard-bridge/hydrate-component', (component) => {
     // storybook is doing this, when the story is registered
     // based on the exported storyname
     context.id = csf_1.toId(context.kind, startCase(context.story));
-    // context.id = toId(context.kind, context.story)
+    context.story = transformIfPascalCase(context.story);
     const hydrate = () => {
         const props = currentController.versionUpdate
             ? currentController.versionUpdate(component.props)
@@ -119,5 +119,18 @@ const startCase = (str) => {
         .replace(/([a-z])([A-Z])/g, '$1 $2')
         .replace(/(\s|_)+/g, ' ')
         .replace(/(^\w{1})|(\s+\w{1})/g, (match) => match.toUpperCase());
+};
+const isPascalCase = (str) => {
+    const isPascalCase = /^([A-Z][a-z0-9]*)+$/;
+    return isPascalCase.test(str);
+};
+const pascalToSnakeCase = (str) => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+const transformIfPascalCase = (str) => {
+    if (isPascalCase(str)) {
+        return pascalToSnakeCase(str);
+    }
+    else {
+        return str;
+    }
 };
 //# sourceMappingURL=knob-manager.js.map

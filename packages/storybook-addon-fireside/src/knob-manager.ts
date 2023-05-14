@@ -105,6 +105,7 @@ channel.on('storyboard-bridge/hydrate-component', (component:t.Component) => {
   // storybook is doing this, when the story is registered
   // based on the exported storyname
   context.id = toId(context.kind, startCase(context.story));
+  context.story = transformIfPascalCase(context.story)
 
   const hydrate = () => {
     const props = currentController.versionUpdate 
@@ -138,3 +139,20 @@ return str
   .replace(/(\s|_)+/g, ' ')
   .replace(/(^\w{1})|(\s+\w{1})/g, (match) => match.toUpperCase());
 };
+
+const isPascalCase = (str: string)  => {
+  const isPascalCase = /^([A-Z][a-z0-9]*)+$/;
+  return isPascalCase.test(str);
+}
+
+const pascalToSnakeCase = (str: string) => 
+  str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+
+
+const transformIfPascalCase = (str: string) => {
+  if (isPascalCase(str)) {
+      return pascalToSnakeCase(str);
+  } else {
+      return str;
+  }
+}

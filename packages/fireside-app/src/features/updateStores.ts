@@ -15,7 +15,7 @@ addRule<$connector.a.UpdateStory>({
     $plugins.c.INIT
   ],
   consequence: (action, {dispatch, getState}) => {
-    const {grids, componentsById, allComponents, plugins} = action.payload
+    const {grids, componentsById, allComponents} = action.payload
     const updates = [
       $grid.a.init(grids),
       $components.a.init(componentsById, allComponents),
@@ -24,7 +24,7 @@ addRule<$connector.a.UpdateStory>({
         p[key] = val.enabled || false
         return p
       },{})),
-      $plugins.a.init(plugins || {})
+      $plugins.a.init(action.payload)
     ]
     updates.forEach(update => dispatch(update))
 

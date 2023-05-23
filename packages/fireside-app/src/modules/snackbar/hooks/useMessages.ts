@@ -7,6 +7,7 @@ type Result = {
   data: ReturnType<typeof s.getMessages>,
   add: typeof a.addMessage,
   remove: typeof a.removeMessage
+  removeByIndex: typeof a.removeMessageByIndex
 }
 
 type Props = {}
@@ -20,7 +21,8 @@ const config:Config<Props,Result,State,object> = {
   }),
   mapDispatch: {
     add: a.addMessage,
-    remove: a.removeMessage
+    remove: a.removeMessage,
+    removeByIndex: a.removeMessageByIndex
   }
 }
 

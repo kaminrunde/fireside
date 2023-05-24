@@ -25,5 +25,12 @@ export default produce((state:State, action:Action) => {
       )
       break
     }
+    case at.REMOVE_MESSAGE_BY_INDEX: {
+      if (action.payload >= 0 && action.payload < state.messages.length) {
+        state.messages.splice(action.payload, 1);
+        break
+    }
+      break
+    }
   }
 }, defaultState)

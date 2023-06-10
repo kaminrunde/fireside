@@ -149,6 +149,7 @@ const pascalToSnakeCase = (str: string) =>
   str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
 
 
+// storybook-transformation
 const transformIfPascalCase = (str: string) => {
   if (isPascalCase(str)) {
       return pascalToSnakeCase(str);

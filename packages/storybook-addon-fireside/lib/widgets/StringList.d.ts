@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import * as t from '../types';
+import * as t from "../types";
 declare type Props = {
     value: string[];
     onChange: (value: string[]) => void;

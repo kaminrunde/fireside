@@ -104,10 +104,8 @@ channel.on('storyboard-bridge/hydrate-component', (component:t.Component) => {
   // transform of the story name to match the storybook id
   // storybook is doing this, when the story is registered
   // based on the exported storyname
-  console.log(1, context)
   context.id = toId(context.kind, startCase(context.story));
   context.story = transformIfPascalCase(context.story)
-  console.log(2, context)
 
   const hydrate = () => {
     const props = currentController.versionUpdate 
@@ -115,7 +113,7 @@ channel.on('storyboard-bridge/hydrate-component', (component:t.Component) => {
     : component.props
     currentKnobs.forEach(knob => {
       const hydratedValue = objPath.get(props, knob.prop)
-      knob.value = hydratedValue || knob.value
+      knob.value = hydratedValue ?? knob.value
     })
     channel.emit('storyboard-bridge/set-knobs', currentKnobs)
     channel.emit('storyboard-bridge/update-component-props', getProps(currentKnobs))

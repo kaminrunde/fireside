@@ -1,9 +1,9 @@
 {
   "name": "@kaminrunde/fireside-app",
-  "version": "1.1.1-alpha.23",
+  "version": "1.1.1-alpha.24",
   "author": "Manuel Jung",
   "devDependencies": {
-    "@kaminrunde/fireside-connector-contentful": "^1.1.1-alpha.15",
+    "@kaminrunde/fireside-connector-contentful": "^1.1.1-alpha.24",
     "@kaminrunde/fireside-plugin-ab-test": "^1.1.1-alpha.7",
     "@kaminrunde/fireside-plugin-background-rows": "^1.1.1-alpha.15",
     "@kaminrunde/fireside-plugin-fullwidth-components": "^1.1.1-alpha.15"

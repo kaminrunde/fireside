@@ -28,13 +28,13 @@ export default function StringList(props: Props) {
     <Wrapper>
       <SortableList
         items={props.value}
-        onSortEnd={({ oldIndex, newIndex }) => {
+        onSortEnd={({ oldIndex, newIndex }: {oldIndex: number, newIndex: number}) => {
           props.onChange(arrayMoveImmutable(props.value, oldIndex, newIndex));
         }}
-        onDelete={(index) => {
+        onDelete={(index: number) => {
           props.onChange(props.value.filter((_, i) => i !== index));
         }}
-        onUpdate={(index, val) => {
+        onUpdate={(index: number, val: any) => {
           if (!val) {
             props.onChange(props.value.filter((_, i) => i !== index));
             return;
@@ -74,7 +74,7 @@ export default function StringList(props: Props) {
   );
 }
 
-const SortableItem = SortableElement(({ value, onDelete, onUpdate }) => {
+const SortableItem = SortableElement(({ value, onDelete, onUpdate }: any) => {
   const [pendingDelete, setPendingDelete] = React.useState(false);
   const [pendingEdit, setPendingEdit] = React.useState(!value);
   const input = React.useRef<HTMLInputElement | null>(null);
@@ -147,10 +147,10 @@ const SortableItem = SortableElement(({ value, onDelete, onUpdate }) => {
   );
 });
 
-const SortableList = SortableContainer(({ items, onDelete, onUpdate }) => {
+const SortableList = SortableContainer(({ items, onDelete, onUpdate }: any) => {
   return (
     <ul>
-      {items.map((value, index) => (
+      {items.map((value: number, index: number) => (
         <SortableItem
           key={`item-${value + index}`}
           index={index}
@@ -213,7 +213,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Item = styled.li`
+const Item = styled.li<{highlight?: boolean}>`
   padding: 10px;
   margin: 3px 0;
   border: 1px solid lightgrey;

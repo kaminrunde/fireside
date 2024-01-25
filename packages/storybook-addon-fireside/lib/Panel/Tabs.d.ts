@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import * as React from 'react';
 declare type Props = {
     tabs: {
         tabs: string[];
@@ -6,5 +6,5 @@ declare type Props = {
         setActiveTab: (tab: string) => void;
     };
 };
-export default function Tabs(props: Props): JSX.Element;
+export default function Tabs(props: Props): React.JSX.Element;
 export {};

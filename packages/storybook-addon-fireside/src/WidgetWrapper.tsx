@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as t from './types'
 
 type Props = {
-  component: React.ElementType,
+  component: React.JSX.ElementType,
   props: object,
   controller:t.Controller
 }

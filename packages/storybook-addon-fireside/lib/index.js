@@ -1,9 +1,31 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createCustomKnob = exports.registerWidgetSelector = exports.create = exports.select = exports.objectList = exports.stringList = exports.bool = exports.markdown = exports.number = exports.constant = exports.string = void 0;
-const React = require("react");
-const manager = require("./knob-manager");
-const WidgetWrapper_1 = require("./WidgetWrapper");
+exports.registerKnob = exports.createCustomKnob = exports.registerWidgetSelector = exports.create = exports.select = exports.objectList = exports.stringList = exports.bool = exports.markdown = exports.number = exports.constant = exports.string = void 0;
+const React = __importStar(require("react"));
+const manager = __importStar(require("./knob-manager"));
+const WidgetWrapper_1 = __importDefault(require("./WidgetWrapper"));
 /**
  * manages string props. use this knob for simple labels. for more
  * complex inputs use the markdown knob
@@ -137,8 +159,22 @@ function createCustomKnob(name) {
         type: 'custom-knob',
         prop,
         label, value,
-        options: Object.assign(Object.assign({}, options), { __name: name })
+        options: { ...options, __name: name }
     });
 }
 exports.createCustomKnob = createCustomKnob;
-//# sourceMappingURL=index.js.map
+function registerKnob(name, component) {
+    if (typeof window === 'undefined')
+        return;
+    // @ts-ignore
+    if (!window.__customKnobs)
+        window.__customKnobs = {};
+    // @ts-ignore
+    window.__customKnobs[name] = component;
+    // @ts-ignore
+    if (window.__addCustomKnob) {
+        // @ts-ignore
+        window.__addCustomKnob(name, component);
+    }
+}
+exports.registerKnob = registerKnob;

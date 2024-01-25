@@ -15,4 +15,3 @@ function registerKnob(name, component) {
     }
 }
 exports.default = registerKnob;
-//# sourceMappingURL=registerKnob.js.map

@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import * as React from 'react';
 import * as t from '../types';
 declare type Props = {
     value: boolean;
@@ -7,5 +7,5 @@ declare type Props = {
     hasError: boolean;
     options: t.BoolOptions;
 };
-export default function Bool(props: Props): JSX.Element;
+export default function Bool(props: Props): React.JSX.Element;
 export {};

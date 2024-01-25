@@ -1,4 +1,3 @@
-import * as React from 'react';
 import * as t from './types';
 /**
  * manages string props. use this knob for simple labels. for more
@@ -118,9 +117,10 @@ export declare const objectList: (prop: string, label: string, value: object[], 
   * })
   */
 export declare const select: (prop: string, label: string, value: string, options: t.SelectOptions) => t.SimpleKnob;
-export declare const create: (name: string, component: React.ElementType, simpleKnobs: t.SimpleKnob[], controller?: t.Controller) => any;
+export declare const create: (name: string, component: any, simpleKnobs: t.SimpleKnob[], controller?: t.Controller) => any;
 export declare function registerWidgetSelector<UserConfig>(name: string, cb: (props: UserConfig) => {
     kind: string;
     story: string;
 }): void;
 export declare function createCustomKnob<Value, Options extends Record<string, unknown>>(name: string): (prop: string, label: string, value: Value, options: Options & t.KnobOptions) => any;
+export declare function registerKnob(name: string, component: any): void;

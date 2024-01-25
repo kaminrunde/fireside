@@ -1,7 +1,6 @@
 import * as t from './types'
 import objPath = require('object-path')
-import addons from '@storybook/addons'
-// import { forceReRender } from '@storybook/react'
+import {addons} from '@storybook/addons'
 import { toId } from '@storybook/csf'
 
 const knobStore:{[id:string]:t.Knob} = {}
@@ -9,7 +8,7 @@ const contextStore:{[id:string]:t.StoryContext} = {}
 const selectorStore:{[id:string]: Function} = {}
 let forceReRender:()=>void = () => null
 let currentStoryId = ''
-let currentKnobs = []
+let currentKnobs: t.Knob[] = []
 let currentController:t.Controller = {}
 const channel:t.Channel = addons.getChannel()
 let hydratedProps:null|object = null

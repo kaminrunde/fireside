@@ -22,7 +22,7 @@ export default function String (props:Props) {
   )
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{focus: boolean}>`
   border: 1px solid ${props => props.focus ? '#1DA7FD' : 'lightgrey'};
   border-radius: 3px;
   padding-left: 5px;

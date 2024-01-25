@@ -31,7 +31,9 @@ const Wrapper = styled.div`
   border-bottom: 1px solid lightgrey;
 `
 
-const Tab = styled.button`
+const Tab = styled.button<{
+  active: boolean;
+}>`
   padding: 10px;
   border: none;
   background: none;

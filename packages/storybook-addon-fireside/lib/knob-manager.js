@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.addSelector = exports.getProps = exports.getKnobs = void 0;
 const objPath = require("object-path");
 const addons_1 = require("@storybook/addons");
-// import { forceReRender } from '@storybook/react'
 const csf_1 = require("@storybook/csf");
 const knobStore = {};
 const contextStore = {};
@@ -12,7 +11,7 @@ let forceReRender = () => null;
 let currentStoryId = '';
 let currentKnobs = [];
 let currentController = {};
-const channel = addons_1.default.getChannel();
+const channel = addons_1.addons.getChannel();
 let hydratedProps = null;
 function getKnobs(context, simpleKnobs, controller, name, rerender) {
     contextStore[context.id] = context;
@@ -22,7 +21,12 @@ function getKnobs(context, simpleKnobs, controller, name, rerender) {
         if (knobStore[id])
             return knobStore[id];
         else
-            return knobStore[id] = Object.assign(Object.assign({}, simpleKnob), { id: id, story: context, defaultValue: simpleKnob.value });
+            return knobStore[id] = {
+                ...simpleKnob,
+                id: id,
+                story: context,
+                defaultValue: simpleKnob.value
+            };
     });
     if (hydratedProps) {
         const props = controller.versionUpdate
@@ -99,7 +103,7 @@ channel.on('storyboard-bridge/hydrate-component', (component) => {
             : component.props;
         currentKnobs.forEach(knob => {
             const hydratedValue = objPath.get(props, knob.prop);
-            knob.value = hydratedValue !== null && hydratedValue !== void 0 ? hydratedValue : knob.value;
+            knob.value = hydratedValue ?? knob.value;
         });
         channel.emit('storyboard-bridge/set-knobs', currentKnobs);
         channel.emit('storyboard-bridge/update-component-props', getProps(currentKnobs));
@@ -134,4 +138,3 @@ const transformIfPascalCase = (str) => {
         return str;
     }
 };
-//# sourceMappingURL=knob-manager.js.map

@@ -16,7 +16,7 @@ export default function Widget (props:Props) {
   const Component:any = getWidget(props.knob, customComponents)
   const [handle, focus, ref] = useFocus()
 
-  const update = val => {
+  const update = (val: any) => {
     setValue(val)
     props.onUpdate(val)
   }
@@ -49,7 +49,7 @@ export default function Widget (props:Props) {
   )
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ref: React.MutableRefObject<HTMLElement>}>`
   padding: 10px;
   &:active {outline:none;}
   > .label {
@@ -87,10 +87,10 @@ function useFocus ():[
 
   React.useEffect(() => {
     if(!activeEl) return
-    const elIsInDropdown = ({parentElement: el}:any) => {
+    const elIsInDropdown = ({parentElement: el}:any): boolean => {
       return el ? el === activeEl || elIsInDropdown(el) : false
     }
-    const listener = e => {
+    const listener = (e: MouseEvent) => {
       if(!elIsInDropdown(e.target)){
         window.removeEventListener('click', listener)
         setActiveEl(null)

@@ -51,7 +51,7 @@ export default function Select (props:Props) {
   )
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{focus: boolean, tabIndex: string}>`
   position: relative;
   > .value {
     border: 1px solid ${props => props.focus ? '#1DA7FD' : 'lightgrey'};
@@ -80,7 +80,7 @@ const Wrapper = styled.div`
   }
 `
 
-const Row = styled.div`
+const Row = styled.div<{selected: boolean}>`
   padding-left: 5px;
   line-height: 30px;
   background: white;

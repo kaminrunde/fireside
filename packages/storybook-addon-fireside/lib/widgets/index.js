@@ -1,14 +1,17 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const String_1 = require("./String");
-const Constant_1 = require("./Constant");
-const Number_1 = require("./Number");
-const Markdown_1 = require("./Markdown");
-const Bool_1 = require("./Bool");
-const StringList_1 = require("./StringList");
-const ObjectList_1 = require("./ObjectList");
-const CustomKnobPlaceholder_1 = require("./CustomKnobPlaceholder");
-const Select_1 = require("./Select");
+const String_1 = __importDefault(require("./String"));
+const Constant_1 = __importDefault(require("./Constant"));
+const Number_1 = __importDefault(require("./Number"));
+const Markdown_1 = __importDefault(require("./Markdown"));
+const Bool_1 = __importDefault(require("./Bool"));
+const StringList_1 = __importDefault(require("./StringList"));
+const ObjectList_1 = __importDefault(require("./ObjectList"));
+const CustomKnobPlaceholder_1 = __importDefault(require("./CustomKnobPlaceholder"));
+const Select_1 = __importDefault(require("./Select"));
 function getWidget(knob, customComponents) {
     if (knob.type === 'custom-knob') {
         // @ts-ignore
@@ -29,4 +32,3 @@ function getWidget(knob, customComponents) {
     }[knob.type];
 }
 exports.default = getWidget;
-//# sourceMappingURL=index.js.map

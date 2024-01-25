@@ -174,7 +174,7 @@ export const objectList = (
 
 export const create = (
   name: string,
-  component: React.ElementType, 
+  component: any,
   simpleKnobs: t.SimpleKnob[],
   controller:t.Controller={}
 ):any => (args:any, context:t.StoryContext) => {
@@ -203,4 +203,18 @@ export function createCustomKnob <Value, Options extends Record<string, unknown>
     label, value,
     options: {...options, __name: name}} as any
   )
+}
+
+export function registerKnob (name:string, component:any) {
+  if(typeof window === 'undefined') return
+  // @ts-ignore
+  if(!window.__customKnobs) window.__customKnobs = {}
+  // @ts-ignore
+  window.__customKnobs[name] = component
+
+  // @ts-ignore
+  if(window.__addCustomKnob){
+    // @ts-ignore
+    window.__addCustomKnob(name, component)
+  }
 }

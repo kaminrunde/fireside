@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import * as React from 'react';
 import * as t from '../types';
 declare type Props = {
     value: string;
@@ -7,5 +7,5 @@ declare type Props = {
     options: t.StringOptions;
     hasError: boolean;
 };
-export default function String(props: Props): JSX.Element;
+export default function String(props: Props): React.JSX.Element;
 export {};

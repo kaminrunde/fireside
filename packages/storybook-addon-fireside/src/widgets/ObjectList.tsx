@@ -36,13 +36,13 @@ export default function ObjectList (props:Props) {
       {isActive || <SortableList 
         items={props.value} 
         getName={props.options.getRowName}
-        onSortEnd={({oldIndex,newIndex}) => {
+        onSortEnd={({oldIndex,newIndex}: {oldIndex: number, newIndex: number}) => {
           props.onChange(arrayMoveImmutable(props.value, oldIndex, newIndex))
         }}
-        onDelete={index => {
+        onDelete={(index: number): void => {
           props.onChange(props.value.filter((_,i) => i !== index))
         }}
-        onUpdate={(index) => {
+        onUpdate={(index: number): void => {
           setActiveRowIndex(index)
         }}
       />}
@@ -67,7 +67,7 @@ export default function ObjectList (props:Props) {
 }
 
 
-const SortableItem = SortableElement(({value, onDelete, onUpdate, getName}) => {
+const SortableItem = SortableElement(({value, onDelete, onUpdate, getName}:any) => {
   const [pendingDelete, setPendingDelete] = React.useState(false)
 
   if(pendingDelete) return (
@@ -80,7 +80,7 @@ const SortableItem = SortableElement(({value, onDelete, onUpdate, getName}) => {
   )
 
   return (
-    <Item className='SortableItem'>
+    <Item className='SortableItem' highlight>
       <span>{getName(value)}</span>
       <div className='update' onMouseDown={onUpdate}>U</div>
       <div className='delete' onMouseDown={() => setPendingDelete(true)}>D</div>
@@ -88,10 +88,10 @@ const SortableItem = SortableElement(({value, onDelete, onUpdate, getName}) => {
   )
 })
 
-const SortableList = SortableContainer(({items, onDelete, onUpdate, getName}) => {
+const SortableList = SortableContainer(({items, onDelete, onUpdate, getName}: any) => {
   return (
     <ul>
-      {items.map((value, index) => (
+      {items.map((value: object, index: number) => (
         <SortableItem 
           key={`item-${index}`} 
           index={index} 
@@ -136,7 +136,7 @@ const Wrapper = styled.div`
   }
 `
 
-const Item = styled.li`
+const Item = styled.li<{highlight: boolean}>`
   padding: 10px;
   margin: 3px 0;
   border: 1px solid lightgrey;

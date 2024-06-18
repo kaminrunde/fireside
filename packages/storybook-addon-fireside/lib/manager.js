@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -14,7 +18,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -29,12 +33,13 @@ const Panel_1 = __importDefault(require("./Panel/Panel"));
 const hashit = require("hash-it");
 manager_api_1.addons.register("addons:storyboard-bridge", (api) => {
     const channel = manager_api_1.addons.getChannel();
-    manager_api_1.addons.addPanel("addons:storyboard-bridge", {
+    manager_api_1.addons.add("addons:storyboard-bridge", {
+        type: manager_api_1.types.PANEL,
         title: "Eigenschaften",
         render: () => React.createElement(Panel_1.default, { channel: channel, api: api, key: "fireside" }),
     });
     let component = {
-        id: uuid_1.v4(),
+        id: (0, uuid_1.v4)(),
         name: "not-known",
         props: {},
     };
@@ -95,7 +100,7 @@ manager_api_1.addons.register("addons:storyboard-bridge", (api) => {
         switch (e.data.type) {
             case "fireside-hydrate-component": {
                 if (!e.data.component) {
-                    component.id = uuid_1.v4();
+                    component.id = (0, uuid_1.v4)();
                     channel.emit("storyboard-bridge/clear-props");
                 }
                 if (e.data.component) {

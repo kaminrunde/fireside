@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -14,7 +18,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -39,7 +43,8 @@ const WidgetWrapper_1 = __importDefault(require("./WidgetWrapper"));
  * @example
  * k.string('label', 'Label', 'hello world')
  */
-exports.string = (prop, label, value, options = {}) => ({ type: 'string', prop, label, value, options });
+const string = (prop, label, value, options = {}) => ({ type: 'string', prop, label, value, options });
+exports.string = string;
 /**
  * store anything you like here. This knob won't be visible in storybook.
  * But be carefull what you want to store. The constant is only usefull for distinguising
@@ -52,7 +57,8 @@ exports.string = (prop, label, value, options = {}) => ({ type: 'string', prop, 
  * @example
  * k.constant('__version', '', 1)
  */
-exports.constant = (prop, label, value, options = {}) => ({ type: 'constant', prop, label, value, options });
+const constant = (prop, label, value, options = {}) => ({ type: 'constant', prop, label, value, options });
+exports.constant = constant;
 /**
  * manages number props.
  * @param {string} prop name of prop. can also be in nested form. eg: "obj.prop". for more information see docs of "object-path"
@@ -65,7 +71,8 @@ exports.constant = (prop, label, value, options = {}) => ({ type: 'constant', pr
  * @example
  * k.number('size', 'Your Size', 4)
  */
-exports.number = (prop, label, value, options = {}) => ({ type: 'number', prop, label, value, options });
+const number = (prop, label, value, options = {}) => ({ type: 'number', prop, label, value, options });
+exports.number = number;
 /**
  * manages markdown string props. use this knob for complex text.
  * @param {string} prop name of prop. can also be in nested form. eg: "obj.prop". for more information see docs of "object-path"
@@ -78,7 +85,8 @@ exports.number = (prop, label, value, options = {}) => ({ type: 'number', prop, 
  * @example
  * k.markdown('content', 'Your Content', '# Headline')
  */
-exports.markdown = (prop, label, value, options = {}) => ({ type: 'markdown', prop, label, value, options });
+const markdown = (prop, label, value, options = {}) => ({ type: 'markdown', prop, label, value, options });
+exports.markdown = markdown;
 /**
  * manages boolean props
  * @param {string} prop name of prop. can also be in nested form. eg: "obj.prop". for more information see docs of "object-path"
@@ -91,7 +99,8 @@ exports.markdown = (prop, label, value, options = {}) => ({ type: 'markdown', pr
  * @example
  * k.bool('isPrimary', 'Is Primary', true)
  */
-exports.bool = (prop, label, value, options = {}) => ({ type: 'bool', prop, label, value, options });
+const bool = (prop, label, value, options = {}) => ({ type: 'bool', prop, label, value, options });
+exports.bool = bool;
 /**
  * yields a sortable list of strings
  * @param {string} prop name of prop. can also be in nested form. eg: "obj.prop". for more information see docs of "object-path"
@@ -104,7 +113,8 @@ exports.bool = (prop, label, value, options = {}) => ({ type: 'bool', prop, labe
  * @example
  * k.stringList('todos', 'List of Todos', ['buy coffee', 'star fireside on github'])
  */
-exports.stringList = (prop, label, value, options = {}) => ({ type: 'stringList', prop, label, value, options });
+const stringList = (prop, label, value, options = {}) => ({ type: 'stringList', prop, label, value, options });
+exports.stringList = stringList;
 /**
  * yields a sortable list of objects. You have to define a schema just like you define the schema of your component.
  * Every Knob can be used. Even further ObjectList knobs. That way you can build any deep object schema
@@ -121,10 +131,11 @@ exports.stringList = (prop, label, value, options = {}) => ({ type: 'stringList'
  *     k.string('title', 'Title', ''),
  *     k.markdown('description', 'Description', '')
  *   ],
- *   getRowName: row => row.title
+ *   getRowName: "title"
  * })
  */
-exports.objectList = (prop, label, value, options) => ({ type: 'objectList', prop, label, value, options });
+const objectList = (prop, label, value, options) => ({ type: 'objectList', prop, label, value, options });
+exports.objectList = objectList;
 /**
  * same as string but with predefined options. useful if you only want to have specific options
  * @param {string} prop name of prop. can also be in nested form. eg: "obj.prop". for more information see docs of "object-path"
@@ -143,13 +154,15 @@ exports.objectList = (prop, label, value, options) => ({ type: 'objectList', pro
   *   ]
   * })
   */
-exports.select = (prop, label, value, options) => ({ type: 'select', prop, label, value, options });
-exports.create = (name, component, simpleKnobs, controller = {}) => (args, context) => {
+const select = (prop, label, value, options) => ({ type: 'select', prop, label, value, options });
+exports.select = select;
+const create = (name, component, simpleKnobs, controller = {}) => (args, context) => {
     const [, update] = React.useState(0);
     const knobs = manager.getKnobs(context, simpleKnobs, controller, name, () => update(i => i + 1));
     let props = manager.getProps(knobs);
-    return React.createElement(WidgetWrapper_1.default, Object.assign({}, { component, props, controller }));
+    return React.createElement(WidgetWrapper_1.default, { component, props, controller });
 };
+exports.create = create;
 function registerWidgetSelector(name, cb) {
     manager.addSelector(name, cb);
 }

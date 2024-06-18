@@ -1,4 +1,4 @@
-export declare type StoryContext = {
+export type StoryContext = {
     kind: string;
     story: string;
     id: string;
@@ -30,7 +30,7 @@ export interface ObjectListOptions extends KnobOptions {
     /** define the schema of each row. this works the same way you define the schema of your components */
     schema: SimpleKnob[];
     /** this is the name of the row, that will be displayed in the sortable list */
-    getRowName: (row: any) => string;
+    getRowName: string;
 }
 export interface SelectOptions extends KnobOptions {
     /** all available options. label is displayed in dopdown and value will be the knob value  */
@@ -94,19 +94,19 @@ export interface Knob extends SimpleKnob {
     story: StoryContext;
     defaultValue: any;
 }
-export declare type Controller = {
+export type Controller = {
     versionUpdate?: Function;
     createContext?: Function;
     preprocessProps?: Function;
     createStoryEvents?: Function;
 };
-export declare type Component = {
+export type Component = {
     id: string;
     name: string;
     props: object;
 };
-declare type Event = 'storyboard-bridge/set-knobs' | 'storyboard-bridge/set-knob-value' | 'storyboard-bridge/select-story' | 'storyboard-bridge/story-selected' | 'storyboard-bridge/hydrate-component' | 'storyboard-bridge/update-component-name' | 'storyboard-bridge/update-component-props' | 'storyboard-bridge/init-knob-manager' | 'storyboard-bridge/clear-props';
-export declare type Channel = {
+type Event = 'storyboard-bridge/set-knobs' | 'storyboard-bridge/set-knob-value' | 'storyboard-bridge/select-story' | 'storyboard-bridge/story-selected' | 'storyboard-bridge/hydrate-component' | 'storyboard-bridge/update-component-name' | 'storyboard-bridge/update-component-props' | 'storyboard-bridge/init-knob-manager' | 'storyboard-bridge/clear-props';
+export type Channel = {
     emit: (event: Event, options?: any) => void;
     on: (event: Event, cb: (val: any) => void) => void;
     once: (event: Event, cb: (val: any) => void) => void;

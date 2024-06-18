@@ -1,6 +1,6 @@
 import * as t from './types'
 import objPath = require('object-path')
-import {addons} from '@storybook/addons'
+import {addons} from '@storybook/preview-api'
 import { toId } from '@storybook/csf'
 
 const knobStore:{[id:string]:t.Knob} = {}

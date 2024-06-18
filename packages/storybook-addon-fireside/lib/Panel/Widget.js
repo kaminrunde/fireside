@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -14,7 +18,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -27,9 +31,9 @@ const widgets_1 = __importDefault(require("../widgets"));
 const styled_components_1 = __importDefault(require("styled-components"));
 const useCustomComponents_1 = __importDefault(require("./useCustomComponents"));
 function Widget(props) {
-    const customComponents = useCustomComponents_1.default();
+    const customComponents = (0, useCustomComponents_1.default)();
     const [value, setValue] = React.useState(props.knob.value);
-    const Component = widgets_1.default(props.knob, customComponents);
+    const Component = (0, widgets_1.default)(props.knob, customComponents);
     const [handle, focus, ref] = useFocus();
     const update = (val) => {
         setValue(val);

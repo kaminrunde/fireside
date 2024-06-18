@@ -1,5 +1,5 @@
 import * as t from '../../types';
-declare type Output = {
+type Output = {
     knobs: t.Knob[];
     props: Record<string, any>;
     update: Function;

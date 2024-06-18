@@ -37,7 +37,7 @@ export interface ObjectListOptions extends KnobOptions {
   /** define the schema of each row. this works the same way you define the schema of your components */
   schema: SimpleKnob[],
   /** this is the name of the row, that will be displayed in the sortable list */
-  getRowName: (row:any) => string
+  getRowName: string
 }
 export interface SelectOptions extends KnobOptions {
   /** all available options. label is displayed in dopdown and value will be the knob value  */

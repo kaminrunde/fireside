@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.addSelector = exports.getProps = exports.getKnobs = void 0;
 const objPath = require("object-path");
-const addons_1 = require("@storybook/addons");
+const preview_api_1 = require("@storybook/preview-api");
 const csf_1 = require("@storybook/csf");
 const knobStore = {};
 const contextStore = {};
@@ -11,7 +11,7 @@ let forceReRender = () => null;
 let currentStoryId = '';
 let currentKnobs = [];
 let currentController = {};
-const channel = addons_1.addons.getChannel();
+const channel = preview_api_1.addons.getChannel();
 let hydratedProps = null;
 function getKnobs(context, simpleKnobs, controller, name, rerender) {
     contextStore[context.id] = context;
@@ -95,7 +95,7 @@ channel.on('storyboard-bridge/hydrate-component', (component) => {
     // transform of the story name to match the storybook id
     // storybook is doing this, when the story is registered
     // based on the exported storyname
-    context.id = csf_1.toId(context.kind, startCase(context.story));
+    context.id = (0, csf_1.toId)(context.kind, startCase(context.story));
     context.story = transformIfPascalCase(context.story);
     const hydrate = () => {
         const props = currentController.versionUpdate

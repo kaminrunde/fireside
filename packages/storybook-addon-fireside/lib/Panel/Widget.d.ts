@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as t from '../types';
-declare type Props = {
+type Props = {
     knob: t.Knob | t.SimpleKnob;
     onUpdate: (value: any) => void;
 };

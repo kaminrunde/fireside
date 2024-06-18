@@ -72,8 +72,7 @@ const SortableItem = SortableElement(({value, onDelete, onUpdate, getName}:any) 
 
   if(pendingDelete) return (
     <Item className='SortableItem' highlight>
-      {/* <span>Delete "{value}"?</span> */}
-      <span>Delete "{getName(value)}"?</span>
+      <span>Delete "{value[getName]}"?</span>
       <div className='update keep' onMouseDown={onDelete}>Y</div>
       <div className='delete keep' onMouseDown={() => setPendingDelete(false)}>N</div>
     </Item>
@@ -81,9 +80,9 @@ const SortableItem = SortableElement(({value, onDelete, onUpdate, getName}:any) 
 
   return (
     <Item className='SortableItem' highlight>
-      <span>{getName(value)}</span>
+      <span>{value[getName]}</span>
       <div className='update' onMouseDown={onUpdate}>U</div>
-      <div className='delete' onMouseDown={() => setPendingDelete(true)}>D</div>
+      <div className='delete' onMouseDown={() => setPendingDelete(true)}>D</div> 
     </Item>
   )
 })

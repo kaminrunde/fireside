@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -14,7 +18,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -38,7 +42,7 @@ function StringList(props) {
     };
     return (React.createElement(Wrapper, null,
         React.createElement(SortableList, { items: props.value, onSortEnd: ({ oldIndex, newIndex }) => {
-                props.onChange(array_move_1.arrayMoveImmutable(props.value, oldIndex, newIndex));
+                props.onChange((0, array_move_1.arrayMoveImmutable)(props.value, oldIndex, newIndex));
             }, onDelete: (index) => {
                 props.onChange(props.value.filter((_, i) => i !== index));
             }, onUpdate: (index, val) => {
@@ -46,7 +50,7 @@ function StringList(props) {
                     props.onChange(props.value.filter((_, i) => i !== index));
                     return;
                 }
-                const newValue = immer_1.default(props.value, (value) => {
+                const newValue = (0, immer_1.default)(props.value, (value) => {
                     value[index] = val;
                 });
                 props.onChange(newValue);
@@ -61,7 +65,7 @@ function StringList(props) {
             React.createElement("button", { onClick: () => setShowBulkInput(false) }, "Close")))));
 }
 exports.default = StringList;
-const SortableItem = react_sortable_hoc_1.SortableElement(({ value, onDelete, onUpdate }) => {
+const SortableItem = (0, react_sortable_hoc_1.SortableElement)(({ value, onDelete, onUpdate }) => {
     const [pendingDelete, setPendingDelete] = React.useState(false);
     const [pendingEdit, setPendingEdit] = React.useState(!value);
     const input = React.useRef(null);
@@ -109,7 +113,7 @@ const SortableItem = react_sortable_hoc_1.SortableElement(({ value, onDelete, on
         React.createElement("div", { className: "update", onMouseDown: () => setPendingEdit(true) }, "U"),
         React.createElement("div", { className: "delete", onMouseDown: () => setPendingDelete(true) }, "D")));
 });
-const SortableList = react_sortable_hoc_1.SortableContainer(({ items, onDelete, onUpdate }) => {
+const SortableList = (0, react_sortable_hoc_1.SortableContainer)(({ items, onDelete, onUpdate }) => {
     return (React.createElement("ul", null, items.map((value, index) => (React.createElement(SortableItem, { key: `item-${value + index}`, index: index, value: value, onDelete: () => onDelete(index), onUpdate: (val) => onUpdate(index, val) })))));
 });
 const BulkInputWrapper = styled_components_1.default.div `

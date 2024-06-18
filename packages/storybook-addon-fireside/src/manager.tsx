@@ -1,13 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
 import * as React from "react";
-import { addons } from "@storybook/manager-api";
+import { addons, types } from "@storybook/manager-api";
 import * as t from "./types";
 import Panel from "./Panel/Panel";
 const hashit = require("hash-it");
 
 addons.register("addons:storyboard-bridge", (api) => {
   const channel: t.Channel = addons.getChannel();
-  addons.addPanel("addons:storyboard-bridge", {
+  addons.add("addons:storyboard-bridge", {
+    type: types.PANEL,
     title: "Eigenschaften",
     render: () => <Panel channel={channel} api={api} key="fireside" />,
   });

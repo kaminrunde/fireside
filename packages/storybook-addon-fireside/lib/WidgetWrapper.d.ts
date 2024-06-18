@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as t from './types';
-declare type Props = {
+type Props = {
     component: React.JSX.ElementType;
     props: object;
     controller: t.Controller;

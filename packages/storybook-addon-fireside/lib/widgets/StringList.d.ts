@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as t from "../types";
-declare type Props = {
+type Props = {
     value: string[];
     onChange: (value: string[]) => void;
     focus: boolean;

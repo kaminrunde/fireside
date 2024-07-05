@@ -14,14 +14,14 @@ export default function Markdown (props:Props) {
   const ref = React.useRef<HTMLTextAreaElement|null>(null)
 
   return (
-    <Wrapper focus={props.focus}>
+    <Wrapper focus={props.focus.toString()}>
       <textarea ref={ref} value={props.value} onChange={e => props.onChange(e.target.value)} rows={20}/>
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div<{focus: boolean}>`
-  border: 1px solid ${props => props.focus ? '#1DA7FD' : 'lightgrey'};
+const Wrapper = styled.div<{focus: string}>`
+  border: 1px solid ${props => props.focus === 'true' ? '#1DA7FD' : 'lightgrey'};
   border-radius: 3px;
   padding-left: 5px;
   > textarea {

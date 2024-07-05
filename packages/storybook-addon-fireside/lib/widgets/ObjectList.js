@@ -67,14 +67,14 @@ exports.default = ObjectList;
 const SortableItem = (0, react_sortable_hoc_1.SortableElement)(({ value, onDelete, onUpdate, getName }) => {
     const [pendingDelete, setPendingDelete] = React.useState(false);
     if (pendingDelete)
-        return (React.createElement(Item, { className: 'SortableItem', highlight: true },
+        return (React.createElement(Item, { className: 'SortableItem', highlight: "true" },
             React.createElement("span", null,
                 "Delete \"",
                 value[getName],
                 "\"?"),
             React.createElement("div", { className: 'update keep', onMouseDown: onDelete }, "Y"),
             React.createElement("div", { className: 'delete keep', onMouseDown: () => setPendingDelete(false) }, "N")));
-    return (React.createElement(Item, { className: 'SortableItem', highlight: true },
+    return (React.createElement(Item, { className: 'SortableItem', highlight: "true" },
         React.createElement("span", null, value[getName]),
         React.createElement("div", { className: 'update', onMouseDown: onUpdate }, "U"),
         React.createElement("div", { className: 'delete', onMouseDown: () => setPendingDelete(true) }, "D")));
@@ -117,7 +117,7 @@ const Item = styled_components_1.default.li `
   margin: 3px 0;
   border: 1px solid lightgrey;
   border-radius: 3px;
-  background: ${p => p.highlight ? '#FFE4C4' : 'white'};
+  background: ${p => p.highlight === 'true' ? '#FFE4C4' : 'white'};
   list-style: none;
   font-size: 14px;
   cursor: grabbing;

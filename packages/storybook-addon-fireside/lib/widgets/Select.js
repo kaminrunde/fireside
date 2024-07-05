@@ -42,7 +42,7 @@ function Select(props) {
         const match = props.options.options.find(opt => opt.value === props.value);
         return match ? match.label : props.value;
     }, [props.value, props.options.options]);
-    return (React.createElement(Wrapper, { tabIndex: '1', focus: props.focus },
+    return (React.createElement(Wrapper, { tabIndex: '1', focus: props.focus.toString() },
         React.createElement("div", { className: 'value', onClick: handleClick },
             label || '-',
             open ? React.createElement(fa_1.FaChevronUp, null) : React.createElement(fa_1.FaChevronDown, null)),
@@ -52,7 +52,7 @@ exports.default = Select;
 const Wrapper = styled_components_1.default.div `
   position: relative;
   > .value {
-    border: 1px solid ${props => props.focus ? '#1DA7FD' : 'lightgrey'};
+    border: 1px solid ${props => props.focus === 'true' ? '#1DA7FD' : 'lightgrey'};
     border-radius: 3px;
     padding: 0 8px;
     line-height: 30px;

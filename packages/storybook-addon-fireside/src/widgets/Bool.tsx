@@ -12,16 +12,16 @@ type Props = {
 
 export default function Bool (props:Props) {
   return (
-    <Wrapper on={props.value} onClick={() =>props.onChange(!props.value)}>
+    <Wrapper on={props.value.toString()} onClick={() =>props.onChange(!props.value)}>
       {props.value ? 'ON' : 'OFF'}
     </Wrapper>
   )
 }
 
-const Wrapper = styled.button<{on: boolean}>`
+const Wrapper = styled.button<{on: string}>`
   padding: 10px 20px;
   border: none;
   color: white;
   cursor: pointer;
-  background: ${props => props.on ? '#8bc34a' : '#e91e63'};
+  background: ${props => props.on === 'true' ? '#8bc34a' : '#e91e63'};
 `

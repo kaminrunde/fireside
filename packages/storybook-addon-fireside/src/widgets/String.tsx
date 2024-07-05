@@ -12,7 +12,7 @@ type Props = {
 
 export default function String (props:Props) {
   return (
-    <Wrapper focus={props.focus}>
+    <Wrapper focus={props.focus.toString()}>
       <input 
         type='text'
         value={props.value} 
@@ -22,8 +22,8 @@ export default function String (props:Props) {
   )
 }
 
-const Wrapper = styled.div<{focus: boolean}>`
-  border: 1px solid ${props => props.focus ? '#1DA7FD' : 'lightgrey'};
+const Wrapper = styled.div<{focus: string}>`
+  border: 1px solid ${props => props.focus === 'true' ? '#1DA7FD' : 'lightgrey'};
   border-radius: 3px;
   padding-left: 5px;
   > input {

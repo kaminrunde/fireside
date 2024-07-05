@@ -95,7 +95,7 @@ const SortableItem = (0, react_sortable_hoc_1.SortableElement)(({ value, onDelet
         return () => input.current && input.current.removeEventListener("keyup", e);
     }, [pendingEdit, newVal]);
     if (pendingDelete)
-        return (React.createElement(Item, { className: "SortableItem", highlight: true },
+        return (React.createElement(Item, { className: "SortableItem", highlight: "true" },
             React.createElement("span", null,
                 "Delete \"",
                 value,
@@ -103,7 +103,7 @@ const SortableItem = (0, react_sortable_hoc_1.SortableElement)(({ value, onDelet
             React.createElement("div", { className: "update keep", onMouseDown: onDelete }, "Y"),
             React.createElement("div", { className: "delete keep", onMouseDown: () => setPendingDelete(false) }, "N")));
     if (pendingEdit)
-        return (React.createElement(Item, { className: "SortableItem", highlight: true },
+        return (React.createElement(Item, { className: "SortableItem", highlight: "true" },
             React.createElement("input", { ref: input, type: "text", value: newVal, onChange: (e) => setNewVal(e.target.value), onBlur: () => {
                     setPendingEdit(false);
                     onUpdate(newVal);
@@ -169,7 +169,7 @@ const Item = styled_components_1.default.li `
   margin: 3px 0;
   border: 1px solid lightgrey;
   border-radius: 3px;
-  background: ${(p) => (p.highlight ? "#FFE4C4" : "white")};
+  background: ${(p) => (p.highlight === 'true' ? "#FFE4C4" : "white")};
   list-style: none;
   font-size: 14px;
   cursor: grabbing;

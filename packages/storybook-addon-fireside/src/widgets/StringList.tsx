@@ -104,7 +104,7 @@ const SortableItem = SortableElement(({ value, onDelete, onUpdate }: any) => {
 
   if (pendingDelete)
     return (
-      <Item className="SortableItem" highlight>
+      <Item className="SortableItem" highlight="true">
         <span>Delete "{value}"?</span>
         <div className="update keep" onMouseDown={onDelete}>
           Y
@@ -120,7 +120,7 @@ const SortableItem = SortableElement(({ value, onDelete, onUpdate }: any) => {
 
   if (pendingEdit)
     return (
-      <Item className="SortableItem" highlight>
+      <Item className="SortableItem" highlight="true">
         <input
           ref={input}
           type="text"
@@ -213,12 +213,12 @@ const Wrapper = styled.div`
   }
 `;
 
-const Item = styled.li<{highlight?: boolean}>`
+const Item = styled.li<{highlight?: string}>`
   padding: 10px;
   margin: 3px 0;
   border: 1px solid lightgrey;
   border-radius: 3px;
-  background: ${(p) => (p.highlight ? "#FFE4C4" : "white")};
+  background: ${(p) => (p.highlight === 'true' ? "#FFE4C4" : "white")};
   list-style: none;
   font-size: 14px;
   cursor: grabbing;

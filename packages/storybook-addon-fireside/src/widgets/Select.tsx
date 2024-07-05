@@ -28,7 +28,7 @@ export default function Select (props:Props) {
   }, [props.value, props.options.options])
   
   return (
-    <Wrapper tabIndex='1' focus={props.focus}>
+    <Wrapper tabIndex='1' focus={props.focus.toString()}>
       <div className='value' onClick={handleClick}>
         {label || '-'}
         {open ? <FaChevronUp/> : <FaChevronDown />}
@@ -51,10 +51,10 @@ export default function Select (props:Props) {
   )
 }
 
-const Wrapper = styled.div<{focus: boolean, tabIndex: string}>`
+const Wrapper = styled.div<{focus: string, tabIndex: string}>`
   position: relative;
   > .value {
-    border: 1px solid ${props => props.focus ? '#1DA7FD' : 'lightgrey'};
+    border: 1px solid ${props => props.focus === 'true' ? '#1DA7FD' : 'lightgrey'};
     border-radius: 3px;
     padding: 0 8px;
     line-height: 30px;

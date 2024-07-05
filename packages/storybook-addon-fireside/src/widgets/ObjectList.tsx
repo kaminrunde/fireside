@@ -71,7 +71,7 @@ const SortableItem = SortableElement(({value, onDelete, onUpdate, getName}:any) 
   const [pendingDelete, setPendingDelete] = React.useState(false)
 
   if(pendingDelete) return (
-    <Item className='SortableItem' highlight>
+    <Item className='SortableItem' highlight="true">
       <span>Delete "{value[getName]}"?</span>
       <div className='update keep' onMouseDown={onDelete}>Y</div>
       <div className='delete keep' onMouseDown={() => setPendingDelete(false)}>N</div>
@@ -79,7 +79,7 @@ const SortableItem = SortableElement(({value, onDelete, onUpdate, getName}:any) 
   )
 
   return (
-    <Item className='SortableItem' highlight>
+    <Item className='SortableItem' highlight="true">
       <span>{value[getName]}</span>
       <div className='update' onMouseDown={onUpdate}>U</div>
       <div className='delete' onMouseDown={() => setPendingDelete(true)}>D</div> 
@@ -135,12 +135,12 @@ const Wrapper = styled.div`
   }
 `
 
-const Item = styled.li<{highlight: boolean}>`
+const Item = styled.li<{highlight: string}>`
   padding: 10px;
   margin: 3px 0;
   border: 1px solid lightgrey;
   border-radius: 3px;
-  background: ${p => p.highlight ? '#FFE4C4' : 'white'};
+  background: ${p => p.highlight === 'true' ? '#FFE4C4' : 'white'};
   list-style: none;
   font-size: 14px;
   cursor: grabbing;

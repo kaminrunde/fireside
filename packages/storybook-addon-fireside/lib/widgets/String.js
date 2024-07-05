@@ -29,12 +29,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
 const styled_components_1 = __importDefault(require("styled-components"));
 function String(props) {
-    return (React.createElement(Wrapper, { focus: props.focus },
+    return (React.createElement(Wrapper, { focus: props.focus.toString() },
         React.createElement("input", { type: 'text', value: props.value, onChange: e => props.onChange(e.target.value) })));
 }
 exports.default = String;
 const Wrapper = styled_components_1.default.div `
-  border: 1px solid ${props => props.focus ? '#1DA7FD' : 'lightgrey'};
+  border: 1px solid ${props => props.focus === 'true' ? '#1DA7FD' : 'lightgrey'};
   border-radius: 3px;
   padding-left: 5px;
   > input {

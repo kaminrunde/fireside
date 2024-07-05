@@ -17,7 +17,7 @@ export default function Tabs (props:Props) {
       {props.tabs.tabs.map(tab => (
         <Tab 
           key={tab} 
-          active={tab === props.tabs.activeTab}
+          active={(tab === props.tabs.activeTab).toString()}
           children={tab}
           onClick={() => props.tabs.setActiveTab(tab)}
         />
@@ -32,14 +32,14 @@ const Wrapper = styled.div`
 `
 
 const Tab = styled.button<{
-  active: boolean;
+  active: string;
 }>`
   padding: 10px;
   border: none;
   background: none;
   border-bottom: 2px solid transparent;
   cursor: pointer;
-  ${props => props.active && `
+  ${props => props.active === 'true' && `
     color: #1da7fd;
     border-bottom: 2px solid #1da7fd;;
     font-weight: bold;

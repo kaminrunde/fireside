@@ -23,7 +23,6 @@ export default function Panel ({channel}:Props) {
       setCustomComponents(dict => ({...dict, [name]: component}))
   }, [])
 
-
   return (
     <CustomComponentsProvider value={customComponents}>
       <Wrapper>

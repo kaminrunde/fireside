@@ -70,12 +70,12 @@ const SortableItem = (0, react_sortable_hoc_1.SortableElement)(({ value, onDelet
         return (React.createElement(Item, { className: 'SortableItem', highlight: "true" },
             React.createElement("span", null,
                 "Delete \"",
-                value[getName],
+                getName(value),
                 "\"?"),
             React.createElement("div", { className: 'update keep', onMouseDown: onDelete }, "Y"),
             React.createElement("div", { className: 'delete keep', onMouseDown: () => setPendingDelete(false) }, "N")));
     return (React.createElement(Item, { className: 'SortableItem', highlight: "true" },
-        React.createElement("span", null, value[getName]),
+        React.createElement("span", null, getName(value)),
         React.createElement("div", { className: 'update', onMouseDown: onUpdate }, "U"),
         React.createElement("div", { className: 'delete', onMouseDown: () => setPendingDelete(true) }, "D")));
 });

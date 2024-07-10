@@ -94,7 +94,7 @@ export declare const stringList: (prop: string, label: string, value: string[], 
  *     k.string('title', 'Title', ''),
  *     k.markdown('description', 'Description', '')
  *   ],
- *   getRowName: "title"
+ *   getRowName: row => row.title
  * })
  */
 export declare const objectList: (prop: string, label: string, value: object[], options: t.ObjectListOptions) => t.SimpleKnob;

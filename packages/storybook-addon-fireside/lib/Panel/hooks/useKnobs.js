@@ -33,7 +33,27 @@ function useKnobs(channel) {
     const [tabs, setTabs] = React.useState([]);
     const [activeTab, setActiveTab] = React.useState('DEFAULT');
     React.useEffect(() => {
-        channel.on('storyboard-bridge/set-knobs', (knobs) => {
+        channel.on("storyboard-bridge/set-knobs", async (knobs) => {
+            const pendingFunctions = [];
+            for (const knob of knobs) {
+                for (const key in knob.options) {
+                    //@ts-ignore
+                    if (knob.options[key].includes("function_")) {
+                        const id = knob.options[key];
+                        console.log('id', id);
+                        const promise = new Promise((resolve) => {
+                            channel.emit("storyboard-bridge/request-function", id);
+                            channel.on(`storyboard-bridge/response-function-${id}`, (fnString) => {
+                                const fn = new Function("return " + fnString)();
+                                knob.options[key] = fn;
+                                resolve();
+                            });
+                        });
+                        pendingFunctions.push(promise);
+                    }
+                }
+            }
+            await Promise.all(pendingFunctions);
             // setAllKnobs(knobs)
             allKnobs.current = knobs;
             const tabsSet = new Set();

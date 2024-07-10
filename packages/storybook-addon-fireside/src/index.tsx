@@ -136,7 +136,7 @@ export const stringList = (
  *     k.string('title', 'Title', ''),
  *     k.markdown('description', 'Description', '')
  *   ],
- *   getRowName: "title"
+ *   getRowName: row => row.title
  * })
  */
 export const objectList = (

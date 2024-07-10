@@ -4,6 +4,7 @@ exports.addSelector = exports.getProps = exports.getKnobs = void 0;
 const objPath = require("object-path");
 const preview_api_1 = require("@storybook/preview-api");
 const csf_1 = require("@storybook/csf");
+const uuid_1 = require("uuid");
 const knobStore = {};
 const contextStore = {};
 const selectorStore = {};
@@ -13,6 +14,7 @@ let currentKnobs = [];
 let currentController = {};
 const channel = preview_api_1.addons.getChannel();
 let hydratedProps = null;
+const functionRegistry = {};
 function getKnobs(context, simpleKnobs, controller, name, rerender) {
     contextStore[context.id] = context;
     forceReRender = rerender;
@@ -50,7 +52,7 @@ function getKnobs(context, simpleKnobs, controller, name, rerender) {
         currentController = controller;
         hydratedProps = null;
         channel.emit('storyboard-bridge/update-component-name', name);
-        channel.emit('storyboard-bridge/set-knobs', knobs);
+        channel.emit("storyboard-bridge/set-knobs", replaceFunctionsWithIdsAndEmit(knobs));
         channel.emit('storyboard-bridge/update-component-props', getProps(knobs));
     }
     return knobs;
@@ -72,7 +74,7 @@ function clearKnobs() {
     for (const id in knobStore)
         knobStore[id].value = knobStore[id].defaultValue;
     forceReRender();
-    channel.emit('storyboard-bridge/set-knobs', currentKnobs);
+    channel.emit('storyboard-bridge/set-knobs', replaceFunctionsWithIdsAndEmit(currentKnobs));
 }
 channel.on('storyboard-bridge/clear-props', () => {
     clearKnobs();
@@ -105,7 +107,7 @@ channel.on('storyboard-bridge/hydrate-component', (component) => {
             const hydratedValue = objPath.get(props, knob.prop);
             knob.value = hydratedValue ?? knob.value;
         });
-        channel.emit('storyboard-bridge/set-knobs', currentKnobs);
+        channel.emit('storyboard-bridge/set-knobs', replaceFunctionsWithIdsAndEmit(currentKnobs));
         channel.emit('storyboard-bridge/update-component-props', getProps(currentKnobs));
         forceReRender();
     };
@@ -118,6 +120,14 @@ channel.on('storyboard-bridge/hydrate-component', (component) => {
         hydrate();
 });
 channel.emit('storyboard-bridge/init-knob-manager');
+channel.on("storyboard-bridge/register-function", ({ id, fn }) => {
+    functionRegistry[id] = fn;
+});
+channel.on("storyboard-bridge/request-function", (id) => {
+    if (functionRegistry[id]) {
+        channel.emit(`storyboard-bridge/response-function-${id}`, functionRegistry[id]);
+    }
+});
 const startCase = (str) => {
     return str
         .replace(/([a-z])([A-Z])/g, '$1 $2')
@@ -137,4 +147,24 @@ const transformIfPascalCase = (str) => {
     else {
         return str;
     }
+};
+const generateUniqueId = () => {
+    return `function_${(0, uuid_1.v4)()}`;
+};
+const replaceFunctionsWithIdsAndEmit = (knobs) => {
+    const knobsWithIds = knobs;
+    for (const knob of knobsWithIds) {
+        for (const key in knob.options) {
+            if (typeof knob.options[key] === "function") {
+                const id = generateUniqueId();
+                functionRegistry[id] = knob.options[key].toString();
+                channel.emit("storyboard-bridge/register-function", {
+                    id,
+                    fn: knob.options[key].toString(),
+                });
+                knob.options[key] = id;
+            }
+        }
+    }
+    return knobsWithIds;
 };

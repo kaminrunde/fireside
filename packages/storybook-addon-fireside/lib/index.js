@@ -131,7 +131,7 @@ exports.stringList = stringList;
  *     k.string('title', 'Title', ''),
  *     k.markdown('description', 'Description', '')
  *   ],
- *   getRowName: "title"
+ *   getRowName: row => row.title
  * })
  */
 const objectList = (prop, label, value, options) => ({ type: 'objectList', prop, label, value, options });

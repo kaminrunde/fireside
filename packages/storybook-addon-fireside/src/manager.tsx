@@ -3,14 +3,20 @@ import * as React from "react";
 import { addons, types } from "@storybook/manager-api";
 import * as t from "./types";
 import Panel from "./Panel/Panel";
+import { AddonPanel } from "@storybook/components";
+import { getPersistentChannel } from "./persistentChannel";
 const hashit = require("hash-it");
 
 addons.register("addons:storyboard-bridge", (api) => {
   const channel: t.Channel = addons.getChannel();
+  getPersistentChannel(channel);
+
   addons.add("addons:storyboard-bridge", {
     type: types.PANEL,
     title: "Eigenschaften",
-    render: () => <Panel channel={channel} api={api} key="fireside" />,
+    render: ({ active }) => (
+        <Panel channel={channel} api={api} key="fireside" />
+    ),
   });
 
   let component = {

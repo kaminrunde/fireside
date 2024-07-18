@@ -119,7 +119,7 @@ export type Component = {
   props: object
 }
 
-type Event =
+export type Event =
   | "storyboard-bridge/set-knobs"
   | "storyboard-bridge/set-knob-value"
   | "storyboard-bridge/select-story"

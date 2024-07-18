@@ -105,10 +105,9 @@ export type Component = {
     name: string;
     props: object;
 };
-type Event = "storyboard-bridge/set-knobs" | "storyboard-bridge/set-knob-value" | "storyboard-bridge/select-story" | "storyboard-bridge/story-selected" | "storyboard-bridge/hydrate-component" | "storyboard-bridge/update-component-name" | "storyboard-bridge/update-component-props" | "storyboard-bridge/init-knob-manager" | "storyboard-bridge/clear-props" | "storyboard-bridge/register-function" | "storyboard-bridge/request-function" | `storyboard-bridge/response-function-${string}`;
+export type Event = "storyboard-bridge/set-knobs" | "storyboard-bridge/set-knob-value" | "storyboard-bridge/select-story" | "storyboard-bridge/story-selected" | "storyboard-bridge/hydrate-component" | "storyboard-bridge/update-component-name" | "storyboard-bridge/update-component-props" | "storyboard-bridge/init-knob-manager" | "storyboard-bridge/clear-props" | "storyboard-bridge/register-function" | "storyboard-bridge/request-function" | `storyboard-bridge/response-function-${string}`;
 export type Channel = {
     emit: (event: Event, options?: any) => void;
     on: (event: Event, cb: (val: any) => void) => void;
     once: (event: Event, cb: (val: any) => void) => void;
 };
-export {};

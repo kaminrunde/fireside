@@ -30,13 +30,15 @@ const uuid_1 = require("uuid");
 const React = __importStar(require("react"));
 const manager_api_1 = require("@storybook/manager-api");
 const Panel_1 = __importDefault(require("./Panel/Panel"));
+const persistentChannel_1 = require("./persistentChannel");
 const hashit = require("hash-it");
 manager_api_1.addons.register("addons:storyboard-bridge", (api) => {
     const channel = manager_api_1.addons.getChannel();
+    (0, persistentChannel_1.getPersistentChannel)(channel);
     manager_api_1.addons.add("addons:storyboard-bridge", {
         type: manager_api_1.types.PANEL,
         title: "Eigenschaften",
-        render: () => React.createElement(Panel_1.default, { channel: channel, api: api, key: "fireside" }),
+        render: ({ active }) => (React.createElement(Panel_1.default, { channel: channel, api: api, key: "fireside" })),
     });
     let component = {
         id: (0, uuid_1.v4)(),

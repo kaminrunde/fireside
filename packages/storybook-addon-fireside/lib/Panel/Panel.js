@@ -32,8 +32,10 @@ const useKnobs_1 = __importDefault(require("./hooks/useKnobs"));
 const Widget_1 = __importDefault(require("./Widget"));
 const Tabs_1 = __importDefault(require("./Tabs"));
 const useCustomComponents_1 = require("./useCustomComponents");
+const persistentChannel_1 = require("../persistentChannel");
 function Panel({ channel }) {
-    const { knobs, props, update, key, ...tabs } = (0, useKnobs_1.default)(channel);
+    const persistentChannel = (0, persistentChannel_1.getPersistentChannel)(channel);
+    const { knobs, props, update, key, ...tabs } = (0, useKnobs_1.default)(persistentChannel);
     const [customComponents, setCustomComponents] = React.useState({});
     React.useEffect(() => {
         // @ts-ignore

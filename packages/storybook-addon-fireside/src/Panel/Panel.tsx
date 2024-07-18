@@ -5,6 +5,7 @@ import Widget from './Widget'
 import Tabs from './Tabs'
 import * as t from '../types'
 import {CustomComponentsProvider} from './useCustomComponents'
+import { getPersistentChannel } from '../persistentChannel'
 
 type Props = {
   channel: t.Channel,
@@ -12,7 +13,8 @@ type Props = {
 }
 
 export default function Panel ({channel}:Props) {
-  const {knobs,props,update,key, ...tabs} = useKnobs(channel)
+  const persistentChannel = getPersistentChannel(channel);
+  const {knobs,props,update,key, ...tabs} = useKnobs(persistentChannel)
   const [customComponents, setCustomComponents] = React.useState<Record<string, any>>({})
 
   React.useEffect(() => {

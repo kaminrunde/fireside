@@ -1,4 +1,5 @@
 import * as t from '../../types';
+import { PersistentChannel } from '../../persistentChannel';
 type Output = {
     knobs: t.Knob[];
     props: Record<string, any>;
@@ -8,5 +9,5 @@ type Output = {
     activeTab: string;
     setActiveTab: (tab: string) => void;
 };
-export default function useKnobs(channel: t.Channel): Output;
+export default function useKnobs(channel: PersistentChannel): Output;
 export {};

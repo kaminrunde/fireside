@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as t from '../../types'
 import objPath = require('object-path')
-
+import { PersistentChannel } from '../../persistentChannel'
 
 type Output = {
   knobs: t.Knob[],
@@ -13,7 +13,7 @@ type Output = {
   setActiveTab: (tab:string) => void
 }
 
-export default function useKnobs(channel:t.Channel):Output {
+export default function useKnobs(channel: PersistentChannel):Output {
   const [knobs,setKnobs] = React.useState<t.Knob[]>([])
   const [props,setProps] = React.useState<Record<string,any>>({})
   const allKnobs = React.useRef<t.Knob[]>([])
@@ -22,59 +22,76 @@ export default function useKnobs(channel:t.Channel):Output {
   const [activeTab, setActiveTab] = React.useState('DEFAULT')
 
   React.useEffect(() => {
+    // Initial die gespeicherten Knobs abrufen
+    const savedKnobs = channel.getKnobs();
+    if (savedKnobs.length > 0) {
+      processKnobs(savedKnobs);
+    }
+
     channel.on("storyboard-bridge/set-knobs", async (knobs: t.Knob[]) => {
-      const pendingFunctions: Promise<void>[] = [];
-      
-      for (const knob of knobs) {
-        for (const key in knob.options) {
-          //@ts-ignore
-          if (knob.options[key].includes("function_")) {
-            const id = knob.options[key as keyof t.KnobOptions];
-            console.log('id', id)
-            const promise = new Promise<void>((resolve) => {
-              channel.emit("storyboard-bridge/request-function", id);
-              channel.on(
-                `storyboard-bridge/response-function-${id}`,
-                (fnString) => {
-                  const fn = new Function("return " + fnString)();
-                  knob.options[key as keyof t.KnobOptions] = fn;
-                  resolve();
-                }
-              );
-            });
-            pendingFunctions.push(promise);
-          }
+      processKnobs(knobs);
+    });
+  }, [channel])
+
+  const processKnobs = async (knobs: t.Knob[]) => {
+    const pendingFunctions: Promise<void>[] = [];
+    
+    for (const knob of knobs) {
+      for (const key in knob.options) {
+        //@ts-ignore
+        if (knob.options[key].includes("function_")) {
+          const id = knob.options[key as keyof t.KnobOptions];
+          const promise = new Promise<void>((resolve) => {
+            channel.emit("storyboard-bridge/request-function", id);
+            channel.on(
+              `storyboard-bridge/response-function-${id}`,
+              (fnString: string) => {
+                const fn = new Function("return " + fnString)();
+                knob.options[key as keyof t.KnobOptions] = fn;
+                resolve();
+              }
+            );
+          });
+          pendingFunctions.push(promise);
         }
       }
-      await Promise.all(pendingFunctions);
+    }
+    await Promise.all(pendingFunctions);
 
-      // setAllKnobs(knobs)
-      allKnobs.current = knobs
-      const tabsSet = new Set<string>()
-      for(let knob of knobs) tabsSet.add(knob.options.tab || 'DEFAULT')
-      const tabs = [...tabsSet]
-      let activeTab = 'DEFAULT'
-      if(!tabsSet.has('DEFAULT') && tabs[0]) activeTab = tabs[0]
-      let filteredKnobs = calculateKnobs(knobs, activeTab)
+    allKnobs.current = knobs
+    const tabsSet = new Set<string>()
+    for(let knob of knobs) tabsSet.add(knob.options.tab || 'DEFAULT')
+    const newTabs = [...tabsSet]
+    let newActiveTab = 'DEFAULT'
+    if(!tabsSet.has('DEFAULT') && newTabs[0]) newActiveTab = newTabs[0]
+    let filteredKnobs = calculateKnobs(knobs, newActiveTab)
 
-      const props:Record<string,any> = {}
-      for(const knob of knobs) objPath.set(props, knob.prop, knob.value)
-      
-      setProps(props)
-      setKnobs(filteredKnobs)
-      setTabs(tabs)
-      setActiveTab(activeTab)
-      setKey(key => key+1)
-    })
-  },[channel])
+    const newProps: Record<string,any> = {}
+    for(const knob of knobs) objPath.set(newProps, knob.prop, knob.value)
+    
+    setProps(newProps)
+    setKnobs(filteredKnobs)
+    setTabs(newTabs)
+    setActiveTab(newActiveTab)
+    setKey(key => key + 1)
+  }
 
-  const overloadedSetActiveTab = (tab:string) => {
+  const overloadedSetActiveTab = (tab: string) => {
     const filteredKnobs = calculateKnobs(allKnobs.current, tab)
     setKnobs(filteredKnobs)
     setActiveTab(tab)
   }
 
-
+  const update = (knob: t.Knob, value: any) => {
+    knob.value = value
+    channel.emit('storyboard-bridge/set-knob-value', {
+      knobId: knob.id,
+      payload: value
+    })
+    const newProps: Record<string,any> = {}
+    for(const knob of allKnobs.current) objPath.set(newProps, knob.prop, knob.value)
+    setProps(newProps)
+  }
 
   return {
     knobs,

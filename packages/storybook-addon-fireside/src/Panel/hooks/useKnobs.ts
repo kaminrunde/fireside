@@ -38,8 +38,12 @@ export default function useKnobs(channel: PersistentChannel):Output {
     
     for (const knob of knobs) {
       for (const key in knob.options) {
-        //@ts-ignore
-        if (knob.options[key].includes("function_")) {
+          //@ts-ignore
+          const knobOption = knob.options[key];
+          if (
+            typeof knobOption === "string" &&
+            knobOption.includes("function_")
+          ) {
           const id = knob.options[key as keyof t.KnobOptions];
           const promise = new Promise<void>((resolve) => {
             channel.emit("storyboard-bridge/request-function", id);
@@ -80,17 +84,6 @@ export default function useKnobs(channel: PersistentChannel):Output {
     const filteredKnobs = calculateKnobs(allKnobs.current, tab)
     setKnobs(filteredKnobs)
     setActiveTab(tab)
-  }
-
-  const update = (knob: t.Knob, value: any) => {
-    knob.value = value
-    channel.emit('storyboard-bridge/set-knob-value', {
-      knobId: knob.id,
-      payload: value
-    })
-    const newProps: Record<string,any> = {}
-    for(const knob of allKnobs.current) objPath.set(newProps, knob.prop, knob.value)
-    setProps(newProps)
   }
 
   return {

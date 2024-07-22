@@ -3,7 +3,6 @@ import * as React from "react";
 import { addons, types } from "@storybook/manager-api";
 import * as t from "./types";
 import Panel from "./Panel/Panel";
-import { AddonPanel } from "@storybook/components";
 import { getPersistentChannel } from "./persistentChannel";
 const hashit = require("hash-it");
 

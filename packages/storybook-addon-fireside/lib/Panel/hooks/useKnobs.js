@@ -47,7 +47,9 @@ function useKnobs(channel) {
         for (const knob of knobs) {
             for (const key in knob.options) {
                 //@ts-ignore
-                if (knob.options[key].includes("function_")) {
+                const knobOption = knob.options[key];
+                if (typeof knobOption === "string" &&
+                    knobOption.includes("function_")) {
                     const id = knob.options[key];
                     const promise = new Promise((resolve) => {
                         channel.emit("storyboard-bridge/request-function", id);
@@ -84,17 +86,6 @@ function useKnobs(channel) {
         const filteredKnobs = calculateKnobs(allKnobs.current, tab);
         setKnobs(filteredKnobs);
         setActiveTab(tab);
-    };
-    const update = (knob, value) => {
-        knob.value = value;
-        channel.emit('storyboard-bridge/set-knob-value', {
-            knobId: knob.id,
-            payload: value
-        });
-        const newProps = {};
-        for (const knob of allKnobs.current)
-            objPath.set(newProps, knob.prop, knob.value);
-        setProps(newProps);
     };
     return {
         knobs,

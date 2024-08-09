@@ -19,7 +19,7 @@ initContentfulExtension((_sdk) => {
   sdk = _sdk;
   try {
     // @ts-ignore
-    sdk.window.updateHeight(600);
+    sdk.window.updateHeight(1000);
     sdk.window;
   } catch (e) {}
   const value = sdk.field.getValue();

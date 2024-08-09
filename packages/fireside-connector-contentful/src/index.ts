@@ -42,7 +42,7 @@ initContentfulExtension(async(_sdk:any) => {
   sdk = _sdk
   try {
     // @ts-ignore
-    sdk.window.updateHeight(600);
+    sdk.window.updateHeight(1000);
   } catch (e) {}
 
   let value = sdk.field.getValue();

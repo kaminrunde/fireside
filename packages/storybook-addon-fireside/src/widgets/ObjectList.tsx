@@ -145,6 +145,7 @@ const Item = styled.li<{highlight: string}>`
   font-size: 14px;
   cursor: grabbing;
   display: flex;
+  z-index: 9999;
 
   > input {
     display: block;

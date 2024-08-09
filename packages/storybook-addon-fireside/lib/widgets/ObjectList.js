@@ -122,6 +122,7 @@ const Item = styled_components_1.default.li `
   font-size: 14px;
   cursor: grabbing;
   display: flex;
+  z-index: 9999;
 
   > input {
     display: block;

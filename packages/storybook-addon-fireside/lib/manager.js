@@ -45,7 +45,7 @@ manager_api_1.addons.register("addons:storyboard-bridge", (api) => {
         name: "not-known",
         props: {},
     };
-    if (window.localStorage.getItem("debugFireside")) {
+    if (!window.localStorage.getItem("debugFireside")) {
         channel.on("channelCreated", (e) => console.log("channelCreated", e));
         channel.on("getCurrentStory", (e) => console.log("getCurrentStory", e));
         channel.on("setCurrentStory", (e) => console.log("setCurrentStory", e));
@@ -80,9 +80,6 @@ manager_api_1.addons.register("addons:storyboard-bridge", (api) => {
     }
     channel.on("storyboard-bridge/select-story", (context) => {
         const storyId = api.storyId(context.kind, context.story);
-        if (window.localStorage.getItem("debugFireside")) {
-            console.log("createStoryId", storyId);
-        }
         api.selectStory(storyId);
     });
     channel.on("storyboard-bridge/update-component-name", (name) => {

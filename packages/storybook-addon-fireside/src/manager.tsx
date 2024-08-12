@@ -24,7 +24,7 @@ addons.register("addons:storyboard-bridge", (api) => {
     props: {},
   };
 
-  if (window.localStorage.getItem("debugFireside")) {
+  if (!window.localStorage.getItem("debugFireside")) {
     channel.on("channelCreated" as any, (e) =>
       console.log("channelCreated", e),
     );
@@ -96,9 +96,6 @@ addons.register("addons:storyboard-bridge", (api) => {
 
   channel.on("storyboard-bridge/select-story", (context) => {
     const storyId = api.storyId(context.kind, context.story);
-    if (window.localStorage.getItem("debugFireside")) {
-      console.log("createStoryId", storyId);
-    }
     api.selectStory(storyId);
   });
   channel.on("storyboard-bridge/update-component-name", (name) => {

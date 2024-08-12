@@ -120,6 +120,7 @@ export type Component = {
 }
 
 export type Event =
+  | "storyboard-bridge/create"
   | "storyboard-bridge/set-knobs"
   | "storyboard-bridge/set-knob-value"
   | "storyboard-bridge/select-story"

@@ -15,6 +15,7 @@ let currentController = {};
 const channel = preview_api_1.addons.getChannel();
 let hydratedProps = null;
 const functionRegistry = {};
+let currentComponent = '';
 function getKnobs(context, simpleKnobs, controller, name, rerender) {
     contextStore[context.id] = context;
     forceReRender = rerender;
@@ -46,11 +47,16 @@ function getKnobs(context, simpleKnobs, controller, name, rerender) {
             knob.value = newValue || knob.value;
         });
     }
-    if (currentStoryId !== context.id || hydratedProps) {
-        currentStoryId = context.id;
+    console.log('---');
+    console.log('context.id', context.id);
+    console.log('currentComponent', currentComponent);
+    console.log('---');
+    if (currentComponent === context.id) {
+        currentComponent = '';
         currentKnobs = knobs;
         currentController = controller;
         hydratedProps = null;
+        console.log('hydrateProps:59', hydratedProps);
         channel.emit('storyboard-bridge/update-component-name', name);
         channel.emit("storyboard-bridge/set-knobs", replaceFunctionsWithIdsAndEmit(knobs));
         channel.emit('storyboard-bridge/update-component-props', getProps(knobs));
@@ -113,6 +119,7 @@ channel.on('storyboard-bridge/hydrate-component', (component) => {
     };
     if (currentStoryId !== context.id) {
         hydratedProps = component.props;
+        console.log('hydrateProps:129', hydratedProps);
         channel.emit('storyboard-bridge/select-story', context);
         setTimeout(() => hydrate(), 500);
     }
@@ -120,6 +127,15 @@ channel.on('storyboard-bridge/hydrate-component', (component) => {
         hydrate();
 });
 channel.emit('storyboard-bridge/init-knob-manager');
+window.addEventListener('message', (message) => {
+    try {
+        const data = JSON.parse(message.data);
+        if (data.type === 'create-component') {
+            currentComponent = data.payload;
+        }
+    }
+    catch (e) { }
+});
 channel.on("storyboard-bridge/register-function", ({ id, fn }) => {
     functionRegistry[id] = fn;
 });

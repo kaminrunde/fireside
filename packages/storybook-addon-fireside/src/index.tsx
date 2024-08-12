@@ -179,6 +179,21 @@ export const create = (
   controller:t.Controller={}
 ):any => (args:any, context:t.StoryContext) => {
   const [,update] = React.useState(0)
+
+  console.log(111, context.id)
+  React.useEffect(() => {
+    setTimeout(() => {
+      () => update(i => i + 1)
+    }, 1000)
+    window.postMessage(
+      JSON.stringify({
+        type: "create-component",
+        payload: context.id
+      }),
+      "*",
+    );
+  }, [context.id])
+
   const knobs = manager.getKnobs(context, simpleKnobs, controller, name, () => update(i => i+1))
   let props = manager.getProps(knobs)
   return <WidgetWrapper {...{component, props, controller}}/>

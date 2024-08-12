@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as t from './types'
 import * as manager from './knob-manager'
 import WidgetWrapper from './WidgetWrapper'
+import { addons } from '@storybook/preview-api'
 
 /**
  * manages string props. use this knob for simple labels. for more
@@ -179,19 +180,10 @@ export const create = (
   controller:t.Controller={}
 ):any => (args:any, context:t.StoryContext) => {
   const [,update] = React.useState(0)
+  const channel:t.Channel = addons.getChannel()
 
-  console.log(111, context.id)
   React.useEffect(() => {
-    setTimeout(() => {
-      () => update(i => i + 1)
-    }, 1000)
-    window.postMessage(
-      JSON.stringify({
-        type: "create-component",
-        payload: context.id
-      }),
-      "*",
-    );
+    channel.emit('storyboard-bridge/story-component-loaded', context.id)
   }, [context.id])
 
   const knobs = manager.getKnobs(context, simpleKnobs, controller, name, () => update(i => i+1))

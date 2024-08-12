@@ -30,6 +30,7 @@ exports.registerKnob = exports.createCustomKnob = exports.registerWidgetSelector
 const React = __importStar(require("react"));
 const manager = __importStar(require("./knob-manager"));
 const WidgetWrapper_1 = __importDefault(require("./WidgetWrapper"));
+const preview_api_1 = require("@storybook/preview-api");
 /**
  * manages string props. use this knob for simple labels. for more
  * complex inputs use the markdown knob
@@ -158,15 +159,9 @@ const select = (prop, label, value, options) => ({ type: 'select', prop, label, 
 exports.select = select;
 const create = (name, component, simpleKnobs, controller = {}) => (args, context) => {
     const [, update] = React.useState(0);
-    console.log(111, context.id);
+    const channel = preview_api_1.addons.getChannel();
     React.useEffect(() => {
-        setTimeout(() => {
-            () => update(i => i + 1);
-        }, 1000);
-        window.postMessage(JSON.stringify({
-            type: "create-component",
-            payload: context.id
-        }), "*");
+        channel.emit('storyboard-bridge/story-component-loaded', context.id);
     }, [context.id]);
     const knobs = manager.getKnobs(context, simpleKnobs, controller, name, () => update(i => i + 1));
     let props = manager.getProps(knobs);

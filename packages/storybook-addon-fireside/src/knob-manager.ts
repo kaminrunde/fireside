@@ -15,7 +15,7 @@ const channel:t.Channel = addons.getChannel()
 let hydratedProps:null|object = null
 const functionRegistry: any = {};
 
-let currentComponent = ''
+let componentToBeHydrated = ''
 
 
 export function getKnobs (
@@ -54,16 +54,12 @@ export function getKnobs (
     })
   }
 
-  console.log('---')    
-  console.log('context.id', context.id)
-  console.log('currentComponent', currentComponent)
-  console.log('---')
-  if (currentComponent === context.id) {
-    currentComponent = ''
+  if (currentStoryId !== context.id || hydratedProps) {
+    componentToBeHydrated = ''
+    currentStoryId = context.id;
     currentKnobs = knobs
     currentController = controller
     hydratedProps = null
-    console.log('hydrateProps:59', hydratedProps)
     channel.emit('storyboard-bridge/update-component-name', name)
     channel.emit(
       "storyboard-bridge/set-knobs",
@@ -107,7 +103,7 @@ channel.on('storyboard-bridge/set-knob-value', ({knobId,payload}) => {
   forceReRender()
 })
 
-channel.on('storyboard-bridge/hydrate-component', (component:t.Component) => {
+channel.on('storyboard-bridge/hydrate-component', async (component:t.Component) => {
   const selector = selectorStore[component.name]
   if(!selector){
     throw new Error('you forgot to implement "registerWidgetSelector" for widget '+component.name)
@@ -135,9 +131,13 @@ channel.on('storyboard-bridge/hydrate-component', (component:t.Component) => {
 
   if(currentStoryId !== context.id) {
     hydratedProps = component.props 
-    console.log('hydrateProps:129', hydratedProps)
     channel.emit('storyboard-bridge/select-story', context)
-    setTimeout(() => hydrate(), 500)
+    while (componentToBeHydrated !== context.id) {
+      await new Promise((resolve) => setTimeout(() => {
+        resolve(true)
+      }, 16))
+    }
+    hydrate()
   }
   else hydrate()
   
@@ -147,14 +147,9 @@ channel.on('storyboard-bridge/hydrate-component', (component:t.Component) => {
 
 channel.emit('storyboard-bridge/init-knob-manager')
 
-window.addEventListener('message', (message) => {
-  try {
-    const data = JSON.parse(message.data)
-    if (data.type === 'create-component') {
-      currentComponent = data.payload
-    }
-  } catch (e) {}
-})
+channel.on("storyboard-bridge/story-component-loaded", (loadedComponent) => {
+  componentToBeHydrated = loadedComponent;
+});
 
 channel.on("storyboard-bridge/register-function", ({ id, fn }) => {
   functionRegistry[id] = fn;

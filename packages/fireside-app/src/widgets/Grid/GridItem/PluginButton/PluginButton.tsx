@@ -1,50 +1,50 @@
-import * as React from 'react'
-import styled from 'styled-components'
-import {usePluginState} from 'modules/plugins'
-import {PluginComponentAPI} from '@kaminrunde/fireside-utils'
+import * as React from "react";
+import styled from "styled-components";
+import { usePluginState } from "modules/plugins";
+import { PluginComponentAPI } from "@kaminrunde/fireside-utils";
 import { useComponent } from "modules/components";
 
-
 type Props = {
-  pluginKey: string,
-  componentId: string,
-  mediaSize: string,
+  pluginKey: string;
+  componentId: string;
+  mediaSize: string;
   icon: {
     component: any;
     isActive: (api: any) => boolean;
     onClick: (api: any) => void;
-  }
-}
+  };
+};
 
-export default React.memo(function PluginComponent (props:Props) {
-  const state = usePluginState(props.pluginKey)
-  const component = useComponent(props.componentId)
+export default React.memo(function PluginComponent(props: Props) {
+  const state = usePluginState(props.pluginKey);
+  const component = useComponent(props.componentId);
 
-  const api:PluginComponentAPI<any> = {
+  const api: PluginComponentAPI<any> = {
     state: state.data,
-    setState: (data:any) => { state.set(data) },
+    setState: (data: any) => {
+      state.set(data);
+    },
     component: component.data,
     mediaSize: props.mediaSize,
     story: state.story,
-  }
+  };
 
-  const handleClick = e => {
-    e.preventDefault()
-    e.stopPropagation()
-    props.icon.onClick(api)
-  }
-  
-  if(!component.data) return null
+  const handleClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    props.icon.onClick(api);
+  };
 
-  const isActive = props.icon.isActive(api)
+  if (!component.data) return null;
 
+  const isActive = props.icon.isActive(api);
 
   return (
     <Wrapper onClick={handleClick} active={isActive}>
-      <props.icon.component {...api}/>
+      <props.icon.component {...api} />
     </Wrapper>
-  )
-})
+  );
+});
 
 const Wrapper = styled.button`
   width: max-content;
@@ -59,4 +59,4 @@ const Wrapper = styled.button`
   &:first-child {
     border-left: none;
   }
-`
+`;

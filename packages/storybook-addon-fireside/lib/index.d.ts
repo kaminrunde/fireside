@@ -1,4 +1,4 @@
-import * as t from './types';
+import * as t from "./types";
 /**
  * manages string props. use this knob for simple labels. for more
  * complex inputs use the markdown knob
@@ -109,13 +109,13 @@ export declare const objectList: (prop: string, label: string, value: object[], 
  * @yields {string[]}
  * @example
  * k.select('position', 'Position', 'left', {
-  *   options: [
-  *     { label: 'left', value: 'left' },
-  *     { label: 'center', value: 'center' },
-  *     { label: 'right', value: 'right' },
-  *   ]
-  * })
-  */
+ *   options: [
+ *     { label: 'left', value: 'left' },
+ *     { label: 'center', value: 'center' },
+ *     { label: 'right', value: 'right' },
+ *   ]
+ * })
+ */
 export declare const select: (prop: string, label: string, value: string, options: t.SelectOptions) => t.SimpleKnob;
 export declare const create: (name: string, component: any, simpleKnobs: t.SimpleKnob[], controller?: t.Controller) => any;
 export declare function registerWidgetSelector<UserConfig>(name: string, cb: (props: UserConfig) => {

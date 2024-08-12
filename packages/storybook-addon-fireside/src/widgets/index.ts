@@ -1,23 +1,23 @@
-import String from './String'
-import Constant from './Constant'
-import Number from './Number'
-import Markdown from './Markdown'
-import Bool from './Bool'
-import StringList from './StringList'
-import ObjectList from './ObjectList'
-import CustomKnobPlaceholder from './CustomKnobPlaceholder'
-import Select from './Select'
-import * as t from '../types'
+import String from "./String";
+import Constant from "./Constant";
+import Number from "./Number";
+import Markdown from "./Markdown";
+import Bool from "./Bool";
+import StringList from "./StringList";
+import ObjectList from "./ObjectList";
+import CustomKnobPlaceholder from "./CustomKnobPlaceholder";
+import Select from "./Select";
+import * as t from "../types";
 
-export default function getWidget (
-  knob:t.Knob | t.SimpleKnob, 
-  customComponents:Record<string, any>
+export default function getWidget(
+  knob: t.Knob | t.SimpleKnob,
+  customComponents: Record<string, any>
 ) {
-  if(knob.type === 'custom-knob') {
+  if (knob.type === "custom-knob") {
     // @ts-ignore
-    const result = customComponents[knob.options.__name]
-    if(!result) return CustomKnobPlaceholder
-    return result
+    const result = customComponents[knob.options.__name];
+    if (!result) return CustomKnobPlaceholder;
+    return result;
   }
   return {
     string: String,
@@ -27,6 +27,6 @@ export default function getWidget (
     bool: Bool,
     stringList: StringList,
     objectList: ObjectList,
-    select: Select
-  }[knob.type]
+    select: Select,
+  }[knob.type];
 }

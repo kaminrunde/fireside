@@ -1,5 +1,4 @@
-import * as t from './types'
-
+import * as t from "./types";
 
 /**
  * Updates a component by defined controller
@@ -11,32 +10,34 @@ import * as t from './types'
  * @param config Config
  */
 export default async function preprocessComponent(
-  c:t.Component,
+  c: t.Component,
   getGridContext: () => t.GridContext,
-  config:t.Config
-):Promise<[t.Component, any[]]> {
-  const controller = await config.resolveController(c.name)
-  let updated = Object.assign({},c)
-  let storyEvents = []
-  if(!controller) return [c, storyEvents]
+  config: t.Config
+): Promise<[t.Component, any[]]> {
+  const controller = await config.resolveController(c.name);
+  let updated = Object.assign({}, c);
+  let storyEvents = [];
+  if (!controller) return [c, storyEvents];
 
-  if(controller.versionUpdate){
-    updated.props = controller.versionUpdate(updated.props)
+  if (controller.versionUpdate) {
+    updated.props = controller.versionUpdate(updated.props);
   }
 
-  if(controller.preprocessProps){
-    updated.props = await controller.preprocessProps(updated.props)
+  if (controller.preprocessProps) {
+    updated.props = await controller.preprocessProps(updated.props);
   }
 
-  if(controller.createContext){
+  if (controller.createContext) {
     updated.props = Object.assign({}, updated.props, {
-      context: await controller.createContext(updated.props, {getGridContext})
-    })
+      context: await controller.createContext(updated.props, {
+        getGridContext,
+      }),
+    });
   }
 
-  if(controller.createStoryEvents){
-    storyEvents = await controller.createStoryEvents(updated.props)
+  if (controller.createStoryEvents) {
+    storyEvents = await controller.createStoryEvents(updated.props);
   }
 
-  return [updated,storyEvents]
+  return [updated, storyEvents];
 }

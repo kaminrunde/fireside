@@ -1,10 +1,9 @@
 import * as React from "react";
 import styled from "styled-components";
 import * as $grid from "modules/grid";
-import { useComponentIconList, useComponentBadgeList } from 'modules/plugins'
-import PluginButton from './PluginButton'
-import PluginBadge from './PluginBadge'
-
+import { useComponentIconList, useComponentBadgeList } from "modules/plugins";
+import PluginButton from "./PluginButton";
+import PluginBadge from "./PluginBadge";
 
 type Props = {
   mediaSize: string;
@@ -13,14 +12,14 @@ type Props = {
   onClick: () => void;
   label: string;
   item: $grid.t.GridArea;
-  onMouseEnter: () => void
-  onMouseLeave: () => void
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 };
 
 export default function GridItem(props: Props) {
-  const iconList = useComponentIconList()
-  const badgeList = useComponentBadgeList()
-  
+  const iconList = useComponentIconList();
+  const badgeList = useComponentBadgeList();
+
   return (
     <Wrapper
       rowHeight={props.rowHeight}
@@ -29,10 +28,10 @@ export default function GridItem(props: Props) {
       onMouseEnter={props.onMouseEnter}
       onMouseLeave={props.onMouseLeave}
     >
-      <div className='label'>{props.label}</div>
+      <div className="label">{props.label}</div>
       <div className="context">
-        {iconList.data.map((row,i) => (
-          <PluginButton 
+        {iconList.data.map((row, i) => (
+          <PluginButton
             mediaSize={props.mediaSize}
             componentId={props.item.i}
             key={i}
@@ -42,7 +41,7 @@ export default function GridItem(props: Props) {
         ))}
       </div>
       <div className="badges">
-        {badgeList.data.map((row,i) => (
+        {badgeList.data.map((row, i) => (
           <PluginBadge
             key={i}
             mediaSize={props.mediaSize}

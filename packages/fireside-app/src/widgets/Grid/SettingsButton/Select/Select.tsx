@@ -1,45 +1,44 @@
-import * as React from 'react'
-import styled from 'styled-components'
-import useFocus from 'hooks/useFocus'
-import {FiChevronDown, FiChevronUp} from 'react-icons/fi'
+import * as React from "react";
+import styled from "styled-components";
+import useFocus from "hooks/useFocus";
+import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
 type Props = {
   value: {
-    key: string,
-    label: string
-  },
+    key: string;
+    label: string;
+  };
   options: {
-    key: string,
-    label: string
-  }[],
-  onSelect: (opt:{
-    key: string,
-    label: string
-  }) => void
-}
+    key: string;
+    label: string;
+  }[];
+  onSelect: (opt: { key: string; label: string }) => void;
+};
 
-export default function Select (props:Props) {
-  const [focus, open, ref, close] = useFocus()
+export default function Select(props: Props) {
+  const [focus, open, ref, close] = useFocus();
   return (
-    <Wrapper className='Select' ref={ref} onClick={focus}>
-      <div className='value'>{props.value.label} {open 
-        ? <FiChevronUp />
-        : <FiChevronDown />
-      }</div>
+    <Wrapper className="Select" ref={ref} onClick={focus}>
+      <div className="value">
+        {props.value.label} {open ? <FiChevronUp /> : <FiChevronDown />}
+      </div>
       {open && (
-        <div className='dropdown'>
-          {props.options.map(opt => (
-            <div key={opt.key} onClick={() => {
-              props.onSelect(opt)
-              close()
-            }}>
+        <div className="dropdown">
+          {props.options.map((opt) => (
+            <div
+              key={opt.key}
+              onClick={() => {
+                props.onSelect(opt);
+                close();
+              }}
+            >
               {opt.label}
             </div>
           ))}
         </div>
       )}
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.div`
@@ -54,7 +53,7 @@ const Wrapper = styled.div`
     width: 100%;
     align-items: center;
     justify-content: space-between;
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Open Sans", sans-serif;
 
     > svg {
       margin-left: 10px;
@@ -66,7 +65,7 @@ const Wrapper = styled.div`
     height: 100px;
     overflow: auto;
     margin-top: 10px;
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Open Sans", sans-serif;
     background: white;
     z-index: 999999999;
     > * {
@@ -78,4 +77,4 @@ const Wrapper = styled.div`
       }
     }
   }
-`
+`;

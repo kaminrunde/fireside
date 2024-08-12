@@ -1,1 +1,1 @@
-export {default} from './EnforceFullscreen'
+export { default } from "./EnforceFullscreen";

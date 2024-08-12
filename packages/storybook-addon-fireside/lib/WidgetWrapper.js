@@ -47,7 +47,7 @@ function useComponentProps(props) {
                     colStretch: 1,
                     rowStretch: 1,
                 }),
-                has: () => true
+                has: () => true,
             });
             context.byMediaSize = proxy;
             return context;
@@ -58,11 +58,13 @@ function useComponentProps(props) {
                 newProps = await props.controller.preprocessProps(newProps);
             }
             if (props.controller.createContext) {
-                newProps.context = await props.controller.createContext(newProps, { getGridContext });
+                newProps.context = await props.controller.createContext(newProps, {
+                    getGridContext,
+                });
             }
             setFinalProps(newProps);
             setFinished(true);
-            setKey(key => key + 1);
+            setKey((key) => key + 1);
         })();
     }, [props.controller, props.props]);
     return [finished, finalProps, key];

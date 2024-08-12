@@ -1,21 +1,19 @@
-import * as t from './types'
-import * as at from './const'
+import * as t from "./types";
+import * as at from "./const";
 
-export const init = (ms:t.MS) => ({
+export const init = (ms: t.MS) => ({
   type: at.INIT,
   payload: {
-    activeMediaSizes: ms
-  }
-})
+    activeMediaSizes: ms,
+  },
+});
 
-export const toggleMediaSize = (ms:string) => ({
+export const toggleMediaSize = (ms: string) => ({
   type: at.TOGGLE_MEDIA_SIZE,
-  payload: ms
-})
+  payload: ms,
+});
 
-export type Init = ReturnType<typeof init>
-export type ToggleMediaSize = ReturnType<typeof toggleMediaSize>
+export type Init = ReturnType<typeof init>;
+export type ToggleMediaSize = ReturnType<typeof toggleMediaSize>;
 
-export type Action = 
-| ToggleMediaSize
-| Init
+export type Action = ToggleMediaSize | Init;

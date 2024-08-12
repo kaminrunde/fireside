@@ -1,47 +1,50 @@
-import * as React from 'react'
-import styled from 'styled-components'
-import {FiSettings} from 'react-icons/fi'
-import {useGrid} from 'modules/grid'
-import { useGridRowIconList, useGridRowBadgeList, useGridRowSettingList } from 'modules/plugins'
-import PluginBadge from './PluginBadge'
-import PluginButton from './PluginButton'
-import PluginModal from '../PluginModal'
+import * as React from "react";
+import styled from "styled-components";
+import { FiSettings } from "react-icons/fi";
+import { useGrid } from "modules/grid";
+import {
+  useGridRowIconList,
+  useGridRowBadgeList,
+  useGridRowSettingList,
+} from "modules/plugins";
+import PluginBadge from "./PluginBadge";
+import PluginButton from "./PluginButton";
+import PluginModal from "../PluginModal";
 
 type Props = {
-  mediaSize: string,
-  height: string,
-  index: number
-}
+  mediaSize: string;
+  height: string;
+  index: number;
+};
 
-const GRID_MARGIN = 5
-const ROW_HEIGHT = 40
+const GRID_MARGIN = 5;
+const ROW_HEIGHT = 40;
 
-export default function GridHeight (props:Props) {
-  const grid = useGrid(props.mediaSize)
-  const iconList = useGridRowIconList()
-  const badgeList = useGridRowBadgeList()
-  const settingsList = useGridRowSettingList()
-  const [showModal, setShowModal] = React.useState(false)
-
+export default function GridHeight(props: Props) {
+  const grid = useGrid(props.mediaSize);
+  const iconList = useGridRowIconList();
+  const badgeList = useGridRowBadgeList();
+  const settingsList = useGridRowSettingList();
+  const [showModal, setShowModal] = React.useState(false);
 
   const pluginComponents = React.useMemo(() => {
-    return settingsList.data.map(row => ({
+    return settingsList.data.map((row) => ({
       title: row.payload.title,
       component: row.payload.component,
       isActive: row.payload.isActive,
-      pluginKey: row.meta.key
-    }))
-  }, settingsList.data)
+      pluginKey: row.meta.key,
+    }));
+  }, settingsList.data);
 
   return (
     <Wrapper>
-      <input 
-        type='text' 
-        value={props.height} 
-        onChange={e => grid.setHeight(props.index, e.target.value)} 
+      <input
+        type="text"
+        value={props.height}
+        onChange={(e) => grid.setHeight(props.index, e.target.value)}
       />
-      <div className='context'>
-        {iconList.data.map((row,i) => (
+      <div className="context">
+        {iconList.data.map((row, i) => (
           <PluginButton
             row={props.index}
             key={i}
@@ -51,11 +54,13 @@ export default function GridHeight (props:Props) {
           />
         ))}
         {settingsList.data.length > 0 && (
-          <button className='settings' onClick={() => setShowModal(true)}><FiSettings/></button>
+          <button className="settings" onClick={() => setShowModal(true)}>
+            <FiSettings />
+          </button>
         )}
       </div>
-      <div className='badges'>
-        {badgeList.data.map((row,i) => (
+      <div className="badges">
+        {badgeList.data.map((row, i) => (
           <PluginBadge
             row={props.index}
             key={i}
@@ -66,18 +71,18 @@ export default function GridHeight (props:Props) {
         ))}
       </div>
       {showModal && (
-        <PluginModal 
+        <PluginModal
           onClose={() => setShowModal(false)}
           title={`Grid row [${props.index}]`}
           components={pluginComponents}
           extraArgs={{
             mediaSize: props.mediaSize,
-            row: props.index
+            row: props.index,
           }}
         />
       )}
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.div`
@@ -94,7 +99,7 @@ const Wrapper = styled.div`
     border: none;
     background: whitesmoke;
     text-align: center;
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Open Sans", sans-serif;
     &:focus {
       background: white;
     }
@@ -121,8 +126,12 @@ const Wrapper = styled.div`
       cursor: pointer;
       border-left: 1px solid lightgrey;
       padding-top: 3px;
-      > svg {font-size: 15px;}
-      &:first-child { border-left: none;}
+      > svg {
+        font-size: 15px;
+      }
+      &:first-child {
+        border-left: none;
+      }
     }
   }
 
@@ -131,7 +140,9 @@ const Wrapper = styled.div`
     right: -12px;
     top: -5px;
     display: flex;
-    > * { margin-right: 3px;}
+    > * {
+      margin-right: 3px;
+    }
   }
 
   &:hover {
@@ -142,4 +153,4 @@ const Wrapper = styled.div`
       display: none;
     }
   }
-`
+`;

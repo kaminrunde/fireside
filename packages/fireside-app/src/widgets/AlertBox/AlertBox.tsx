@@ -1,24 +1,26 @@
-import * as React from 'react'
-import styled from 'styled-components'
-import { useAlertBox } from 'modules/ui'
-import { MdClose } from 'react-icons/md'
+import * as React from "react";
+import styled from "styled-components";
+import { useAlertBox } from "modules/ui";
+import { MdClose } from "react-icons/md";
 
-export default function AlertBox () {
-  const alertBox = useAlertBox()
+export default function AlertBox() {
+  const alertBox = useAlertBox();
 
-  if(!alertBox.modal) return null
+  if (!alertBox.modal) return null;
 
-  const options = alertBox.modal.options || ['OK']
+  const options = alertBox.modal.options || ["OK"];
 
   return (
     <Wrapper>
-      <div className='overlay' />
-      <div className='box'>
-        <div className='close-wrapper' onClick={() => alertBox.close('ABORT')}><MdClose/></div>
+      <div className="overlay" />
+      <div className="box">
+        <div className="close-wrapper" onClick={() => alertBox.close("ABORT")}>
+          <MdClose />
+        </div>
         <h3>{alertBox.modal.title}</h3>
         {alertBox.modal.description && <p>{alertBox.modal.description}</p>}
         <Options single={options.length === 1}>
-          {options.map(opt => (
+          {options.map((opt) => (
             <button key={opt} onClick={() => alertBox.close(opt)}>
               {opt}
             </button>
@@ -26,7 +28,7 @@ export default function AlertBox () {
         </Options>
       </div>
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.div`
@@ -36,7 +38,7 @@ const Wrapper = styled.div`
     top: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     z-index: 9999999999999999999999998;
   }
 
@@ -76,39 +78,39 @@ const Wrapper = styled.div`
     > h3 {
       margin: 0;
       text-align: center;
-      font-family: 'Open Sans', sans-serif;
+      font-family: "Open Sans", sans-serif;
     }
 
     > p {
       text-align: center;
-      font-family: 'Roboto', sans-serif;
+      font-family: "Roboto", sans-serif;
     }
   }
-`
+`;
 
 const Options = styled.div`
   display: flex;
   margin-top: 40px;
   padding: 0 50px;
-  justify-content: ${p => p.single ? 'center' : 'space-between'};
+  justify-content: ${(p) => (p.single ? "center" : "space-between")};
 
   > button {
     border: none;
     position: relative;
     padding: 15px;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     cursor: pointer;
 
     &:hover {
       &:after {
-        content: '';
+        content: "";
         position: absolute;
         left: 0;
         top: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0,0,0,0.2);
+        background: rgba(0, 0, 0, 0.2);
       }
     }
   }
-`
+`;

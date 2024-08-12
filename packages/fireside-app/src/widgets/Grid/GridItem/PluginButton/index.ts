@@ -1,1 +1,1 @@
-export {default} from './PluginButton'
+export { default } from "./PluginButton";

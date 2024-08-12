@@ -16,6 +16,13 @@ export interface KnobOptions {
      * })
      */
     shouldDisplay?: (props: any) => boolean;
+    /**
+     * if an error string is returned, the error is displayed below the headline
+     * @example
+     * k.string('foo', 'Foo', '', {
+     *   validate: s => !s && 'a value is required'
+     * })
+     */
     validate?: (value: any) => void | null | false | string;
 }
 export interface StringOptions extends KnobOptions {
@@ -83,7 +90,7 @@ export interface MarkdownOptions extends KnobOptions {
     toolbarTips?: any;
 }
 export interface SimpleKnob {
-    type: 'string' | 'constant' | 'number' | 'markdown' | 'bool' | 'stringList' | 'objectList' | 'select' | 'custom-knob';
+    type: "string" | "constant" | "number" | "markdown" | "bool" | "stringList" | "objectList" | "select" | "custom-knob";
     prop: string;
     label: string;
     value: any;

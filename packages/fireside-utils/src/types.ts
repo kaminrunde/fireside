@@ -1,112 +1,108 @@
-import * as et from './createPlugin/event-types'
-
+import * as et from "./createPlugin/event-types";
 
 export type Connector = {
-  name: string,
-  onChange: (cb:(story?:RawStory) => void) => void,
-  setStory: (story:RawStory) => void
-}
+  name: string;
+  onChange: (cb: (story?: RawStory) => void) => void;
+  setStory: (story: RawStory) => void;
+};
 
 export type PluginOptions = {
-  key: string
-}
+  key: string;
+};
 
 export type PluginActions = {
-  alert: (ctx:{
-    title: string
-    description?: string
-    options?: string[]
-  }) => Promise<string | null>
-  addComponentToComponentList: (component) => void
+  alert: (ctx: {
+    title: string;
+    description?: string;
+    options?: string[];
+  }) => Promise<string | null>;
+  addComponentToComponentList: (component) => void;
   triggerSnackbarEvent: (message: {
-    type: 'info' | 'warning' | 'error',
-    title: string,
-    content: string
-  }) => void
-  updateStory: (story: RawStory) => void
-}
+    type: "info" | "warning" | "error";
+    title: string;
+    content: string;
+  }) => void;
+  updateStory: (story: RawStory) => void;
+};
 
 export interface PluginAPI<State> {
-  state: State,
-  setState: (state:State) => void
-  story: RawStory
+  state: State;
+  setState: (state: State) => void;
+  story: RawStory;
 }
 
 export interface PluginComponentAPI<State> extends PluginAPI<State> {
-  component: Component,
-  mediaSize: string
+  component: Component;
+  mediaSize: string;
 }
 
 export interface PluginGridRowAPI<State> extends PluginAPI<State> {
-  mediaSize: string,
-  row: number
+  mediaSize: string;
+  row: number;
 }
 
-export interface SettingsPageAPI<State> extends PluginAPI<State> {
-  
-}
+export interface SettingsPageAPI<State> extends PluginAPI<State> {}
 
-export interface StaticComponentAPI<State> extends PluginAPI<State> {
-  
-}
+export interface StaticComponentAPI<State> extends PluginAPI<State> {}
 
-export interface OnStoryUpdateAPI<State> extends PluginAPI<State> {
-  
-}
+export interface OnStoryUpdateAPI<State> extends PluginAPI<State> {}
 
-export type PluginEvent = 
-| et.InitialStateEvent
-| et.ComponentBadgeEvent 
-| et.ComponentIconEvent
-| et.ComponentSettingsEvent
-| et.GridRowBadgeEvent 
-| et.GridRowIconEvent
-| et.GridRowSettingsEvent
-| et.SettingsPageRowEvent
-| et.CreatePageNavigationEvent
-| et.CreatePagePageEvent
-| et.CreateStaticComponentEvent
-| et.OnStoryUpdateEvent
-| et.ExtendComponentButtonListEvent;
-
+export type PluginEvent =
+  | et.InitialStateEvent
+  | et.ComponentBadgeEvent
+  | et.ComponentIconEvent
+  | et.ComponentSettingsEvent
+  | et.GridRowBadgeEvent
+  | et.GridRowIconEvent
+  | et.GridRowSettingsEvent
+  | et.SettingsPageRowEvent
+  | et.CreatePageNavigationEvent
+  | et.CreatePagePageEvent
+  | et.CreateStaticComponentEvent
+  | et.OnStoryUpdateEvent
+  | et.ExtendComponentButtonListEvent;
 
 export type Config = {
-  resolveController?: (name:string) => Controller<any,any> | Promise<Controller<any,any>>,
-  nodes?: string[] | {
-    name:string,
-    key:string
-  }[]
-}
+  resolveController?: (
+    name: string
+  ) => Controller<any, any> | Promise<Controller<any, any>>;
+  nodes?:
+    | string[]
+    | {
+        name: string;
+        key: string;
+      }[];
+};
 
-export type Controller<ComponentConfig,Context> = {
+export type Controller<ComponentConfig, Context> = {
   /**
    * This is the first hook that is ever called in the controller lifecicle. A some
    * point you want to change the component config. but there may be a bunch of static
-   * configurations in your cms, you cannot change. So this hook is able to transform 
+   * configurations in your cms, you cannot change. So this hook is able to transform
    * the older content into your newer one. When you have a newer version of your component
    * config define a constant integer that represents your current version
    * @example
    * // in component creation
    * k.constant('__version', '', 1)
-   * 
+   *
    * // in hook
    * versionUpdate (componentConfig) {
    *   let newConfig = {...componentConfig}
-   * 
+   *
    *   if(!newConfig.__version){
    *     newConfig.__version = 1
    *     // other transformation
    *   }
-   *   
+   *
    *   if(newConfig.__version === 1){
-    *     newConfig.__version = 2
-    *     // other transformation
-    *   }
-    * 
-    *   return newConfig
+   *     newConfig.__version = 2
+   *     // other transformation
+   *   }
+   *
+   *   return newConfig
    * }
    */
-  versionUpdate?: (componentConfig:ComponentConfig) => ComponentConfig,
+  versionUpdate?: (componentConfig: ComponentConfig) => ComponentConfig;
   /**
    * Here you can change the original component config. E.g you can transform a markdown string
    * into a html-string. You are not allowed to change the shape of your component config. Everything
@@ -119,7 +115,9 @@ export type Controller<ComponentConfig,Context> = {
    *   }
    * }
    */
-  preprocessProps?: (componentConfig:ComponentConfig) => ComponentConfig | Promise<ComponentConfig>,
+  preprocessProps?: (
+    componentConfig: ComponentConfig
+  ) => ComponentConfig | Promise<ComponentConfig>;
   /**
    * Return anything you want to have as aditional data in addition to the component config. This
    * will be accesable in your component with "props.context". You can do some heavy computation
@@ -132,14 +130,14 @@ export type Controller<ComponentConfig,Context> = {
    * }
    */
   createContext?: (
-    componentConfig:ComponentConfig, 
-    opt: { getGridContext:() => GridContext }
-  ) => Context | Promise<Context>,
+    componentConfig: ComponentConfig,
+    opt: { getGridContext: () => GridContext }
+  ) => Context | Promise<Context>;
   /**
    * Sometimes you want to some context to the whole story. E.g your component adds something
    * to your redux-store and you want to hydrate it. In "createStoryEvents" you can return a
    * array of anything that will be accesable with "story.storyEvents". Each controller that
-   * implements this hook adds its returned items to this list. It is up to you how to handle 
+   * implements this hook adds its returned items to this list. It is up to you how to handle
    * these events in your application
    * @example
    * async createStoryEvents(componentConfig) {
@@ -150,70 +148,72 @@ export type Controller<ComponentConfig,Context> = {
    *   }]
    * }
    */
-  createStoryEvents?: (componentConfig:ComponentConfig & {context:Context}) => Array<any> | Promise<Array<any>>,
-}
+  createStoryEvents?: (
+    componentConfig: ComponentConfig & { context: Context }
+  ) => Array<any> | Promise<Array<any>>;
+};
 
 /**
  * Basic building block for stories
  */
 export type Component = {
-  name: string,
-  id: string,
-  createdAt: number,
-  updatedAt: number,
+  name: string;
+  id: string;
+  createdAt: number;
+  updatedAt: number;
   props: {
-    gridArea: string
-  }
-}
+    gridArea: string;
+  };
+};
 
 /**
  * Format in which grid will be saved in fireside connector (e.g Contentful)
  * Can be transformed further with fireside-utils
  */
 export type RawGrid = {
-  enabled: boolean,
-  gap: number,
-  grid: string[][],
-  widths: string[],
-  heights: string[]
-}
+  enabled: boolean;
+  gap: number;
+  grid: string[][];
+  widths: string[];
+  heights: string[];
+};
 
 /**
  * Format in which Story will be saved in fireside connector (e.g Contentful)
  * Can be transformed further with fireside-utils
  */
 export type RawStory = {
-  version: '1.0.0' | '2.0.0',
-  hash: string,
-  componentsById: Record<string, Component>,
-  allComponents: string[],
-  grids: Record<string, RawGrid>,
-  plugins: {[key:string]:any}
-}
+  version: "1.0.0" | "2.0.0";
+  hash: string;
+  componentsById: Record<string, Component>;
+  allComponents: string[];
+  grids: Record<string, RawGrid>;
+  plugins: { [key: string]: any };
+};
 
 /**
  * RawStory is transformed in this format which can be used in apps
  */
 export type FormattedStory = {
-  hash: string,
-  events: any[],
-  componentsById: Record<string, Component>,
-  allComponents: string[],
-  grids: Record<string, RawGrid>,
-  plugins: {[key:string]:any}
-}
+  hash: string;
+  events: any[];
+  componentsById: Record<string, Component>;
+  allComponents: string[];
+  grids: Record<string, RawGrid>;
+  plugins: { [key: string]: any };
+};
 
 export type GridContext = {
-  minRow: number
-  maxRow: number
+  minRow: number;
+  maxRow: number;
   byMediaSize: {
-    [ms:string]: {
-      row: number
-      col: number
-      totalRows: number
-      totalCols: number
-      colStretch: number
-      rowStretch: number
-    }
-  }
-}
+    [ms: string]: {
+      row: number;
+      col: number;
+      totalRows: number;
+      totalCols: number;
+      colStretch: number;
+      rowStretch: number;
+    };
+  };
+};

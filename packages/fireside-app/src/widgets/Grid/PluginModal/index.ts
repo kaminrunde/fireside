@@ -1,1 +1,1 @@
-export {default} from './PluginModal'
+export { default } from "./PluginModal";

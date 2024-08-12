@@ -1,10 +1,9 @@
-
 export type Message = {
-  title: string
-  content: string
+  title: string;
+  content: string;
   buttons?: {
-    label: string
-    type: 'primary' | 'secondary' | 'error'
-    onClick?: () => void
-  }[]
-}
+    label: string;
+    type: "primary" | "secondary" | "error";
+    onClick?: () => void;
+  }[];
+};

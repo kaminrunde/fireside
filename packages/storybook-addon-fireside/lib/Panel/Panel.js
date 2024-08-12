@@ -42,18 +42,18 @@ function Panel({ channel }) {
         if (window.__customKnobs)
             setCustomComponents(window.__customKnobs);
         // @ts-ignore
-        window.__addCustomKnob = (name, component) => setCustomComponents(dict => ({ ...dict, [name]: component }));
+        window.__addCustomKnob = (name, component) => setCustomComponents((dict) => ({ ...dict, [name]: component }));
     }, []);
     return (React.createElement(useCustomComponents_1.CustomComponentsProvider, { value: customComponents },
         React.createElement(Wrapper, null,
             React.createElement(Tabs_1.default, { key: key, tabs: tabs }),
             knobs
-                .filter(knob => {
+                .filter((knob) => {
                 if (!knob.options.shouldDisplay)
                     return true;
                 return knob.options.shouldDisplay(props);
             })
-                .map(knob => (React.createElement(Widget_1.default, { key: knob.id + key, knob: knob, onUpdate: val => update(knob, val) }))))));
+                .map((knob) => (React.createElement(Widget_1.default, { key: knob.id + key, knob: knob, onUpdate: (val) => update(knob, val) }))))));
 }
 exports.default = Panel;
 const Wrapper = styled_components_1.default.div `

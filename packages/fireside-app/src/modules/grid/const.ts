@@ -1,13 +1,11 @@
-
-// export const UPDATE_GRID_AREA:'grid/UPDATE_GRID_AREA' = 'grid/UPDATE_GRID_AREA'
-export const ADD_WIDTH:'grid/ADD_WIDTH' = 'grid/ADD_WIDTH'
-export const REMOVE_WIDTH:'grid/REMOVE_WIDTH' = 'grid/REMOVE_WIDTH'
-export const SET_WIDTH:'grid/SET_WIDTH' = 'grid/SET_WIDTH'
-export const SET_HEIGHT:'grid/SET_HEIGHT' = 'grid/SET_HEIGHT'
-export const UPDATE_GRID:'grid/UPDATE_GRID' = 'grid/UPDATE_GRID'
-export const ADD_AREA:'grid/ADD_AREA' = 'grid/ADD_AREA'
-export const INIT:'grid/INIT' = 'grid/INIT'
-export const ADD_FROM_BUFFER:'grid/ADD_FROM_BUFFER' = 'grid/ADD_FROM_BUFFER'
-export const TO_BUFFER:'grid/TO_BUFFER' = 'grid/TO_BUFFER'
-export const COPY_GRID:'grid/COPY_GRID' = 'grid/COPY_GRID'
-export const CLEAR_GRID:'grid/CLEAR_GRID' = 'grid/CLEAR_GRID'
+export const ADD_WIDTH: "grid/ADD_WIDTH" = "grid/ADD_WIDTH";
+export const REMOVE_WIDTH: "grid/REMOVE_WIDTH" = "grid/REMOVE_WIDTH";
+export const SET_WIDTH: "grid/SET_WIDTH" = "grid/SET_WIDTH";
+export const SET_HEIGHT: "grid/SET_HEIGHT" = "grid/SET_HEIGHT";
+export const UPDATE_GRID: "grid/UPDATE_GRID" = "grid/UPDATE_GRID";
+export const ADD_AREA: "grid/ADD_AREA" = "grid/ADD_AREA";
+export const INIT: "grid/INIT" = "grid/INIT";
+export const ADD_FROM_BUFFER: "grid/ADD_FROM_BUFFER" = "grid/ADD_FROM_BUFFER";
+export const TO_BUFFER: "grid/TO_BUFFER" = "grid/TO_BUFFER";
+export const COPY_GRID: "grid/COPY_GRID" = "grid/COPY_GRID";
+export const CLEAR_GRID: "grid/CLEAR_GRID" = "grid/CLEAR_GRID";

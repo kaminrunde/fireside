@@ -44,7 +44,7 @@ const preview_api_1 = require("@storybook/preview-api");
  * @example
  * k.string('label', 'Label', 'hello world')
  */
-const string = (prop, label, value, options = {}) => ({ type: 'string', prop, label, value, options });
+const string = (prop, label, value, options = {}) => ({ type: "string", prop, label, value, options });
 exports.string = string;
 /**
  * store anything you like here. This knob won't be visible in storybook.
@@ -58,7 +58,7 @@ exports.string = string;
  * @example
  * k.constant('__version', '', 1)
  */
-const constant = (prop, label, value, options = {}) => ({ type: 'constant', prop, label, value, options });
+const constant = (prop, label, value, options = {}) => ({ type: "constant", prop, label, value, options });
 exports.constant = constant;
 /**
  * manages number props.
@@ -72,7 +72,7 @@ exports.constant = constant;
  * @example
  * k.number('size', 'Your Size', 4)
  */
-const number = (prop, label, value, options = {}) => ({ type: 'number', prop, label, value, options });
+const number = (prop, label, value, options = {}) => ({ type: "number", prop, label, value, options });
 exports.number = number;
 /**
  * manages markdown string props. use this knob for complex text.
@@ -86,7 +86,7 @@ exports.number = number;
  * @example
  * k.markdown('content', 'Your Content', '# Headline')
  */
-const markdown = (prop, label, value, options = {}) => ({ type: 'markdown', prop, label, value, options });
+const markdown = (prop, label, value, options = {}) => ({ type: "markdown", prop, label, value, options });
 exports.markdown = markdown;
 /**
  * manages boolean props
@@ -100,7 +100,7 @@ exports.markdown = markdown;
  * @example
  * k.bool('isPrimary', 'Is Primary', true)
  */
-const bool = (prop, label, value, options = {}) => ({ type: 'bool', prop, label, value, options });
+const bool = (prop, label, value, options = {}) => ({ type: "bool", prop, label, value, options });
 exports.bool = bool;
 /**
  * yields a sortable list of strings
@@ -114,7 +114,7 @@ exports.bool = bool;
  * @example
  * k.stringList('todos', 'List of Todos', ['buy coffee', 'star fireside on github'])
  */
-const stringList = (prop, label, value, options = {}) => ({ type: 'stringList', prop, label, value, options });
+const stringList = (prop, label, value, options = {}) => ({ type: "stringList", prop, label, value, options });
 exports.stringList = stringList;
 /**
  * yields a sortable list of objects. You have to define a schema just like you define the schema of your component.
@@ -135,7 +135,7 @@ exports.stringList = stringList;
  *   getRowName: row => row.title
  * })
  */
-const objectList = (prop, label, value, options) => ({ type: 'objectList', prop, label, value, options });
+const objectList = (prop, label, value, options) => ({ type: "objectList", prop, label, value, options });
 exports.objectList = objectList;
 /**
  * same as string but with predefined options. useful if you only want to have specific options
@@ -148,22 +148,22 @@ exports.objectList = objectList;
  * @yields {string[]}
  * @example
  * k.select('position', 'Position', 'left', {
-  *   options: [
-  *     { label: 'left', value: 'left' },
-  *     { label: 'center', value: 'center' },
-  *     { label: 'right', value: 'right' },
-  *   ]
-  * })
-  */
-const select = (prop, label, value, options) => ({ type: 'select', prop, label, value, options });
+ *   options: [
+ *     { label: 'left', value: 'left' },
+ *     { label: 'center', value: 'center' },
+ *     { label: 'right', value: 'right' },
+ *   ]
+ * })
+ */
+const select = (prop, label, value, options) => ({ type: "select", prop, label, value, options });
 exports.select = select;
 const create = (name, component, simpleKnobs, controller = {}) => (args, context) => {
     const [, update] = React.useState(0);
     const channel = preview_api_1.addons.getChannel();
     React.useEffect(() => {
-        channel.emit('storyboard-bridge/story-component-loaded', context.id);
+        channel.emit("storyboard-bridge/story-component-loaded", context.id);
     }, [context.id]);
-    const knobs = manager.getKnobs(context, simpleKnobs, controller, name, () => update(i => i + 1));
+    const knobs = manager.getKnobs(context, simpleKnobs, controller, name, () => update((i) => i + 1));
     let props = manager.getProps(knobs);
     return React.createElement(WidgetWrapper_1.default, { component, props, controller });
 };
@@ -174,15 +174,16 @@ function registerWidgetSelector(name, cb) {
 exports.registerWidgetSelector = registerWidgetSelector;
 function createCustomKnob(name) {
     return (prop, label, value, options) => ({
-        type: 'custom-knob',
+        type: "custom-knob",
         prop,
-        label, value,
-        options: { ...options, __name: name }
+        label,
+        value,
+        options: { ...options, __name: name },
     });
 }
 exports.createCustomKnob = createCustomKnob;
 function registerKnob(name, component) {
-    if (typeof window === 'undefined')
+    if (typeof window === "undefined")
         return;
     // @ts-ignore
     if (!window.__customKnobs)

@@ -31,7 +31,7 @@ function useKnobs(channel) {
     const allKnobs = React.useRef([]);
     const [key, setKey] = React.useState(1);
     const [tabs, setTabs] = React.useState([]);
-    const [activeTab, setActiveTab] = React.useState('DEFAULT');
+    const [activeTab, setActiveTab] = React.useState("DEFAULT");
     React.useEffect(() => {
         // Initial die gespeicherten Knobs abrufen
         const savedKnobs = channel.getKnobs();
@@ -67,10 +67,10 @@ function useKnobs(channel) {
         allKnobs.current = knobs;
         const tabsSet = new Set();
         for (let knob of knobs)
-            tabsSet.add(knob.options.tab || 'DEFAULT');
+            tabsSet.add(knob.options.tab || "DEFAULT");
         const newTabs = [...tabsSet];
-        let newActiveTab = 'DEFAULT';
-        if (!tabsSet.has('DEFAULT') && newTabs[0])
+        let newActiveTab = "DEFAULT";
+        if (!tabsSet.has("DEFAULT") && newTabs[0])
             newActiveTab = newTabs[0];
         let filteredKnobs = calculateKnobs(knobs, newActiveTab);
         const newProps = {};
@@ -80,7 +80,7 @@ function useKnobs(channel) {
         setKnobs(filteredKnobs);
         setTabs(newTabs);
         setActiveTab(newActiveTab);
-        setKey(key => key + 1);
+        setKey((key) => key + 1);
     };
     const overloadedSetActiveTab = (tab) => {
         const filteredKnobs = calculateKnobs(allKnobs.current, tab);
@@ -92,9 +92,9 @@ function useKnobs(channel) {
         props,
         update: (knob, value) => {
             knob.value = value;
-            channel.emit('storyboard-bridge/set-knob-value', {
+            channel.emit("storyboard-bridge/set-knob-value", {
                 knobId: knob.id,
-                payload: value
+                payload: value,
             });
             const props = {};
             for (const knob of allKnobs.current)
@@ -104,13 +104,13 @@ function useKnobs(channel) {
         key: key.toString(),
         tabs,
         activeTab,
-        setActiveTab: overloadedSetActiveTab
+        setActiveTab: overloadedSetActiveTab,
     };
 }
 exports.default = useKnobs;
 function calculateKnobs(knobs, tab) {
-    return knobs.filter(knob => {
-        if (!knob.options.tab && tab === 'DEFAULT')
+    return knobs.filter((knob) => {
+        if (!knob.options.tab && tab === "DEFAULT")
             return true;
         else
             return knob.options.tab === tab;

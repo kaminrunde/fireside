@@ -1,3 +1,1 @@
-
-
-export type MS = Record<string,boolean>
+export type MS = Record<string, boolean>;

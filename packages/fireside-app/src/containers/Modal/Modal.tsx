@@ -1,20 +1,20 @@
-import * as React from 'react'
-import styled, {css} from 'styled-components'
-import {useMessage} from 'modules/modal'
+import * as React from "react";
+import styled, { css } from "styled-components";
+import { useMessage } from "modules/modal";
 
-export default function Modal () {
-  const message = useMessage()
+export default function Modal() {
+  const message = useMessage();
 
-  if(!message.data) return null
+  if (!message.data) return null;
 
   return (
     <Wrapper>
-      <div className='overlay'/>
-      <div className='content'>
+      <div className="overlay" />
+      <div className="content">
         <h2>{message.data.title}</h2>
         <p>{message.data.content}</p>
         {message.data.buttons && (
-          <div className='buttons'>
+          <div className="buttons">
             {message.data.buttons.map((btn, i) => (
               <Button key={i} type={btn.type} onClick={btn.label}>
                 {btn.label}
@@ -24,7 +24,7 @@ export default function Modal () {
         )}
       </div>
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.div`
@@ -35,7 +35,7 @@ const Wrapper = styled.div`
     top: 0;
     bottom: 0;
     z-index: 9999999999999999999999998;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.6);
   }
   > .content {
     position: fixed;
@@ -51,7 +51,8 @@ const Wrapper = styled.div`
       text-align: center;
     }
 
-    > p {}
+    > p {
+    }
 
     > .button {
       display: grid;
@@ -60,27 +61,30 @@ const Wrapper = styled.div`
       grid-gap: 20px;
     }
   }
-`
+`;
 
 const Button = styled.div`
   border: none;
   background: none;
   border-radius: 5px;
   padding: 10px;
-  ${p => {
-    switch(p.type) {
-      case 'primary': return css`
-        background: #8bc34a;
-        color: whitesmoke;
-      `
-      case 'secondary': return css`
-        background: whitesmoke;
-        color: black;
-        border: 2px solid #8bc34a;
-      `
-      case 'error': return css`
-        background: #ff5722;
-      `
+  ${(p) => {
+    switch (p.type) {
+      case "primary":
+        return css`
+          background: #8bc34a;
+          color: whitesmoke;
+        `;
+      case "secondary":
+        return css`
+          background: whitesmoke;
+          color: black;
+          border: 2px solid #8bc34a;
+        `;
+      case "error":
+        return css`
+          background: #ff5722;
+        `;
     }
   }}
-`
+`;

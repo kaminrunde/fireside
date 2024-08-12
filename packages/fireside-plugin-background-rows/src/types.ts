@@ -1,15 +1,13 @@
-
-
 export type State = {
-  [mediaSize:string]: {
-    [row:number]: string
-  }
-}
+  [mediaSize: string]: {
+    [row: number]: string;
+  };
+};
 
 export type Options = {
-  key: string,
+  key: string;
   colors: {
-    color: string,
-    label: string
-  }[]
-}
+    color: string;
+    label: string;
+  }[];
+};

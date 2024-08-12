@@ -13,7 +13,7 @@ const ObjectList_1 = __importDefault(require("./ObjectList"));
 const CustomKnobPlaceholder_1 = __importDefault(require("./CustomKnobPlaceholder"));
 const Select_1 = __importDefault(require("./Select"));
 function getWidget(knob, customComponents) {
-    if (knob.type === 'custom-knob') {
+    if (knob.type === "custom-knob") {
         // @ts-ignore
         const result = customComponents[knob.options.__name];
         if (!result)
@@ -28,7 +28,7 @@ function getWidget(knob, customComponents) {
         bool: Bool_1.default,
         stringList: StringList_1.default,
         objectList: ObjectList_1.default,
-        select: Select_1.default
+        select: Select_1.default,
     }[knob.type];
 }
 exports.default = getWidget;

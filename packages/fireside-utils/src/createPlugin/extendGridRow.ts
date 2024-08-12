@@ -1,45 +1,48 @@
-import * as t from '../types'
+import * as t from "../types";
 
 export type ExtendGridRow<State> = {
   badge?: {
-    component: (props:t.PluginGridRowAPI<State>) => any
-    isActive: (api:t.PluginGridRowAPI<State>) => boolean
-  }
+    component: (props: t.PluginGridRowAPI<State>) => any;
+    isActive: (api: t.PluginGridRowAPI<State>) => boolean;
+  };
   icon?: {
-    component: (props:t.PluginGridRowAPI<State>) => any
-    isActive: (api:t.PluginGridRowAPI<State>) => boolean
-    onClick: (api:t.PluginGridRowAPI<State>) => void
-  }
+    component: (props: t.PluginGridRowAPI<State>) => any;
+    isActive: (api: t.PluginGridRowAPI<State>) => boolean;
+    onClick: (api: t.PluginGridRowAPI<State>) => void;
+  };
   settingsModal?: {
-    title: string
-    isActive?: (api:t.PluginGridRowAPI<State>) => boolean
-    component: (props:t.PluginGridRowAPI<State>) => any
-  }
-}
+    title: string;
+    isActive?: (api: t.PluginGridRowAPI<State>) => boolean;
+    component: (props: t.PluginGridRowAPI<State>) => any;
+  };
+};
 
-export default function extendGridRow <State, Options extends t.PluginOptions>(
-  config:ExtendGridRow<State>,
+export default function extendGridRow<State, Options extends t.PluginOptions>(
+  config: ExtendGridRow<State>,
   options: Options
-):t.PluginEvent[] {
-  let events:t.PluginEvent[] = []
+): t.PluginEvent[] {
+  let events: t.PluginEvent[] = [];
 
-  if(config.badge) events.push({
-    type: 'GRID_ROW_BADGE',
-    meta: {key:options.key},
-    payload: config.badge
-  })
+  if (config.badge)
+    events.push({
+      type: "GRID_ROW_BADGE",
+      meta: { key: options.key },
+      payload: config.badge,
+    });
 
-  if(config.icon) events.push({
-    type: 'GRID_ROW_ICON',
-    meta: {key:options.key},
-    payload: config.icon
-  })
+  if (config.icon)
+    events.push({
+      type: "GRID_ROW_ICON",
+      meta: { key: options.key },
+      payload: config.icon,
+    });
 
-  if(config.settingsModal) events.push({
-    type: 'GRID_ROW_SETTINGS',
-    meta: {key:options.key},
-    payload: config.settingsModal
-  })
+  if (config.settingsModal)
+    events.push({
+      type: "GRID_ROW_SETTINGS",
+      meta: { key: options.key },
+      payload: config.settingsModal,
+    });
 
-  return events
+  return events;
 }

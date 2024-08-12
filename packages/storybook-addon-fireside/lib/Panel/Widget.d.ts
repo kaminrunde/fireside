@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as t from '../types';
+import * as React from "react";
+import * as t from "../types";
 type Props = {
     knob: t.Knob | t.SimpleKnob;
     onUpdate: (value: any) => void;

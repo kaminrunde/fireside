@@ -1,1 +1,1 @@
-export {default} from './StaticComponents'
+export { default } from "./StaticComponents";

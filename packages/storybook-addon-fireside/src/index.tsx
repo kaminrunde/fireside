@@ -1,7 +1,8 @@
-import * as React from 'react'
-import * as t from './types'
-import * as manager from './knob-manager'
-import WidgetWrapper from './WidgetWrapper'
+import * as React from "react";
+import * as t from "./types";
+import * as manager from "./knob-manager";
+import WidgetWrapper from "./WidgetWrapper";
+import { addons } from "@storybook/preview-api";
 
 /**
  * manages string props. use this knob for simple labels. for more
@@ -13,34 +14,34 @@ import WidgetWrapper from './WidgetWrapper'
  * @param {string} options.tab the tabname the knob will be displayed in storybook
  * @param {Function} options.validate validate the value. if this functions returns a string the form-filed will be hilighted
  * @yields {string}
- * @example 
+ * @example
  * k.string('label', 'Label', 'hello world')
  */
 export const string = (
-  prop:string, 
-  label:string, 
-  value:string, 
-  options:t.StringOptions={}
-):t.SimpleKnob => ({ type: 'string', prop, label, value, options })
+  prop: string,
+  label: string,
+  value: string,
+  options: t.StringOptions = {}
+): t.SimpleKnob => ({ type: "string", prop, label, value, options });
 
 /**
- * store anything you like here. This knob won't be visible in storybook. 
- * But be carefull what you want to store. The constant is only usefull for distinguising 
+ * store anything you like here. This knob won't be visible in storybook.
+ * But be carefull what you want to store. The constant is only usefull for distinguising
  * different implementations (stories) of the same component. For everything else use a locale
  * config object
  * @param {string} prop name of prop. can also be in nested form. eg: "obj.prop". for more information see docs of "object-path"
  * @param {string} label won't be visible so leave it blank
  * @param {string} value default value. can be anything
  * @yields {string}
- * @example 
+ * @example
  * k.constant('__version', '', 1)
  */
 export const constant = (
-  prop:string, 
-  label:string, 
-  value:any, 
-  options:{}={}
-):t.SimpleKnob => ({ type: 'constant', prop, label, value, options })
+  prop: string,
+  label: string,
+  value: any,
+  options: {} = {}
+): t.SimpleKnob => ({ type: "constant", prop, label, value, options });
 
 /**
  * manages number props.
@@ -51,16 +52,15 @@ export const constant = (
  * @param {string} options.tab the tabname the knob will be displayed in storybook
  * @param {Function} options.validate validate the value. if this functions returns a string the form-filed will be hilighted
  * @yields {number}
- * @example 
+ * @example
  * k.number('size', 'Your Size', 4)
  */
 export const number = (
-  prop:string, 
-  label:string, 
-  value:number, 
-  options:t.NumberOptions={}
-):t.SimpleKnob => ({ type: 'number', prop, label, value, options })
-
+  prop: string,
+  label: string,
+  value: number,
+  options: t.NumberOptions = {}
+): t.SimpleKnob => ({ type: "number", prop, label, value, options });
 
 /**
  * manages markdown string props. use this knob for complex text.
@@ -71,15 +71,15 @@ export const number = (
  * @param {string} options.tab the tabname the knob will be displayed in storybook
  * @param {Function} options.validate validate the value. if this functions returns a string the form-filed will be hilighted
  * @yields {string}
- * @example 
+ * @example
  * k.markdown('content', 'Your Content', '# Headline')
  */
 export const markdown = (
-  prop:string, 
-  label:string, 
-  value:string, 
-  options:t.MarkdownOptions={}
-):t.SimpleKnob => ({ type: 'markdown', prop, label, value, options })
+  prop: string,
+  label: string,
+  value: string,
+  options: t.MarkdownOptions = {}
+): t.SimpleKnob => ({ type: "markdown", prop, label, value, options });
 
 /**
  * manages boolean props
@@ -90,16 +90,15 @@ export const markdown = (
  * @param {string} options.tab the tabname the knob will be displayed in storybook
  * @param {Function} options.validate validate the value. if this functions returns a string the form-filed will be hilighted
  * @yields {boolean}
- * @example 
+ * @example
  * k.bool('isPrimary', 'Is Primary', true)
  */
 export const bool = (
-  prop:string, 
-  label:string, 
-  value:boolean, 
-  options:t.BoolOptions={}
-):t.SimpleKnob => ({ type: 'bool', prop, label, value, options })
-
+  prop: string,
+  label: string,
+  value: boolean,
+  options: t.BoolOptions = {}
+): t.SimpleKnob => ({ type: "bool", prop, label, value, options });
 
 /**
  * yields a sortable list of strings
@@ -110,15 +109,15 @@ export const bool = (
  * @param {string} options.tab the tabname the knob will be displayed in storybook
  * @param {Function} options.validate validate the value. if this functions returns a string the form-filed will be hilighted
  * @yields {string[]}
- * @example 
+ * @example
  * k.stringList('todos', 'List of Todos', ['buy coffee', 'star fireside on github'])
  */
 export const stringList = (
-  prop:string, 
-  label:string, 
-  value:string[], 
-  options:t.StringListOptions={}
-):t.SimpleKnob => ({ type: 'stringList', prop, label, value, options })
+  prop: string,
+  label: string,
+  value: string[],
+  options: t.StringListOptions = {}
+): t.SimpleKnob => ({ type: "stringList", prop, label, value, options });
 
 /**
  * yields a sortable list of objects. You have to define a schema just like you define the schema of your component.
@@ -130,7 +129,7 @@ export const stringList = (
  * @param {string} options.tab the tabname the knob will be displayed in storybook
  * @yields {object[]}
  * @param {Function} options.validate validate the value. if this functions returns a string the form-filed will be hilighted
- * @example 
+ * @example
  * k.objectList('todos', 'List of Todos', [], {
  *   schema: [
  *     k.string('title', 'Title', ''),
@@ -140,11 +139,11 @@ export const stringList = (
  * })
  */
 export const objectList = (
-  prop:string, 
-  label:string, 
-  value:object[], 
-  options:t.ObjectListOptions
-):t.SimpleKnob => ({ type: 'objectList', prop, label, value, options })
+  prop: string,
+  label: string,
+  value: object[],
+  options: t.ObjectListOptions
+): t.SimpleKnob => ({ type: "objectList", prop, label, value, options });
 
 /**
  * same as string but with predefined options. useful if you only want to have specific options
@@ -155,66 +154,80 @@ export const objectList = (
  * @param {string} options.tab the tabname the knob will be displayed in storybook
  * @param {Function} options.validate validate the value. if this functions returns a string the form-filed will be hilighted
  * @yields {string[]}
- * @example 
+ * @example
  * k.select('position', 'Position', 'left', {
-  *   options: [
-  *     { label: 'left', value: 'left' },
-  *     { label: 'center', value: 'center' },
-  *     { label: 'right', value: 'right' },
-  *   ]
-  * })
-  */
- export const select = (
-   prop:string, 
-   label:string, 
-   value:string, 
-   options:t.SelectOptions
- ):t.SimpleKnob => ({ type: 'select', prop, label, value, options })
+ *   options: [
+ *     { label: 'left', value: 'left' },
+ *     { label: 'center', value: 'center' },
+ *     { label: 'right', value: 'right' },
+ *   ]
+ * })
+ */
+export const select = (
+  prop: string,
+  label: string,
+  value: string,
+  options: t.SelectOptions
+): t.SimpleKnob => ({ type: "select", prop, label, value, options });
 
+export const create =
+  (
+    name: string,
+    component: any,
+    simpleKnobs: t.SimpleKnob[],
+    controller: t.Controller = {}
+  ): any =>
+  (args: any, context: t.StoryContext) => {
+    const [, update] = React.useState(0);
+    const channel: t.Channel = addons.getChannel();
 
-export const create = (
+    React.useEffect(() => {
+      channel.emit("storyboard-bridge/story-component-loaded", context.id);
+    }, [context.id]);
+
+    const knobs = manager.getKnobs(context, simpleKnobs, controller, name, () =>
+      update((i) => i + 1)
+    );
+    let props = manager.getProps(knobs);
+    return <WidgetWrapper {...{ component, props, controller }} />;
+  };
+
+export function registerWidgetSelector<UserConfig>(
   name: string,
-  component: any,
-  simpleKnobs: t.SimpleKnob[],
-  controller:t.Controller={}
-):any => (args:any, context:t.StoryContext) => {
-  const [,update] = React.useState(0)
-  const knobs = manager.getKnobs(context, simpleKnobs, controller, name, () => update(i => i+1))
-  let props = manager.getProps(knobs)
-  return <WidgetWrapper {...{component, props, controller}}/>
-}
-
-export function registerWidgetSelector <UserConfig>(
-  name:string, 
-  cb: (props:UserConfig) => {kind:string, story:string}
+  cb: (props: UserConfig) => { kind: string; story: string }
 ) {
-  manager.addSelector(name, cb)
+  manager.addSelector(name, cb);
 }
 
-export function createCustomKnob <Value, Options extends Record<string, unknown>>(name:string) {
+export function createCustomKnob<
+  Value,
+  Options extends Record<string, unknown>
+>(name: string) {
   return (
     prop: string,
     label: string,
     value: Value,
-    options:Options&t.KnobOptions
-  ) => ({ 
-    type: 'custom-knob',
-    prop,
-    label, value,
-    options: {...options, __name: name}} as any
-  )
+    options: Options & t.KnobOptions
+  ) =>
+    ({
+      type: "custom-knob",
+      prop,
+      label,
+      value,
+      options: { ...options, __name: name },
+    } as any);
 }
 
-export function registerKnob (name:string, component:any) {
-  if(typeof window === 'undefined') return
+export function registerKnob(name: string, component: any) {
+  if (typeof window === "undefined") return;
   // @ts-ignore
-  if(!window.__customKnobs) window.__customKnobs = {}
+  if (!window.__customKnobs) window.__customKnobs = {};
   // @ts-ignore
-  window.__customKnobs[name] = component
+  window.__customKnobs[name] = component;
 
   // @ts-ignore
-  if(window.__addCustomKnob){
+  if (window.__addCustomKnob) {
     // @ts-ignore
-    window.__addCustomKnob(name, component)
+    window.__addCustomKnob(name, component);
   }
 }

@@ -1,1 +1,1 @@
-export {default} from './PluginBadge'
+export { default } from "./PluginBadge";

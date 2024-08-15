@@ -41,7 +41,7 @@ function StringList(props) {
         setShowBulkInput(false);
     };
     return (React.createElement(Wrapper, null,
-        React.createElement(SortableList, { items: props.value, onSortEnd: ({ oldIndex, newIndex }) => {
+        React.createElement(SortableList, { items: props.value, onSortEnd: ({ oldIndex, newIndex, }) => {
                 props.onChange((0, array_move_1.arrayMoveImmutable)(props.value, oldIndex, newIndex));
             }, onDelete: (index) => {
                 props.onChange(props.value.filter((_, i) => i !== index));
@@ -169,11 +169,12 @@ const Item = styled_components_1.default.li `
   margin: 3px 0;
   border: 1px solid lightgrey;
   border-radius: 3px;
-  background: ${(p) => (p.highlight === 'true' ? "#FFE4C4" : "white")};
+  background: ${(p) => (p.highlight === "true" ? "#FFE4C4" : "white")};
   list-style: none;
   font-size: 14px;
   cursor: grabbing;
   display: flex;
+  z-index: 9999;
 
   > input {
     display: block;

@@ -16,6 +16,13 @@ export interface KnobOptions {
      * })
      */
     shouldDisplay?: (props: any) => boolean;
+    /**
+     * if an error string is returned, the error is displayed below the headline
+     * @example
+     * k.string('foo', 'Foo', '', {
+     *   validate: s => !s && 'a value is required'
+     * })
+     */
     validate?: (value: any) => void | null | false | string;
 }
 export interface StringOptions extends KnobOptions {
@@ -83,7 +90,7 @@ export interface MarkdownOptions extends KnobOptions {
     toolbarTips?: any;
 }
 export interface SimpleKnob {
-    type: 'string' | 'constant' | 'number' | 'markdown' | 'bool' | 'stringList' | 'objectList' | 'select' | 'custom-knob';
+    type: "string" | "constant" | "number" | "markdown" | "bool" | "stringList" | "objectList" | "select" | "custom-knob";
     prop: string;
     label: string;
     value: any;
@@ -105,7 +112,7 @@ export type Component = {
     name: string;
     props: object;
 };
-export type Event = "storyboard-bridge/set-knobs" | "storyboard-bridge/set-knob-value" | "storyboard-bridge/select-story" | "storyboard-bridge/story-selected" | "storyboard-bridge/hydrate-component" | "storyboard-bridge/update-component-name" | "storyboard-bridge/update-component-props" | "storyboard-bridge/init-knob-manager" | "storyboard-bridge/clear-props" | "storyboard-bridge/register-function" | "storyboard-bridge/request-function" | `storyboard-bridge/response-function-${string}`;
+export type Event = "storyboard-bridge/story-component-loaded" | "storyboard-bridge/set-knobs" | "storyboard-bridge/set-knob-value" | "storyboard-bridge/select-story" | "storyboard-bridge/story-selected" | "storyboard-bridge/hydrate-component" | "storyboard-bridge/update-component-name" | "storyboard-bridge/update-component-props" | "storyboard-bridge/init-knob-manager" | "storyboard-bridge/clear-props" | "storyboard-bridge/register-function" | "storyboard-bridge/request-function" | `storyboard-bridge/response-function-${string}`;
 export type Channel = {
     emit: (event: Event, options?: any) => void;
     on: (event: Event, cb: (val: any) => void) => void;

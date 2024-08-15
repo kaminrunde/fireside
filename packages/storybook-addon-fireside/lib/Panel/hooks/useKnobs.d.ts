@@ -1,5 +1,5 @@
-import * as t from '../../types';
-import { PersistentChannel } from '../../persistentChannel';
+import * as t from "../../types";
+import { PersistentChannel } from "../../persistentChannel";
 type Output = {
     knobs: t.Knob[];
     props: Record<string, any>;

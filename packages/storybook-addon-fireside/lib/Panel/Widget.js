@@ -39,21 +39,23 @@ function Widget(props) {
         setValue(val);
         props.onUpdate(val);
     };
-    if (props.knob.type === 'constant')
+    if (props.knob.type === "constant")
         return null;
     const error = props.knob.options.validate
         ? props.knob.options.validate(value)
         : null;
     return (React.createElement(Wrapper, { ref: ref, onClick: handle },
-        React.createElement("h3", { className: 'label' }, props.knob.label),
-        props.knob.options.hint && (React.createElement("div", { className: 'hint' }, props.knob.options.hint)),
-        error && (React.createElement("div", { className: 'error' }, error)),
+        React.createElement("h3", { className: "label" }, props.knob.label),
+        props.knob.options.hint && (React.createElement("div", { className: "hint" }, props.knob.options.hint)),
+        error && React.createElement("div", { className: "error" }, error),
         React.createElement(Component, { value: value, onChange: update, focus: focus, hasError: !!error, options: props.knob.options })));
 }
 exports.default = Widget;
 const Wrapper = styled_components_1.default.div `
   padding: 10px;
-  &:active {outline:none;}
+  &:active {
+    outline: none;
+  }
   > .label {
     font-size: 18px;
     letter-spacing: 1px;
@@ -88,12 +90,12 @@ function useFocus() {
         };
         const listener = (e) => {
             if (!elIsInDropdown(e.target)) {
-                window.removeEventListener('click', listener);
+                window.removeEventListener("click", listener);
                 setActiveEl(null);
             }
         };
-        window.addEventListener('click', listener);
-        return () => window.removeEventListener('click', listener);
+        window.addEventListener("click", listener);
+        return () => window.removeEventListener("click", listener);
     }, [activeEl]);
     return [handle, !!activeEl, ref, () => setActiveEl(null)];
 }

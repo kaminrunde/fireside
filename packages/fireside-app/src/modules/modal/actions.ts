@@ -1,18 +1,16 @@
-import * as t from './types'
-import * as at from './const'
+import * as t from "./types";
+import * as at from "./const";
 
-export const setMessage = (message:t.Message) => ({
+export const setMessage = (message: t.Message) => ({
   type: at.SET_MESSAGE,
-  payload: message
-})
+  payload: message,
+});
 
 export const clearMessage = () => ({
-  type: at.CLEAR_MESSAGE
-})
+  type: at.CLEAR_MESSAGE,
+});
 
-export type SetMessage = ReturnType<typeof setMessage>
-export type ClearMessage = ReturnType<typeof clearMessage>
+export type SetMessage = ReturnType<typeof setMessage>;
+export type ClearMessage = ReturnType<typeof clearMessage>;
 
-export type Action =
-| SetMessage
-| ClearMessage
+export type Action = SetMessage | ClearMessage;

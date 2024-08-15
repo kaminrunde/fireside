@@ -1,21 +1,21 @@
-
-export type State = {
-  components: {
-    [ms:string]: {
-      A: number[]
-      B: number[]
+export type State =
+  | {
+      components: {
+        [ms: string]: {
+          A: number[];
+          B: number[];
+        };
+      };
+      byId: {
+        [id: string]: {
+          [ms: string]: "A" | "B";
+        };
+      };
     }
-  }
-  // Record<string, Record<string, 'A' | 'B'>>
-  byId: {
-    [id:string]: {
-      [ms:string]: 'A' | 'B'
-    }
-  }
-} | undefined
+  | undefined;
 
 export type PluginOptions = {
-  key: string
-  password?: string
-  maxComponents?: number
-}
+  key: string;
+  password?: string;
+  maxComponents?: number;
+};

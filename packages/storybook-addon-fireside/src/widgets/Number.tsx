@@ -1,29 +1,30 @@
-import * as React from 'react'
-import styled from 'styled-components'
-import * as t from '../types'
+import * as React from "react";
+import styled from "styled-components";
+import * as t from "../types";
 
 type Props = {
-  value: number,
-  onChange: (value:number) => void,
-  focus: boolean,
-  options: t.NumberOptions,
-  hasError: boolean,
-}
+  value: number;
+  onChange: (value: number) => void;
+  focus: boolean;
+  options: t.NumberOptions;
+  hasError: boolean;
+};
 
-export default function String (props:Props) {
+export default function String(props: Props) {
   return (
     <Wrapper focus={props.focus.toString()}>
-      <input 
-        type='number'
-        value={props.value} 
-        onChange={e => props.onChange(parseInt(e.target.value))}
+      <input
+        type="number"
+        value={props.value}
+        onChange={(e) => props.onChange(parseInt(e.target.value))}
       />
     </Wrapper>
-  )
+  );
 }
 
-const Wrapper = styled.div<{focus: string}>`
-  border: 1px solid ${props => props.focus === 'true' ? '#1DA7FD' : 'lightgrey'};
+const Wrapper = styled.div<{ focus: string }>`
+  border: 1px solid
+    ${(props) => (props.focus === "true" ? "#1DA7FD" : "lightgrey")};
   border-radius: 3px;
   padding-left: 5px;
   > input {
@@ -31,4 +32,4 @@ const Wrapper = styled.div<{focus: string}>`
     border: none;
     line-height: 30px;
   }
-`
+`;

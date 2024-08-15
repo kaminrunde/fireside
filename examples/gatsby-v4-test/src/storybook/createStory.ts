@@ -1,21 +1,19 @@
-import { storiesOf } from '@storybook/react'
-// import withGlobalStyle from './decorators/withGlobalStyle'
+import { storiesOf } from "@storybook/react";
 
 declare global {
   interface Document {
-    isStorybook: boolean
+    isStorybook: boolean;
   }
 }
 
-document.isStorybook = true
-
+document.isStorybook = true;
 
 export default (name, context) => {
-  const story = storiesOf(name, context)
+  const story = storiesOf(name, context);
 
   // add decorators
-  story
-    // .addDecorator(withGlobalStyle)
+  story;
+  // .addDecorator(withGlobalStyle)
 
-  return story
-}
+  return story;
+};

@@ -1,10 +1,10 @@
-import * as t from './types'
+import * as t from "./types";
 
 /**
  * Wrapps your controller with typescript autosuggestion + validation.
  */
-export default function createController <ComponentConfig,Context>(
+export default function createController<ComponentConfig, Context>(
   controller: t.Controller<ComponentConfig, Context>
 ) {
-  return controller
+  return controller;
 }

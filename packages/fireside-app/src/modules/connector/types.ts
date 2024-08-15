@@ -1,5 +1,8 @@
-import {RawStory, Connector as RawConnector} from '@kaminrunde/fireside-utils'
+import {
+  RawStory,
+  Connector as RawConnector,
+} from "@kaminrunde/fireside-utils";
 
-export type Story = RawStory
+export type Story = RawStory;
 
-export type Connector = RawConnector
+export type Connector = RawConnector;

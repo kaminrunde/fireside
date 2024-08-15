@@ -29,7 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
 const styled_components_1 = __importDefault(require("styled-components"));
 function Bool(props) {
-    return (React.createElement(Wrapper, { on: props.value.toString(), onClick: () => props.onChange(!props.value) }, props.value ? 'ON' : 'OFF'));
+    return (React.createElement(Wrapper, { on: props.value.toString(), onClick: () => props.onChange(!props.value) }, props.value ? "ON" : "OFF"));
 }
 exports.default = Bool;
 const Wrapper = styled_components_1.default.button `
@@ -37,5 +37,5 @@ const Wrapper = styled_components_1.default.button `
   border: none;
   color: white;
   cursor: pointer;
-  background: ${props => props.on === 'true' ? '#8bc34a' : '#e91e63'};
+  background: ${(props) => (props.on === "true" ? "#8bc34a" : "#e91e63")};
 `;

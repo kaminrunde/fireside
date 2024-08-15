@@ -1,51 +1,53 @@
-import * as React from 'react'
-import styled from 'styled-components'
-import useKnobs from './hooks/useKnobs'
-import Widget from './Widget'
-import Tabs from './Tabs'
-import * as t from '../types'
-import {CustomComponentsProvider} from './useCustomComponents'
-import { getPersistentChannel } from '../persistentChannel'
+import * as React from "react";
+import styled from "styled-components";
+import useKnobs from "./hooks/useKnobs";
+import Widget from "./Widget";
+import Tabs from "./Tabs";
+import * as t from "../types";
+import { CustomComponentsProvider } from "./useCustomComponents";
+import { getPersistentChannel } from "../persistentChannel";
 
 type Props = {
-  channel: t.Channel,
-  api: any
-}
+  channel: t.Channel;
+  api: any;
+};
 
-export default function Panel ({channel}:Props) {
+export default function Panel({ channel }: Props) {
   const persistentChannel = getPersistentChannel(channel);
-  const {knobs,props,update,key, ...tabs} = useKnobs(persistentChannel)
-  const [customComponents, setCustomComponents] = React.useState<Record<string, any>>({})
+  const { knobs, props, update, key, ...tabs } = useKnobs(persistentChannel);
+  const [customComponents, setCustomComponents] = React.useState<
+    Record<string, any>
+  >({});
 
   React.useEffect(() => {
     // @ts-ignore
-    if(window.__customKnobs) setCustomComponents(window.__customKnobs)
+    if (window.__customKnobs) setCustomComponents(window.__customKnobs);
     // @ts-ignore
-    window.__addCustomKnob = (name, component) => 
-      setCustomComponents(dict => ({...dict, [name]: component}))
-  }, [])
+    window.__addCustomKnob = (name, component) =>
+      setCustomComponents((dict) => ({ ...dict, [name]: component }));
+  }, []);
 
   return (
     <CustomComponentsProvider value={customComponents}>
       <Wrapper>
         <Tabs key={key} tabs={tabs} />
         {knobs
-        .filter(knob => {
-          if(!knob.options.shouldDisplay) return true
-          return knob.options.shouldDisplay(props)
-        })
-        .map(knob => (
-          <Widget 
-            key={knob.id+key}
-            knob={knob}
-            onUpdate={val => update(knob, val)}
-          />
-        ))}
+          .filter((knob) => {
+            if (!knob.options.shouldDisplay) return true;
+            return knob.options.shouldDisplay(props);
+          })
+          .map((knob) => (
+            <Widget
+              key={knob.id + key}
+              knob={knob}
+              onUpdate={(val) => update(knob, val)}
+            />
+          ))}
       </Wrapper>
     </CustomComponentsProvider>
-  )
+  );
 }
 
 const Wrapper = styled.div`
   padding-bottom: 300px;
-`
+`;

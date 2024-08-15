@@ -1,1 +1,1 @@
-export {default} from './ExtendedButtonBottomList'
+export { default } from "./ExtendedButtonBottomList";

@@ -1,4 +1,4 @@
-import * as t from './types'
-import {State} from './reducer'
+import * as t from "./types";
+import { State } from "./reducer";
 
-export const getMessages = (state:State):t.Message[] => state.messages
+export const getMessages = (state: State): t.Message[] => state.messages;

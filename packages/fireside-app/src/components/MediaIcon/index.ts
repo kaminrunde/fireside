@@ -1,1 +1,1 @@
-export {default} from './MediaIcon'
+export { default } from "./MediaIcon";

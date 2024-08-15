@@ -35,37 +35,42 @@ function Select(props) {
         if (!props.focus)
             setOpen(false);
     }, [props.focus]);
-    const handleClick = () => {
+    const handleClick = (e) => {
+        e.stopPropagation();
         setOpen(!open);
     };
+    const handleOptionSelect = (value) => {
+        props.onChange(value);
+        setOpen(false);
+    };
     const label = React.useMemo(() => {
-        const match = props.options.options.find(opt => opt.value === props.value);
+        const match = props.options.options.find((opt) => opt.value === props.value);
         return match ? match.label : props.value;
     }, [props.value, props.options.options]);
-    return (React.createElement(Wrapper, { tabIndex: '1', focus: props.focus.toString() },
-        React.createElement("div", { className: 'value', onClick: handleClick },
-            label || '-',
+    return (React.createElement(Wrapper, { tabIndex: "1", focus: props.focus.toString() },
+        React.createElement("div", { className: "value", onClick: handleClick },
+            label || "-",
             open ? React.createElement(fa_1.FaChevronUp, null) : React.createElement(fa_1.FaChevronDown, null)),
-        open && (React.createElement("div", { className: 'options' }, props.options.options.map(row => (React.createElement(Row, { key: row.label, selected: row.value === props.value, onClick: () => props.onChange(row.value) }, row.label)))))));
+        open && (React.createElement("div", { className: "options" }, props.options.options.map((row) => (React.createElement(Row, { key: row.label, selected: row.value === props.value, onClick: () => handleOptionSelect(row.value) }, row.label)))))));
 }
 exports.default = Select;
 const Wrapper = styled_components_1.default.div `
   position: relative;
   > .value {
-    border: 1px solid ${props => props.focus === 'true' ? '#1DA7FD' : 'lightgrey'};
+    border: 1px solid
+      ${(props) => (props.focus === "true" ? "#1DA7FD" : "lightgrey")};
     border-radius: 3px;
     padding: 0 8px;
     line-height: 30px;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
-    
+
     > svg {
       font-size: 12px;
       margin-top: 10px;
     }
   }
-
 
   > .options {
     position: absolute;
@@ -85,5 +90,5 @@ const Row = styled_components_1.default.div `
     background: whitesmoke;
     cursor: pointer;
   }
-  ${p => p.selected && `&&& {background: silver;}`}
+  ${(p) => p.selected && `&&& {background: silver;}`}
 `;

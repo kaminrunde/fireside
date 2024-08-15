@@ -82,7 +82,7 @@ contentful_ui_extensions_sdk_1.init(function (_sdk) { return __awaiter(void 0, v
                 sdk = _sdk;
                 try {
                     // @ts-ignore
-                    sdk.window.updateHeight(600);
+                    sdk.window.updateHeight(1000);
                 }
                 catch (e) { }
                 value = sdk.field.getValue();

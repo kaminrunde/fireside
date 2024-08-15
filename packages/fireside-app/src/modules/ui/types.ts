@@ -1,6 +1,5 @@
-
 export type ModalConfig = {
-  title: string
-  description?: string
-  options?: string[]
-}
+  title: string;
+  description?: string;
+  options?: string[];
+};

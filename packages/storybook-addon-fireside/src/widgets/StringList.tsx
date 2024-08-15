@@ -28,7 +28,13 @@ export default function StringList(props: Props) {
     <Wrapper>
       <SortableList
         items={props.value}
-        onSortEnd={({ oldIndex, newIndex }: {oldIndex: number, newIndex: number}) => {
+        onSortEnd={({
+          oldIndex,
+          newIndex,
+        }: {
+          oldIndex: number;
+          newIndex: number;
+        }) => {
           props.onChange(arrayMoveImmutable(props.value, oldIndex, newIndex));
         }}
         onDelete={(index: number) => {
@@ -213,16 +219,17 @@ const Wrapper = styled.div`
   }
 `;
 
-const Item = styled.li<{highlight?: string}>`
+const Item = styled.li<{ highlight?: string }>`
   padding: 10px;
   margin: 3px 0;
   border: 1px solid lightgrey;
   border-radius: 3px;
-  background: ${(p) => (p.highlight === 'true' ? "#FFE4C4" : "white")};
+  background: ${(p) => (p.highlight === "true" ? "#FFE4C4" : "white")};
   list-style: none;
   font-size: 14px;
   cursor: grabbing;
   display: flex;
+  z-index: 9999;
 
   > input {
     display: block;

@@ -1,1 +1,1 @@
-export {default} from './AlertBox'
+export { default } from "./AlertBox";

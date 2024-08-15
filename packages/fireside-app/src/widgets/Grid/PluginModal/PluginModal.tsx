@@ -1,54 +1,56 @@
-import * as React from 'react'
-import styled from 'styled-components'
-import {MdClose} from 'react-icons/md'
-import Component from './Component'
-import {PluginGridRowAPI} from '@kaminrunde/fireside-utils'
+import * as React from "react";
+import styled from "styled-components";
+import { MdClose } from "react-icons/md";
+import Component from "./Component";
+import { PluginGridRowAPI } from "@kaminrunde/fireside-utils";
 
 type Props = {
-  title: string,
-  onClose: () => void,
+  title: string;
+  onClose: () => void;
   components: {
-    title: string,
-    component: any,
-    isActive?: (api:PluginGridRowAPI<any>) => boolean
-    pluginKey: string
-  }[],
-  children?: any,
-  extraArgs: {
-    mediaSize: string,
-    row: number
-  } | {
-    mediaSize: string,
-    componentId: string
-  } | {
-    mediaSize: string
-  }
-}
+    title: string;
+    component: any;
+    isActive?: (api: PluginGridRowAPI<any>) => boolean;
+    pluginKey: string;
+  }[];
+  children?: any;
+  extraArgs:
+    | {
+        mediaSize: string;
+        row: number;
+      }
+    | {
+        mediaSize: string;
+        componentId: string;
+      }
+    | {
+        mediaSize: string;
+      };
+};
 
-export default function PluginModal (props:Props) {
+export default function PluginModal(props: Props) {
   return (
     <Wrapper>
-      <div className='overlay' onClick={props.onClose}/>
-      <div className='content'>
-        <h3 className='title'>{props.title}</h3>
-        <div className='close-wrapper' onClick={props.onClose}><MdClose/></div>
-        <div className='components'>
+      <div className="overlay" onClick={props.onClose} />
+      <div className="content">
+        <h3 className="title">{props.title}</h3>
+        <div className="close-wrapper" onClick={props.onClose}>
+          <MdClose />
+        </div>
+        <div className="components">
           {props.children}
-          {props.components.map((c,i) => (
-            <Component 
-              key={i}
-              component={c}
-              extraArgs={props.extraArgs}
-            />
+          {props.components.map((c, i) => (
+            <Component key={i} component={c} extraArgs={props.extraArgs} />
           ))}
         </div>
       </div>
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.div`
-  > .overlay, .content {
+  > .overlay,
+  .content {
     z-index: 9999999999999999999999999;
     position: fixed;
     &.overlay {
@@ -56,7 +58,7 @@ const Wrapper = styled.div`
       right: 0;
       top: 0;
       bottom: 0;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0, 0, 0, 0.6);
       cursor: pointer;
     }
     &.content {
@@ -80,7 +82,7 @@ const Wrapper = styled.div`
       font-size: 30px;
       font-weight: normal;
       margin-bottom: 20px;
-      font-family:'Open Sans' sans-serif;
+      font-family: "Open Sans" sans-serif;
     }
     > .close-wrapper {
       position: absolute;
@@ -95,7 +97,9 @@ const Wrapper = styled.div`
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      > .svg { font-size: 30px;}
+      > .svg {
+        font-size: 30px;
+      }
     }
     > .components {
       overflow-y: scroll;
@@ -103,5 +107,4 @@ const Wrapper = styled.div`
       padding-bottom: 100px;
     }
   }
-
-`
+`;

@@ -1,1 +1,1 @@
-export {default} from './GridHeight'
+export { default } from "./GridHeight";

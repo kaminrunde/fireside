@@ -1,43 +1,45 @@
-import * as React from 'react'
-import styled from 'styled-components'
-import {usePluginState} from 'modules/plugins'
-import {PluginComponentAPI} from '@kaminrunde/fireside-utils'
+import * as React from "react";
+import styled from "styled-components";
+import { usePluginState } from "modules/plugins";
+import { PluginComponentAPI } from "@kaminrunde/fireside-utils";
 import { useComponent } from "modules/components";
 
 type Props = {
-  pluginKey: string,
-  componentId: string,
-  mediaSize: string,
+  pluginKey: string;
+  componentId: string;
+  mediaSize: string;
   badge: {
     component: any;
     isActive: (api: any) => boolean;
-  }
-}
+  };
+};
 
-export default React.memo(function PluginBadge (props:Props) {
-  const state = usePluginState(props.pluginKey)
-  const component = useComponent(props.componentId)
+export default React.memo(function PluginBadge(props: Props) {
+  const state = usePluginState(props.pluginKey);
+  const component = useComponent(props.componentId);
 
-  const api:PluginComponentAPI<any> = {
+  const api: PluginComponentAPI<any> = {
     state: state.data,
-    setState: (data:any) => { state.set(data) },
+    setState: (data: any) => {
+      state.set(data);
+    },
     component: component.data,
     mediaSize: props.mediaSize,
     story: state.story,
-  }
+  };
 
-  if(!component.data) return null
+  if (!component.data) return null;
 
-  const isActive = props.badge.isActive(api)
-  
-  if(!isActive) return null
+  const isActive = props.badge.isActive(api);
+
+  if (!isActive) return null;
 
   return (
     <Wrapper>
-      <props.badge.component {...api}/>
+      <props.badge.component {...api} />
     </Wrapper>
-  )
-})
+  );
+});
 
 const Wrapper = styled.div`
   margin-left: 5px;
@@ -53,4 +55,4 @@ const Wrapper = styled.div`
   > svg {
     font-size: 17px;
   }
-`
+`;

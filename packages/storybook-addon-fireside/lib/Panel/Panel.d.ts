@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as t from '../types';
+import * as React from "react";
+import * as t from "../types";
 type Props = {
     channel: t.Channel;
     api: any;

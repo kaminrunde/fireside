@@ -18,7 +18,8 @@ export default function Select(props: Props) {
     if (!props.focus) setOpen(false);
   }, [props.focus]);
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     setOpen(!open);
   };
 

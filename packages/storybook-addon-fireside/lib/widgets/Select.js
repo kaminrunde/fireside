@@ -35,7 +35,8 @@ function Select(props) {
         if (!props.focus)
             setOpen(false);
     }, [props.focus]);
-    const handleClick = () => {
+    const handleClick = (e) => {
+        e.stopPropagation();
         setOpen(!open);
     };
     const label = React.useMemo(() => {

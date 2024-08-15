@@ -39,6 +39,10 @@ function Select(props) {
         e.stopPropagation();
         setOpen(!open);
     };
+    const handleOptionSelect = (value) => {
+        props.onChange(value);
+        setOpen(false);
+    };
     const label = React.useMemo(() => {
         const match = props.options.options.find((opt) => opt.value === props.value);
         return match ? match.label : props.value;
@@ -47,7 +51,7 @@ function Select(props) {
         React.createElement("div", { className: "value", onClick: handleClick },
             label || "-",
             open ? React.createElement(fa_1.FaChevronUp, null) : React.createElement(fa_1.FaChevronDown, null)),
-        open && (React.createElement("div", { className: "options" }, props.options.options.map((row) => (React.createElement(Row, { key: row.label, selected: row.value === props.value, onClick: () => props.onChange(row.value) }, row.label)))))));
+        open && (React.createElement("div", { className: "options" }, props.options.options.map((row) => (React.createElement(Row, { key: row.label, selected: row.value === props.value, onClick: () => handleOptionSelect(row.value) }, row.label)))))));
 }
 exports.default = Select;
 const Wrapper = styled_components_1.default.div `

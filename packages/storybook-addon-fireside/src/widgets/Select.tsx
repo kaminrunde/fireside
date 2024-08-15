@@ -23,6 +23,11 @@ export default function Select(props: Props) {
     setOpen(!open);
   };
 
+  const handleOptionSelect = (value: string) => {
+    props.onChange(value);
+    setOpen(false);
+  };
+
   const label = React.useMemo(() => {
     const match = props.options.options.find(
       (opt) => opt.value === props.value
@@ -43,7 +48,7 @@ export default function Select(props: Props) {
             <Row
               key={row.label}
               selected={row.value === props.value}
-              onClick={() => props.onChange(row.value)}
+              onClick={() => handleOptionSelect(row.value)}
             >
               {row.label}
             </Row>

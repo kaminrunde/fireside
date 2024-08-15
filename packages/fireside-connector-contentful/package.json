@@ -1,6 +1,6 @@
 {
   "name": "@kaminrunde/fireside-connector-contentful",
-  "version": "1.1.1-alpha.24",
+  "version": "1.1.1-alpha.31",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -13,7 +13,7 @@
   "author": "Manuel Jung",
   "license": "MIT",
   "dependencies": {
-    "@kaminrunde/fireside-utils": "^1.1.1-alpha.15",
+    "@kaminrunde/fireside-utils": "^1.1.1-alpha.31",
     "contentful-ui-extensions-sdk": "^3.15.0",
     "typescript": "3.9.5"
   },

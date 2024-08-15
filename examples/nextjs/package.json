@@ -1,6 +1,6 @@
 {
   "name": "nextjs",
-  "version": "1.1.1-alpha.30",
+  "version": "1.1.1-alpha.31",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -17,10 +17,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
-    "@kaminrunde/fireside-app": "^1.1.1-alpha.24",
-    "@kaminrunde/fireside-connector-contentful": "^1.1.1-alpha.24",
-    "@kaminrunde/fireside-utils": "^1.1.1-alpha.15",
-    "@kaminrunde/storybook-addon-fireside": "^1.1.1-alpha.30",
+    "@kaminrunde/fireside-app": "^1.1.1-alpha.31",
+    "@kaminrunde/fireside-connector-contentful": "^1.1.1-alpha.31",
+    "@kaminrunde/fireside-utils": "^1.1.1-alpha.31",
+    "@kaminrunde/storybook-addon-fireside": "^1.1.1-alpha.31",
     "@storybook/addon-actions": "^6.5.12",
     "@storybook/addon-essentials": "^6.5.12",
     "@storybook/addon-interactions": "^6.5.12",

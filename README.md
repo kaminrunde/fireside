@@ -49,7 +49,6 @@ Required scopes:
 npm login --registry=https://npm.pkg.github.com --scope=@kaminrunde
 > Username: USERNAME
 > Password: TOKEN
-> Email: PUBLIC-EMAIL-ADDRESS
 ```
 
 Publishing a package using a local `.npmrc` file
@@ -84,3 +83,7 @@ Successfully published:
  - @kaminrunde/storybook-addon-fireside@1.0.1-alpha.0
 lerna success published 4 packages
 ```
+
+### forced manual prelrelease from branch `master`
+
+`yarn run publish --force-publish '*'`

@@ -24,7 +24,5 @@ addRule<$connector.a.UpdateStory>({
       $plugins.a.init(action.payload),
     ];
     updates.forEach((update) => dispatch(update));
-
-    console.log("updates", getState());
   },
 });

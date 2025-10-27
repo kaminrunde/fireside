@@ -113,6 +113,11 @@ addons.register("addons:storyboard-bridge", (api) => {
   window.addEventListener("message", (e: any) => {
     if (typeof e.data !== "object" || !e.data.type) return;
     switch (e.data.type) {
+      case 'fireside-abort-component': {
+        component.id = uuidv4();
+        channel.emit("storyboard-bridge/clear-props");
+        break;
+      }
       case "fireside-hydrate-component": {
         if (!e.data.component) {
           component.id = uuidv4();

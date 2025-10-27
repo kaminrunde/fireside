@@ -59,15 +59,31 @@ export default function Storybook() {
             {
               label: "Save",
               type: "primary",
-              onClick: () =>
+              onClick: () => {
                 loadingComponent.data
                   ? loadingComponent.update(loadingComponent.data.id, component)
                   : loadingComponent.add(component),
+                ref.current?.contentWindow?.postMessage(
+                  {
+                    type: "fireside-abort-component",
+                    component: component,
+                  },
+                  "*"
+                );
+              }
             },
             {
               label: "Abort",
               type: "danger",
-              onClick: () => loadingComponent.unload(),
+              onClick: () => {
+                ref.current?.contentWindow?.postMessage(
+                  {
+                    type: "fireside-abort-component",
+                  },
+                  "*"
+                );
+                loadingComponent.unload()
+              },
             },
           ]}
         />

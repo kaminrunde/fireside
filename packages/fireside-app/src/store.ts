@@ -1,7 +1,7 @@
 import "features";
 import { createStore, compose, applyMiddleware, combineReducers } from "redux";
 import ruleMiddleware from "redux-ruleset";
-import { createReduxHistoryContext, reachify } from "redux-first-history";
+import { createReduxHistoryContext } from "redux-first-history";
 import { createBrowserHistory } from "history";
 
 import gridReducer from "modules/grid";
@@ -47,7 +47,7 @@ const store = createStore(
 export type ReduxStore = typeof store;
 export type ReduxState = ReturnType<typeof rootReducer>;
 
-export const history = reachify(createReduxHistory(store));
+export const history = createReduxHistory(store);
 
 export default store;
 

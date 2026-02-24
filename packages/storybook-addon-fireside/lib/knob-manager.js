@@ -1,10 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.addSelector = exports.getProps = exports.getKnobs = void 0;
-const objPath = require("object-path");
-const preview_api_1 = require("@storybook/preview-api");
-const csf_1 = require("@storybook/csf");
-const uuid_1 = require("uuid");
+import objPath from "object-path";
+import { addons } from "storybook/preview-api";
+import { toId } from "storybook/internal/csf";
+import { v4 as uuidv4 } from "uuid";
 const knobStore = {};
 const contextStore = {};
 const selectorStore = {};
@@ -12,11 +9,11 @@ let forceReRender = () => null;
 let currentStoryId = "";
 let currentKnobs = [];
 let currentController = {};
-const channel = preview_api_1.addons.getChannel();
+const channel = addons.getChannel();
 let hydratedProps = null;
 const functionRegistry = {};
 let componentToBeHydrated = "";
-function getKnobs(context, simpleKnobs, controller, name, rerender) {
+export function getKnobs(context, simpleKnobs, controller, name, rerender) {
     contextStore[context.id] = context;
     forceReRender = rerender;
     const knobs = simpleKnobs.map((simpleKnob) => {
@@ -59,19 +56,16 @@ function getKnobs(context, simpleKnobs, controller, name, rerender) {
     }
     return knobs;
 }
-exports.getKnobs = getKnobs;
-function getProps(knobs) {
+export function getProps(knobs) {
     let props = {};
     for (let knob of knobs) {
         objPath.set(props, knob.prop, knob.value);
     }
     return props;
 }
-exports.getProps = getProps;
-function addSelector(name, cb) {
+export function addSelector(name, cb) {
     selectorStore[name] = cb;
 }
-exports.addSelector = addSelector;
 function clearKnobs() {
     for (const id in knobStore)
         knobStore[id].value = knobStore[id].defaultValue;
@@ -100,7 +94,7 @@ channel.on("storyboard-bridge/hydrate-component", async (component) => {
     // transform of the story name to match the storybook id
     // storybook is doing this, when the story is registered
     // based on the exported storyname
-    context.id = (0, csf_1.toId)(context.kind, startCase(context.story));
+    context.id = toId(context.kind, startCase(context.story));
     context.story = transformIfPascalCase(context.story);
     const hydrate = () => {
         const props = currentController.versionUpdate
@@ -160,7 +154,7 @@ const transformIfPascalCase = (str) => {
     }
 };
 const generateUniqueId = () => {
-    return `function_${(0, uuid_1.v4)()}`;
+    return `function_${uuidv4()}`;
 };
 const replaceFunctionsWithIdsAndEmit = (knobs) => {
     const knobsWithIds = knobs;

@@ -5,5 +5,5 @@ type Props = {
     props: object;
     controller: t.Controller;
 };
-export default function WidgetWrapper(props: Props): React.JSX.Element;
+export default function WidgetWrapper(props: Props): import("react/jsx-runtime").JSX.Element;
 export {};

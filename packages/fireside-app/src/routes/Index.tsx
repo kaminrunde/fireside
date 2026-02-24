@@ -4,16 +4,13 @@ import ComponentList from "widgets/ComponentList";
 import { useLoadingStatus } from "modules/connector";
 import ClockLoader from "react-spinners/ClockLoader";
 
-type Props = {
-  path: string;
-};
-
-export default function IndexRoute(props: Props) {
+export default function IndexRoute() {
   const loadingStatus = useLoadingStatus();
   return (
     <Wrapper>
       {loadingStatus.data && (
         <div className="loading">
+          {/* @ts-expect-error react-spinners types not yet compatible with React 19 types */}
           <ClockLoader color="#8bc34a" loading size={50} />
 
           <span className="label">Collecting data...</span>

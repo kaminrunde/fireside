@@ -5,7 +5,8 @@
     "declaration": true,
     "outDir": "lib",
     "jsx": "react",
-    "sourceMap": true
+    "sourceMap": true,
+    "skipLibCheck": true
   },
   "include": [
     "src"

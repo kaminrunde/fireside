@@ -2,7 +2,7 @@ import * as React from "react";
 import * as t from "./types";
 import * as manager from "./knob-manager";
 import WidgetWrapper from "./WidgetWrapper";
-import { addons } from "@storybook/preview-api";
+import { addons } from "storybook/preview-api";
 
 /**
  * manages string props. use this knob for simple labels. for more

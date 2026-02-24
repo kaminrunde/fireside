@@ -1,4 +1,3 @@
-import * as React from "react";
 type Props = {
     tabs: {
         tabs: string[];
@@ -6,5 +5,5 @@ type Props = {
         setActiveTab: (tab: string) => void;
     };
 };
-export default function Tabs(props: Props): React.JSX.Element;
+export default function Tabs(props: Props): import("react/jsx-runtime").JSX.Element;
 export {};

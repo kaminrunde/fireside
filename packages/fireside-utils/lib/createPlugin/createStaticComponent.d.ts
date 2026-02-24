@@ -1,5 +1,5 @@
-import * as t from '../types';
-export declare type CreateStaticComponent<State> = {
+import * as t from "../types";
+export type CreateStaticComponent<State> = {
     isActive?: (api: t.PluginComponentAPI<State>) => boolean;
     component: (api: t.PluginComponentAPI<State>) => void;
 };

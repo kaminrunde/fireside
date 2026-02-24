@@ -1,5 +1,5 @@
-import * as t from '../types';
-export declare type ExtendComponent<State> = {
+import * as t from "../types";
+export type ExtendComponent<State> = {
     badge?: {
         component: any;
         isActive: (api: t.PluginComponentAPI<State>) => boolean;

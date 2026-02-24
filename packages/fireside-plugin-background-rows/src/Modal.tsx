@@ -58,7 +58,7 @@ const Wrapper = styled.div`
   gap: 20px;
 `;
 
-const Opt = styled.div.attrs((p) => ({
+const Opt = styled.div.attrs<{ bg: string; active?: boolean }>((p) => ({
   style: {
     background: p.bg,
   },

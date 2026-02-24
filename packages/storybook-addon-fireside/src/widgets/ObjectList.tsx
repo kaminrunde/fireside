@@ -1,11 +1,26 @@
 import * as React from "react";
 import styled from "styled-components";
-import { SortableContainer, SortableElement } from "react-sortable-hoc";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import Widget from "../Panel/Widget";
 import * as t from "../types";
 import produce from "immer";
-import objPath = require("object-path");
-import { arrayMoveImmutable } from "array-move";
+import objPath from "object-path";
 
 type Props = {
   value: object[];
@@ -20,6 +35,22 @@ export default function ObjectList(props: Props) {
     null
   );
   const isActive = typeof activeRowIndex === "number";
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIndex = Number(active.id);
+      const newIndex = Number(over.id);
+      props.onChange(arrayMove(props.value, oldIndex, newIndex));
+    }
+  };
 
   return (
     <Wrapper>
@@ -43,25 +74,32 @@ export default function ObjectList(props: Props) {
         </div>
       )}
       {isActive || (
-        <SortableList
-          items={props.value}
-          getName={props.options.getRowName}
-          onSortEnd={({
-            oldIndex,
-            newIndex,
-          }: {
-            oldIndex: number;
-            newIndex: number;
-          }) => {
-            props.onChange(arrayMoveImmutable(props.value, oldIndex, newIndex));
-          }}
-          onDelete={(index: number): void => {
-            props.onChange(props.value.filter((_, i) => i !== index));
-          }}
-          onUpdate={(index: number): void => {
-            setActiveRowIndex(index);
-          }}
-        />
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          {/* @ts-expect-error @dnd-kit/sortable types not yet compatible with React 19 */}
+          <SortableContext
+            items={props.value.map((_, i) => String(i))}
+            strategy={verticalListSortingStrategy}
+          >
+            <ul>
+              {props.value.map((value: object, index: number) => (
+                <SortableItem
+                  key={`item-${index}`}
+                  id={String(index)}
+                  value={value}
+                  getName={props.options.getRowName}
+                  onDelete={() =>
+                    props.onChange(props.value.filter((_, i) => i !== index))
+                  }
+                  onUpdate={() => setActiveRowIndex(index)}
+                />
+              ))}
+            </ul>
+          </SortableContext>
+        </DndContext>
       )}
 
       <button
@@ -89,58 +127,70 @@ export default function ObjectList(props: Props) {
   );
 }
 
-const SortableItem = SortableElement(
-  ({ value, onDelete, onUpdate, getName }: any) => {
-    const [pendingDelete, setPendingDelete] = React.useState(false);
+function SortableItem({
+  id,
+  value,
+  onDelete,
+  onUpdate,
+  getName,
+}: {
+  id: string;
+  value: object;
+  onDelete: () => void;
+  onUpdate: () => void;
+  getName: (value: object) => string;
+}) {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
+  const [pendingDelete, setPendingDelete] = React.useState(false);
 
-    if (pendingDelete)
-      return (
-        <Item className="SortableItem" highlight="true">
-          <span>Delete "{getName(value)}"?</span>
-          <div className="update keep" onMouseDown={onDelete}>
-            Y
-          </div>
-          <div
-            className="delete keep"
-            onMouseDown={() => setPendingDelete(false)}
-          >
-            N
-          </div>
-        </Item>
-      );
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
 
+  if (pendingDelete)
     return (
-      <Item className="SortableItem" highlight="true">
-        <span>{getName(value)}</span>
-        <div className="update" onMouseDown={onUpdate}>
-          U
+      <Item
+        ref={setNodeRef}
+        style={style}
+        {...attributes}
+        {...listeners}
+        className="SortableItem"
+        highlight="true"
+      >
+        <span>Delete "{getName(value)}"?</span>
+        <div className="update keep" onMouseDown={onDelete}>
+          Y
         </div>
-        <div className="delete" onMouseDown={() => setPendingDelete(true)}>
-          D
+        <div
+          className="delete keep"
+          onMouseDown={() => setPendingDelete(false)}
+        >
+          N
         </div>
       </Item>
     );
-  }
-);
 
-const SortableList = SortableContainer(
-  ({ items, onDelete, onUpdate, getName }: any) => {
-    return (
-      <ul>
-        {items.map((value: object, index: number) => (
-          <SortableItem
-            key={`item-${index}`}
-            index={index}
-            value={value}
-            getName={getName}
-            onDelete={() => onDelete(index)}
-            onUpdate={() => onUpdate(index)}
-          />
-        ))}
-      </ul>
-    );
-  }
-);
+  return (
+    <Item
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className="SortableItem"
+      highlight="true"
+    >
+      <span>{getName(value)}</span>
+      <div className="update" onMouseDown={onUpdate}>
+        U
+      </div>
+      <div className="delete" onMouseDown={() => setPendingDelete(true)}>
+        D
+      </div>
+    </Item>
+  );
+}
 
 const Wrapper = styled.div`
   > .edit {

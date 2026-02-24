@@ -15,6 +15,7 @@ export default function AlertBox() {
       <div className="overlay" />
       <div className="box">
         <div className="close-wrapper" onClick={() => alertBox.close("ABORT")}>
+          {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
           <MdClose />
         </div>
         <h3>{alertBox.modal.title}</h3>

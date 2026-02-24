@@ -1,9 +1,24 @@
 import * as React from "react";
 import styled from "styled-components";
-import { SortableContainer, SortableElement } from "react-sortable-hoc";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import * as t from "../types";
 import produce from "immer";
-import { arrayMoveImmutable } from "array-move";
 
 type Props = {
   value: string[];
@@ -17,6 +32,13 @@ export default function StringList(props: Props) {
   const [showBulkInput, setShowBulkInput] = React.useState(false);
   const [bulkValue, setBulkValue] = React.useState("");
 
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
   const handleBulkAdd = () => {
     const newValues = bulkValue.split("\n").filter(Boolean);
     props.onChange([...props.value, ...newValues]);
@@ -24,33 +46,51 @@ export default function StringList(props: Props) {
     setShowBulkInput(false);
   };
 
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIndex = Number(active.id);
+      const newIndex = Number(over.id);
+      props.onChange(arrayMove(props.value, oldIndex, newIndex));
+    }
+  };
+
   return (
     <Wrapper>
-      <SortableList
-        items={props.value}
-        onSortEnd={({
-          oldIndex,
-          newIndex,
-        }: {
-          oldIndex: number;
-          newIndex: number;
-        }) => {
-          props.onChange(arrayMoveImmutable(props.value, oldIndex, newIndex));
-        }}
-        onDelete={(index: number) => {
-          props.onChange(props.value.filter((_, i) => i !== index));
-        }}
-        onUpdate={(index: number, val: any) => {
-          if (!val) {
-            props.onChange(props.value.filter((_, i) => i !== index));
-            return;
-          }
-          const newValue = produce(props.value, (value) => {
-            value[index] = val;
-          });
-          props.onChange(newValue);
-        }}
-      />
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
+        {/* @ts-expect-error @dnd-kit/sortable types not yet compatible with React 19 */}
+        <SortableContext
+          items={props.value.map((_, i) => String(i))}
+          strategy={verticalListSortingStrategy}
+        >
+          <ul>
+            {props.value.map((value: string, index: number) => (
+              <SortableItem
+                key={`item-${value + index}`}
+                id={String(index)}
+                value={value}
+                onDelete={() =>
+                  props.onChange(props.value.filter((_, i) => i !== index))
+                }
+                onUpdate={(val: string) => {
+                  if (!val) {
+                    props.onChange(props.value.filter((_, i) => i !== index));
+                    return;
+                  }
+                  const newValue = produce(props.value, (value) => {
+                    value[index] = val;
+                  });
+                  props.onChange(newValue);
+                }}
+              />
+            ))}
+          </ul>
+        </SortableContext>
+      </DndContext>
 
       <button
         className="add"
@@ -80,11 +120,28 @@ export default function StringList(props: Props) {
   );
 }
 
-const SortableItem = SortableElement(({ value, onDelete, onUpdate }: any) => {
+function SortableItem({
+  id,
+  value,
+  onDelete,
+  onUpdate,
+}: {
+  id: string;
+  value: string;
+  onDelete: () => void;
+  onUpdate: (val: string) => void;
+}) {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
   const [pendingDelete, setPendingDelete] = React.useState(false);
   const [pendingEdit, setPendingEdit] = React.useState(!value);
   const input = React.useRef<HTMLInputElement | null>(null);
   const [newVal, setNewVal] = React.useState(value);
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
 
   React.useEffect(() => {
     if (!pendingEdit) return;
@@ -103,14 +160,21 @@ const SortableItem = SortableElement(({ value, onDelete, onUpdate }: any) => {
       }
     };
     if (input.current) input.current.addEventListener("keyup", e);
-    else setTimeout(() => input.current.addEventListener("keyup", e), 100);
+    else setTimeout(() => input.current!.addEventListener("keyup", e), 100);
 
     return () => input.current && input.current.removeEventListener("keyup", e);
   }, [pendingEdit, newVal]);
 
   if (pendingDelete)
     return (
-      <Item className="SortableItem" highlight="true">
+      <Item
+        ref={setNodeRef}
+        style={style}
+        {...attributes}
+        {...listeners}
+        className="SortableItem"
+        highlight="true"
+      >
         <span>Delete "{value}"?</span>
         <div className="update keep" onMouseDown={onDelete}>
           Y
@@ -126,7 +190,14 @@ const SortableItem = SortableElement(({ value, onDelete, onUpdate }: any) => {
 
   if (pendingEdit)
     return (
-      <Item className="SortableItem" highlight="true">
+      <Item
+        ref={setNodeRef}
+        style={style}
+        {...attributes}
+        {...listeners}
+        className="SortableItem"
+        highlight="true"
+      >
         <input
           ref={input}
           type="text"
@@ -141,7 +212,13 @@ const SortableItem = SortableElement(({ value, onDelete, onUpdate }: any) => {
     );
 
   return (
-    <Item className="SortableItem">
+    <Item
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className="SortableItem"
+    >
       <span>{value}</span>
       <div className="update" onMouseDown={() => setPendingEdit(true)}>
         U
@@ -151,23 +228,7 @@ const SortableItem = SortableElement(({ value, onDelete, onUpdate }: any) => {
       </div>
     </Item>
   );
-});
-
-const SortableList = SortableContainer(({ items, onDelete, onUpdate }: any) => {
-  return (
-    <ul>
-      {items.map((value: number, index: number) => (
-        <SortableItem
-          key={`item-${value + index}`}
-          index={index}
-          value={value}
-          onDelete={() => onDelete(index)}
-          onUpdate={(val: string) => onUpdate(index, val)}
-        />
-      ))}
-    </ul>
-  );
-});
+}
 
 const BulkInputWrapper = styled.div`
   margin-top: 15px;

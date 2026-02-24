@@ -257,7 +257,7 @@ const styles = {
     borderRadius: "2px",
   }),
   staticOverlay: () => ({
-    position: "fixed",
+    position: "fixed" as const,
     left: "0px",
     top: "0px",
     right: "0px",
@@ -266,7 +266,7 @@ const styles = {
     zIndex: 9999999999999999,
   }),
   staticWrapper: () => ({
-    position: "fixed",
+    position: "fixed" as const,
     left: "50%",
     top: "100px",
     padding: "40px 60px",

@@ -55,6 +55,7 @@ export default function GridHeight(props: Props) {
         ))}
         {settingsList.data.length > 0 && (
           <button className="settings" onClick={() => setShowModal(true)}>
+            {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
             <FiSettings />
           </button>
         )}

@@ -1,12 +1,12 @@
-import * as t from '../types';
-import { ExtendComponent } from './extendComponent';
-import { ExtendGridRow } from './extendGridRow';
-import { ExtendSettingsPage } from './extendSettingsPage';
-import { CreateStaticComponent } from './createStaticComponent';
-import { CreatePage } from './createPage';
-import { OnStoryUpdate } from './onStoryUpdate';
-import { ExtendComponentButtonList } from './extendComponentButtonList';
-declare type PluginContext<State, Options> = {
+import * as t from "../types";
+import { ExtendComponent } from "./extendComponent";
+import { ExtendGridRow } from "./extendGridRow";
+import { ExtendSettingsPage } from "./extendSettingsPage";
+import { CreateStaticComponent } from "./createStaticComponent";
+import { CreatePage } from "./createPage";
+import { OnStoryUpdate } from "./onStoryUpdate";
+import { ExtendComponentButtonList } from "./extendComponentButtonList";
+type PluginContext<State, Options> = {
     extendComponent: (config: ExtendComponent<State>) => void;
     extendGridRow: (config: ExtendGridRow<State>) => void;
     extendSettingsPage: (config: ExtendSettingsPage<State>) => void;

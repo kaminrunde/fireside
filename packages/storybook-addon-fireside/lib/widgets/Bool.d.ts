@@ -1,4 +1,3 @@
-import * as React from "react";
 import * as t from "../types";
 type Props = {
     value: boolean;
@@ -7,5 +6,5 @@ type Props = {
     hasError: boolean;
     options: t.BoolOptions;
 };
-export default function Bool(props: Props): React.JSX.Element;
+export default function Bool(props: Props): import("react/jsx-runtime").JSX.Element;
 export {};

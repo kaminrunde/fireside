@@ -14,13 +14,10 @@ declare module "crypto-browserify" {
   export { createHash };
 }
 
-declare module "@reach/router" {
-  const module: any;
-  const Router: any;
-  const push: any;
-  const Link: any;
-  export { Router, push, Link };
-  export default module;
+declare module "redux-first-history/rr6" {
+  import { History } from "history";
+  import { ComponentType } from "react";
+  export const HistoryRouter: ComponentType<{ history: History; children: any }>;
 }
 
 declare module "redux-ruleset" {

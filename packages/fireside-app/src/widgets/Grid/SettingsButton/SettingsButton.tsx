@@ -29,6 +29,7 @@ export default function SettingsButton(props: Props) {
   return (
     <>
       <button onClick={() => setOpen(true)}>
+        {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
         <FiSettings />
       </button>
       {open && (

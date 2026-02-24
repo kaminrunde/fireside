@@ -1,5 +1,5 @@
-import * as t from '../types';
-export declare type ExtendGridRow<State> = {
+import * as t from "../types";
+export type ExtendGridRow<State> = {
     badge?: {
         component: (props: t.PluginGridRowAPI<State>) => any;
         isActive: (api: t.PluginGridRowAPI<State>) => boolean;

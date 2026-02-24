@@ -83,7 +83,7 @@ export default function useBetterConnect<
   Input extends object,
   Result,
   State,
-  DP
+  DP extends Partial<{ [key in keyof Result]: Function }>
 >(props: Input, m: Config<Input, Result, State, DP>): Result {
   if (!setup) runSetup();
   const rootState: any = store.getState();

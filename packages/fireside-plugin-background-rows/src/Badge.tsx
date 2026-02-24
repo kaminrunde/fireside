@@ -17,7 +17,7 @@ export default function Badge(props: Props) {
   }
 }
 
-const Wrapper = styled.div.attrs((p) => ({
+const Wrapper = styled.div.attrs<{ bg: string }>((p) => ({
   style: {
     background: p.bg,
   },

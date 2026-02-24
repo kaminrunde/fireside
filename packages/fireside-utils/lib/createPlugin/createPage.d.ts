@@ -1,5 +1,5 @@
-import * as t from '../types';
-export declare type CreatePage<State> = {
+import * as t from "../types";
+export type CreatePage<State> = {
     slug: string;
     navigation?: {
         icon?: any;

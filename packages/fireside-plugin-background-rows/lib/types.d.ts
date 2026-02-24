@@ -1,9 +1,9 @@
-export declare type State = {
+export type State = {
     [mediaSize: string]: {
         [row: number]: string;
     };
 };
-export declare type Options = {
+export type Options = {
     key: string;
     colors: {
         color: string;

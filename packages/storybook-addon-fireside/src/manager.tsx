@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 import * as React from "react";
-import { addons, types } from "@storybook/manager-api";
+import { addons, types } from "storybook/manager-api";
 import * as t from "./types";
 import Panel from "./Panel/Panel";
 import { getPersistentChannel } from "./persistentChannel";
-const hashit = require("hash-it");
+import hashit from "hash-it";
 
 addons.register("addons:storyboard-bridge", (api) => {
   const channel: t.Channel = addons.getChannel();

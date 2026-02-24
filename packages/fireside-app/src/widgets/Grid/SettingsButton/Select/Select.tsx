@@ -20,6 +20,7 @@ export default function Select(props: Props) {
   return (
     <Wrapper className="Select" ref={ref} onClick={focus}>
       <div className="value">
+        {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
         {props.value.label} {open ? <FiChevronUp /> : <FiChevronDown />}
       </div>
       {open && (

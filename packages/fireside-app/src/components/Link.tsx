@@ -1,7 +1,7 @@
 import React from "react";
 import store from "store";
 import { push } from "redux-first-history";
-import { Link as RawLink } from "@reach/router";
+import { Link as RawLink } from "react-router-dom";
 
 type Props = {
   to: string;

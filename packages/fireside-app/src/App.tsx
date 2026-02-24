@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Router } from "@reach/router";
+import { HistoryRouter } from "redux-first-history/rr6";
+import { Routes, Route } from "react-router-dom";
 import Snackbar from "widgets/Snackbar";
 import { history } from "./store";
 import Header from "containers/Header";
@@ -20,11 +21,13 @@ export default function App() {
       <EnforceFullscreen />
       <Header />
       <Sidebar />
-      <Router history={history}>
-        <IndexRoute path="/" />
-        <GridRoute path="/grid/:mediaSize" mediaSize="" />
-        <Settings path="/settings" />
-      </Router>
+      <HistoryRouter history={history}>
+        <Routes>
+          <Route path="/" element={<IndexRoute />} />
+          <Route path="/grid/:mediaSize" element={<GridRoute />} />
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
+      </HistoryRouter>
       <Storybook />
       <Snackbar />
       <Modal />

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fa_1 = require("react-icons/fa");
 var fireside_utils_1 = require("@kaminrunde/fireside-utils");
 var immer_1 = require("immer");
-exports.default = fireside_utils_1.createPlugin(function (ctx) {
+exports.default = (0, fireside_utils_1.createPlugin)(function (ctx) {
     ctx.extendComponent({
         badge: {
             component: fa_1.FaArrowsAltH,
@@ -11,8 +11,8 @@ exports.default = fireside_utils_1.createPlugin(function (ctx) {
                 var state = _a.state, component = _a.component, mediaSize = _a.mediaSize;
                 if (!state[component.id])
                     return false;
-                return (!!state[component.id][mediaSize]);
-            }
+                return !!state[component.id][mediaSize];
+            },
         },
         icon: {
             component: fa_1.FaArrowsAltH,
@@ -20,11 +20,11 @@ exports.default = fireside_utils_1.createPlugin(function (ctx) {
                 var state = _a.state, component = _a.component, mediaSize = _a.mediaSize;
                 if (!state[component.id])
                     return false;
-                return (!!state[component.id][mediaSize]);
+                return !!state[component.id][mediaSize];
             },
             onClick: function (_a) {
                 var state = _a.state, component = _a.component, mediaSize = _a.mediaSize, setState = _a.setState;
-                setState(immer_1.default(state, function (draft) {
+                setState((0, immer_1.default)(state, function (draft) {
                     if (!draft[component.id])
                         draft[component.id] = {};
                     draft[component.id][mediaSize] = !draft[component.id][mediaSize];
@@ -34,8 +34,8 @@ exports.default = fireside_utils_1.createPlugin(function (ctx) {
                         delete draft[component.id];
                     }
                 }));
-            }
-        }
+            },
+        },
     });
     return {};
 });

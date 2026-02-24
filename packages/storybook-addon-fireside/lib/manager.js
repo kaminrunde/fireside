@@ -1,47 +1,19 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const uuid_1 = require("uuid");
-const React = __importStar(require("react"));
-const manager_api_1 = require("@storybook/manager-api");
-const Panel_1 = __importDefault(require("./Panel/Panel"));
-const persistentChannel_1 = require("./persistentChannel");
-const hashit = require("hash-it");
-manager_api_1.addons.register("addons:storyboard-bridge", (api) => {
-    const channel = manager_api_1.addons.getChannel();
-    (0, persistentChannel_1.getPersistentChannel)(channel);
-    manager_api_1.addons.add("addons:storyboard-bridge", {
-        type: manager_api_1.types.PANEL,
+import { jsx as _jsx } from "react/jsx-runtime";
+import { v4 as uuidv4 } from "uuid";
+import { addons, types } from "storybook/manager-api";
+import Panel from "./Panel/Panel";
+import { getPersistentChannel } from "./persistentChannel";
+import hashit from "hash-it";
+addons.register("addons:storyboard-bridge", (api) => {
+    const channel = addons.getChannel();
+    getPersistentChannel(channel);
+    addons.add("addons:storyboard-bridge", {
+        type: types.PANEL,
         title: "Eigenschaften",
-        render: ({ active }) => (React.createElement(Panel_1.default, { channel: channel, api: api, key: "fireside" })),
+        render: ({ active }) => (_jsx(Panel, { channel: channel, api: api }, "fireside")),
     });
     let component = {
-        id: (0, uuid_1.v4)(),
+        id: uuidv4(),
         name: "not-known",
         props: {},
     };
@@ -97,9 +69,14 @@ manager_api_1.addons.register("addons:storyboard-bridge", (api) => {
         if (typeof e.data !== "object" || !e.data.type)
             return;
         switch (e.data.type) {
+            case 'fireside-abort-component': {
+                component.id = uuidv4();
+                channel.emit("storyboard-bridge/clear-props");
+                break;
+            }
             case "fireside-hydrate-component": {
                 if (!e.data.component) {
-                    component.id = (0, uuid_1.v4)();
+                    component.id = uuidv4();
                     channel.emit("storyboard-bridge/clear-props");
                 }
                 if (e.data.component) {

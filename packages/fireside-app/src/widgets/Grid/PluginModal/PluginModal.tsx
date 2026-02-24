@@ -35,6 +35,7 @@ export default function PluginModal(props: Props) {
       <div className="content">
         <h3 className="title">{props.title}</h3>
         <div className="close-wrapper" onClick={props.onClose}>
+          {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
           <MdClose />
         </div>
         <div className="components">

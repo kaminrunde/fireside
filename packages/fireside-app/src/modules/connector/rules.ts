@@ -22,7 +22,7 @@ addRule<a.SetConnector>({
         const compressedBuffer = Buffer.from(compressedStory, "base64");
 
         Promise.resolve()
-          .then(() => gunzipAsync(compressedBuffer))
+          .then(() => gunzipAsync(new Uint8Array(compressedBuffer)))
           .then((decompressedBuffer) => {
             story = JSON.parse(decompressedBuffer.toString());
 

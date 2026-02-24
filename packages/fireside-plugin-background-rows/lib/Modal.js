@@ -15,14 +15,16 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = Modal;
 var React = require("react");
 var styled_components_1 = require("styled-components");
 var immer_1 = require("immer");
 function Modal(props) {
     var handleColorClick = function (color) { return function () {
-        var state = immer_1.default(props.state, function (state) {
+        var state = (0, immer_1.default)(props.state, function (state) {
             var _a, _b;
-            if (state[props.mediaSize] && state[props.mediaSize][props.row] === color) {
+            if (state[props.mediaSize] &&
+                state[props.mediaSize][props.row] === color) {
                 delete state[props.mediaSize][props.row];
                 if (!Object.keys(state[props.mediaSize]).length) {
                     delete state[props.mediaSize];
@@ -40,12 +42,11 @@ function Modal(props) {
     };
     return (React.createElement(Wrapper, null, props.options.colors.map(function (c) { return (React.createElement(Opt, { onClick: handleColorClick(c.label), key: c.color, bg: c.color, active: optIsActive(c.label) })); })));
 }
-exports.default = Modal;
 var Wrapper = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  padding: 20px;\n  display: flex;\n  gap: 20px;\n"], ["\n  padding: 20px;\n  display: flex;\n  gap: 20px;\n"])));
 var Opt = styled_components_1.default.div.attrs(function (p) { return ({
     style: {
         background: p.bg,
-    }
-}); })(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  width: 50px;\n  height: 50px;\n  border-radius: 5px;\n  border: ", "px solid black;\n  cursor: pointer;\n"], ["\n  width: 50px;\n  height: 50px;\n  border-radius: 5px;\n  border: ", "px solid black;\n  cursor: pointer;\n"])), function (p) { return p.active ? '6' : '1'; });
+    },
+}); })(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  width: 50px;\n  height: 50px;\n  border-radius: 5px;\n  border: ", "px solid black;\n  cursor: pointer;\n"], ["\n  width: 50px;\n  height: 50px;\n  border-radius: 5px;\n  border: ", "px solid black;\n  cursor: pointer;\n"])), function (p) { return (p.active ? "6" : "1"); });
 var templateObject_1, templateObject_2;
 //# sourceMappingURL=Modal.js.map

@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPersistentChannel = void 0;
 let persistentChannelInstance = null;
-function getPersistentChannel(channel) {
+export function getPersistentChannel(channel) {
     if (persistentChannelInstance)
         return persistentChannelInstance;
     let knobs = [];
@@ -19,4 +16,3 @@ function getPersistentChannel(channel) {
     };
     return persistentChannelInstance;
 }
-exports.getPersistentChannel = getPersistentChannel;

@@ -1,4 +1,4 @@
-import * as t from './types';
+import * as t from "./types";
 /**
  * Updates a component by defined controller
  * - versionUpdate hook is called

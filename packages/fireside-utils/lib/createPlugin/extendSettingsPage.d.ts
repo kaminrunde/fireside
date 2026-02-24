@@ -1,5 +1,5 @@
-import * as t from '../types';
-export declare type ExtendSettingsPage<State> = {
+import * as t from "../types";
+export type ExtendSettingsPage<State> = {
     row?: {
         title: string;
         component: (api: t.SettingsPageAPI<State>) => any;

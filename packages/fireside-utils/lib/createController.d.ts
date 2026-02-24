@@ -1,4 +1,4 @@
-import * as t from './types';
+import * as t from "./types";
 /**
  * Wrapps your controller with typescript autosuggestion + validation.
  */

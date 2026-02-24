@@ -1,13 +1,13 @@
-import * as et from './createPlugin/event-types';
-export declare type Connector = {
+import * as et from "./createPlugin/event-types";
+export type Connector = {
     name: string;
     onChange: (cb: (story?: RawStory) => void) => void;
     setStory: (story: RawStory) => void;
 };
-export declare type PluginOptions = {
+export type PluginOptions = {
     key: string;
 };
-export declare type PluginActions = {
+export type PluginActions = {
     alert: (ctx: {
         title: string;
         description?: string;
@@ -15,7 +15,7 @@ export declare type PluginActions = {
     }) => Promise<string | null>;
     addComponentToComponentList: (component: any) => void;
     triggerSnackbarEvent: (message: {
-        type: 'info' | 'warning' | 'error';
+        type: "info" | "warning" | "error";
         title: string;
         content: string;
     }) => void;
@@ -40,15 +40,15 @@ export interface StaticComponentAPI<State> extends PluginAPI<State> {
 }
 export interface OnStoryUpdateAPI<State> extends PluginAPI<State> {
 }
-export declare type PluginEvent = et.InitialStateEvent | et.ComponentBadgeEvent | et.ComponentIconEvent | et.ComponentSettingsEvent | et.GridRowBadgeEvent | et.GridRowIconEvent | et.GridRowSettingsEvent | et.SettingsPageRowEvent | et.CreatePageNavigationEvent | et.CreatePagePageEvent | et.CreateStaticComponentEvent | et.OnStoryUpdateEvent | et.ExtendComponentButtonListEvent;
-export declare type Config = {
+export type PluginEvent = et.InitialStateEvent | et.ComponentBadgeEvent | et.ComponentIconEvent | et.ComponentSettingsEvent | et.GridRowBadgeEvent | et.GridRowIconEvent | et.GridRowSettingsEvent | et.SettingsPageRowEvent | et.CreatePageNavigationEvent | et.CreatePagePageEvent | et.CreateStaticComponentEvent | et.OnStoryUpdateEvent | et.ExtendComponentButtonListEvent;
+export type Config = {
     resolveController?: (name: string) => Controller<any, any> | Promise<Controller<any, any>>;
     nodes?: string[] | {
         name: string;
         key: string;
     }[];
 };
-export declare type Controller<ComponentConfig, Context> = {
+export type Controller<ComponentConfig, Context> = {
     /**
      * This is the first hook that is ever called in the controller lifecicle. A some
      * point you want to change the component config. but there may be a bunch of static
@@ -69,11 +69,11 @@ export declare type Controller<ComponentConfig, Context> = {
      *   }
      *
      *   if(newConfig.__version === 1){
-      *     newConfig.__version = 2
-      *     // other transformation
-      *   }
-      *
-      *   return newConfig
+     *     newConfig.__version = 2
+     *     // other transformation
+     *   }
+     *
+     *   return newConfig
      * }
      */
     versionUpdate?: (componentConfig: ComponentConfig) => ComponentConfig;
@@ -126,7 +126,7 @@ export declare type Controller<ComponentConfig, Context> = {
 /**
  * Basic building block for stories
  */
-export declare type Component = {
+export type Component = {
     name: string;
     id: string;
     createdAt: number;
@@ -139,7 +139,7 @@ export declare type Component = {
  * Format in which grid will be saved in fireside connector (e.g Contentful)
  * Can be transformed further with fireside-utils
  */
-export declare type RawGrid = {
+export type RawGrid = {
     enabled: boolean;
     gap: number;
     grid: string[][];
@@ -150,8 +150,8 @@ export declare type RawGrid = {
  * Format in which Story will be saved in fireside connector (e.g Contentful)
  * Can be transformed further with fireside-utils
  */
-export declare type RawStory = {
-    version: '1.0.0' | '2.0.0';
+export type RawStory = {
+    version: "1.0.0" | "2.0.0";
     hash: string;
     componentsById: Record<string, Component>;
     allComponents: string[];
@@ -163,7 +163,7 @@ export declare type RawStory = {
 /**
  * RawStory is transformed in this format which can be used in apps
  */
-export declare type FormattedStory = {
+export type FormattedStory = {
     hash: string;
     events: any[];
     componentsById: Record<string, Component>;
@@ -173,7 +173,7 @@ export declare type FormattedStory = {
         [key: string]: any;
     };
 };
-export declare type GridContext = {
+export type GridContext = {
     minRow: number;
     maxRow: number;
     byMediaSize: {

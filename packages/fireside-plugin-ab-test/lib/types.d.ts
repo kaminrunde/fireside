@@ -1,4 +1,4 @@
-export declare type State = {
+export type State = {
     components: {
         [ms: string]: {
             A: number[];
@@ -7,11 +7,11 @@ export declare type State = {
     };
     byId: {
         [id: string]: {
-            [ms: string]: 'A' | 'B';
+            [ms: string]: "A" | "B";
         };
     };
 } | undefined;
-export declare type PluginOptions = {
+export type PluginOptions = {
     key: string;
     password?: string;
     maxComponents?: number;

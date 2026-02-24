@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = sortComponents;
 /**
  * We need to sort the compnents by their order in DOM. The browser starts rendering
  * as soon as there are 20 000 chars of the DOM available. for large stories this could
@@ -31,9 +32,6 @@ function sortComponents(story) {
         for (var ms in story.grids) {
         }
     }
-    // const sortedComponents = story.allComponents.sort((a,b) => {
-    // })
     return story;
 }
-exports.default = sortComponents;
 //# sourceMappingURL=sortComponents.js.map

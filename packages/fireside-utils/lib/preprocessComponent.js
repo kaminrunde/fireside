@@ -9,12 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = preprocessComponent;
 /**
  * Updates a component by defined controller
  * - versionUpdate hook is called
@@ -47,7 +48,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 function preprocessComponent(c, getGridContext, config) {
     return __awaiter(this, void 0, void 0, function () {
-        var controller, updated, storyEvents, _a, _b, _c, _d, _e, _f;
+        var controller, updated, storyEvents, _a, _b, _c, _d, _e;
+        var _f;
         return __generator(this, function (_g) {
             switch (_g.label) {
                 case 0: return [4 /*yield*/, config.resolveController(c.name)];
@@ -72,7 +74,9 @@ function preprocessComponent(c, getGridContext, config) {
                     _d = (_c = Object).assign;
                     _e = [{}, updated.props];
                     _f = {};
-                    return [4 /*yield*/, controller.createContext(updated.props, { getGridContext: getGridContext })];
+                    return [4 /*yield*/, controller.createContext(updated.props, {
+                            getGridContext: getGridContext,
+                        })];
                 case 4:
                     _b.props = _d.apply(_c, _e.concat([(_f.context = _g.sent(),
                             _f)]));
@@ -88,5 +92,4 @@ function preprocessComponent(c, getGridContext, config) {
         });
     });
 }
-exports.default = preprocessComponent;
 //# sourceMappingURL=preprocessComponent.js.map

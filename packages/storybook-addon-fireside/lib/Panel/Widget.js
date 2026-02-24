@@ -1,39 +1,12 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const React = __importStar(require("react"));
-const widgets_1 = __importDefault(require("../widgets"));
-const styled_components_1 = __importDefault(require("styled-components"));
-const useCustomComponents_1 = __importDefault(require("./useCustomComponents"));
-function Widget(props) {
-    const customComponents = (0, useCustomComponents_1.default)();
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import * as React from "react";
+import getWidget from "../widgets";
+import styled from "styled-components";
+import useCustomComponents from "./useCustomComponents";
+export default function Widget(props) {
+    const customComponents = useCustomComponents();
     const [value, setValue] = React.useState(props.knob.value);
-    const Component = (0, widgets_1.default)(props.knob, customComponents);
+    const Component = getWidget(props.knob, customComponents);
     const [handle, focus, ref] = useFocus();
     const update = (val) => {
         setValue(val);
@@ -44,14 +17,9 @@ function Widget(props) {
     const error = props.knob.options.validate
         ? props.knob.options.validate(value)
         : null;
-    return (React.createElement(Wrapper, { ref: ref, onClick: handle },
-        React.createElement("h3", { className: "label" }, props.knob.label),
-        props.knob.options.hint && (React.createElement("div", { className: "hint" }, props.knob.options.hint)),
-        error && React.createElement("div", { className: "error" }, error),
-        React.createElement(Component, { value: value, onChange: update, focus: focus, hasError: !!error, options: props.knob.options })));
+    return (_jsxs(Wrapper, { ref: ref, onClick: handle, children: [_jsx("h3", { className: "label", children: props.knob.label }), props.knob.options.hint && (_jsx("div", { className: "hint", children: props.knob.options.hint })), error && _jsx("div", { className: "error", children: error }), _jsx(Component, { value: value, onChange: update, focus: focus, hasError: !!error, options: props.knob.options })] }));
 }
-exports.default = Widget;
-const Wrapper = styled_components_1.default.div `
+const Wrapper = styled.div `
   padding: 10px;
   &:active {
     outline: none;

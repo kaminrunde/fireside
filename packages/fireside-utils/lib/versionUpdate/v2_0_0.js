@@ -10,18 +10,21 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = update_2_0_0;
 function update_2_0_0(story) {
-    if (story.version === '1.0.0') {
+    if (story.version === "1.0.0") {
         story = __assign({}, story);
-        story.version = '2.0.0';
+        story.version = "2.0.0";
         var componentsById = {};
         var grids = {};
         var gridAreaToId_1 = {};
@@ -31,7 +34,7 @@ function update_2_0_0(story) {
         }
         for (var ms in story.grids) {
             var grid = __assign({}, story.grids[ms]);
-            grid.grid = __spreadArrays(grid.grid);
+            grid.grid = __spreadArray([], grid.grid, true);
             for (var i = 0; i < grid.grid.length; i++) {
                 var cells = [];
                 for (var _i = 0, _a = grid.grid[i]; _i < _a.length; _i++) {
@@ -48,5 +51,4 @@ function update_2_0_0(story) {
     }
     return story;
 }
-exports.default = update_2_0_0;
 //# sourceMappingURL=v2_0_0.js.map

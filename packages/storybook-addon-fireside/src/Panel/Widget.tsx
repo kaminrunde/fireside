@@ -44,7 +44,7 @@ export default function Widget(props: Props) {
   );
 }
 
-const Wrapper = styled.div<{ ref: React.MutableRefObject<HTMLElement> }>`
+const Wrapper = styled.div`
   padding: 10px;
   &:active {
     outline: none;
@@ -71,11 +71,11 @@ const Wrapper = styled.div<{ ref: React.MutableRefObject<HTMLElement> }>`
 function useFocus(): [
   () => void,
   boolean,
-  React.MutableRefObject<HTMLElement | null>,
+  React.MutableRefObject<HTMLDivElement | null>,
   () => void
 ] {
-  const [activeEl, setActiveEl] = React.useState<null | HTMLElement>(null);
-  const ref = React.useRef<null | HTMLElement>(null);
+  const [activeEl, setActiveEl] = React.useState<null | HTMLDivElement>(null);
+  const ref = React.useRef<null | HTMLDivElement>(null);
   const handle = () => {
     if (activeEl || !ref.current) return;
     setActiveEl(ref.current);

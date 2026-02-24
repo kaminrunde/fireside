@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateStateByComponents = void 0;
+exports.updateStateByComponents = updateStateByComponents;
 function updateStateByComponents(state, story) {
     var byId = {};
     for (var ms in state.components) {
@@ -13,7 +13,7 @@ function updateStateByComponents(state, story) {
                 var id = gridRow_1[_b];
                 if (!byId[id])
                     byId[id] = {};
-                byId[id][ms] = 'A';
+                byId[id][ms] = "A";
             }
         }
         for (var _c = 0, _d = state.components[ms].B; _c < _d.length; _c++) {
@@ -25,11 +25,10 @@ function updateStateByComponents(state, story) {
                 var id = gridRow_2[_e];
                 if (!byId[id])
                     byId[id] = {};
-                byId[id][ms] = 'B';
+                byId[id][ms] = "B";
             }
         }
     }
     state.byId = byId;
 }
-exports.updateStateByComponents = updateStateByComponents;
 //# sourceMappingURL=utils.js.map

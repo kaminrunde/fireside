@@ -1,4 +1,4 @@
-import * as t from './types';
+import * as t from "./types";
 /**
  * We need to sort the compnents by their order in DOM. The browser starts rendering
  * as soon as there are 20 000 chars of the DOM available. for large stories this could

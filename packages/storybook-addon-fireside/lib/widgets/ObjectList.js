@@ -1,91 +1,59 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const React = __importStar(require("react"));
-const styled_components_1 = __importDefault(require("styled-components"));
-const react_sortable_hoc_1 = require("react-sortable-hoc");
-const Widget_1 = __importDefault(require("../Panel/Widget"));
-const immer_1 = __importDefault(require("immer"));
-const objPath = require("object-path");
-const array_move_1 = require("array-move");
-function ObjectList(props) {
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import * as React from "react";
+import styled from "styled-components";
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, } from "@dnd-kit/core";
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy, } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import Widget from "../Panel/Widget";
+import produce from "immer";
+import objPath from "object-path";
+export default function ObjectList(props) {
     const [activeRowIndex, setActiveRowIndex] = React.useState(null);
     const isActive = typeof activeRowIndex === "number";
-    return (React.createElement(Wrapper, null,
-        isActive && (React.createElement("div", { className: "edit" }, props.options.schema.map((knob) => (React.createElement(Widget_1.default, { knob: {
-                ...knob,
-                value: objPath.get(props.value[activeRowIndex], knob.prop),
-            }, onUpdate: (val) => props.onChange((0, immer_1.default)(props.value, (value) => {
-                objPath.set(value[activeRowIndex], knob.prop, val);
-            })) }))))),
-        isActive || (React.createElement(SortableList, { items: props.value, getName: props.options.getRowName, onSortEnd: ({ oldIndex, newIndex, }) => {
-                props.onChange((0, array_move_1.arrayMoveImmutable)(props.value, oldIndex, newIndex));
-            }, onDelete: (index) => {
-                props.onChange(props.value.filter((_, i) => i !== index));
-            }, onUpdate: (index) => {
-                setActiveRowIndex(index);
-            } })),
-        React.createElement("button", { className: "add", onClick: () => {
-                if (isActive) {
-                    setActiveRowIndex(null);
-                }
-                else {
-                    props.onChange((0, immer_1.default)(props.value, (value) => {
-                        let entry = {};
-                        for (let knob of props.options.schema) {
-                            objPath.set(entry, knob.prop, knob.value);
-                        }
-                        value.push(entry);
-                    }));
-                    setActiveRowIndex(props.value.length);
-                }
-            } }, isActive ? "SAVE" : "ADD")));
+    const sensors = useSensors(useSensor(PointerSensor), useSensor(KeyboardSensor, {
+        coordinateGetter: sortableKeyboardCoordinates,
+    }));
+    const handleDragEnd = (event) => {
+        const { active, over } = event;
+        if (over && active.id !== over.id) {
+            const oldIndex = Number(active.id);
+            const newIndex = Number(over.id);
+            props.onChange(arrayMove(props.value, oldIndex, newIndex));
+        }
+    };
+    return (_jsxs(Wrapper, { children: [isActive && (_jsx("div", { className: "edit", children: props.options.schema.map((knob) => (_jsx(Widget, { knob: {
+                        ...knob,
+                        value: objPath.get(props.value[activeRowIndex], knob.prop),
+                    }, onUpdate: (val) => props.onChange(produce(props.value, (value) => {
+                        objPath.set(value[activeRowIndex], knob.prop, val);
+                    })) }))) })), isActive || (_jsx(DndContext, { sensors: sensors, collisionDetection: closestCenter, onDragEnd: handleDragEnd, children: _jsx(SortableContext, { items: props.value.map((_, i) => String(i)), strategy: verticalListSortingStrategy, children: _jsx("ul", { children: props.value.map((value, index) => (_jsx(SortableItem, { id: String(index), value: value, getName: props.options.getRowName, onDelete: () => props.onChange(props.value.filter((_, i) => i !== index)), onUpdate: () => setActiveRowIndex(index) }, `item-${index}`))) }) }) })), _jsx("button", { className: "add", onClick: () => {
+                    if (isActive) {
+                        setActiveRowIndex(null);
+                    }
+                    else {
+                        props.onChange(produce(props.value, (value) => {
+                            let entry = {};
+                            for (let knob of props.options.schema) {
+                                objPath.set(entry, knob.prop, knob.value);
+                            }
+                            value.push(entry);
+                        }));
+                        setActiveRowIndex(props.value.length);
+                    }
+                }, children: isActive ? "SAVE" : "ADD" })] }));
 }
-exports.default = ObjectList;
-const SortableItem = (0, react_sortable_hoc_1.SortableElement)(({ value, onDelete, onUpdate, getName }) => {
+function SortableItem({ id, value, onDelete, onUpdate, getName, }) {
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
     const [pendingDelete, setPendingDelete] = React.useState(false);
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+    };
     if (pendingDelete)
-        return (React.createElement(Item, { className: "SortableItem", highlight: "true" },
-            React.createElement("span", null,
-                "Delete \"",
-                getName(value),
-                "\"?"),
-            React.createElement("div", { className: "update keep", onMouseDown: onDelete }, "Y"),
-            React.createElement("div", { className: "delete keep", onMouseDown: () => setPendingDelete(false) }, "N")));
-    return (React.createElement(Item, { className: "SortableItem", highlight: "true" },
-        React.createElement("span", null, getName(value)),
-        React.createElement("div", { className: "update", onMouseDown: onUpdate }, "U"),
-        React.createElement("div", { className: "delete", onMouseDown: () => setPendingDelete(true) }, "D")));
-});
-const SortableList = (0, react_sortable_hoc_1.SortableContainer)(({ items, onDelete, onUpdate, getName }) => {
-    return (React.createElement("ul", null, items.map((value, index) => (React.createElement(SortableItem, { key: `item-${index}`, index: index, value: value, getName: getName, onDelete: () => onDelete(index), onUpdate: () => onUpdate(index) })))));
-});
-const Wrapper = styled_components_1.default.div `
+        return (_jsxs(Item, { ref: setNodeRef, style: style, ...attributes, ...listeners, className: "SortableItem", highlight: "true", children: [_jsxs("span", { children: ["Delete \"", getName(value), "\"?"] }), _jsx("div", { className: "update keep", onMouseDown: onDelete, children: "Y" }), _jsx("div", { className: "delete keep", onMouseDown: () => setPendingDelete(false), children: "N" })] }));
+    return (_jsxs(Item, { ref: setNodeRef, style: style, ...attributes, ...listeners, className: "SortableItem", highlight: "true", children: [_jsx("span", { children: getName(value) }), _jsx("div", { className: "update", onMouseDown: onUpdate, children: "U" }), _jsx("div", { className: "delete", onMouseDown: () => setPendingDelete(true), children: "D" })] }));
+}
+const Wrapper = styled.div `
   > .edit {
     border-left: 4px solid #1da7fd;
     background: #d3d3d34d;
@@ -114,7 +82,7 @@ const Wrapper = styled_components_1.default.div `
     color: white;
   }
 `;
-const Item = styled_components_1.default.li `
+const Item = styled.li `
   padding: 10px;
   margin: 3px 0;
   border: 1px solid lightgrey;

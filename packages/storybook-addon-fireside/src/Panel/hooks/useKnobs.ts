@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as t from "../../types";
-import objPath = require("object-path");
+import objPath from "object-path";
 import { PersistentChannel } from "../../persistentChannel";
 
 type Output = {

@@ -1,5 +1,5 @@
-import * as t from './types';
-declare type Config = {
+import * as t from "./types";
+type Config = {
     allIds: string[];
     gridAreas: Record<string, string>;
 };

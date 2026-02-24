@@ -1,5 +1,5 @@
 import * as t from "../types";
-export declare type ExtendComponentButtonList<State> = {
+export type ExtendComponentButtonList<State> = {
     /**
      * The function to execute when the button is clicked
      */

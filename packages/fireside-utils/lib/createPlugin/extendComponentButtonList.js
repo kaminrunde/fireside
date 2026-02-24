@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = extendComponentButtonList;
 function extendComponentButtonList(config, options) {
     var events = [];
     events.push({
@@ -9,5 +10,4 @@ function extendComponentButtonList(config, options) {
     });
     return events;
 }
-exports.default = extendComponentButtonList;
 //# sourceMappingURL=extendComponentButtonList.js.map

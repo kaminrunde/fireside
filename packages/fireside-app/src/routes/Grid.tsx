@@ -1,16 +1,13 @@
 import * as React from "react";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
 import Grid from "widgets/Grid";
 
-type Props = {
-  path: string;
-  mediaSize: string;
-};
-
-export default function GridRoute(props: Props) {
+export default function GridRoute() {
+  const { mediaSize = "" } = useParams<{ mediaSize: string }>();
   return (
     <Wrapper>
-      <Grid mediaSize={props.mediaSize} />
+      <Grid mediaSize={mediaSize} />
     </Wrapper>
   );
 }

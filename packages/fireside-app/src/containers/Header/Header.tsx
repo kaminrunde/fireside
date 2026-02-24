@@ -65,6 +65,7 @@ export default function Header() {
           className="burger-menu"
           onClick={sidebar.isOpen ? sidebar.close : sidebar.open}
         >
+          {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
           {sidebar.isOpen ? <MdClose /> : <FiMenu />}
         </div>
         <div className="logo"></div>
@@ -74,10 +75,12 @@ export default function Header() {
           location.pathname === "/" &&
           components.data.length > 0 && (
             <div className="add" onClick={() => loading.load()}>
+              {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
               <FiPlusCircle />
             </div>
           )}
         <div className="fullscreen" onClick={handleFullscreenClick}>
+          {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
           <MdFullscreen />
         </div>
       </Wrapper>

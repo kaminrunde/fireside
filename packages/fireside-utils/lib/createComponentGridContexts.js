@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = createComponentGridContexts;
 function createComponentGridContexts(story) {
     var dict = {};
     var areaByIdDict = {};
@@ -44,12 +45,18 @@ function createComponentGridContexts(story) {
                         maxRow = y;
                 }
             if (row !== -1) {
-                byMediaSize[ms] = Object.freeze({ totalRows: totalRows, totalCols: totalCols, row: row, col: col, colStretch: colStretch, rowStretch: rowStretch });
+                byMediaSize[ms] = Object.freeze({
+                    totalRows: totalRows,
+                    totalCols: totalCols,
+                    row: row,
+                    col: col,
+                    colStretch: colStretch,
+                    rowStretch: rowStretch,
+                });
             }
         }
         dict[id] = { minRow: minRow, maxRow: maxRow, byMediaSize: byMediaSize };
     }
     return dict;
 }
-exports.default = createComponentGridContexts;
 //# sourceMappingURL=createComponentGridContexts.js.map

@@ -14,6 +14,7 @@ export default function Snackbar() {
             className="close-wrapper"
             onClick={() => messages.removeByIndex(i)}
           >
+            {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
             <MdClose />
           </div>
           <h5>{msg.title}</h5>

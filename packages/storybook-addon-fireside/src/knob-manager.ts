@@ -1,7 +1,7 @@
 import * as t from "./types";
-import objPath = require("object-path");
-import { addons } from "@storybook/preview-api";
-import { toId } from "@storybook/csf";
+import objPath from "object-path";
+import { addons } from "storybook/preview-api";
+import { toId } from "storybook/internal/csf";
 import { v4 as uuidv4 } from "uuid";
 
 const knobStore: { [id: string]: t.Knob } = {};

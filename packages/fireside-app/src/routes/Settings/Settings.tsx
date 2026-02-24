@@ -8,11 +8,7 @@ import config from "config";
 import { useSettingsPageComponents } from "modules/plugins";
 import Component from "./Component";
 
-type Props = {
-  path: string;
-};
-
-export default function Settings(props: Props) {
+export default function Settings() {
   const ms = useActiveMediaSizes();
   const pluginComponents = useSettingsPageComponents();
   return (

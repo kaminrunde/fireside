@@ -17,22 +17,22 @@ import StaticComponents from "widgets/StaticComponents/StaticComponents";
 
 export default function App() {
   return (
-    <div className="App">
-      <EnforceFullscreen />
-      <Header />
-      <Sidebar />
-      <HistoryRouter history={history}>
+    <HistoryRouter history={history}>
+      <div className="App">
+        <EnforceFullscreen />
+        <Header />
+        <Sidebar />
         <Routes>
           <Route path="/" element={<IndexRoute />} />
           <Route path="/grid/:mediaSize" element={<GridRoute />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
-      </HistoryRouter>
-      <Storybook />
-      <Snackbar />
-      <Modal />
-      <StaticComponents />
-      <AlertBox />
-    </div>
+        <Storybook />
+        <Snackbar />
+        <Modal />
+        <StaticComponents />
+        <AlertBox />
+      </div>
+    </HistoryRouter>
   );
 }

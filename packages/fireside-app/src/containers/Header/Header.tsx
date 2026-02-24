@@ -7,11 +7,25 @@ import { useSidebar } from "modules/ui";
 import toggleFullscreen, { isFullscreen } from "toggle-fullscreen";
 import { useComponents, useLoadingComponent } from "modules/components";
 import * as components from "modules/components";
+import { useLocation } from "react-router-dom";
+import config from "config";
 
 export default function Header() {
   const sidebar = useSidebar();
   const loading = useLoadingComponent();
   const components = useComponents();
+  const location = useLocation();
+
+  const routeName = React.useMemo(() => {
+    if (location.pathname === "/") return "Components";
+    if (location.pathname === "/settings") return "Settings";
+    const match = location.pathname.match(/^\/grid\/(.+)/);
+    if (match) {
+      const ms = config.mediaSizes.find((m) => m.key === match[1]);
+      return ms ? ms.label : match[1];
+    }
+    return "";
+  }, [location.pathname]);
   const [isModalVisible, setModalVisible] = React.useState(false);
   const [component, setComponent] =
     React.useState<components.t.Component | null>(null);
@@ -68,8 +82,7 @@ export default function Header() {
           {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
           {sidebar.isOpen ? <MdClose /> : <FiMenu />}
         </div>
-        <div className="logo"></div>
-        <div className="title"></div>
+        <div className="route-name">{routeName}</div>
         <ActionButtonsDisplay />
         {!loading.isLoading &&
           location.pathname === "/" &&
@@ -116,11 +129,12 @@ const Wrapper = styled.div`
       font-size: 30px;
     }
   }
-  > .logo {
-    width: 100px;
-  }
-  > .title {
+  > .route-name {
     flex: 1;
+    color: white;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    line-height: 60px;
   }
   > .ActionButtonsDisplay {
   }

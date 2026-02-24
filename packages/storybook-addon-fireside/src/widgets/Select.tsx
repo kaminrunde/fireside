@@ -39,7 +39,6 @@ export default function Select(props: Props) {
     <Wrapper tabIndex={1} $focus={props.focus.toString()}>
       <div className="value" onClick={handleClick}>
         {label || "-"}
-        {/* @ts-expect-error react-icons types not yet compatible with React 19 */}
         {open ? <FaChevronUp /> : <FaChevronDown />}
       </div>
 

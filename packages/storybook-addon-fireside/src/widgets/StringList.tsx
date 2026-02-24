@@ -62,7 +62,6 @@ export default function StringList(props: Props) {
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
       >
-        {/* @ts-expect-error @dnd-kit/sortable types not yet compatible with React 19 */}
         <SortableContext
           items={props.value.map((_, i) => String(i))}
           strategy={verticalListSortingStrategy}

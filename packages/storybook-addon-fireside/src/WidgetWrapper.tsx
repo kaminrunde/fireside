@@ -19,6 +19,7 @@ function useComponentProps(props: Props): [boolean, object, number] {
   const [key, setKey] = React.useState(0);
 
   React.useEffect(() => {
+    let cancelled = false;
     const getGridContext = () => {
       const context = { minRow: 0, maxRow: 0, byMediaSize: {} };
       const proxy = new Proxy(context.byMediaSize, {
@@ -36,20 +37,27 @@ function useComponentProps(props: Props): [boolean, object, number] {
       return context;
     };
     (async () => {
-      let newProps: any = { ...props.props };
+      try {
+        let newProps: any = { ...props.props };
 
-      if (props.controller.preprocessProps) {
-        newProps = await props.controller.preprocessProps(newProps);
+        if (props.controller.preprocessProps) {
+          newProps = await props.controller.preprocessProps(newProps);
+        }
+        if (cancelled) return;
+        if (props.controller.createContext) {
+          newProps.context = await props.controller.createContext(newProps, {
+            getGridContext,
+          });
+        }
+        if (cancelled) return;
+        setFinalProps(newProps);
+        setFinished(true);
+        setKey((key) => key + 1);
+      } catch (e) {
+        console.warn("[fireside] createContext error (transient):", e);
       }
-      if (props.controller.createContext) {
-        newProps.context = await props.controller.createContext(newProps, {
-          getGridContext,
-        });
-      }
-      setFinalProps(newProps);
-      setFinished(true);
-      setKey((key) => key + 1);
     })();
+    return () => { cancelled = true; };
   }, [props.controller, props.props]);
 
   return [finished, finalProps, key];

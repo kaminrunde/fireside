@@ -79,7 +79,6 @@ export default function ObjectList(props: Props) {
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}
         >
-          {/* @ts-expect-error @dnd-kit/sortable types not yet compatible with React 19 */}
           <SortableContext
             items={props.value.map((_, i) => String(i))}
             strategy={verticalListSortingStrategy}
@@ -148,6 +147,8 @@ function SortableItem({
     transform: CSS.Transform.toString(transform),
     transition,
   };
+
+  if (!value) return null;
 
   if (pendingDelete)
     return (

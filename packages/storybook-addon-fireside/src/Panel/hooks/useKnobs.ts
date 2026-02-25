@@ -31,6 +31,9 @@ export default function useKnobs(channel: PersistentChannel): Output {
     channel.on("storyboard-bridge/set-knobs", async (knobs: t.Knob[]) => {
       processKnobs(knobs);
     });
+
+    // Request knobs from preview in case they were emitted before this panel mounted
+    channel.emit("storyboard-bridge/request-knobs");
   }, [channel]);
 
   const processKnobs = async (knobs: t.Knob[]) => {

@@ -139,6 +139,7 @@ export type Event =
   | "storyboard-bridge/clear-props"
   | "storyboard-bridge/register-function"
   | "storyboard-bridge/request-function"
+  | "storyboard-bridge/request-knobs"
   | `storyboard-bridge/response-function-${string}`;
 
 export type Channel = {

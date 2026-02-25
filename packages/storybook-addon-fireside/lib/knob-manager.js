@@ -122,6 +122,13 @@ channel.on("storyboard-bridge/hydrate-component", async (component) => {
         hydrate();
 });
 channel.emit("storyboard-bridge/init-knob-manager");
+// Re-emit current knobs when the manager panel requests them (fixes race condition
+// where preview emits knobs before the manager panel has mounted its listeners)
+channel.on("storyboard-bridge/request-knobs", () => {
+    if (currentKnobs.length > 0) {
+        channel.emit("storyboard-bridge/set-knobs", replaceFunctionsWithIdsAndEmit(currentKnobs));
+    }
+});
 channel.on("storyboard-bridge/story-component-loaded", (loadedComponent) => {
     componentToBeHydrated = loadedComponent;
 });

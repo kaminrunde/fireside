@@ -132,8 +132,8 @@ export default function Grid(props: Props) {
             }}
             margin={[GRID_MARGIN, GRID_MARGIN]}
             isDroppable
-            onDrop={(target: any) =>
-              grid.addFromBuffer({ ...target, i: draggingName, static: true })
+            onDrop={(_layout: any, item: any) =>
+              grid.addFromBuffer({ ...item, i: draggingName, static: true })
             }
             width={gridWidth.data}
           >

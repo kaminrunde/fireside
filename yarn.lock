@@ -2540,12 +2540,12 @@ __metadata:
   resolution: "@kaminrunde/fireside-app@workspace:packages/fireside-app"
   dependencies:
     "@babel/core": "npm:7.9.0"
-    "@kaminrunde/fireside-connector-contentful": "npm:^1.1.1-alpha.32"
+    "@kaminrunde/fireside-connector-contentful": "npm:^1.1.1-alpha.35"
     "@kaminrunde/fireside-plugin-ab-test": "npm:^1.1.1-alpha.7"
-    "@kaminrunde/fireside-plugin-background-rows": "npm:^1.1.1-alpha.32"
-    "@kaminrunde/fireside-plugin-copy-component": "npm:^1.1.1-alpha.32"
-    "@kaminrunde/fireside-plugin-fullwidth-components": "npm:^1.1.1-alpha.32"
-    "@kaminrunde/fireside-utils": "npm:^1.1.1-alpha.32"
+    "@kaminrunde/fireside-plugin-background-rows": "npm:^1.1.1-alpha.35"
+    "@kaminrunde/fireside-plugin-copy-component": "npm:^1.1.1-alpha.35"
+    "@kaminrunde/fireside-plugin-fullwidth-components": "npm:^1.1.1-alpha.35"
+    "@kaminrunde/fireside-utils": "npm:^1.1.1-alpha.35"
     "@svgr/webpack": "npm:4.3.3"
     "@testing-library/jest-dom": "npm:^4.2.4"
     "@testing-library/react": "npm:^9.3.2"
@@ -2602,7 +2602,7 @@ __metadata:
     react-app-polyfill: "npm:^1.0.6"
     react-dev-utils: "npm:^10.2.1"
     react-dom: "npm:^19.0.0"
-    react-grid-layout: "npm:^0.18.3"
+    react-grid-layout: "npm:^1.4.4"
     react-icons: "npm:5.4.0"
     react-iframe: "npm:^1.8.0"
     react-router-dom: "npm:^6.22.0"
@@ -2634,11 +2634,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@kaminrunde/fireside-connector-contentful@npm:^1.1.1-alpha.32, @kaminrunde/fireside-connector-contentful@workspace:packages/fireside-connector-contentful":
+"@kaminrunde/fireside-connector-contentful@npm:^1.1.1-alpha.35, @kaminrunde/fireside-connector-contentful@workspace:packages/fireside-connector-contentful":
   version: 0.0.0-use.local
   resolution: "@kaminrunde/fireside-connector-contentful@workspace:packages/fireside-connector-contentful"
   dependencies:
-    "@kaminrunde/fireside-utils": "npm:^1.1.1-alpha.32"
+    "@kaminrunde/fireside-utils": "npm:^1.1.1-alpha.35"
     contentful-ui-extensions-sdk: "npm:^3.15.0"
     typescript: "npm:^5.3.3"
   languageName: unknown
@@ -2648,7 +2648,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@kaminrunde/fireside-plugin-ab-test@workspace:packages/fireside-plugin-ab-test"
   dependencies:
-    "@kaminrunde/fireside-utils": "npm:^1.1.1-alpha.32"
+    "@kaminrunde/fireside-utils": "npm:^1.1.1-alpha.35"
     immer: "npm:^8.0.0"
     react: "npm:^19.0.0"
     react-icons: "npm:^4.1.0"
@@ -2659,11 +2659,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@kaminrunde/fireside-plugin-background-rows@npm:^1.1.1-alpha.32, @kaminrunde/fireside-plugin-background-rows@workspace:packages/fireside-plugin-background-rows":
+"@kaminrunde/fireside-plugin-background-rows@npm:^1.1.1-alpha.35, @kaminrunde/fireside-plugin-background-rows@workspace:packages/fireside-plugin-background-rows":
   version: 0.0.0-use.local
   resolution: "@kaminrunde/fireside-plugin-background-rows@workspace:packages/fireside-plugin-background-rows"
   dependencies:
-    "@kaminrunde/fireside-utils": "npm:^1.1.1-alpha.32"
+    "@kaminrunde/fireside-utils": "npm:^1.1.1-alpha.35"
     immer: "npm:^8.0.0"
     react: "npm:^19.0.0"
     react-icons: "npm:^4.1.0"
@@ -2676,11 +2676,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@kaminrunde/fireside-plugin-copy-component@npm:^1.1.1-alpha.32, @kaminrunde/fireside-plugin-copy-component@workspace:packages/fireside-plugin-copy-component":
+"@kaminrunde/fireside-plugin-copy-component@npm:^1.1.1-alpha.35, @kaminrunde/fireside-plugin-copy-component@workspace:packages/fireside-plugin-copy-component":
   version: 0.0.0-use.local
   resolution: "@kaminrunde/fireside-plugin-copy-component@workspace:packages/fireside-plugin-copy-component"
   dependencies:
-    "@kaminrunde/fireside-utils": "npm:^1.1.1-alpha.32"
+    "@kaminrunde/fireside-utils": "npm:^1.1.1-alpha.35"
     react: "npm:^19.0.0"
     typescript: "npm:^5.3.3"
   peerDependencies:
@@ -2688,11 +2688,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@kaminrunde/fireside-plugin-fullwidth-components@npm:^1.1.1-alpha.32, @kaminrunde/fireside-plugin-fullwidth-components@workspace:packages/fireside-plugin-fullwidth-components":
+"@kaminrunde/fireside-plugin-fullwidth-components@npm:^1.1.1-alpha.35, @kaminrunde/fireside-plugin-fullwidth-components@workspace:packages/fireside-plugin-fullwidth-components":
   version: 0.0.0-use.local
   resolution: "@kaminrunde/fireside-plugin-fullwidth-components@workspace:packages/fireside-plugin-fullwidth-components"
   dependencies:
-    "@kaminrunde/fireside-utils": "npm:^1.1.1-alpha.32"
+    "@kaminrunde/fireside-utils": "npm:^1.1.1-alpha.35"
     immer: "npm:^8.0.0"
     react: "npm:^19.0.0"
     react-icons: "npm:^4.1.0"
@@ -2703,7 +2703,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@kaminrunde/fireside-utils@npm:^1.1.1-alpha.32, @kaminrunde/fireside-utils@workspace:packages/fireside-utils":
+"@kaminrunde/fireside-utils@npm:^1.1.1-alpha.35, @kaminrunde/fireside-utils@workspace:packages/fireside-utils":
   version: 0.0.0-use.local
   resolution: "@kaminrunde/fireside-utils@workspace:packages/fireside-utils"
   dependencies:
@@ -2724,7 +2724,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@kaminrunde/gatsby-plugin-fireside@workspace:packages/gatsby-plugin-fireside"
   dependencies:
-    "@kaminrunde/fireside-utils": "npm:^1.1.1-alpha.32"
+    "@kaminrunde/fireside-utils": "npm:^1.1.1-alpha.35"
   languageName: unknown
   linkType: soft
 
@@ -6549,7 +6549,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:2.x, classnames@npm:^2.2.5":
+"classnames@npm:^2.2.5":
   version: 2.5.1
   resolution: "classnames@npm:2.5.1"
   checksum: 10c0/afff4f77e62cea2d79c39962980bf316bacb0d7c49e13a21adaadb9221e1c6b9d3cdb829d8bb1b23c406f4e740507f37e1dcf506f7e3b7113d17c5bab787aa69
@@ -9322,6 +9322,13 @@ __metadata:
   version: 3.1.3
   resolution: "fast-deep-equal@npm:3.1.3"
   checksum: 10c0/40dedc862eb8992c54579c66d914635afbec43350afbbe991235fdcb4e3a8d5af1b23ae7e79bef7d4882d0ecee06c3197488026998fb19f72dc95acff1d1b1d0
+  languageName: node
+  linkType: hard
+
+"fast-equals@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "fast-equals@npm:4.0.3"
+  checksum: 10c0/87fd2609c945ee61e9ed4d041eb2a8f92723fc02884115f67e429dd858d880279e962334894f116b3e9b223f387d246e3db5424ae779287849015ddadbf5ff27
   languageName: node
   linkType: hard
 
@@ -13032,13 +13039,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.isequal@npm:^4.0.0":
-  version: 4.5.0
-  resolution: "lodash.isequal@npm:4.5.0"
-  checksum: 10c0/dfdb2356db19631a4b445d5f37868a095e2402292d59539a987f134a8778c62a2810c2452d11ae9e6dcac71fc9de40a6fedcb20e2952a15b431ad8b29e50e28f
-  languageName: node
-  linkType: hard
-
 "lodash.ismatch@npm:^4.4.0":
   version: 4.4.0
   resolution: "lodash.ismatch@npm:4.4.0"
@@ -16326,7 +16326,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.x, prop-types@npm:^15.0.0, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:15.x, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -16662,7 +16662,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-draggable@npm:^4.0.0, react-draggable@npm:^4.0.3":
+"react-draggable@npm:^4.4.6, react-draggable@npm:^4.5.0":
   version: 4.5.0
   resolution: "react-draggable@npm:4.5.0"
   dependencies:
@@ -16682,16 +16682,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-grid-layout@npm:^0.18.3":
-  version: 0.18.3
-  resolution: "react-grid-layout@npm:0.18.3"
+"react-grid-layout@npm:^1.4.4":
+  version: 1.5.3
+  resolution: "react-grid-layout@npm:1.5.3"
   dependencies:
-    classnames: "npm:2.x"
-    lodash.isequal: "npm:^4.0.0"
-    prop-types: "npm:^15.0.0"
-    react-draggable: "npm:^4.0.0"
-    react-resizable: "npm:^1.9.0"
-  checksum: 10c0/220eb79469289efba01ce10bb7c92aab7a69fb48eb51c8ffc31412a70eead4d83c36c97377e0c575f4ef88bf01bd6066388e9ea0512b023f8f68780904ed87f4
+    clsx: "npm:^2.1.1"
+    fast-equals: "npm:^4.0.3"
+    prop-types: "npm:^15.8.1"
+    react-draggable: "npm:^4.4.6"
+    react-resizable: "npm:^3.0.5"
+    resize-observer-polyfill: "npm:^1.5.1"
+  peerDependencies:
+    react: ">= 16.3.0"
+    react-dom: ">= 16.3.0"
+  checksum: 10c0/e7ddacff138e7e83121b7356411a38056fa628dcd77ee8dfa5d5290fda76c2bafdc757578ed5cf4617731696e959ba8570f391b509e597f6563158ed2dd8dbb9
   languageName: node
   linkType: hard
 
@@ -16731,16 +16735,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-resizable@npm:^1.9.0":
-  version: 1.11.1
-  resolution: "react-resizable@npm:1.11.1"
+"react-resizable@npm:^3.0.5":
+  version: 3.1.3
+  resolution: "react-resizable@npm:3.1.3"
   dependencies:
     prop-types: "npm:15.x"
-    react-draggable: "npm:^4.0.3"
+    react-draggable: "npm:^4.5.0"
   peerDependencies:
-    react: 0.14.x || 15.x || 16.x || 17.x
-    react-dom: 0.14.x || 15.x || 16.x || 17.x
-  checksum: 10c0/a78c3d667bbc7b4fc5245f92f34a305b8257f554dd739c5485b834dd90cd883f123b776916043cca1b317ee79a920872d0f95ad582fe58adc069a578fe44f0ed
+    react: ">= 16.3"
+    react-dom: ">= 16.3"
+  checksum: 10c0/de0f4447369381a446c0ce5f5770e85ec3a522a540d8eaf11998ec2d0b37835f879eb58f1765a89269ead53018c1eabf10b293eae5cb41c41a89057f2741563d
   languageName: node
   linkType: hard
 
@@ -17365,6 +17369,13 @@ __metadata:
   version: 4.1.8
   resolution: "reselect@npm:4.1.8"
   checksum: 10c0/06a305a504affcbb67dd0561ddc8306b35796199c7e15b38934c80606938a021eadcf68cfd58e7bb5e17786601c37602a3362a4665c7bf0a96c1041ceee9d0b7
+  languageName: node
+  linkType: hard
+
+"resize-observer-polyfill@npm:^1.5.1":
+  version: 1.5.1
+  resolution: "resize-observer-polyfill@npm:1.5.1"
+  checksum: 10c0/5e882475067f0b97dc07e0f37c3e335ac5bc3520d463f777cec7e894bb273eddbfecb857ae668e6fb6881fd6f6bb7148246967172139302da50fa12ea3a15d95
   languageName: node
   linkType: hard
 

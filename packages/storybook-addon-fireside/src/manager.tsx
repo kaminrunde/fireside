@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import * as React from "react";
 import { addons, types } from "storybook/manager-api";
+import { AddonPanel } from "storybook/internal/components";
 import * as t from "./types";
 import Panel from "./Panel/Panel";
 import { getPersistentChannel } from "./persistentChannel";
@@ -14,7 +15,9 @@ addons.register("addons:storyboard-bridge", (api) => {
     type: types.PANEL,
     title: "Eigenschaften",
     render: ({ active }) => (
-      <Panel channel={channel} api={api} key="fireside" />
+      <AddonPanel active={active}>
+        <Panel channel={channel} api={api} key="fireside" />
+      </AddonPanel>
     ),
   });
 

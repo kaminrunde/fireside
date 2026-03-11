@@ -82,7 +82,7 @@ var connector = {
                 sdk = _sdk;
                 try {
                     // @ts-ignore
-                    sdk.window.updateHeight(1000);
+                    sdk.window.updateHeight(600);
                 }
                 catch (e) { }
                 value = sdk.field.getValue();

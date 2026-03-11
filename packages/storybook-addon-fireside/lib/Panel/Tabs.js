@@ -15,6 +15,7 @@ const Tab = styled.button `
   background: none;
   border-bottom: 2px solid transparent;
   cursor: pointer;
+  color: #333;
   ${(props) => props.active === "true" &&
     `
     color: #1da7fd;

@@ -26,5 +26,6 @@ export default function Panel({ channel }) {
                     .map((knob) => (_jsx(Widget, { knob: knob, onUpdate: (val) => update(knob, val) }, knob.id + key)))] }) }));
 }
 const Wrapper = styled.div `
+  color-scheme: light;
   padding-bottom: 300px;
 `;

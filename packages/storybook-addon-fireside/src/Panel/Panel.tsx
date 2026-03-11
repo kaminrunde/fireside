@@ -49,5 +49,6 @@ export default function Panel({ channel }: Props) {
 }
 
 const Wrapper = styled.div`
+  color-scheme: light;
   padding-bottom: 300px;
 `;

@@ -170,7 +170,6 @@ function SortableItem({
         ref={setNodeRef}
         style={style}
         {...attributes}
-        {...listeners}
         className="SortableItem"
         highlight="true"
       >
@@ -193,7 +192,6 @@ function SortableItem({
         ref={setNodeRef}
         style={style}
         {...attributes}
-        {...listeners}
         className="SortableItem"
         highlight="true"
       >

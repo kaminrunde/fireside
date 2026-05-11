@@ -182,10 +182,18 @@ function SortableItem({
       highlight="true"
     >
       <span>{getName(value)}</span>
-      <div className="update" onMouseDown={onUpdate}>
+      <div
+        className="update"
+        onPointerDown={(e) => e.stopPropagation()}
+        onMouseDown={onUpdate}
+      >
         U
       </div>
-      <div className="delete" onMouseDown={() => setPendingDelete(true)}>
+      <div
+        className="delete"
+        onPointerDown={(e) => e.stopPropagation()}
+        onMouseDown={() => setPendingDelete(true)}
+      >
         D
       </div>
     </Item>

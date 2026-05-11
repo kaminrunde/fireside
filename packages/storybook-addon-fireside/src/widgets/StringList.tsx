@@ -169,7 +169,6 @@ function SortableItem({
       <Item
         ref={setNodeRef}
         style={style}
-        {...attributes}
         className="SortableItem"
         highlight="true"
       >
@@ -191,7 +190,6 @@ function SortableItem({
       <Item
         ref={setNodeRef}
         style={style}
-        {...attributes}
         className="SortableItem"
         highlight="true"
       >
@@ -199,6 +197,7 @@ function SortableItem({
           ref={input}
           type="text"
           value={newVal}
+          onPointerDown={(e) => e.stopPropagation()}
           onChange={(e) => setNewVal(e.target.value)}
           onBlur={() => {
             setPendingEdit(false);
@@ -217,10 +216,18 @@ function SortableItem({
       className="SortableItem"
     >
       <span>{value}</span>
-      <div className="update" onMouseDown={() => setPendingEdit(true)}>
+      <div
+        className="update"
+        onPointerDown={(e) => e.stopPropagation()}
+        onMouseDown={() => setPendingEdit(true)}
+      >
         U
       </div>
-      <div className="delete" onMouseDown={() => setPendingDelete(true)}>
+      <div
+        className="delete"
+        onPointerDown={(e) => e.stopPropagation()}
+        onMouseDown={() => setPendingDelete(true)}
+      >
         D
       </div>
     </Item>

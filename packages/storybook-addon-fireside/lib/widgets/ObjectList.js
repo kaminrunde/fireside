@@ -52,8 +52,8 @@ function SortableItem({ id, value, onDelete, onUpdate, getName, }) {
     if (!value)
         return null;
     if (pendingDelete)
-        return (_jsxs(Item, { ref: setNodeRef, style: style, ...attributes, ...listeners, className: "SortableItem", highlight: "true", children: [_jsxs("span", { children: ["Delete \"", getName(value), "\"?"] }), _jsx("div", { className: "update keep", onMouseDown: onDelete, children: "Y" }), _jsx("div", { className: "delete keep", onMouseDown: () => setPendingDelete(false), children: "N" })] }));
-    return (_jsxs(Item, { ref: setNodeRef, style: style, ...attributes, ...listeners, className: "SortableItem", highlight: "true", children: [_jsx("span", { children: getName(value) }), _jsx("div", { className: "update", onMouseDown: onUpdate, children: "U" }), _jsx("div", { className: "delete", onMouseDown: () => setPendingDelete(true), children: "D" })] }));
+        return (_jsxs(Item, { ref: setNodeRef, style: style, ...attributes, className: "SortableItem", highlight: "true", children: [_jsxs("span", { children: ["Delete \"", getName(value), "\"?"] }), _jsx("div", { className: "update keep", onMouseDown: onDelete, children: "Y" }), _jsx("div", { className: "delete keep", onMouseDown: () => setPendingDelete(false), children: "N" })] }));
+    return (_jsxs(Item, { ref: setNodeRef, style: style, ...attributes, ...listeners, className: "SortableItem", highlight: "true", children: [_jsx("span", { children: getName(value) }), _jsx("div", { className: "update", onPointerDown: (e) => e.stopPropagation(), onMouseDown: onUpdate, children: "U" }), _jsx("div", { className: "delete", onPointerDown: (e) => e.stopPropagation(), onMouseDown: () => setPendingDelete(true), children: "D" })] }));
 }
 const Wrapper = styled.div `
   > .edit {

@@ -73,13 +73,13 @@ function SortableItem({ id, value, onDelete, onUpdate, }) {
         return () => input.current && input.current.removeEventListener("keyup", e);
     }, [pendingEdit, newVal]);
     if (pendingDelete)
-        return (_jsxs(Item, { ref: setNodeRef, style: style, ...attributes, ...listeners, className: "SortableItem", highlight: "true", children: [_jsxs("span", { children: ["Delete \"", value, "\"?"] }), _jsx("div", { className: "update keep", onMouseDown: onDelete, children: "Y" }), _jsx("div", { className: "delete keep", onMouseDown: () => setPendingDelete(false), children: "N" })] }));
+        return (_jsxs(Item, { ref: setNodeRef, style: style, className: "SortableItem", highlight: "true", children: [_jsxs("span", { children: ["Delete \"", value, "\"?"] }), _jsx("div", { className: "update keep", onMouseDown: onDelete, children: "Y" }), _jsx("div", { className: "delete keep", onMouseDown: () => setPendingDelete(false), children: "N" })] }));
     if (pendingEdit)
-        return (_jsx(Item, { ref: setNodeRef, style: style, ...attributes, ...listeners, className: "SortableItem", highlight: "true", children: _jsx("input", { ref: input, type: "text", value: newVal, onChange: (e) => setNewVal(e.target.value), onBlur: () => {
+        return (_jsx(Item, { ref: setNodeRef, style: style, className: "SortableItem", highlight: "true", children: _jsx("input", { ref: input, type: "text", value: newVal, onPointerDown: (e) => e.stopPropagation(), onChange: (e) => setNewVal(e.target.value), onBlur: () => {
                     setPendingEdit(false);
                     onUpdate(newVal);
                 } }) }));
-    return (_jsxs(Item, { ref: setNodeRef, style: style, ...attributes, ...listeners, className: "SortableItem", children: [_jsx("span", { children: value }), _jsx("div", { className: "update", onMouseDown: () => setPendingEdit(true), children: "U" }), _jsx("div", { className: "delete", onMouseDown: () => setPendingDelete(true), children: "D" })] }));
+    return (_jsxs(Item, { ref: setNodeRef, style: style, ...attributes, ...listeners, className: "SortableItem", children: [_jsx("span", { children: value }), _jsx("div", { className: "update", onPointerDown: (e) => e.stopPropagation(), onMouseDown: () => setPendingEdit(true), children: "U" }), _jsx("div", { className: "delete", onPointerDown: (e) => e.stopPropagation(), onMouseDown: () => setPendingDelete(true), children: "D" })] }));
 }
 const BulkInputWrapper = styled.div `
   margin-top: 15px;

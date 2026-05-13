@@ -30,6 +30,8 @@ type Props = {
   hasError: boolean;
 };
 
+const nonNull = (a:object[]): object[] => a.filter((a) => a !== null);
+
 export default function ObjectList(props: Props) {
   const [activeRowIndex, setActiveRowIndex] = React.useState<number | null>(
     null
@@ -48,7 +50,7 @@ export default function ObjectList(props: Props) {
     if (over && active.id !== over.id) {
       const oldIndex = Number(active.id);
       const newIndex = Number(over.id);
-      props.onChange(arrayMove(props.value, oldIndex, newIndex));
+      props.onChange(arrayMove(nonNull(props.value), oldIndex, newIndex));
     }
   };
 
@@ -64,7 +66,7 @@ export default function ObjectList(props: Props) {
               }}
               onUpdate={(val) =>
                 props.onChange(
-                  produce(props.value, (value) => {
+                  produce(nonNull(props.value), (value) => {
                     objPath.set(value[activeRowIndex], knob.prop, val);
                   })
                 )
@@ -91,7 +93,7 @@ export default function ObjectList(props: Props) {
                   value={value}
                   getName={props.options.getRowName}
                   onDelete={() =>
-                    props.onChange(props.value.filter((_, i) => i !== index))
+                    props.onChange(nonNull(props.value.filter((_, i) => i !== index)))
                   }
                   onUpdate={() => setActiveRowIndex(index)}
                 />

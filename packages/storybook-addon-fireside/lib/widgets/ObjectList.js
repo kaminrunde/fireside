@@ -7,6 +7,7 @@ import { CSS } from "@dnd-kit/utilities";
 import Widget from "../Panel/Widget";
 import produce from "immer";
 import objPath from "object-path";
+const nonNull = (a) => a.filter((a) => a !== null);
 export default function ObjectList(props) {
     const [activeRowIndex, setActiveRowIndex] = React.useState(null);
     const isActive = typeof activeRowIndex === "number";
@@ -18,15 +19,15 @@ export default function ObjectList(props) {
         if (over && active.id !== over.id) {
             const oldIndex = Number(active.id);
             const newIndex = Number(over.id);
-            props.onChange(arrayMove(props.value, oldIndex, newIndex));
+            props.onChange(arrayMove(nonNull(props.value), oldIndex, newIndex));
         }
     };
     return (_jsxs(Wrapper, { children: [isActive && (_jsx("div", { className: "edit", children: props.options.schema.map((knob) => (_jsx(Widget, { knob: {
                         ...knob,
                         value: objPath.get(props.value[activeRowIndex], knob.prop),
-                    }, onUpdate: (val) => props.onChange(produce(props.value, (value) => {
+                    }, onUpdate: (val) => props.onChange(produce(nonNull(props.value), (value) => {
                         objPath.set(value[activeRowIndex], knob.prop, val);
-                    })) }))) })), isActive || (_jsx(DndContext, { sensors: sensors, collisionDetection: closestCenter, onDragEnd: handleDragEnd, children: _jsx(SortableContext, { items: props.value.map((_, i) => String(i)), strategy: verticalListSortingStrategy, children: _jsx("ul", { children: props.value.map((value, index) => (_jsx(SortableItem, { id: String(index), value: value, getName: props.options.getRowName, onDelete: () => props.onChange(props.value.filter((_, i) => i !== index)), onUpdate: () => setActiveRowIndex(index) }, `item-${index}`))) }) }) })), _jsx("button", { className: "add", onClick: () => {
+                    })) }))) })), isActive || (_jsx(DndContext, { sensors: sensors, collisionDetection: closestCenter, onDragEnd: handleDragEnd, children: _jsx(SortableContext, { items: props.value.map((_, i) => String(i)), strategy: verticalListSortingStrategy, children: _jsx("ul", { children: props.value.map((value, index) => (_jsx(SortableItem, { id: String(index), value: value, getName: props.options.getRowName, onDelete: () => props.onChange(nonNull(props.value.filter((_, i) => i !== index))), onUpdate: () => setActiveRowIndex(index) }, `item-${index}`))) }) }) })), _jsx("button", { className: "add", onClick: () => {
                     if (isActive) {
                         setActiveRowIndex(null);
                     }

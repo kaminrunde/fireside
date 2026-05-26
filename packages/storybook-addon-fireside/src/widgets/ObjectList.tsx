@@ -67,6 +67,7 @@ export default function ObjectList(props: Props) {
             })
             .map((knob) => (
               <Widget
+                key={knob.prop}
                 knob={{
                   ...knob,
                   value: objPath.get(props.value[activeRowIndex!], knob.prop),

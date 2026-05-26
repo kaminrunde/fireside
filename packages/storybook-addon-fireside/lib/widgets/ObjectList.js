@@ -34,7 +34,7 @@ export default function ObjectList(props) {
                         value: objPath.get(props.value[activeRowIndex], knob.prop),
                     }, parentProps: props.parentProps, onUpdate: (val) => props.onChange(produce(nonNull(props.value), (value) => {
                         objPath.set(value[activeRowIndex], knob.prop, val);
-                    })) }))) })), isActive || (_jsx(DndContext, { sensors: sensors, collisionDetection: closestCenter, onDragEnd: handleDragEnd, children: _jsx(SortableContext, { items: props.value.map((_, i) => String(i)), strategy: verticalListSortingStrategy, children: _jsx("ul", { children: props.value.map((value, index) => (_jsx(SortableItem, { id: String(index), value: value, getName: props.options.getRowName, onDelete: () => props.onChange(nonNull(props.value.filter((_, i) => i !== index))), onUpdate: () => setActiveRowIndex(index) }, `item-${index}`))) }) }) })), _jsx("button", { className: "add", onClick: () => {
+                    })) }, knob.prop))) })), isActive || (_jsx(DndContext, { sensors: sensors, collisionDetection: closestCenter, onDragEnd: handleDragEnd, children: _jsx(SortableContext, { items: props.value.map((_, i) => String(i)), strategy: verticalListSortingStrategy, children: _jsx("ul", { children: props.value.map((value, index) => (_jsx(SortableItem, { id: String(index), value: value, getName: props.options.getRowName, onDelete: () => props.onChange(nonNull(props.value.filter((_, i) => i !== index))), onUpdate: () => setActiveRowIndex(index) }, `item-${index}`))) }) }) })), _jsx("button", { className: "add", onClick: () => {
                     if (isActive) {
                         setActiveRowIndex(null);
                     }

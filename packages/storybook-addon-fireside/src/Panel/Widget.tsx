@@ -7,6 +7,7 @@ import useCustomComponents from "./useCustomComponents";
 type Props = {
   knob: t.Knob | t.SimpleKnob;
   onUpdate: (value: any) => void;
+  parentProps?: any;
 };
 
 export default function Widget(props: Props) {
@@ -39,6 +40,7 @@ export default function Widget(props: Props) {
         focus={focus}
         hasError={!!error}
         options={props.knob.options}
+        parentProps={props.parentProps}
       />
     </Wrapper>
   );

@@ -19,26 +19,35 @@ export default function useKnobs(channel) {
         // Request knobs from preview in case they were emitted before this panel mounted
         channel.emit("storyboard-bridge/request-knobs");
     }, [channel]);
+    const resolveOptionFunctions = (options, pendingFunctions) => {
+        if (!options || typeof options !== "object")
+            return;
+        for (const key in options) {
+            const value = options[key];
+            if (typeof value === "string" && value.includes("function_")) {
+                const id = value;
+                const promise = new Promise((resolve) => {
+                    channel.emit("storyboard-bridge/request-function", id);
+                    channel.on(`storyboard-bridge/response-function-${id}`, (fnString) => {
+                        const fn = new Function("return " + fnString)();
+                        options[key] = fn;
+                        resolve();
+                    });
+                });
+                pendingFunctions.push(promise);
+            }
+            else if (key === "schema" && Array.isArray(value)) {
+                for (const subKnob of value) {
+                    if (subKnob && subKnob.options)
+                        resolveOptionFunctions(subKnob.options, pendingFunctions);
+                }
+            }
+        }
+    };
     const processKnobs = async (knobs) => {
         const pendingFunctions = [];
         for (const knob of knobs) {
-            for (const key in knob.options) {
-                //@ts-ignore
-                const knobOption = knob.options[key];
-                if (typeof knobOption === "string" &&
-                    knobOption.includes("function_")) {
-                    const id = knob.options[key];
-                    const promise = new Promise((resolve) => {
-                        channel.emit("storyboard-bridge/request-function", id);
-                        channel.on(`storyboard-bridge/response-function-${id}`, (fnString) => {
-                            const fn = new Function("return " + fnString)();
-                            knob.options[key] = fn;
-                            resolve();
-                        });
-                    });
-                    pendingFunctions.push(promise);
-                }
-            }
+            resolveOptionFunctions(knob.options, pendingFunctions);
         }
         await Promise.all(pendingFunctions);
         allKnobs.current = knobs;

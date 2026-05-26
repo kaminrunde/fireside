@@ -36,32 +36,41 @@ export default function useKnobs(channel: PersistentChannel): Output {
     channel.emit("storyboard-bridge/request-knobs");
   }, [channel]);
 
+  const resolveOptionFunctions = (
+    options: any,
+    pendingFunctions: Promise<void>[]
+  ) => {
+    if (!options || typeof options !== "object") return;
+    for (const key in options) {
+      const value = options[key];
+      if (typeof value === "string" && value.includes("function_")) {
+        const id = value;
+        const promise = new Promise<void>((resolve) => {
+          channel.emit("storyboard-bridge/request-function", id);
+          channel.on(
+            `storyboard-bridge/response-function-${id}`,
+            (fnString: string) => {
+              const fn = new Function("return " + fnString)();
+              options[key] = fn;
+              resolve();
+            }
+          );
+        });
+        pendingFunctions.push(promise);
+      } else if (key === "schema" && Array.isArray(value)) {
+        for (const subKnob of value) {
+          if (subKnob && subKnob.options)
+            resolveOptionFunctions(subKnob.options, pendingFunctions);
+        }
+      }
+    }
+  };
+
   const processKnobs = async (knobs: t.Knob[]) => {
     const pendingFunctions: Promise<void>[] = [];
 
     for (const knob of knobs) {
-      for (const key in knob.options) {
-        //@ts-ignore
-        const knobOption = knob.options[key];
-        if (
-          typeof knobOption === "string" &&
-          knobOption.includes("function_")
-        ) {
-          const id = knob.options[key as keyof t.KnobOptions];
-          const promise = new Promise<void>((resolve) => {
-            channel.emit("storyboard-bridge/request-function", id);
-            channel.on(
-              `storyboard-bridge/response-function-${id}`,
-              (fnString: string) => {
-                const fn = new Function("return " + fnString)();
-                knob.options[key as keyof t.KnobOptions] = fn;
-                resolve();
-              }
-            );
-          });
-          pendingFunctions.push(promise);
-        }
-      }
+      resolveOptionFunctions(knob.options, pendingFunctions);
     }
     await Promise.all(pendingFunctions);
 

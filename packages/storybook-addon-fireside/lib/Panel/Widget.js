@@ -17,7 +17,7 @@ export default function Widget(props) {
     const error = props.knob.options.validate
         ? props.knob.options.validate(value)
         : null;
-    return (_jsxs(Wrapper, { ref: ref, onClick: handle, children: [_jsx("h3", { className: "label", children: props.knob.label }), props.knob.options.hint && (_jsx("div", { className: "hint", children: props.knob.options.hint })), error && _jsx("div", { className: "error", children: error }), _jsx(Component, { value: value, onChange: update, focus: focus, hasError: !!error, options: props.knob.options })] }));
+    return (_jsxs(Wrapper, { ref: ref, onClick: handle, children: [_jsx("h3", { className: "label", children: props.knob.label }), props.knob.options.hint && (_jsx("div", { className: "hint", children: props.knob.options.hint })), error && _jsx("div", { className: "error", children: error }), _jsx(Component, { value: value, onChange: update, focus: focus, hasError: !!error, options: props.knob.options, parentProps: props.parentProps })] }));
 }
 const Wrapper = styled.div `
   padding: 10px;

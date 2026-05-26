@@ -5,6 +5,7 @@ type Props = {
     focus: boolean;
     options: t.ObjectListOptions;
     hasError: boolean;
+    parentProps?: any;
 };
 export default function ObjectList(props: Props): import("react/jsx-runtime").JSX.Element;
 export {};

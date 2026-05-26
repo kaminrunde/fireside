@@ -23,7 +23,7 @@ export default function Panel({ channel }) {
                         return true;
                     return knob.options.shouldDisplay(props);
                 })
-                    .map((knob) => (_jsx(Widget, { knob: knob, onUpdate: (val) => update(knob, val) }, knob.id + key)))] }) }));
+                    .map((knob) => (_jsx(Widget, { knob: knob, parentProps: props, onUpdate: (val) => update(knob, val) }, knob.id + key)))] }) }));
 }
 const Wrapper = styled.div `
   color-scheme: light;

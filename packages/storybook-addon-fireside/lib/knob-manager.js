@@ -163,20 +163,32 @@ const transformIfPascalCase = (str) => {
 const generateUniqueId = () => {
     return `function_${uuidv4()}`;
 };
+const replaceOptionFunctions = (options) => {
+    if (!options || typeof options !== "object")
+        return;
+    for (const key in options) {
+        const value = options[key];
+        if (typeof value === "function") {
+            const id = generateUniqueId();
+            functionRegistry[id] = value.toString();
+            channel.emit("storyboard-bridge/register-function", {
+                id,
+                fn: value.toString(),
+            });
+            options[key] = id;
+        }
+        else if (key === "schema" && Array.isArray(value)) {
+            for (const subKnob of value) {
+                if (subKnob && subKnob.options)
+                    replaceOptionFunctions(subKnob.options);
+            }
+        }
+    }
+};
 const replaceFunctionsWithIdsAndEmit = (knobs) => {
     const knobsWithIds = knobs;
     for (const knob of knobsWithIds) {
-        for (const key in knob.options) {
-            if (typeof knob.options[key] === "function") {
-                const id = generateUniqueId();
-                functionRegistry[id] = knob.options[key].toString();
-                channel.emit("storyboard-bridge/register-function", {
-                    id,
-                    fn: knob.options[key].toString(),
-                });
-                knob.options[key] = id;
-            }
-        }
+        replaceOptionFunctions(knob.options);
     }
     return knobsWithIds;
 };

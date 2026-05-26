@@ -28,6 +28,7 @@ type Props = {
   focus: boolean;
   options: t.ObjectListOptions;
   hasError: boolean;
+  parentProps?: any;
 };
 
 const nonNull = (a:object[]): object[] => a.filter((a) => a !== null);
@@ -58,21 +59,28 @@ export default function ObjectList(props: Props) {
     <Wrapper>
       {isActive && (
         <div className="edit">
-          {props.options.schema.map((knob) => (
-            <Widget
-              knob={{
-                ...knob,
-                value: objPath.get(props.value[activeRowIndex], knob.prop),
-              }}
-              onUpdate={(val) =>
-                props.onChange(
-                  produce(nonNull(props.value), (value) => {
-                    objPath.set(value[activeRowIndex], knob.prop, val);
-                  })
-                )
-              }
-            />
-          ))}
+          {props.options.schema
+            .filter((knob) => {
+              if (!knob.options.shouldDisplay) return true;
+              const objectProps = props.value[activeRowIndex!] ?? {};
+              return knob.options.shouldDisplay(objectProps, props.parentProps);
+            })
+            .map((knob) => (
+              <Widget
+                knob={{
+                  ...knob,
+                  value: objPath.get(props.value[activeRowIndex!], knob.prop),
+                }}
+                parentProps={props.parentProps}
+                onUpdate={(val) =>
+                  props.onChange(
+                    produce(nonNull(props.value), (value) => {
+                      objPath.set(value[activeRowIndex!], knob.prop, val);
+                    })
+                  )
+                }
+              />
+            ))}
         </div>
       )}
       {isActive || (

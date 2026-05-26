@@ -40,6 +40,7 @@ export default function Panel({ channel }: Props) {
             <Widget
               key={knob.id + key}
               knob={knob}
+              parentProps={props}
               onUpdate={(val) => update(knob, val)}
             />
           ))}

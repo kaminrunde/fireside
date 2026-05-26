@@ -9,13 +9,20 @@ export interface KnobOptions {
     /** renders knob in seperate tab. Knobs with the same tab are grouped together. if not defined tab will default to "DEFAULT" */
     tab?: string;
     /**
-     * whether or not the knob should be displayed. recieves the other props as arguments
+     * whether or not the knob should be displayed. recieves the other props as arguments.
+     * for sub-knobs inside an `objectList` schema, the function receives `(objectProps, parentProps)`
+     * where `objectProps` is the currently edited row and `parentProps` is the top-level component props.
      * @example
      * k.string('foo', 'Foo', '', {
-     *   condition: props => Boolean(props.otherProp)
+     *   shouldDisplay: props => Boolean(props.otherProp)
      * })
+     * @example
+     * // inside an objectList schema:
+     * { type: 'string', prop: 'title', label: 'Title', value: '', options: {
+     *   shouldDisplay: (obj, parent) => obj.enabled && parent.someTopLevelFlag
+     * }}
      */
-    shouldDisplay?: (props: any) => boolean;
+    shouldDisplay?: (props: any, parentProps?: any) => boolean;
     /**
      * if an error string is returned, the error is displayed below the headline
      * @example

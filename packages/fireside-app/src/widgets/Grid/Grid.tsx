@@ -70,7 +70,7 @@ export default function Grid(props: Props) {
       },
     ]);
     return () => setActionButtons([]);
-  }, [active, loadingComponent.load]);
+  }, [active, loadingComponent.load, props.mediaSize]);
 
   // set propper z-index
   function calcZIndex() {

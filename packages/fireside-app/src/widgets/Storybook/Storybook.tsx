@@ -44,6 +44,22 @@ export default function Storybook() {
     );
   }, [setupFinished, loadingComponent.isLoading, loadingComponent.data]);
 
+  /**
+   * only reset storybook when the editing session actually ends.
+   * Save can be blocked by validation rules (e.g. duplicate grid-area),
+   * in that case isLoading stays true and the knob values must be kept
+   */
+  const wasLoading = React.useRef(loadingComponent.isLoading);
+  React.useEffect(() => {
+    if (wasLoading.current && !loadingComponent.isLoading) {
+      ref.current?.contentWindow?.postMessage(
+        { type: "fireside-abort-component" },
+        "*"
+      );
+    }
+    wasLoading.current = loadingComponent.isLoading;
+  }, [loadingComponent.isLoading]);
+
   React.useEffect(() => {
     const match = window.location.search.match(/storybookUrl=([^&]+)/);
 
@@ -62,27 +78,14 @@ export default function Storybook() {
               onClick: () => {
                 loadingComponent.data
                   ? loadingComponent.update(loadingComponent.data.id, component)
-                  : loadingComponent.add(component),
-                ref.current?.contentWindow?.postMessage(
-                  {
-                    type: "fireside-abort-component",
-                    component: component,
-                  },
-                  "*"
-                );
-              }
+                  : loadingComponent.add(component);
+              },
             },
             {
               label: "Abort",
               type: "danger",
               onClick: () => {
-                ref.current?.contentWindow?.postMessage(
-                  {
-                    type: "fireside-abort-component",
-                  },
-                  "*"
-                );
-                loadingComponent.unload()
+                loadingComponent.unload();
               },
             },
           ]}

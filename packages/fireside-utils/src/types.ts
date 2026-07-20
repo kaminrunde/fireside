@@ -45,7 +45,15 @@ export interface SettingsPageAPI<State> extends PluginAPI<State> {}
 
 export interface StaticComponentAPI<State> extends PluginAPI<State> {}
 
-export interface OnStoryUpdateAPI<State> extends PluginAPI<State> {}
+export interface OnStoryUpdateAPI<State> extends PluginAPI<State> {
+  /**
+   * the story as it was before the current update (last story known to the
+   * connector). `null` when no story was loaded yet. Allows plugins with
+   * grid-bound state (e.g. row-based backgrounds) to remap their state when
+   * the grid structure changes.
+   */
+  prevStory: RawStory | null;
+}
 
 export type PluginEvent =
   | et.InitialStateEvent

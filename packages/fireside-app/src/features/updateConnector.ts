@@ -39,7 +39,7 @@ addRule<
   output: connector.c.UPDATE_CONNECTOR,
   delay: 200,
   concurrency: "LAST",
-  consequence: (_, { getState }) => {
+  consequence: (_, { getState, dispatch }) => {
     const state = getState();
     const prevStory = connector.s.getStory(state.connector);
     const componentList = components.s.getComponents(state.components);
@@ -86,9 +86,16 @@ addRule<
     for (const cb of callbacks) {
       const api: OnStoryUpdateAPI<any> = {
         story: story,
+        prevStory: prevStory,
         state: plugins.s.getState(state.plugins, cb.meta.key),
-        setState: (state: any) => {
-          story.plugins[cb.meta.key] = state;
+        setState: (pluginState: any) => {
+          // write into the outgoing story without mutating the redux states
+          // object (pluginStates is a direct reference to it)
+          story.plugins = { ...story.plugins, [cb.meta.key]: pluginState };
+          // keep the editor ui (badges, modals) in sync with the exported
+          // story. triggers another debounced run of this rule, which
+          // terminates via the hash guard below
+          dispatch(plugins.a.setState(cb.meta.key, pluginState));
         },
       };
       cb.payload(api);

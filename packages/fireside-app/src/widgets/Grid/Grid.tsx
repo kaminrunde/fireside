@@ -2,7 +2,13 @@ import * as React from "react";
 import styled, { css } from "styled-components";
 import ActionButtons, { t } from "widgets/ActionButtons";
 import * as $grid from "modules/grid";
+import * as $selection from "modules/selection";
 import { useLoadingComponent, useComponents } from "modules/components";
+import { useActiveMediaSizes } from "modules/settings";
+import { useMessages } from "modules/snackbar";
+import useShortcut from "hooks/useShortcut";
+import * as shortcuts from "shortcuts";
+import config from "config";
 import useGridWidth from "./hooks/useGridWidth";
 import GridLayout from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
@@ -27,7 +33,9 @@ export default function Grid(props: Props) {
   const components = useComponents();
   const gridWidth = useGridWidth();
   const [draggingName, setDraggingName] = React.useState("");
-  const [active, setActive] = React.useState<null | string>(null);
+  const selection = $selection.useSelection();
+  const activeMediaSizes = useActiveMediaSizes();
+  const messages = useMessages();
   const [actionButtons, setActionButtons] = React.useState<t.ActionButton[]>(
     []
   );
@@ -44,33 +52,149 @@ export default function Grid(props: Props) {
     return [labelDict, nameDict];
   }, [components.data]);
 
-  const handleItemClick = (id: string) => () => {
-    if (active === id) setActive(null);
-    else setActive(id);
-  };
+  /**
+   * grid items in reading order (top to bottom, left to right) and the
+   * components that currently sit in the buffer. Both lists define the order
+   * a shift-click range is resolved in
+   */
+  const [gridIds, bufferComponents] = React.useMemo(() => {
+    const ids = [...grid.data.gridAreas]
+      .sort((a, b) => a.y - b.y || a.x - b.x)
+      .map((area) => area.i);
+    const inGrid = new Set(ids);
+    return [ids, components.data.filter((c) => !inGrid.has(c.id))] as const;
+  }, [grid.data.gridAreas, components.data]);
+
+  const bufferIds = React.useMemo(
+    () => bufferComponents.map((c) => c.id),
+    [bufferComponents]
+  );
+
+  const selectedIds = selection.ids;
+  const isSelected = React.useMemo(() => new Set(selectedIds), [selectedIds]);
+
+  /**
+   * ctrl/cmd-click toggles a single component, shift-click selects the range
+   * from the anchor and a plain click replaces the whole selection.
+   * `siblings` is the ordered list of the pane the clicked item lives in,
+   * so a range never spans grid and buffer
+   */
+  const handleItemClick =
+    (id: string, siblings: string[]) => (e: React.MouseEvent) => {
+      const multi = e.ctrlKey || e.metaKey;
+      const anchorIndex = selection.anchor
+        ? siblings.indexOf(selection.anchor)
+        : -1;
+
+      if (e.shiftKey && anchorIndex !== -1) {
+        const targetIndex = siblings.indexOf(id);
+        const [from, to] =
+          anchorIndex < targetIndex
+            ? [anchorIndex, targetIndex]
+            : [targetIndex, anchorIndex];
+        const range = siblings.slice(from, to + 1);
+        // ctrl+shift extends the current selection, plain shift replaces it
+        selection.set(
+          multi
+            ? selectedIds.concat(range.filter((rid) => !isSelected.has(rid)))
+            : range,
+          selection.anchor
+        );
+        return;
+      }
+
+      if (multi || e.shiftKey) {
+        selection.toggle(id);
+        return;
+      }
+
+      const onlySelected = selectedIds.length === 1 && selectedIds[0] === id;
+      selection.set(onlySelected ? [] : [id], onlySelected ? null : id);
+    };
+
+  const selectedInGrid = React.useMemo(
+    () => selectedIds.filter((id) => gridIds.includes(id)),
+    [selectedIds, gridIds]
+  );
+
+  /** keys of every media-size the user has enabled, in config order */
+  const enabledMediaSizes = React.useMemo(
+    () =>
+      config.mediaSizes
+        .filter((ms) => activeMediaSizes.data[ms.key])
+        .map((ms) => ms.key),
+    [activeMediaSizes.data]
+  );
+
+  /** move the selection into the buffer of the media-size on screen */
+  const bufferSelection = React.useCallback(() => {
+    if (!selectedInGrid.length) return;
+    grid.toBufferMany([props.mediaSize], selectedInGrid);
+  }, [selectedInGrid, grid.toBufferMany, props.mediaSize]);
+
+  /**
+   * move the selection into the buffer of every enabled media-size. The
+   * selection is kept on purpose, the components stay marked in the buffer
+   * strip so it is visible what just happened
+   */
+  const bufferSelectionEverywhere = React.useCallback(() => {
+    if (!selectedIds.length) return;
+    grid.toBufferMany(enabledMediaSizes, selectedIds);
+    messages.add({
+      type: "info",
+      title: "Moved to buffer",
+      content: `${selectedIds.length} component(s) removed from ${enabledMediaSizes.length} media-sizes`,
+    });
+  }, [selectedIds, enabledMediaSizes, grid.toBufferMany, messages.add]);
+
+  useShortcut(shortcuts.BUFFER, bufferSelection);
+  useShortcut(shortcuts.BUFFER_ALL, bufferSelectionEverywhere);
+  useShortcut(
+    shortcuts.OPEN_COMPONENT,
+    () => loadingComponent.load(selectedIds[0]),
+    selectedIds.length === 1 && !loadingComponent.isLoading
+  );
 
   React.useEffect(() => {
-    if (!active) return;
-    setActionButtons([
-      {
+    if (!selectedIds.length) return;
+    let buttons: t.ActionButton[] = [];
+
+    if (selectedIds.length === 1) {
+      buttons.push({
         label: "Update",
         type: "primary",
-        onClick: () => loadingComponent.load(active),
-      },
-      {
-        label: "To Buffer",
+        onClick: () => loadingComponent.load(selectedIds[0]),
+      });
+    }
+
+    if (selectedInGrid.length) {
+      buttons.push({
+        label:
+          selectedInGrid.length > 1
+            ? `To Buffer (${selectedInGrid.length})`
+            : "To Buffer",
         type: "danger",
-        onClick: () => {
-          const gridArea = grid.data.gridAreas.find(
-            (area) => area.i === active
-          );
-          if (!gridArea) return;
-          grid.toBuffer(gridArea);
-        },
-      },
-    ]);
+        onClick: bufferSelection,
+      });
+    }
+
+    if (selectedIds.length > 1) {
+      buttons.push({
+        label: "Deselect",
+        type: "secondary",
+        onClick: selection.clear,
+      });
+    }
+
+    setActionButtons(buttons);
     return () => setActionButtons([]);
-  }, [active, loadingComponent.load, props.mediaSize]);
+  }, [
+    selectedIds,
+    selectedInGrid,
+    bufferSelection,
+    loadingComponent.load,
+    selection.clear,
+  ]);
 
   // set propper z-index
   function calcZIndex() {
@@ -142,12 +266,12 @@ export default function Grid(props: Props) {
                 <GridItem
                   mediaSize={props.mediaSize}
                   rowHeight={ROW_HEIGHT}
-                  active={active === item.i}
+                  active={isSelected.has(item.i)}
                   item={item}
                   onMouseEnter={() => setHoverComponentId([item.i, false])}
                   onMouseLeave={() => setHoverComponentId([null, false])}
                   label={labels[item.i]}
-                  onClick={handleItemClick(item.i)}
+                  onClick={handleItemClick(item.i, gridIds)}
                 />
               </div>
             ))}
@@ -156,28 +280,26 @@ export default function Grid(props: Props) {
       </div>
       <div className="buffer-offset" />
       <div className="buffer">
-        {components.data
-          .filter((c) => !grid.data.gridAreas.find((area) => area.i === c.id))
-          .map((c) => (
-            <BufferComponent
-              data-name={c.id}
-              className="component"
-              draggable
-              active={active === c.id}
-              onDragStart={(e: any) => {
-                setDraggingName(c.id);
-                e.dataTransfer.setData("text/plain", "");
-              }}
-              onClick={handleItemClick(c.id)}
-              onDragEnd={() => setDraggingName("")}
-              onMouseEnter={() => setHoverComponentId([c.id, true])}
-              onMouseLeave={() => setHoverComponentId([null, false])}
-              unselectable="on"
-              key={c.id}
-            >
-              {c.props.gridArea}
-            </BufferComponent>
-          ))}
+        {bufferComponents.map((c) => (
+          <BufferComponent
+            data-name={c.id}
+            className="component"
+            draggable
+            active={isSelected.has(c.id)}
+            onDragStart={(e: any) => {
+              setDraggingName(c.id);
+              e.dataTransfer.setData("text/plain", "");
+            }}
+            onClick={handleItemClick(c.id, bufferIds)}
+            onDragEnd={() => setDraggingName("")}
+            onMouseEnter={() => setHoverComponentId([c.id, true])}
+            onMouseLeave={() => setHoverComponentId([null, false])}
+            unselectable="on"
+            key={c.id}
+          >
+            {c.props.gridArea}
+          </BufferComponent>
+        ))}
         <div className="offset" />
       </div>
 
@@ -364,6 +486,7 @@ const BufferComponent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
   background: steelblue;
   width: 100%;
   color: white;

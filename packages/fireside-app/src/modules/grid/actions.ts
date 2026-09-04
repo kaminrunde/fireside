@@ -47,6 +47,17 @@ export const toBuffer = (mediaSize: string, gridArea: t.GridArea) => ({
   payload: gridArea,
 });
 
+/**
+ * remove multiple components from the grids of several media-sizes at once.
+ * A single action keeps the connector sync (and with it the plugin story
+ * callbacks) to one run, no matter how many components are moved
+ */
+export const toBufferMany = (mediaSizes: string[], ids: string[]) => ({
+  type: at.TO_BUFFER_MANY,
+  meta: { mediaSizes },
+  payload: ids,
+});
+
 export const copyGrid = (from: string, to: string) => ({
   type: at.COPY_GRID,
   meta: { from, to },
@@ -105,6 +116,7 @@ export type SetWidth = ReturnType<typeof setWidth>;
 export type SetHeight = ReturnType<typeof setHeight>;
 export type AddFromBuffer = ReturnType<typeof addFromBuffer>;
 export type ToBuffer = ReturnType<typeof toBuffer>;
+export type ToBufferMany = ReturnType<typeof toBufferMany>;
 export type Init = ReturnType<typeof init>;
 export type CopyGrid = ReturnType<typeof copyGrid>;
 export type ClearGrid = ReturnType<typeof clearGrid>;
@@ -118,5 +130,6 @@ export type Action =
   | SetHeight
   | AddFromBuffer
   | ToBuffer
+  | ToBufferMany
   | CopyGrid
   | ClearGrid;

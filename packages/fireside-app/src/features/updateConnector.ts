@@ -20,6 +20,8 @@ addRule<
   | grid.a.SetHeight
   | grid.a.SetWidth
   | grid.a.UpdateGrid
+  | grid.a.ToBuffer
+  | grid.a.ToBufferMany
   | settings.a.ToggleMediaSize
   | plugins.a.SetState
 >({
@@ -33,6 +35,11 @@ addRule<
     grid.c.SET_HEIGHT,
     grid.c.SET_WIDTH,
     grid.c.UPDATE_GRID,
+    // buffering only reaches the story through the UPDATE_GRID that
+    // react-grid-layout emits, which never happens for media-sizes that are
+    // not currently mounted
+    grid.c.TO_BUFFER,
+    grid.c.TO_BUFFER_MANY,
     settings.c.TOGGLE_MEDIA_SIZE,
     plugins.c.SET_STATE,
   ],

@@ -9,7 +9,7 @@ type Props = {
   mediaSize: string;
   rowHeight: number;
   active: boolean;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent) => void;
   label: string;
   item: $grid.t.GridArea;
   onMouseEnter: () => void;
@@ -63,6 +63,7 @@ const Wrapper = styled.div`
   height: 100%;
   padding: 0 10px;
   cursor: pointer;
+  user-select: none;
   position: relative;
   font-family: "Open Sans", sans-serif;
 

@@ -84,5 +84,21 @@ export default produce((state: State, action: Action) => {
       state[mediaSize].gridAreas.splice(index, 1);
       break;
     }
+    case at.TO_BUFFER_MANY: {
+      const ids = new Set(action.payload);
+      for (const mediaSize of action.meta.mediaSizes) {
+        const grid = state[mediaSize];
+        if (!grid) continue;
+        const gridAreas = grid.gridAreas.filter((area) => !ids.has(area.i));
+        if (gridAreas.length === grid.gridAreas.length) continue;
+        grid.gridAreas = gridAreas;
+        // the visible grid gets its heights recalculated through the
+        // UPDATE_GRID that react-grid-layout emits. Media-sizes that are not
+        // mounted have to be kept consistent here, otherwise formatGrid()
+        // builds the story from a stale row count
+        grid.heights = gridHelper.calculateHeights(grid.heights, gridAreas);
+      }
+      break;
+    }
   }
 }, defaultState);

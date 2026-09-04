@@ -14,6 +14,7 @@ type Result = {
   updateGrid: (areas: t.GridArea[]) => a.UpdateGrid;
   addFromBuffer: (area: t.GridArea) => a.AddFromBuffer;
   toBuffer: (area: t.GridArea) => a.ToBuffer;
+  toBufferMany: (mediaSizes: string[], ids: string[]) => a.ToBufferMany;
   clearGrid: () => a.ClearGrid;
   copyGridFrom: (mediaSize: string) => a.CopyGrid;
 };
@@ -26,6 +27,7 @@ type DP = {
   updateGrid: typeof a.updateGrid;
   addFromBuffer: typeof a.addFromBuffer;
   toBuffer: typeof a.toBuffer;
+  toBufferMany: typeof a.toBufferMany;
   clearGrid: typeof a.clearGrid;
   copyGridFrom: typeof a.copyGrid;
 };
@@ -49,6 +51,7 @@ const config: Config<Props, Result, State, DP> = {
     updateGrid: a.updateGrid,
     addFromBuffer: a.addFromBuffer,
     toBuffer: a.toBuffer,
+    toBufferMany: a.toBufferMany,
     copyGridFrom: a.copyGrid,
     clearGrid: a.clearGrid,
   },

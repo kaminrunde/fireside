@@ -32,130 +32,201 @@ initContentfulExtension((_sdk) => {
  * layout each, so multi-select, shift-ranges and buffering across devices
  * can be tried out without a running CMS
  */
+/**
+ * dev fixture. Five components across two enabled media-sizes, two of them
+ * with the long names and nested props the editors actually work with, so
+ * multi-select, buffering across devices and the component search can be
+ * tried out without a running CMS
+ */
 const DEMO_STORY = {
-  version: "2.0.0",
-  componentsById: {
+  "version": "2.0.0",
+  "componentsById": {
     "2e7728ba66196ce3a53d08e8": {
-      id: "2e7728ba66196ce3a53d08e8",
-      name: "Button",
-      props: {
-        gridArea: "Button123",
-        position: "left",
-        __version: 1,
-        label: "foo",
+      "id": "2e7728ba66196ce3a53d08e8",
+      "name": "Button",
+      "props": {
+        "gridArea": "Button123",
+        "position": "left",
+        "__version": 1,
+        "label": "foo"
       },
-      createdAt: 1626710762275,
-      updatedAt: 1626710762275,
-      hash: "5b85fc8a8523c2f5c5f41c88592ca718",
+      "createdAt": 1626710762275,
+      "updatedAt": 1626710762275,
+      "hash": "5b85fc8a8523c2f5c5f41c88592ca718"
     },
     "3f8839cb77207df4b64e19f9": {
-      id: "3f8839cb77207df4b64e19f9",
-      name: "Button",
-      props: {
-        gridArea: "Button456",
-        position: "left",
-        __version: 1,
-        label: "bar",
+      "id": "3f8839cb77207df4b64e19f9",
+      "name": "Button",
+      "props": {
+        "gridArea": "Button456",
+        "position": "left",
+        "__version": 1,
+        "label": "bar"
       },
-      createdAt: 1626710862275,
-      updatedAt: 1626710862275,
-      hash: "527c68ad10e93304d9ab7e576c2c49d3",
+      "createdAt": 1626710862275,
+      "updatedAt": 1626710862275,
+      "hash": "527c68ad10e93304d9ab7e576c2c49d3"
     },
     "4a9940dc88318ea5c75f2a0a": {
-      id: "4a9940dc88318ea5c75f2a0a",
-      name: "Button",
-      props: {
-        gridArea: "Button789",
-        position: "left",
-        __version: 1,
-        label: "baz",
+      "id": "4a9940dc88318ea5c75f2a0a",
+      "name": "Button",
+      "props": {
+        "gridArea": "Button789",
+        "position": "left",
+        "__version": 1,
+        "label": "baz"
       },
-      createdAt: 1626710962275,
-      updatedAt: 1626710962275,
-      hash: "5e3f66c1e79e4ae01d9475a2b0203300",
+      "createdAt": 1626710962275,
+      "updatedAt": 1626710962275,
+      "hash": "5e3f66c1e79e4ae01d9475a2b0203300"
     },
     "5b0051ed99429fb6d8603b1b": {
-      id: "5b0051ed99429fb6d8603b1b",
-      name: "CategoryHeadlineWithProducts",
-      props: {
-        gridArea: "home_category_products_k2_bestecksets",
-        position: "left",
-        __version: 1,
-        label: "",
+      "id": "5b0051ed99429fb6d8603b1b",
+      "name": "CategoryHeadlineWithProducts",
+      "props": {
+        "gridArea": "home_category_products_k2_bestecksets",
+        "__version": 1,
+        "headline": "Bestecksets fuer die Gastronomie",
+        "subline": "Hochwertige Bestecke fuer Hotellerie und Restaurant",
+        "skus": [
+          "30099973",
+          "30089818",
+          "10010717"
+        ]
       },
-      createdAt: 1758844800000,
-      updatedAt: 1758844800000,
-      hash: "df5f4f3b856a81b406fd08e9d2edeab9",
+      "createdAt": 1758844800000,
+      "updatedAt": 1758844800000,
+      "hash": "df5f4f3b856a81b406fd08e9d2edeab9"
     },
     "6c1162fea053a0c7e9714c2c": {
-      id: "6c1162fea053a0c7e9714c2c",
-      name: "CategoryImageTeaserWithProducts",
-      props: {
-        gridArea: "home_category_highlight_k1_buffet_20250622",
-        position: "left",
-        __version: 1,
-        label: "",
+      "id": "6c1162fea053a0c7e9714c2c",
+      "name": "CategoryImageTeaserWithProducts",
+      "props": {
+        "gridArea": "home_category_highlight_k1_buffet_20250622",
+        "__version": 1,
+        "headline": "Buffet Highlights",
+        "slides": [
+          {
+            "headline": "Chafing Dishes",
+            "sku": "30099973",
+            "link": "/de-de/buffet/chafing-dishes"
+          },
+          {
+            "headline": "Bestecksets",
+            "sku": "10013182",
+            "link": "/de-de/tischkultur/bestecke"
+          }
+        ]
       },
-      createdAt: 1750550400000,
-      updatedAt: 1750550400000,
-      hash: "35d3056e94cdbf118632ad0d50efd1c0",
-    },
+      "createdAt": 1750550400000,
+      "updatedAt": 1750550400000,
+      "hash": "35d3056e94cdbf118632ad0d50efd1c0"
+    }
   },
-  allComponents: [
+  "allComponents": [
     "2e7728ba66196ce3a53d08e8",
     "3f8839cb77207df4b64e19f9",
     "4a9940dc88318ea5c75f2a0a",
     "5b0051ed99429fb6d8603b1b",
-    "6c1162fea053a0c7e9714c2c",
+    "6c1162fea053a0c7e9714c2c"
   ],
-  grids: {
-    // two columns, Button789 alone in the second row
-    XS: {
-      enabled: true,
-      gap: 10,
-      grid: [
-        ["2e7728ba66196ce3a53d08e8", "3f8839cb77207df4b64e19f9"],
-        ["4a9940dc88318ea5c75f2a0a", "."],
+  "grids": {
+    "XS": {
+      "enabled": true,
+      "gap": 10,
+      "grid": [
+        [
+          "2e7728ba66196ce3a53d08e8",
+          "3f8839cb77207df4b64e19f9"
+        ],
+        [
+          "4a9940dc88318ea5c75f2a0a",
+          "."
+        ]
       ],
-      widths: ["1fr", "1fr"],
-      heights: ["auto", "auto"],
-    },
-    // same components stacked in a single column
-    SM: {
-      enabled: true,
-      gap: 15,
-      grid: [
-        ["2e7728ba66196ce3a53d08e8"],
-        ["3f8839cb77207df4b64e19f9"],
-        ["4a9940dc88318ea5c75f2a0a"],
+      "widths": [
+        "1fr",
+        "1fr"
       ],
-      widths: ["1fr"],
-      heights: ["auto", "auto", "auto"],
+      "heights": [
+        "auto",
+        "auto"
+      ]
     },
-    MD: {
-      enabled: false,
-      gap: 15,
-      grid: [["."]],
-      widths: ["1fr"],
-      heights: ["auto"],
+    "SM": {
+      "enabled": true,
+      "gap": 15,
+      "grid": [
+        [
+          "2e7728ba66196ce3a53d08e8"
+        ],
+        [
+          "3f8839cb77207df4b64e19f9"
+        ],
+        [
+          "4a9940dc88318ea5c75f2a0a"
+        ]
+      ],
+      "widths": [
+        "1fr"
+      ],
+      "heights": [
+        "auto",
+        "auto",
+        "auto"
+      ]
     },
-    LG: {
-      enabled: false,
-      gap: 20,
-      grid: [["."]],
-      widths: ["1fr"],
-      heights: ["auto"],
+    "MD": {
+      "enabled": false,
+      "gap": 15,
+      "grid": [
+        [
+          "."
+        ]
+      ],
+      "widths": [
+        "1fr"
+      ],
+      "heights": [
+        "auto"
+      ]
     },
-    XL: {
-      enabled: false,
-      gap: 20,
-      grid: [["."]],
-      widths: ["1fr"],
-      heights: ["auto"],
+    "LG": {
+      "enabled": false,
+      "gap": 20,
+      "grid": [
+        [
+          "."
+        ]
+      ],
+      "widths": [
+        "1fr"
+      ],
+      "heights": [
+        "auto"
+      ]
     },
+    "XL": {
+      "enabled": false,
+      "gap": 20,
+      "grid": [
+        [
+          "."
+        ]
+      ],
+      "widths": [
+        "1fr"
+      ],
+      "heights": [
+        "auto"
+      ]
+    }
   },
-  hash: "f897c2ac586ff39787ae61a2978edbab",
-  plugins: { fullWidth: {}, bg: {} },
+  "hash": "faf3b4ebce8c6d66cb9af5cd4457e596",
+  "plugins": {
+    "fullWidth": {},
+    "bg": {}
+  }
 };
 
 setTimeout(() => {

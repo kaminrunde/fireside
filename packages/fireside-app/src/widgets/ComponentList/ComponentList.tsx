@@ -1,19 +1,58 @@
 import * as React from "react";
 import styled from "styled-components";
 import { useComponents, useLoadingComponent } from "modules/components";
+import { Component } from "@kaminrunde/fireside-utils";
 import parseTimestamp from "./utils/parseTimestamp";
 import { useUsedComponents } from "modules/grid";
 import ExtendedButtonRowList from "./ExtendedButtonRowList";
 import ExtendedButtonBottomList from "./ExtendedButtonBottomList";
+import { findMatches, matchesQuery, Match } from "./utils/searchComponents";
+import { FiSearch, FiX } from "react-icons/fi";
 import theme from "theme";
 
 export default function ComponentList() {
   const components = useComponents();
   const loading = useLoadingComponent();
   const usedComponents = useUsedComponents();
+  const [query, setQuery] = React.useState("");
+
+  const visible = React.useMemo(
+    () => components.data.filter((c) => matchesQuery(c, query)),
+    [components.data, query]
+  );
+
+  const isSearching = query.trim().length > 0;
+
   return (
     <Wrapper className="ComponentList">
-      {components.data.map((c) => (
+      <div className="search">
+        {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+        <FiSearch className="icon" />
+        <input
+          type="text"
+          value={query}
+          placeholder="Search components"
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        {isSearching && (
+          <div className="clear" title="Clear" onClick={() => setQuery("")}>
+            {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+            <FiX />
+          </div>
+        )}
+      </div>
+
+      {isSearching && (
+        <div className="result-count">
+          {visible.length} of {components.data.length} components
+        </div>
+      )}
+
+      {isSearching && visible.length === 0 && (
+        <div className="empty">No component matches "{query.trim()}"</div>
+      )}
+
+      {visible.map((c) => (
         <Row key={c.id} inUse={usedComponents.data.has(c.id)}>
           <div className="head">
             {/* the title attribute keeps the full name reachable once it is cut off */}
@@ -28,6 +67,7 @@ export default function ComponentList() {
               <span className="dot">·</span>
               created {parseTimestamp(c.createdAt)}
             </div>
+            <MatchPreview component={c} query={query} />
           </div>
           <div className="button-list">
             <ExtendedButtonRowList c={c} />
@@ -56,9 +96,155 @@ export default function ComponentList() {
   );
 }
 
+/** how many hits a card shows before it just counts the rest */
+const MAX_PREVIEWS = 3;
+
+/**
+ * shows which field a component was found through. The grid area is left
+ * out on purpose, the headline right above already is that value
+ */
+function MatchPreview(props: { component: Component; query: string }) {
+  const matches = React.useMemo(
+    () => findMatches(props.component, props.query),
+    [props.component, props.query]
+  );
+
+  if (!matches.length) return null;
+
+  const shown = matches.slice(0, MAX_PREVIEWS);
+  const rest = matches.length - shown.length;
+
+  return (
+    <Matches>
+      {shown.map((match: Match, i: number) => (
+        <div className="match" key={`${match.path}-${i}`}>
+          <span className="path">{match.path}</span>
+          <span className="snippet">
+            {match.snippet.slice(0, match.start)}
+            <mark>
+              {match.snippet.substr(match.start, match.length)}
+            </mark>
+            {match.snippet.slice(match.start + match.length)}
+          </span>
+        </div>
+      ))}
+      {rest > 0 && <div className="more">+{rest} more</div>}
+    </Matches>
+  );
+}
+
+const Matches = styled.div`
+  margin-top: 6px;
+
+  > .match {
+    display: flex;
+    gap: 6px;
+    font-size: 11px;
+    line-height: 17px;
+
+    > .path {
+      flex-shrink: 0;
+      max-width: 40%;
+      color: ${theme.color.textMuted};
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    > .snippet {
+      min-width: 0;
+      color: ${theme.color.text};
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      > mark {
+        padding: 0 1px;
+        border-radius: 2px;
+        background: #fde68a;
+        color: inherit;
+      }
+    }
+  }
+
+  > .more {
+    margin-top: 2px;
+    font-size: 11px;
+    color: ${theme.color.textMuted};
+  }
+`;
+
 const Wrapper = styled.div`
   padding: 12px;
   font-family: ${theme.font};
+
+  > .search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    > .icon {
+      position: absolute;
+      left: 10px;
+      font-size: 15px;
+      color: ${theme.color.textMuted};
+      pointer-events: none;
+    }
+
+    > input {
+      width: 100%;
+      height: 36px;
+      padding: 0 34px;
+      border: 1px solid ${theme.color.border};
+      border-radius: ${theme.radius};
+      background: ${theme.color.surface};
+      font-size: 13px;
+      color: ${theme.color.text};
+      outline: none;
+
+      &::placeholder {
+        color: ${theme.color.textMuted};
+      }
+
+      &:focus {
+        border-color: ${theme.color.accent};
+        box-shadow: 0 0 0 3px rgba(61, 111, 158, 0.15);
+      }
+    }
+
+    > .clear {
+      position: absolute;
+      right: 6px;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      color: ${theme.color.textMuted};
+      cursor: pointer;
+
+      &:hover {
+        background: ${theme.color.surfaceMuted};
+        color: ${theme.color.text};
+      }
+    }
+  }
+
+  > .result-count {
+    margin-bottom: 8px;
+    font-size: 11px;
+    color: ${theme.color.textMuted};
+  }
+
+  > .empty {
+    padding: 24px 12px;
+    text-align: center;
+    font-size: 13px;
+    color: ${theme.color.textMuted};
+  }
 
   > .globalBtns {
     display: flex;

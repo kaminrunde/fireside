@@ -21,6 +21,7 @@ import Widget from "../Panel/Widget";
 import * as t from "../types";
 import produce from "immer";
 import objPath from "object-path";
+import ListActions from "./ListActions";
 
 type Props = {
   value: object[];
@@ -112,9 +113,9 @@ export default function ObjectList(props: Props) {
         </DndContext>
       )}
 
-      <button
-        className="add"
-        onClick={() => {
+      <ListActions
+        addLabel={isActive ? "SAVE" : "ADD"}
+        onAdd={() => {
           if (isActive) {
             setActiveRowIndex(null);
           } else {
@@ -130,9 +131,20 @@ export default function ObjectList(props: Props) {
             setActiveRowIndex(props.value.length);
           }
         }}
-      >
-        {isActive ? "SAVE" : "ADD"}
-      </button>
+        /* while a row is being edited the list is hidden, so are its actions */
+        actions={
+          isActive
+            ? []
+            : [
+                {
+                  label: "DELETE ALL",
+                  disabled: nonNull(props.value).length === 0,
+                  confirm: `Delete all ${nonNull(props.value).length} entries?`,
+                  onClick: () => props.onChange([]),
+                },
+              ]
+        }
+      />
     </Wrapper>
   );
 }
@@ -225,19 +237,6 @@ const Wrapper = styled.div`
     border-radius: 3px;
     background: #d3d3d34d;
     cursor: grabbing;
-  }
-
-  > .add {
-    margin-top: 5px;
-    display: block;
-    width: 100%;
-    border: 1px solid lightgrey;
-    background: #8bc34a;
-    padding: 8px;
-    border-radius: 3px;
-    cursor: pointer;
-    font-weight: bold;
-    color: white;
   }
 `;
 

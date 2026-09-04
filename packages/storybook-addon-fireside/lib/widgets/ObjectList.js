@@ -7,6 +7,7 @@ import { CSS } from "@dnd-kit/utilities";
 import Widget from "../Panel/Widget";
 import produce from "immer";
 import objPath from "object-path";
+import ListActions from "./ListActions";
 const nonNull = (a) => a.filter((a) => a !== null);
 export default function ObjectList(props) {
     const [activeRowIndex, setActiveRowIndex] = React.useState(null);
@@ -34,7 +35,7 @@ export default function ObjectList(props) {
                         value: objPath.get(props.value[activeRowIndex], knob.prop),
                     }, parentProps: props.parentProps, onUpdate: (val) => props.onChange(produce(nonNull(props.value), (value) => {
                         objPath.set(value[activeRowIndex], knob.prop, val);
-                    })) }, knob.prop))) })), isActive || (_jsx(DndContext, { sensors: sensors, collisionDetection: closestCenter, onDragEnd: handleDragEnd, children: _jsx(SortableContext, { items: props.value.map((_, i) => String(i)), strategy: verticalListSortingStrategy, children: _jsx("ul", { children: props.value.map((value, index) => (_jsx(SortableItem, { id: String(index), value: value, getName: props.options.getRowName, onDelete: () => props.onChange(nonNull(props.value.filter((_, i) => i !== index))), onUpdate: () => setActiveRowIndex(index) }, `item-${index}`))) }) }) })), _jsx("button", { className: "add", onClick: () => {
+                    })) }, knob.prop))) })), isActive || (_jsx(DndContext, { sensors: sensors, collisionDetection: closestCenter, onDragEnd: handleDragEnd, children: _jsx(SortableContext, { items: props.value.map((_, i) => String(i)), strategy: verticalListSortingStrategy, children: _jsx("ul", { children: props.value.map((value, index) => (_jsx(SortableItem, { id: String(index), value: value, getName: props.options.getRowName, onDelete: () => props.onChange(nonNull(props.value.filter((_, i) => i !== index))), onUpdate: () => setActiveRowIndex(index) }, `item-${index}`))) }) }) })), _jsx(ListActions, { addLabel: isActive ? "SAVE" : "ADD", onAdd: () => {
                     if (isActive) {
                         setActiveRowIndex(null);
                     }
@@ -48,7 +49,18 @@ export default function ObjectList(props) {
                         }));
                         setActiveRowIndex(props.value.length);
                     }
-                }, children: isActive ? "SAVE" : "ADD" })] }));
+                }, 
+                /* while a row is being edited the list is hidden, so are its actions */
+                actions: isActive
+                    ? []
+                    : [
+                        {
+                            label: "DELETE ALL",
+                            disabled: nonNull(props.value).length === 0,
+                            confirm: `Delete all ${nonNull(props.value).length} entries?`,
+                            onClick: () => props.onChange([]),
+                        },
+                    ] })] }));
 }
 function SortableItem({ id, value, onDelete, onUpdate, getName, }) {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
@@ -77,19 +89,6 @@ const Wrapper = styled.div `
     border-radius: 3px;
     background: #d3d3d34d;
     cursor: grabbing;
-  }
-
-  > .add {
-    margin-top: 5px;
-    display: block;
-    width: 100%;
-    border: 1px solid lightgrey;
-    background: #8bc34a;
-    padding: 8px;
-    border-radius: 3px;
-    cursor: pointer;
-    font-weight: bold;
-    color: white;
   }
 `;
 const Item = styled.li `

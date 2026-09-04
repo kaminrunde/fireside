@@ -19,6 +19,7 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import * as t from "../types";
 import produce from "immer";
+import ListActions from "./ListActions";
 
 type Props = {
   value: string[];
@@ -91,18 +92,22 @@ export default function StringList(props: Props) {
         </SortableContext>
       </DndContext>
 
-      <button
-        className="add"
-        onClick={() => {
-          props.onChange([...props.value, ""]);
-        }}
-      >
-        ADD
-      </button>
-
-      <button className="add" onClick={() => setShowBulkInput(true)}>
-        ADD MULTIPLE
-      </button>
+      <ListActions
+        addLabel="ADD"
+        onAdd={() => props.onChange([...props.value, ""])}
+        actions={[
+          {
+            label: "ADD MULTIPLE",
+            onClick: () => setShowBulkInput(true),
+          },
+          {
+            label: "DELETE ALL",
+            disabled: props.value.length === 0,
+            confirm: `Delete all ${props.value.length} entries?`,
+            onClick: () => props.onChange([]),
+          },
+        ]}
+      />
 
       {showBulkInput && (
         <BulkInputWrapper>
@@ -268,19 +273,6 @@ const Wrapper = styled.div`
     border-radius: 3px;
     background: #d3d3d34d;
     cursor: grabbing;
-  }
-
-  > .add {
-    margin-top: 5px;
-    display: block;
-    width: 100%;
-    border: 1px solid lightgrey;
-    background: #8bc34a;
-    padding: 8px;
-    border-radius: 3px;
-    cursor: pointer;
-    font-weight: bold;
-    color: white;
   }
 `;
 

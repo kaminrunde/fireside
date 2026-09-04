@@ -5,6 +5,7 @@ import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, us
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy, } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import produce from "immer";
+import ListActions from "./ListActions";
 export default function StringList(props) {
     const [showBulkInput, setShowBulkInput] = React.useState(false);
     const [bulkValue, setBulkValue] = React.useState("");
@@ -34,9 +35,18 @@ export default function StringList(props) {
                                     value[index] = val;
                                 });
                                 props.onChange(newValue);
-                            } }, `item-${value + index}`))) }) }) }), _jsx("button", { className: "add", onClick: () => {
-                    props.onChange([...props.value, ""]);
-                }, children: "ADD" }), _jsx("button", { className: "add", onClick: () => setShowBulkInput(true), children: "ADD MULTIPLE" }), showBulkInput && (_jsxs(BulkInputWrapper, { children: [_jsx("textarea", { value: bulkValue, onChange: (e) => setBulkValue(e.target.value), placeholder: "Enter values, one per line..." }), _jsx("button", { onClick: handleBulkAdd, children: "Submit" }), _jsx("button", { onClick: () => setShowBulkInput(false), children: "Close" })] }))] }));
+                            } }, `item-${value + index}`))) }) }) }), _jsx(ListActions, { addLabel: "ADD", onAdd: () => props.onChange([...props.value, ""]), actions: [
+                    {
+                        label: "ADD MULTIPLE",
+                        onClick: () => setShowBulkInput(true),
+                    },
+                    {
+                        label: "DELETE ALL",
+                        disabled: props.value.length === 0,
+                        confirm: `Delete all ${props.value.length} entries?`,
+                        onClick: () => props.onChange([]),
+                    },
+                ] }), showBulkInput && (_jsxs(BulkInputWrapper, { children: [_jsx("textarea", { value: bulkValue, onChange: (e) => setBulkValue(e.target.value), placeholder: "Enter values, one per line..." }), _jsx("button", { onClick: handleBulkAdd, children: "Submit" }), _jsx("button", { onClick: () => setShowBulkInput(false), children: "Close" })] }))] }));
 }
 function SortableItem({ id, value, onDelete, onUpdate, }) {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
@@ -114,19 +124,6 @@ const Wrapper = styled.div `
     border-radius: 3px;
     background: #d3d3d34d;
     cursor: grabbing;
-  }
-
-  > .add {
-    margin-top: 5px;
-    display: block;
-    width: 100%;
-    border: 1px solid lightgrey;
-    background: #8bc34a;
-    padding: 8px;
-    border-radius: 3px;
-    cursor: pointer;
-    font-weight: bold;
-    color: white;
   }
 `;
 const Item = styled.li `

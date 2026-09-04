@@ -94,13 +94,22 @@ const Row = styled.div<{ inUse: boolean }>`
   margin-bottom: 8px;
   background: ${theme.color.surface};
   border: 1px solid ${theme.color.border};
-  border-left: 3px solid
-    ${(p) => (p.inUse ? "transparent" : theme.color.unused)};
   border-radius: ${theme.radius};
-  box-shadow: ${theme.shadow};
+  /**
+   * the accent for components that sit in no grid is drawn as an inset
+   * shadow rather than a left border, so the card keeps its full outline
+   * either way and the row geometry never shifts
+   */
+  box-shadow: ${(p) =>
+    p.inUse
+      ? theme.shadow
+      : `inset 3px 0 0 ${theme.color.unused}, ${theme.shadow}`};
 
   &:hover {
-    box-shadow: ${theme.shadowRaised};
+    box-shadow: ${(p) =>
+      p.inUse
+        ? theme.shadowRaised
+        : `inset 3px 0 0 ${theme.color.unused}, ${theme.shadowRaised}`};
   }
 
   /* min-width:0 lets the children actually shrink so the ellipsis can kick in */

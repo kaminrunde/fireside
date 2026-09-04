@@ -51,7 +51,6 @@ const Wrapper = styled.div`
   height: calc(100vh - 160px);
   padding: 20px;
   text-align: center;
-  font-family: "Open Sans", sans-serif;
 
   > .icon > svg {
     font-size: 60px;
@@ -79,7 +78,6 @@ const Wrapper = styled.div`
     background: #8bc34a;
     border: none;
     color: white;
-    font-family: "Open Sans", sans-serif;
     font-weight: bold;
     text-transform: uppercase;
     cursor: pointer;

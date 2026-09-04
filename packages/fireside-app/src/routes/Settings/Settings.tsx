@@ -8,6 +8,7 @@ import config from "config";
 import { useSettingsPageComponents } from "modules/plugins";
 import Component from "./Component";
 import Shortcuts from "./Shortcuts";
+import theme from "theme";
 
 export default function Settings() {
   const ms = useActiveMediaSizes();
@@ -54,24 +55,69 @@ export default function Settings() {
 }
 
 const Wrapper = styled.div`
-  padding: 20px;
+  padding: 16px;
+  font-family: ${theme.font};
+  color: ${theme.color.text};
+  max-width: 900px;
 
   > .row {
     > h3 {
-      font-family: "Open Sans", sans-serif;
+      margin: 0 0 12px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: ${theme.color.textMuted};
     }
     > hr {
-      margin: 40px 0;
+      margin: 28px 0;
+      border: none;
+      border-top: 1px solid ${theme.color.border};
     }
   }
 
+  /* react-toggle ships its own green, pull it onto the app palette */
+  .react-toggle--checked .react-toggle-track {
+    background-color: ${theme.color.primary};
+  }
+  .react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
+    background-color: ${theme.color.primaryHover};
+  }
+  .react-toggle--checked .react-toggle-thumb {
+    border-color: ${theme.color.primary};
+  }
+  .react-toggle--focus .react-toggle-thumb,
+  .react-toggle:active .react-toggle-thumb {
+    box-shadow: 0 0 0 3px rgba(74, 143, 44, 0.25);
+  }
+
+  /* label and toggle used to collide on longer media-size names */
   .toggle {
     display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 320px;
+    padding: 6px 0;
+
     > .label {
-      margin-left: 10px;
-      min-width: 150px;
-      font-family: "Roboto", sans-serif;
-      font-weight: bold;
+      flex: 1;
+      min-width: 0;
+      font-size: 13px;
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    > .value {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    > svg {
+      flex-shrink: 0;
+      color: ${theme.color.textMuted};
     }
   }
 `;

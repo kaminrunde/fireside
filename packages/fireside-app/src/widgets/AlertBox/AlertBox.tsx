@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { useAlertBox } from "modules/ui";
 import { MdClose } from "react-icons/md";
+import theme from "theme";
 
 export default function AlertBox() {
   const alertBox = useAlertBox();
@@ -46,71 +47,86 @@ const Wrapper = styled.div`
   > .box {
     position: fixed;
     top: 80px;
-    width: 500px;
-    padding: 30px 20px;
     left: 50%;
     transform: translateX(-50%);
-    background: white;
-    border: 1px solid grey;
+    width: calc(100vw - 32px);
+    max-width: 460px;
+    padding: 22px 20px 20px;
+    background: ${theme.color.surface};
+    color: ${theme.color.text};
+    border-radius: 10px;
     z-index: 9999999999999999999999999;
-    box-shadow: 5px 5px 15px 5px #000000;
-    border-radius: 3px;
+    box-shadow: 0 12px 32px rgba(31, 41, 51, 0.28);
 
+    /* used to sit outside the box on a black bordered circle */
     > .close-wrapper {
       position: absolute;
-      top: -10px;
-      right: -10px;
-      padding: 15px;
-      border-radius: 100%;
-      background: white;
-      border: 1px solid black;
+      top: 10px;
+      right: 10px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: ${theme.radius};
+      color: ${theme.color.textMuted};
+
       &:hover {
-        background: whitesmoke;
+        background: ${theme.color.surfaceMuted};
+        color: ${theme.color.text};
         cursor: pointer;
       }
       > svg {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
+        font-size: 18px;
       }
     }
 
     > h3 {
-      margin: 0;
-      text-align: center;
-      font-family: "Open Sans", sans-serif;
+      margin: 0 30px 0 0;
+      font-size: 16px;
+      font-weight: 700;
     }
 
     > p {
-      text-align: center;
-      font-family: "Roboto", sans-serif;
+      margin: 10px 0 0;
+      font-size: 13px;
+      line-height: 20px;
+      color: ${theme.color.textMuted};
     }
   }
 `;
 
 const Options = styled.div`
   display: flex;
-  margin-top: 40px;
-  padding: 0 50px;
-  justify-content: ${(p) => (p.single ? "center" : "space-between")};
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+  justify-content: flex-end;
 
   > button {
-    border: none;
-    position: relative;
-    padding: 15px;
-    font-family: "Roboto", sans-serif;
+    min-width: 92px;
+    height: 36px;
+    padding: 0 14px;
+    border: 1px solid ${theme.color.border};
+    border-radius: ${theme.radius};
+    background: ${theme.color.surface};
+    color: ${theme.color.text};
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
 
     &:hover {
-      &:after {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.2);
+      background: ${theme.color.surfaceMuted};
+    }
+
+    /* the last option is the one the dialog is asking for */
+    &:last-child {
+      border-color: transparent;
+      background: ${theme.color.primary};
+      color: white;
+
+      &:hover {
+        background: ${theme.color.primaryHover};
       }
     }
   }

@@ -43,14 +43,13 @@ const Wrapper = styled.div`
       border: 1px solid lightgrey;
       border-bottom-width: 2px;
       border-radius: 4px;
-      font-family: "Roboto", monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       font-size: 13px;
       color: #555;
       text-align: center;
     }
 
     > .description {
-      font-family: "Open Sans", sans-serif;
       font-size: 14px;
       color: #555;
     }
@@ -58,7 +57,6 @@ const Wrapper = styled.div`
 
   > .hint {
     margin-top: 15px;
-    font-family: "Open Sans", sans-serif;
     font-size: 13px;
     color: #888;
   }

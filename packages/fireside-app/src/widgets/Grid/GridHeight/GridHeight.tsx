@@ -100,7 +100,6 @@ const Wrapper = styled.div`
     border: none;
     background: whitesmoke;
     text-align: center;
-    font-family: "Open Sans", sans-serif;
     &:focus {
       background: white;
     }

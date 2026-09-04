@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { MdClose } from "react-icons/md";
 import Component from "./Component";
 import { PluginGridRowAPI } from "@kaminrunde/fireside-utils";
+import theme from "theme";
 
 type Props = {
   title: string;
@@ -33,10 +34,12 @@ export default function PluginModal(props: Props) {
     <Wrapper>
       <div className="overlay" onClick={props.onClose} />
       <div className="content">
-        <h3 className="title">{props.title}</h3>
-        <div className="close-wrapper" onClick={props.onClose}>
-          {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
-          <MdClose />
+        <div className="head">
+          <h3 className="title">{props.title}</h3>
+          <div className="close-wrapper" onClick={props.onClose}>
+            {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+            <MdClose />
+          </div>
         </div>
         <div className="components">
           {props.children}
@@ -62,50 +65,79 @@ const Wrapper = styled.div`
       background: rgba(0, 0, 0, 0.6);
       cursor: pointer;
     }
+    /**
+     * centered with inset+margin instead of a transform: a transformed
+     * ancestor becomes the containing block for position:fixed, which would
+     * trap the select dropdown inside the scrolling dialog body
+     */
     &.content {
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      max-width: 600px;
-      max-height: 80vh;
-      width: 100%;
-      margin: 0 auto;
-      background: white;
-      border-radius: 5px;
+      inset: 0;
+      margin: auto;
+      /* never wider than the embed it lives in */
+      width: calc(100vw - 32px);
+      max-width: 560px;
+      height: fit-content;
+      max-height: 84vh;
+      display: flex;
+      flex-direction: column;
+      background: ${theme.color.surface};
+      border-radius: 10px;
+      box-shadow: 0 12px 32px rgba(31, 41, 51, 0.28);
+      overflow: hidden;
     }
   }
 
   > .content {
-    padding: 10px;
     text-align: left;
-    > .title {
-      margin: 0;
-      font-size: 30px;
-      font-weight: normal;
-      margin-bottom: 20px;
-      font-family: "Open Sans" sans-serif;
-    }
-    > .close-wrapper {
-      position: absolute;
-      right: -20px;
-      top: -20px;
-      width: 40px;
-      height: 40px;
-      border: 1px solid grey;
-      border-radius: 40px;
-      background: white;
+    color: ${theme.color.text};
+
+    > .head {
       display: flex;
       align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      > .svg {
-        font-size: 30px;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid ${theme.color.border};
+
+      > .title {
+        flex: 1;
+        min-width: 0;
+        margin: 0;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      /* used to hang outside the dialog at -20px, where it could be clipped */
+      > .close-wrapper {
+        flex-shrink: 0;
+        width: 28px;
+        height: 28px;
+        border-radius: ${theme.radius};
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: ${theme.color.textMuted};
+        cursor: pointer;
+
+        &:hover {
+          background: ${theme.color.surfaceMuted};
+          color: ${theme.color.text};
+        }
+
+        > svg {
+          font-size: 20px;
+        }
       }
     }
+
     > .components {
-      overflow-y: scroll;
-      max-height: 70vh;
-      padding-bottom: 100px;
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 16px;
     }
   }
 `;

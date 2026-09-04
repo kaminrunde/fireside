@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { useExtendedButtonList } from "modules/plugins";
 import Dropdown from "../Dropdown";
+import theme from "theme";
 
 type Props = {};
 
@@ -46,15 +47,20 @@ export default function ExtendedButtonBottomList(props: Props) {
 
 const Wrapper = styled.div`
   > .btns {
-    height: 40px;
-    margin: 10px;
-    font-size: 16px;
+    height: 36px;
+    padding: 0 16px;
     border: none;
-    background-color: #f1f1f1;
+    border-radius: ${theme.radius};
+    background: ${theme.color.surfaceMuted};
+    color: ${theme.color.text};
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
     cursor: pointer;
 
     &:hover {
-      background-color: #f9f9f9;
+      background: #e8ecf1;
     }
   }
 `;

@@ -30,7 +30,6 @@ const Wrapper = styled.div`
     justify-content: center;
     > .label {
       margin-top: 20px;
-      font-family: "Open Sans", sans-serif;
       color: #555;
     }
   }

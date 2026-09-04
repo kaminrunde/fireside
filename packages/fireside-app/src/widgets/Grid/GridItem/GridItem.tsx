@@ -65,7 +65,6 @@ const Wrapper = styled.div`
   cursor: pointer;
   user-select: none;
   position: relative;
-  font-family: "Open Sans", sans-serif;
 
   border-left: 8px solid transparent;
 

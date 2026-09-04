@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { v4 } from "uuid";
 import * as t from "./types";
+import theme from "theme";
 
 let allIds: Record<string, t.ActionButton[]> = {};
 let byId: string[] = [];
@@ -51,37 +52,41 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  > button {
-    margin: 0 10px;
-  }
+  gap: 6px;
 `;
 
 const Btn = styled.button`
-  padding: 10px;
-  min-width: 100px;
+  height: 32px;
+  padding: 0 12px;
   border: none;
-  font-weight: bold;
+  border-radius: ${theme.radius};
+  font-family: ${theme.font};
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
   text-transform: uppercase;
+  white-space: nowrap;
+  color: white;
   cursor: pointer;
 
   ${(props: any) =>
     props.type === "primary" &&
     `
-    background: #009688;
-    color: white;
+    background: ${theme.color.primary};
+    &:hover { background: ${theme.color.primaryHover}; }
   `}
 
   ${(props: any) =>
     props.type === "danger" &&
     `
-    background: #e91e63;
-    color: white;
+    background: ${theme.color.danger};
+    &:hover { background: ${theme.color.dangerHover}; }
   `}
 
   ${(props: any) =>
     props.type === "secondary" &&
     `
-    background: #00bcd4;
-    color: white;
+    background: rgba(255,255,255,0.18);
+    &:hover { background: rgba(255,255,255,0.3); }
   `}
 `;

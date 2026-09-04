@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { useMessages } from "modules/snackbar";
 import { MdClose } from "react-icons/md";
+import theme from "theme";
 
 export default function Snackbar() {
   const messages = useMessages();
@@ -27,40 +28,64 @@ export default function Snackbar() {
 
 const Wrapper = styled.div`
   position: fixed;
-  left: 0;
-  width: 100%;
-  max-width: 800px;
-  width: 50vw;
-  bottom: 0;
+  left: 12px;
+  bottom: 12px;
+  /* stays inside the 600px contentful embed */
+  width: min(380px, calc(100vw - 24px));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   z-index: 9999999999999999999999999999999;
 `;
 
+const accent = (type: string) => {
+  if (type === "error") return "#d0432a";
+  if (type === "warning") return "#e08a1e";
+  return theme.color.accent;
+};
+
 const Message = styled.div`
-  border-left: 15px solid
-    ${(props: any) => {
-      if (props.type === "error") return "#ec1f10";
-      if (props.type === "info") return "#03a9f4";
-      if (props.type === "warning") return "#ff9800";
-    }};
-  width: 100%;
-  margin: 10px;
-  background: #607d8b;
-  color: white;
-  padding: 10px;
+  position: relative;
+  padding: 12px 36px 12px 14px;
+  background: ${theme.color.surface};
+  border: 1px solid ${theme.color.border};
+  border-left: 3px solid ${(props: any) => accent(props.type)};
+  border-radius: ${theme.radius};
+  box-shadow: ${theme.shadowRaised};
+  color: ${theme.color.text};
+
   > h5 {
-    margin: 0;
-    font-family: "Open Sans", sans-serif;
-    font-size: 18px;
-    margin-bottom: 8px;
+    margin: 0 0 3px;
+    font-size: 13px;
+    font-weight: 700;
+    color: ${(props: any) => accent(props.type)};
   }
   > p {
     margin: 0;
-    font-family: "Roboto", sans-serif;
-    font-size: 16px;
+    font-size: 13px;
+    line-height: 18px;
+    color: ${theme.color.textMuted};
   }
   > .close-wrapper {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    color: ${theme.color.textMuted};
     cursor: pointer;
-    text-align: right;
-    margin-bottom: -15px;
+
+    &:hover {
+      background: ${theme.color.surfaceMuted};
+      color: ${theme.color.text};
+    }
+
+    > svg {
+      font-size: 16px;
+    }
   }
 `;

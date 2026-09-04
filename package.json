@@ -11,10 +11,10 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "watch": "lerna run watch",
-    "start:example": "lerna run start --scope='example-project-fireside'",
-    "start:app": "lerna run start --scope='fireside-app'",
-    "start:storybook": "lerna run storybook --scope='example-project-fireside'",
-    "build:fireside": "lerna run fireside --scope='example-project-fireside'",
+    "start:example": "lerna run start --scope='@kaminrunde/example-project-fireside'",
+    "start:app": "lerna run start --scope='@kaminrunde/fireside-app'",
+    "start:storybook": "lerna run storybook --scope='@kaminrunde/example-project-fireside'",
+    "build:fireside": "lerna run fireside --scope='@kaminrunde/example-project-fireside'",
     "prepare-release": "git checkout master && git pull --rebase origin master && lerna updated",
     "release": "yarn run prepare-release && lerna publish --exact",
     "prerelease": "lerna publish prerelease"

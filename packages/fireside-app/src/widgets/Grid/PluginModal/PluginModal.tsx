@@ -65,13 +65,18 @@ const Wrapper = styled.div`
       background: rgba(0, 0, 0, 0.6);
       cursor: pointer;
     }
+    /**
+     * centered with inset+margin instead of a transform: a transformed
+     * ancestor becomes the containing block for position:fixed, which would
+     * trap the select dropdown inside the scrolling dialog body
+     */
     &.content {
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      inset: 0;
+      margin: auto;
       /* never wider than the embed it lives in */
       width: calc(100vw - 32px);
       max-width: 560px;
+      height: fit-content;
       max-height: 84vh;
       display: flex;
       flex-direction: column;

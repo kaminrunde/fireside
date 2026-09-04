@@ -7,6 +7,7 @@ import Header from "containers/Header";
 import Sidebar from "containers/Sidebar";
 import Modal from "containers/Modal";
 import EnforceFullscreen from "containers/EnforceFullscreen";
+import Shortcuts from "containers/Shortcuts";
 import Storybook from "widgets/Storybook";
 
 import IndexRoute from "routes/Index";
@@ -20,6 +21,7 @@ export default function App() {
     <HistoryRouter history={history}>
       <div className="App">
         <EnforceFullscreen />
+        <Shortcuts />
         <Header />
         <Sidebar />
         <Routes>

@@ -7,6 +7,7 @@ import MediaIcon from "components/MediaIcon";
 import config from "config";
 import { useSettingsPageComponents } from "modules/plugins";
 import Component from "./Component";
+import Shortcuts from "./Shortcuts";
 
 export default function Settings() {
   const ms = useActiveMediaSizes();
@@ -31,6 +32,11 @@ export default function Settings() {
             </div>
           );
         })}
+        <hr />
+      </div>
+      <div className="row">
+        <h3>Shortcuts</h3>
+        <Shortcuts />
         <hr />
       </div>
       {pluginComponents.data.map((row, i) => (

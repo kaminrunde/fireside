@@ -7,5 +7,6 @@ export const ADD_AREA: "grid/ADD_AREA" = "grid/ADD_AREA";
 export const INIT: "grid/INIT" = "grid/INIT";
 export const ADD_FROM_BUFFER: "grid/ADD_FROM_BUFFER" = "grid/ADD_FROM_BUFFER";
 export const TO_BUFFER: "grid/TO_BUFFER" = "grid/TO_BUFFER";
+export const TO_BUFFER_MANY: "grid/TO_BUFFER_MANY" = "grid/TO_BUFFER_MANY";
 export const COPY_GRID: "grid/COPY_GRID" = "grid/COPY_GRID";
 export const CLEAR_GRID: "grid/CLEAR_GRID" = "grid/CLEAR_GRID";

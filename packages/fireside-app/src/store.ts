@@ -12,6 +12,7 @@ import uiReducer from "modules/ui";
 import settingsReducer from "modules/settings";
 import pluginsReducer from "modules/plugins";
 import modalReducer from "modules/modal";
+import selectionReducer from "modules/selection";
 
 const { createReduxHistory, routerMiddleware, routerReducer } =
   createReduxHistoryContext({
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   settings: settingsReducer,
   plugins: pluginsReducer,
   modal: modalReducer,
+  selection: selectionReducer,
 });
 
 let composeEnhancers = compose;

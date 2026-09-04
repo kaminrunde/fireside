@@ -76,6 +76,21 @@ const Wrapper = styled.div`
     }
   }
 
+  /* react-toggle ships its own green, pull it onto the app palette */
+  .react-toggle--checked .react-toggle-track {
+    background-color: ${theme.color.primary};
+  }
+  .react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
+    background-color: ${theme.color.primaryHover};
+  }
+  .react-toggle--checked .react-toggle-thumb {
+    border-color: ${theme.color.primary};
+  }
+  .react-toggle--focus .react-toggle-thumb,
+  .react-toggle:active .react-toggle-thumb {
+    box-shadow: 0 0 0 3px rgba(74, 143, 44, 0.25);
+  }
+
   /* label and toggle used to collide on longer media-size names */
   .toggle {
     display: flex;

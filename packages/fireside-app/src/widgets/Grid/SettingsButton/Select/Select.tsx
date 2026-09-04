@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import useFocus from "hooks/useFocus";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import theme from "theme";
 
 type Props = {
   value: {
@@ -42,37 +43,55 @@ export default function Select(props: Props) {
   );
 }
 
+/**
+ * the dropdown stays in the normal flow rather than floating: this select
+ * lives inside a scrolling modal body, where an absolutely positioned list
+ * gets clipped at the dialog edge
+ */
 const Wrapper = styled.div`
-  border: 1px solid #555;
-  height: 40px;
+  font-size: 13px;
   cursor: pointer;
 
   > .value {
+    height: 36px;
     padding: 0 10px;
     display: flex;
-    height: 100%;
-    width: 100%;
     align-items: center;
     justify-content: space-between;
+    border: 1px solid ${theme.color.border};
+    border-radius: ${theme.radius};
+    background: ${theme.color.surface};
+    color: ${theme.color.text};
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:hover {
+      border-color: #cbd2d9;
+    }
 
     > svg {
-      margin-left: 10px;
+      flex-shrink: 0;
+      margin-left: 8px;
+      color: ${theme.color.textMuted};
     }
   }
 
   > .dropdown {
-    border: 1px solid #555;
-    height: 100px;
+    margin-top: 4px;
+    max-height: 180px;
     overflow: auto;
-    margin-top: 10px;
-    background: white;
-    z-index: 999999999;
+    background: ${theme.color.surface};
+    border: 1px solid ${theme.color.border};
+    border-radius: ${theme.radius};
+    box-shadow: ${theme.shadow};
+
     > * {
-      padding: 10px;
-      font-size: 14px;
+      padding: 9px 10px;
+      font-size: 13px;
       cursor: pointer;
       &:hover {
-        background: lightgrey;
+        background: ${theme.color.surfaceMuted};
       }
     }
   }

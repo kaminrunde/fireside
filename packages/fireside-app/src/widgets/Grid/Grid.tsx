@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import ActionButtons, { t } from "widgets/ActionButtons";
 import * as $grid from "modules/grid";
 import * as $selection from "modules/selection";
+import theme from "theme";
 import { useLoadingComponent, useComponents } from "modules/components";
 import { useActiveMediaSizes } from "modules/settings";
 import { useMessages } from "modules/snackbar";
@@ -295,9 +296,10 @@ export default function Grid(props: Props) {
             onMouseEnter={() => setHoverComponentId([c.id, true])}
             onMouseLeave={() => setHoverComponentId([null, false])}
             unselectable="on"
+            title={c.props.gridArea}
             key={c.id}
           >
-            {c.props.gridArea}
+            <span className="label">{c.props.gridArea}</span>
           </BufferComponent>
         ))}
         <div className="offset" />
@@ -377,7 +379,6 @@ const Wrapper = styled.div`
         border: none;
         background: whitesmoke;
         text-align: center;
-        font-family: "Open Sans", sans-serif;
         &:focus {
           background: white;
         }
@@ -453,7 +454,6 @@ const HoverInfo = styled.div`
   left: 20px;
   background: #607d8b;
   color: white;
-  font-family: "Open Sans", sans-serif;
   padding: 5px 10px;
   padding-right: 20px;
   font-size: 14px;
@@ -487,15 +487,35 @@ const BufferComponent = styled.div`
   align-items: center;
   justify-content: center;
   user-select: none;
-  background: steelblue;
+  background: ${theme.color.accent};
+  border-radius: 4px;
   width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 0 10px;
   color: white;
   cursor: pointer;
   height: ${ROW_HEIGHT}px;
-  font-family: "Open Sans", sans-serif;
-  font-size: 14px;
+  font-family: ${theme.font};
+  font-size: 13px;
+  overflow: hidden;
 
-  border-left: 8px solid transparent;
+  border-left: 6px solid transparent;
+
+  /**
+   * grid-area names get long. Centering them with flex would clip both ends,
+   * so they wrap over at most two lines inside the fixed tile height. The
+   * title attribute keeps the full name reachable
+   */
+  > .label {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    text-align: center;
+    line-height: 15px;
+  }
 
   ${(props: any) =>
     props.active &&

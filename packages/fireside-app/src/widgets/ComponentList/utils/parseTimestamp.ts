@@ -10,5 +10,8 @@ export default function parseTimestamp(t: number): string {
   if (now - 1000 * 60 * 60 * 24 * 5 < t) return "4 days ago";
   if (now - 1000 * 60 * 60 * 24 * 6 < t) return "5 days ago";
   if (now - 1000 * 60 * 60 * 24 * 14 < t) return "last week";
-  return `${d.getFullYear()} / ${d.getMonth() + 1} / ${d.getUTCDate()}`;
+  // note: this used to mix getUTCDate() with the local year and month, which
+  // could report the wrong day around midnight. All local now
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()}`;
 }

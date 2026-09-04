@@ -5,6 +5,7 @@ import parseTimestamp from "./utils/parseTimestamp";
 import { useUsedComponents } from "modules/grid";
 import ExtendedButtonRowList from "./ExtendedButtonRowList";
 import ExtendedButtonBottomList from "./ExtendedButtonBottomList";
+import theme from "theme";
 
 export default function ComponentList() {
   const components = useComponents();
@@ -14,26 +15,34 @@ export default function ComponentList() {
     <Wrapper className="ComponentList">
       {components.data.map((c) => (
         <Row key={c.id} inUse={usedComponents.data.has(c.id)}>
-          <div className="gridName">
-            <div className="title">{c.props.gridArea}</div>
-            <div className="last-updated">
-              <b>changed:</b> {parseTimestamp(c.updatedAt)}
+          <div className="head">
+            {/* the title attribute keeps the full name reachable once it is cut off */}
+            <div className="title" title={c.props.gridArea}>
+              {c.props.gridArea}
             </div>
-            <div className="created">
-              <b>created:</b> {parseTimestamp(c.createdAt)}
+            <div className="type" title={c.name}>
+              {c.name}
+            </div>
+            <div className="meta">
+              changed {parseTimestamp(c.updatedAt)}
+              <span className="dot">·</span>
+              created {parseTimestamp(c.createdAt)}
             </div>
           </div>
-          <div className="name">{c.name}</div>
           <div className="button-list">
             <ExtendedButtonRowList c={c} />
-            <div className="btn-update">
-              <button onClick={() => loading.load(c.id)}>update</button>
-            </div>
-            <div className="btn-remove">
-              <button onClick={() => components.removeComponent(c)}>
-                remove
-              </button>
-            </div>
+            <button
+              className="btn btn-update"
+              onClick={() => loading.load(c.id)}
+            >
+              update
+            </button>
+            <button
+              className="btn btn-remove"
+              onClick={() => components.removeComponent(c)}
+            >
+              remove
+            </button>
           </div>
         </Row>
       ))}
@@ -48,114 +57,138 @@ export default function ComponentList() {
 }
 
 const Wrapper = styled.div`
+  padding: 12px;
+  font-family: ${theme.font};
+
   > .globalBtns {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
 
     > .add {
-      height: 40px;
-      margin: 10px;
-      font-size: 16px;
+      height: 36px;
+      padding: 0 16px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
       border: none;
-      color: whitesmoke;
-      background: #8bc34a;
+      border-radius: ${theme.radius};
+      color: white;
+      background: ${theme.color.primary};
       cursor: pointer;
+
+      &:hover {
+        background: ${theme.color.primaryHover};
+      }
     }
   }
 `;
 
-const Row = styled.div`
-  padding-bottom: 10px;
-  border-bottom: 1px solid lightgrey;
-  margin: 10px;
+const Row = styled.div<{ inUse: boolean }>`
   display: flex;
-  position: relative;
-
-  > .gridName {
-    flex: 1;
-
-    > .title {
-      font-size: 20px;
-      line-height: 26px;
-      font-weight: bold;
-      font-family: "Open Sans", sans-serif;
-      color: ${(p) => (p.inUse ? "#555" : "#ff5722")};
-    }
-
-    > .last-updated,
-    .created {
-      font-family: "Roboto", sans-serif;
-      color: grey;
-      font-size: 12px;
-    }
-  }
-
-  > .name {
-    margin: 0 30px;
-    font-size: 18px;
-    display: flex;
-    height: auto;
-    line-break: loose;
-    word-break: break-all;
-    align-items: center;
-    font-family: "Open Sans", sans-serif;
-  }
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  background: ${theme.color.surface};
+  border: 1px solid ${theme.color.border};
+  border-left: 3px solid
+    ${(p) => (p.inUse ? "transparent" : theme.color.unused)};
+  border-radius: ${theme.radius};
+  box-shadow: ${theme.shadow};
 
   &:hover {
-    > .button-list {
-      display: flex !important;
+    box-shadow: ${theme.shadowRaised};
+  }
+
+  /* min-width:0 lets the children actually shrink so the ellipsis can kick in */
+  > .head {
+    flex: 1;
+    min-width: 0;
+
+    /**
+     * these names carry their meaning at the end (..._k2_bestecksets vs
+     * ..._k1_buffet_20250622), so cutting them off with an ellipsis would
+     * hide exactly the distinguishing part. Wrap over at most two lines
+     * instead and break anywhere, which keeps the row height bounded
+     */
+    > .title {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 19px;
+      color: ${(p) => (p.inUse ? theme.color.text : theme.color.unused)};
+      overflow: hidden;
+      overflow-wrap: anywhere;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
-    > .name {
-      display: none;
-      @media (min-width: 800px) {
-        display: flex;
+
+    > .type {
+      display: inline-block;
+      max-width: 100%;
+      margin-top: 4px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: ${theme.color.surfaceMuted};
+      color: ${theme.color.textMuted};
+      font-size: 11px;
+      line-height: 16px;
+      vertical-align: bottom;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    > .meta {
+      margin-top: 4px;
+      color: ${theme.color.textMuted};
+      font-size: 11px;
+      line-height: 16px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      > .dot {
+        margin: 0 5px;
       }
     }
   }
 
   > .button-list {
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
 
-    @media (min-width: 800px) {
-      position: static;
-      display: flex;
+    .btn {
+      height: 30px;
+      padding: 0 10px;
+      border: none;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: white;
+      cursor: pointer;
+      white-space: nowrap;
     }
 
-    > .btn-update,
+    .btn-update {
+      background: ${theme.color.primary};
+      &:hover {
+        background: ${theme.color.primaryHover};
+      }
+    }
+
     .btn-remove {
-      margin: 0 5px;
-      display: flex;
-      height: auto;
-      align-items: center;
-      > button {
-        border: none;
-        background: none;
-        font-size: 16px;
-        font-family: "Roboto", sans-serif;
-        padding: 10px;
-        color: whitesmoke;
-        cursor: pointer;
-        font-weight: bold;
-        border-radius: 3px;
-        text-transform: uppercase;
-      }
-
-      &.btn-update > button {
-        background: #8bc34a;
-
-        &:hover {
-          background-color: #93d14d;
-        }
-      }
-      &.btn-remove > button {
-        background: #ff5722;
-
-        &:hover {
-          background-color: #fc6f44;
-        }
+      background: ${theme.color.danger};
+      &:hover {
+        background: ${theme.color.dangerHover};
       }
     }
   }

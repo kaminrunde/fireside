@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useExtendedButtonList } from "modules/plugins";
 import { Component } from "@kaminrunde/fireside-utils";
 import Dropdown from "../Dropdown";
+import theme from "theme";
 
 type Props = {
   c: Component;
@@ -52,17 +53,23 @@ export default function ExtendedButtonRowList(props: Props) {
 
 const Wrapper = styled.div`
   > .btns {
-    text-transform: uppercase;
-    height: 40px;
-    margin: 10px;
-    font-size: 16px;
+    height: 30px;
+    padding: 0 10px;
     border: none;
-    background-color: #f1f1f1;
+    border-radius: 4px;
+    background: ${theme.color.surfaceMuted};
+    color: ${theme.color.textMuted};
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    white-space: nowrap;
     cursor: pointer;
-    border-radius: 3px;
 
     &:hover {
-      background-color: #f9f9f9;
+      background: #e8ecf1;
+      color: ${theme.color.text};
     }
   }
 `;

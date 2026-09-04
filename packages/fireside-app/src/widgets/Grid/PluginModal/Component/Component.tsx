@@ -61,7 +61,6 @@ const Wrapper = styled.div`
     margin: 0;
     font-weight: normal;
     text-transform: uppercase;
-    font-family: "Open Sans" sans-serif;
     border-bottom: 1px solid grey;
   }
 `;

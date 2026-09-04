@@ -81,7 +81,6 @@ const ModalContent = styled.div`
     margin-bottom: 20px;
     > .label {
       flex: 1;
-      font-family: "Open Sans", sans-serif;
       font-size: 14px;
       color: #555;
     }
@@ -97,7 +96,6 @@ const ModalContent = styled.div`
       background: #8bc34a;
       border: none;
       color: white;
-      font-family: "Open Sans", sans-serif;
       text-transform: uppercase;
       cursor: pointer;
     }
@@ -110,7 +108,6 @@ const ModalContent = styled.div`
     background: #8bc34a;
     border: none;
     color: white;
-    font-family: "Open Sans", sans-serif;
     text-transform: uppercase;
     cursor: pointer;
     margin-bottom: 20px;

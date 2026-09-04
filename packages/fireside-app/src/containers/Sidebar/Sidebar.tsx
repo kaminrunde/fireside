@@ -6,6 +6,7 @@ import config from "config";
 import { useActiveMediaSizes } from "modules/settings";
 import MediaIcon from "components/MediaIcon";
 import { FaListUl, FaCog } from "react-icons/fa";
+import theme from "theme";
 
 export default function Sidebar() {
   const sidebar = useSidebar();
@@ -63,28 +64,48 @@ const Wrapper = styled.div`
     left: 0;
     top: 60px;
     bottom: 0;
-    width: 300px;
-    background: white;
+    width: 260px;
+    max-width: 80vw;
+    padding: 8px;
+    background: ${theme.color.surface};
+    box-shadow: ${theme.shadowRaised};
 
     > .item {
       display: flex;
-      padding: 10px;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: ${theme.radius};
       text-decoration: none;
-      color: black;
+      color: ${theme.color.text};
       cursor: pointer;
-      font-family: "Open Sans", sans-serif;
+      font-family: ${theme.font};
+
       &:hover {
-        background: lightgrey;
+        background: ${theme.color.surfaceMuted};
       }
+
       > .icon {
-        height: 20px;
-        width: 30px;
+        flex-shrink: 0;
+        height: 18px;
+        width: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: ${theme.color.textMuted};
         > svg {
-          font-size: 20px;
+          font-size: 17px;
         }
       }
+
       > .label {
-        line-height: 20px;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 18px;
+        letter-spacing: 0.2px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
   }

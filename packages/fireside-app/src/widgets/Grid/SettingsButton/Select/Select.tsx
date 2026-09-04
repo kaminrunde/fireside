@@ -54,7 +54,6 @@ const Wrapper = styled.div`
     width: 100%;
     align-items: center;
     justify-content: space-between;
-    font-family: "Open Sans", sans-serif;
 
     > svg {
       margin-left: 10px;
@@ -66,7 +65,6 @@ const Wrapper = styled.div`
     height: 100px;
     overflow: auto;
     margin-top: 10px;
-    font-family: "Open Sans", sans-serif;
     background: white;
     z-index: 999999999;
     > * {

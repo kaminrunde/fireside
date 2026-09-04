@@ -83,7 +83,6 @@ const Wrapper = styled.div`
       font-size: 30px;
       font-weight: normal;
       margin-bottom: 20px;
-      font-family: "Open Sans" sans-serif;
     }
     > .close-wrapper {
       position: absolute;

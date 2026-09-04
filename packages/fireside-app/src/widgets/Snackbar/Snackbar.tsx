@@ -49,13 +49,11 @@ const Message = styled.div`
   padding: 10px;
   > h5 {
     margin: 0;
-    font-family: "Open Sans", sans-serif;
     font-size: 18px;
     margin-bottom: 8px;
   }
   > p {
     margin: 0;
-    font-family: "Roboto", sans-serif;
     font-size: 16px;
   }
   > .close-wrapper {

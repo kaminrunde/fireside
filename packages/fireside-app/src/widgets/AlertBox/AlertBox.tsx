@@ -79,12 +79,10 @@ const Wrapper = styled.div`
     > h3 {
       margin: 0;
       text-align: center;
-      font-family: "Open Sans", sans-serif;
     }
 
     > p {
       text-align: center;
-      font-family: "Roboto", sans-serif;
     }
   }
 `;
@@ -99,7 +97,6 @@ const Options = styled.div`
     border: none;
     position: relative;
     padding: 15px;
-    font-family: "Roboto", sans-serif;
     cursor: pointer;
 
     &:hover {

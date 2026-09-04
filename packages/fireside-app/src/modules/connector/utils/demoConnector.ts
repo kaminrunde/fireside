@@ -74,11 +74,39 @@ const DEMO_STORY = {
       updatedAt: 1626710962275,
       hash: "5e3f66c1e79e4ae01d9475a2b0203300",
     },
+    "5b0051ed99429fb6d8603b1b": {
+      id: "5b0051ed99429fb6d8603b1b",
+      name: "CategoryHeadlineWithProducts",
+      props: {
+        gridArea: "home_category_products_k2_bestecksets",
+        position: "left",
+        __version: 1,
+        label: "",
+      },
+      createdAt: 1758844800000,
+      updatedAt: 1758844800000,
+      hash: "df5f4f3b856a81b406fd08e9d2edeab9",
+    },
+    "6c1162fea053a0c7e9714c2c": {
+      id: "6c1162fea053a0c7e9714c2c",
+      name: "CategoryImageTeaserWithProducts",
+      props: {
+        gridArea: "home_category_highlight_k1_buffet_20250622",
+        position: "left",
+        __version: 1,
+        label: "",
+      },
+      createdAt: 1750550400000,
+      updatedAt: 1750550400000,
+      hash: "35d3056e94cdbf118632ad0d50efd1c0",
+    },
   },
   allComponents: [
     "2e7728ba66196ce3a53d08e8",
     "3f8839cb77207df4b64e19f9",
     "4a9940dc88318ea5c75f2a0a",
+    "5b0051ed99429fb6d8603b1b",
+    "6c1162fea053a0c7e9714c2c",
   ],
   grids: {
     // two columns, Button789 alone in the second row
@@ -126,7 +154,7 @@ const DEMO_STORY = {
       heights: ["auto"],
     },
   },
-  hash: "5c988cbce0f8f3c2437782896297a54c",
+  hash: "f897c2ac586ff39787ae61a2978edbab",
   plugins: { fullWidth: {}, bg: {} },
 };
 

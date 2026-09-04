@@ -9,6 +9,7 @@ import { useComponents, useLoadingComponent } from "modules/components";
 import * as components from "modules/components";
 import { useLocation } from "react-router-dom";
 import config from "config";
+import theme from "theme";
 
 export default function Header() {
   const sidebar = useSidebar();
@@ -107,61 +108,56 @@ const Offset = styled.div`
 `;
 
 const Wrapper = styled.div`
+  /* the 60px height is mirrored by the sidebar, the storybook overlay and the
+     grid height, do not change it here alone */
   height: 60px;
-  background: steelblue;
+  background: ${theme.color.accent};
+  box-shadow: ${theme.shadow};
   display: flex;
+  align-items: center;
+  padding: 0 6px;
   position: fixed;
   z-index: 99999;
   left: 0;
   right: 0;
   top: 0;
 
-  > .burger-menu {
-    cursor: pointer;
-    height: 100%;
-    width: 60px;
-    display: flex;
-    align-items: center;
-    justify-items: center;
-    > svg {
-      margin-left: 15px;
-      color: white;
-      font-size: 30px;
-    }
-  }
-  > .route-name {
-    flex: 1;
-    color: white;
-    font-family: "Open Sans", sans-serif;
-    font-size: 16px;
-    line-height: 60px;
-  }
-  > .ActionButtonsDisplay {
-  }
-  > .fullscreen {
-    cursor: pointer;
-    height: 100%;
-    width: 60px;
-    display: flex;
-    align-items: center;
-    justify-items: center;
-    > svg {
-      margin-left: 15px;
-      color: white;
-      font-size: 30px;
-    }
-  }
+  > .burger-menu,
+  > .fullscreen,
   > .add {
     cursor: pointer;
-    height: 100%;
+    height: 36px;
+    width: 36px;
+    margin: 0 2px;
+    border-radius: ${theme.radius};
     display: flex;
     align-items: center;
-    justify-items: center;
-    > svg {
-      margin-left: 15px;
-      color: white;
-      font-size: 26px;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
     }
+
+    > svg {
+      color: white;
+      font-size: 22px;
+    }
+  }
+
+  > .route-name {
+    flex: 1;
+    min-width: 0;
+    margin-left: 8px;
+    color: white;
+    font-family: ${theme.font};
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 `;
 

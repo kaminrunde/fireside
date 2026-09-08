@@ -29,7 +29,9 @@ export default function GridItem(props: Props) {
       onMouseEnter={props.onMouseEnter}
       onMouseLeave={props.onMouseLeave}
     >
-      <div className="label">{props.label}</div>
+      <div className="label">
+        <span>{props.label}</span>
+      </div>
       <div className="context">
         {iconList.data.map((row, i) => (
           <PluginButton
@@ -86,17 +88,31 @@ const Wrapper = styled.div`
     box-shadow: inset 0 0 0 1px ${theme.color.accent};
   `}
 
+  /* the label filled the item but sat on its top edge */
   > .label {
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    text-align: center;
-    padding: 0 5px;
-    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+    font-size: 13px;
     overflow: hidden;
-    text-overflow: ellipsis;
+
+    /* same treatment as the buffer tiles: wrap over at most two lines
+       instead of running out of a short item */
+    > span {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      overflow-wrap: anywhere;
+      text-align: center;
+      line-height: 16px;
+    }
   }
 
   > .context {
@@ -106,7 +122,13 @@ const Wrapper = styled.div`
     box-shadow: ${theme.shadowRaised};
     display: none;
     position: absolute;
-    top: -38px;
+    /**
+     * flush against the item's top edge on purpose. The bar only shows while
+     * the item is hovered, and it is a child of it - any gap here and the
+     * pointer leaves the item on its way up, so the bar vanishes before it
+     * can be clicked
+     */
+    top: -34px;
     left: 0;
     background: ${theme.color.surface};
     height: 34px;

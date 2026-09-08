@@ -82,18 +82,28 @@ export default function ComponentList() {
     canAct
   );
 
-  const handleRowClick = (id: string) => (e: React.MouseEvent) => {
-    const next = $selection.nextSelection(
-      { ids: selection.ids, anchor: selection.anchor },
-      {
-        id,
-        siblings: visibleIds,
-        multi: e.ctrlKey || e.metaKey,
-        range: e.shiftKey,
-      }
-    );
-    selection.set(next.ids, next.anchor);
-  };
+  const handleRowSelect =
+    (id: string) => (e: React.MouseEvent | React.KeyboardEvent) => {
+      const next = $selection.nextSelection(
+        { ids: selection.ids, anchor: selection.anchor },
+        {
+          id,
+          siblings: visibleIds,
+          multi: e.ctrlKey || e.metaKey,
+          range: e.shiftKey,
+        }
+      );
+      selection.set(next.ids, next.anchor);
+    };
+
+  /** space picks the focused row, the same way a click would */
+  const handleRowKeyDown =
+    (id: string) => (e: React.KeyboardEvent) => {
+      if (e.key !== " ") return;
+      // space would scroll the list away under the focused row
+      e.preventDefault();
+      handleRowSelect(id)(e);
+    };
 
   const isSearching = query.trim().length > 0;
 
@@ -132,7 +142,11 @@ export default function ComponentList() {
           key={c.id}
           inUse={usedComponents.data.has(c.id)}
           selected={selectedIds.has(c.id)}
-          onClick={handleRowClick(c.id)}
+          onClick={handleRowSelect(c.id)}
+          onKeyDown={handleRowKeyDown(c.id)}
+          tabIndex={0}
+          role="button"
+          aria-pressed={selectedIds.has(c.id)}
         >
           <div className="head">
             {/* the title attribute keeps the full name reachable once it is cut off */}
@@ -156,6 +170,7 @@ export default function ComponentList() {
             <ExtendedButtonRowList c={c} />
             <button
               className="icon-btn"
+              tabIndex={-1}
               title="Update"
               aria-label="Update"
               onClick={() => loading.load(c.id)}
@@ -165,6 +180,7 @@ export default function ComponentList() {
             </button>
             <button
               className="icon-btn danger"
+              tabIndex={-1}
               title="Remove"
               aria-label="Remove"
               onClick={() => components.removeComponent(c)}
@@ -373,6 +389,15 @@ const Row = styled.div<{ inUse: boolean; selected: boolean }>`
   border-radius: ${theme.radius};
   cursor: pointer;
   user-select: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${theme.color.accent};
+    outline-offset: 1px;
+  }
   /**
    * the accent for components that sit in no grid is drawn as an inset
    * shadow rather than a left border, so the card keeps its full outline

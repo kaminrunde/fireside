@@ -17,6 +17,7 @@ import useShortcut from "hooks/useShortcut";
 import * as shortcuts from "shortcuts";
 import { FiSearch, FiX, FiEdit2, FiTrash2 } from "react-icons/fi";
 import theme from "theme";
+import tooltip from "tooltip";
 
 export default function ComponentList() {
   const components = useComponents();
@@ -219,7 +220,7 @@ export default function ComponentList() {
             <ExtendedButtonRowList c={c} />
             <button
               className="icon-btn"
-              title="Update"
+              data-tooltip="Update"
               aria-label="Update"
               onClick={() => loading.load(c.id)}
             >
@@ -228,7 +229,7 @@ export default function ComponentList() {
             </button>
             <button
               className="icon-btn danger"
-              title="Remove"
+              data-tooltip="Remove"
               aria-label="Remove"
               onClick={() => components.removeComponent(c)}
             >
@@ -525,6 +526,7 @@ const Row = styled.div<{ inUse: boolean; selected: boolean }>`
 
     /* also applies to the plugin buttons, they render into this row */
     .icon-btn {
+      ${tooltip}
       width: 30px;
       height: 30px;
       display: flex;

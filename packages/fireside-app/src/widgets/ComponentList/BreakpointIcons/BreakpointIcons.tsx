@@ -8,6 +8,7 @@ import { useUsedComponentsByMediaSize } from "modules/grid";
 import * as $selection from "modules/selection";
 import config from "config";
 import theme from "theme";
+import tooltip from "tooltip";
 
 type Props = {
   componentId: string;
@@ -46,7 +47,8 @@ export default function BreakpointIcons(props: Props) {
           <div
             key={ms.key}
             className={`bp ${state}`}
-            title={hint}
+            data-tooltip={hint}
+            aria-label={hint}
             onClick={open(ms.key)}
           >
             <MediaIcon icon={ms.icon} />
@@ -64,6 +66,7 @@ const Wrapper = styled.div`
   flex-shrink: 0;
 
   > .bp {
+    ${tooltip}
     width: 24px;
     height: 26px;
     display: flex;

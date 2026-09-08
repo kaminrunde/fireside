@@ -37,6 +37,11 @@ export const DELETE_COMPONENT: ShortcutInfo = {
   description: "Delete the selected component (component list)",
 };
 
+export const CLOSE_STORYBOOK: ShortcutInfo = {
+  key: "Escape",
+  description: "Close storybook, asking first when there are unsaved changes",
+};
+
 export const NEXT_COMPONENT: ShortcutInfo = {
   key: "Tab",
   allowInInput: true,
@@ -60,6 +65,7 @@ export const EDITOR_SHORTCUTS: ShortcutInfo[] = [
   BUFFER,
   BUFFER_ALL,
   OPEN_COMPONENT,
+  CLOSE_STORYBOOK,
   COPY_COMPONENT,
   DELETE_COMPONENT,
   FOCUS_SEARCH,

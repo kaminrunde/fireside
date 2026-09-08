@@ -58,7 +58,7 @@ const DEMO_STORY = {
       },
       "createdAt": 1626710762275,
       "updatedAt": 1626710762275,
-      "hash": "21093375e312b8c173100c35080b23f2"
+      "hash": "3802932857080"
     },
     "027728ba66196ce3a53d08e": {
       "id": "027728ba66196ce3a53d08e",
@@ -71,7 +71,7 @@ const DEMO_STORY = {
       },
       "createdAt": 1626710862275,
       "updatedAt": 1626710862275,
-      "hash": "ae9d9d0262d70150d4fb8072784b8cec"
+      "hash": "5808450017995"
     },
     "037728ba66196ce3a53d08e": {
       "id": "037728ba66196ce3a53d08e",
@@ -84,7 +84,7 @@ const DEMO_STORY = {
       },
       "createdAt": 1626710962275,
       "updatedAt": 1626710962275,
-      "hash": "dc1aed78da01d4329f83435c96bcf411"
+      "hash": "11811966853731"
     },
     "047728ba66196ce3a53d08e": {
       "id": "047728ba66196ce3a53d08e",
@@ -102,7 +102,7 @@ const DEMO_STORY = {
       },
       "createdAt": 1758844800000,
       "updatedAt": 1758844800000,
-      "hash": "22691a93614a2d933c2f1e45bddf3ab4"
+      "hash": "9889326816714"
     },
     "057728ba66196ce3a53d08e": {
       "id": "057728ba66196ce3a53d08e",
@@ -126,7 +126,7 @@ const DEMO_STORY = {
       },
       "createdAt": 1750550400000,
       "updatedAt": 1750550400000,
-      "hash": "2184d2c872ef108fd87b1bceb4932bdf"
+      "hash": "4426129109089"
     },
     "067728ba66196ce3a53d08e": {
       "id": "067728ba66196ce3a53d08e",
@@ -140,7 +140,7 @@ const DEMO_STORY = {
       },
       "createdAt": 1745000000000,
       "updatedAt": 1745000000000,
-      "hash": "1a0d082677e70873d08d171453b4cb89"
+      "hash": "11290263511443"
     },
     "077728ba66196ce3a53d08e": {
       "id": "077728ba66196ce3a53d08e",
@@ -156,7 +156,7 @@ const DEMO_STORY = {
       },
       "createdAt": 1745100000000,
       "updatedAt": 1745100000000,
-      "hash": "fd12284230f1accdab3843fac7cfb6c8"
+      "hash": "3692887777458"
     },
     "087728ba66196ce3a53d08e": {
       "id": "087728ba66196ce3a53d08e",
@@ -169,7 +169,7 @@ const DEMO_STORY = {
       },
       "createdAt": 1745200000000,
       "updatedAt": 1745200000000,
-      "hash": "fa4e7911b6f95dc3cc90c8c51e49e204"
+      "hash": "12414483267216"
     },
     "097728ba66196ce3a53d08e": {
       "id": "097728ba66196ce3a53d08e",
@@ -182,7 +182,7 @@ const DEMO_STORY = {
       },
       "createdAt": 1745300000000,
       "updatedAt": 1745300000000,
-      "hash": "7de2722c212eb0205e5df6200e0feb35"
+      "hash": "9832362403007"
     },
     "0a7728ba66196ce3a53d08e": {
       "id": "0a7728ba66196ce3a53d08e",
@@ -201,7 +201,7 @@ const DEMO_STORY = {
       },
       "createdAt": 1745400000000,
       "updatedAt": 1745400000000,
-      "hash": "7e00c8b9026891a6c3061636e3e23770"
+      "hash": "3574903501758"
     },
     "0b7728ba66196ce3a53d08e": {
       "id": "0b7728ba66196ce3a53d08e",
@@ -219,7 +219,7 @@ const DEMO_STORY = {
       },
       "createdAt": 1745500000000,
       "updatedAt": 1745500000000,
-      "hash": "4d8bdf9353c7a37f54110bc14bc1d9bb"
+      "hash": "8026462518237"
     },
     "0c7728ba66196ce3a53d08e": {
       "id": "0c7728ba66196ce3a53d08e",
@@ -231,7 +231,7 @@ const DEMO_STORY = {
       },
       "createdAt": 1745600000000,
       "updatedAt": 1745600000000,
-      "hash": "ef12c259f7173e31a17d64a0dc342780"
+      "hash": "14719274316547"
     },
     "0d7728ba66196ce3a53d08e": {
       "id": "0d7728ba66196ce3a53d08e",
@@ -244,7 +244,7 @@ const DEMO_STORY = {
       },
       "createdAt": 1745700000000,
       "updatedAt": 1745700000000,
-      "hash": "33a7388b53c10121ae8fdba9f97c1333"
+      "hash": "13213330746910"
     },
     "0e7728ba66196ce3a53d08e": {
       "id": "0e7728ba66196ce3a53d08e",
@@ -265,7 +265,7 @@ const DEMO_STORY = {
       },
       "createdAt": 1745800000000,
       "updatedAt": 1745800000000,
-      "hash": "ce4a1cc020ac92a97496a61151167a84"
+      "hash": "13768266733301"
     },
     "0f7728ba66196ce3a53d08e": {
       "id": "0f7728ba66196ce3a53d08e",
@@ -291,7 +291,7 @@ const DEMO_STORY = {
       },
       "createdAt": 1745900000000,
       "updatedAt": 1745900000000,
-      "hash": "6f021e5cf2b3479e515a33e00dc911ca"
+      "hash": "11501770996311"
     }
   },
   "allComponents": [
@@ -444,7 +444,7 @@ const DEMO_STORY = {
       ]
     }
   },
-  "hash": "c621b9eaafd95be1bb4346fee73a0c56",
+  "hash": "68fe2c3b81f5e66be15f1a9c6eef4633",
   "plugins": {
     "fullWidth": {},
     "bg": {}

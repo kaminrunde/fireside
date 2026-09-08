@@ -4,6 +4,7 @@ import * as $grid from "modules/grid";
 import { useComponentIconList, useComponentBadgeList } from "modules/plugins";
 import PluginButton from "./PluginButton";
 import PluginBadge from "./PluginBadge";
+import theme from "theme";
 
 type Props = {
   mediaSize: string;
@@ -56,7 +57,11 @@ export default function GridItem(props: Props) {
 }
 
 const Wrapper = styled.div`
-  background: lightgrey;
+  box-sizing: border-box;
+  background: ${theme.color.surface};
+  border: 1px solid #d5dae0;
+  border-radius: 5px;
+  box-shadow: ${theme.shadow};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,13 +70,20 @@ const Wrapper = styled.div`
   cursor: pointer;
   user-select: none;
   position: relative;
+  transition: box-shadow 120ms ease, border-color 120ms ease;
 
-  border-left: 8px solid transparent;
+  &:hover {
+    border-color: #bcc4cd;
+    box-shadow: ${theme.shadowRaised};
+  }
 
+  /* selection reads the same here as it does in the component list */
   ${(props: any) =>
     props.active &&
     `
-    border-left: 8px solid #795548;
+    background: ${theme.color.accentSoft};
+    border-color: ${theme.color.accent};
+    box-shadow: inset 0 0 0 1px ${theme.color.accent};
   `}
 
   > .label {
@@ -89,14 +101,17 @@ const Wrapper = styled.div`
 
   > .context {
     box-sizing: border-box;
-    border: 1px solid lightgrey;
-    border-radius: 8px;
+    border: 1px solid ${theme.color.border};
+    border-radius: ${theme.radius};
+    box-shadow: ${theme.shadowRaised};
     display: none;
     position: absolute;
-    top: -40px;
+    top: -38px;
     left: 0;
-    background: white;
-    height: 40px;
+    background: ${theme.color.surface};
+    height: 34px;
+    overflow: hidden;
+    z-index: 5;
   }
 
   > .badges {

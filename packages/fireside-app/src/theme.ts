@@ -18,6 +18,10 @@ const theme = {
     danger: "#d0432a",
     dangerHover: "#b53a24",
     accent: "#3d6f9e",
+    /** background of a selected card, row or tile */
+    accentSoft: "#eff5fb",
+    /** the strip the buffer lives on */
+    canvas: "#eef1f5",
   },
   radius: "6px",
   shadow: "0 1px 2px rgba(31, 41, 51, 0.06)",

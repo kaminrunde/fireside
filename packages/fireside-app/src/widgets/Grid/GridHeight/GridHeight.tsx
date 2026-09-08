@@ -10,6 +10,7 @@ import {
 import PluginBadge from "./PluginBadge";
 import PluginButton from "./PluginButton";
 import PluginModal from "../PluginModal";
+import theme from "theme";
 
 type Props = {
   mediaSize: string;
@@ -96,18 +97,28 @@ const Wrapper = styled.div`
     display: block;
     width: 100%;
     height: 100%;
-    font-size: 14px;
-    border: none;
-    background: whitesmoke;
+    box-sizing: border-box;
+    font-size: 13px;
+    color: ${theme.color.textMuted};
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background: ${theme.color.surfaceMuted};
     text-align: center;
+    outline: none;
+    &:hover {
+      background: #e8ecf1;
+    }
     &:focus {
-      background: white;
+      background: ${theme.color.surface};
+      border-color: ${theme.color.accent};
+      color: ${theme.color.text};
     }
   }
   > .context {
     box-sizing: border-box;
-    border: 1px solid lightgrey;
-    border-radius: 8px;
+    border: 1px solid ${theme.color.border};
+    border-radius: ${theme.radius};
+    box-shadow: ${theme.shadow};
     display: none;
     position: absolute;
     top: 0;
@@ -124,10 +135,15 @@ const Wrapper = styled.div`
       border: none;
       padding: 0 15px;
       cursor: pointer;
-      border-left: 1px solid lightgrey;
+      border-left: 1px solid ${theme.color.border};
       padding-top: 3px;
+      color: ${theme.color.textMuted};
       > svg {
         font-size: 15px;
+      }
+      &:hover {
+        background: ${theme.color.surfaceMuted};
+        color: ${theme.color.text};
       }
       &:first-child {
         border-left: none;

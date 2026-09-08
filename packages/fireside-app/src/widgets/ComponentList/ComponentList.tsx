@@ -10,6 +10,7 @@ import BreakpointIcons from "./BreakpointIcons";
 import * as $selection from "modules/selection";
 import { findMatches, matchesQuery, Match } from "./utils/searchComponents";
 import runPluginAction from "./utils/runPluginAction";
+import { registerSearchInput } from "./searchInput";
 import { useExtendedButtonList } from "modules/plugins";
 import useShortcut from "hooks/useShortcut";
 import * as shortcuts from "shortcuts";
@@ -100,6 +101,7 @@ export default function ComponentList() {
         {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
         <FiSearch className="icon" />
         <input
+          ref={registerSearchInput}
           type="text"
           value={query}
           placeholder="Search components"

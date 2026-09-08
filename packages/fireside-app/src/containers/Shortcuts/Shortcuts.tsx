@@ -3,7 +3,9 @@ import store from "store";
 import { push } from "redux-first-history";
 import useShortcut from "hooks/useShortcut";
 import { useLoadingComponent } from "modules/components";
-import { ROUTES } from "shortcuts";
+import { useLocation } from "react-router-dom";
+import { focusSearchInput } from "widgets/ComponentList/searchInput";
+import { ROUTES, FOCUS_SEARCH } from "shortcuts";
 
 /**
  * app wide shortcuts. Everything that needs grid or storybook state is
@@ -11,6 +13,26 @@ import { ROUTES } from "shortcuts";
  */
 export default function Shortcuts() {
   const loadingComponent = useLoadingComponent();
+  const location = useLocation();
+
+  /**
+   * coming from another route the list has to mount before its search field
+   * exists, so keep trying for a few frames instead of firing once and
+   * silently doing nothing
+   */
+  const focusSearch = () => {
+    if (location.pathname !== "/") store.dispatch(push("/"));
+
+    let tries = 0;
+    const attempt = () => {
+      if (focusSearchInput()) return;
+      if (++tries > 30) return;
+      requestAnimationFrame(attempt);
+    };
+    attempt();
+  };
+
+  useShortcut(FOCUS_SEARCH, focusSearch, !loadingComponent.isLoading);
 
   return (
     <>

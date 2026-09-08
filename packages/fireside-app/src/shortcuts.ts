@@ -37,12 +37,19 @@ export const DELETE_COMPONENT: ShortcutInfo = {
   description: "Delete the selected component (component list)",
 };
 
+export const FOCUS_SEARCH: ShortcutInfo = {
+  key: "s",
+  mod: true,
+  description: "Jump to the component list and focus the search",
+};
+
 export const EDITOR_SHORTCUTS: ShortcutInfo[] = [
   BUFFER,
   BUFFER_ALL,
   OPEN_COMPONENT,
   COPY_COMPONENT,
   DELETE_COMPONENT,
+  FOCUS_SEARCH,
 ];
 
 /**

@@ -8,6 +8,7 @@ import ExtendedButtonRowList from "./ExtendedButtonRowList";
 import ExtendedButtonBottomList from "./ExtendedButtonBottomList";
 import BreakpointIcons from "./BreakpointIcons";
 import * as $selection from "modules/selection";
+import { useSearch } from "modules/search";
 import { findMatches, matchesQuery, Match } from "./utils/searchComponents";
 import runPluginAction from "./utils/runPluginAction";
 import { registerSearchInput } from "./searchInput";
@@ -23,7 +24,8 @@ export default function ComponentList() {
   const usedComponents = useUsedComponents();
   const selection = $selection.useSelection();
   const pluginButtons = useExtendedButtonList();
-  const [query, setQuery] = React.useState("");
+  // in redux rather than local state so it survives a route change
+  const { query, setQuery } = useSearch();
 
   const selectedIds = React.useMemo(
     () => new Set(selection.ids),

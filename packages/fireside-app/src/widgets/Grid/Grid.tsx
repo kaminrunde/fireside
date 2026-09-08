@@ -310,9 +310,18 @@ const Wrapper = styled.div`
   position: relative;
   padding-bottom: 200px;
 
+  /**
+   * the drop area gets its own tone, so the light component cards read
+   * against it the same way the buffer tiles read against the strip below.
+   * The background sits on the layout itself, not on the measured wrapper -
+   * useGridWidth reads that wrapper's width and hands it to react-grid-layout
+   */
   .react-grid-layout {
     padding-bottom: 50px;
     box-sizing: content-box;
+    min-height: ${ROW_HEIGHT}px;
+    background: ${theme.color.canvas};
+    border-radius: ${theme.radius};
   }
 
   > .drag {

@@ -1,5 +1,5 @@
 import * as React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import ActionButtons, { t } from "widgets/ActionButtons";
 import * as $grid from "modules/grid";
 import * as $selection from "modules/selection";
@@ -40,8 +40,9 @@ export default function Grid(props: Props) {
   const [actionButtons, setActionButtons] = React.useState<t.ActionButton[]>(
     []
   );
-  const [[hoverComponentId, hoverComponentToTop], setHoverComponentId] =
-    React.useState<[string | null, boolean]>([null, false]);
+  const [hoverComponentId, setHoverComponentId] = React.useState<string | null>(
+    null
+  );
 
   const [labels, componentNames] = React.useMemo(() => {
     let labelDict: Record<string, string> = {};
@@ -75,42 +76,22 @@ export default function Grid(props: Props) {
   const isSelected = React.useMemo(() => new Set(selectedIds), [selectedIds]);
 
   /**
-   * ctrl/cmd-click toggles a single component, shift-click selects the range
-   * from the anchor and a plain click replaces the whole selection.
    * `siblings` is the ordered list of the pane the clicked item lives in,
-   * so a range never spans grid and buffer
+   * so a range never spans grid and buffer. The semantics themselves are
+   * shared with the component list
    */
   const handleItemClick =
     (id: string, siblings: string[]) => (e: React.MouseEvent) => {
-      const multi = e.ctrlKey || e.metaKey;
-      const anchorIndex = selection.anchor
-        ? siblings.indexOf(selection.anchor)
-        : -1;
-
-      if (e.shiftKey && anchorIndex !== -1) {
-        const targetIndex = siblings.indexOf(id);
-        const [from, to] =
-          anchorIndex < targetIndex
-            ? [anchorIndex, targetIndex]
-            : [targetIndex, anchorIndex];
-        const range = siblings.slice(from, to + 1);
-        // ctrl+shift extends the current selection, plain shift replaces it
-        selection.set(
-          multi
-            ? selectedIds.concat(range.filter((rid) => !isSelected.has(rid)))
-            : range,
-          selection.anchor
-        );
-        return;
-      }
-
-      if (multi || e.shiftKey) {
-        selection.toggle(id);
-        return;
-      }
-
-      const onlySelected = selectedIds.length === 1 && selectedIds[0] === id;
-      selection.set(onlySelected ? [] : [id], onlySelected ? null : id);
+      const next = $selection.nextSelection(
+        { ids: selectedIds, anchor: selection.anchor },
+        {
+          id,
+          siblings,
+          multi: e.ctrlKey || e.metaKey,
+          range: e.shiftKey,
+        }
+      );
+      selection.set(next.ids, next.anchor);
     };
 
   const selectedInGrid = React.useMemo(
@@ -269,8 +250,8 @@ export default function Grid(props: Props) {
                   rowHeight={ROW_HEIGHT}
                   active={isSelected.has(item.i)}
                   item={item}
-                  onMouseEnter={() => setHoverComponentId([item.i, false])}
-                  onMouseLeave={() => setHoverComponentId([null, false])}
+                  onMouseEnter={() => setHoverComponentId(item.i)}
+                  onMouseLeave={() => setHoverComponentId(null)}
                   label={labels[item.i]}
                   onClick={handleItemClick(item.i, gridIds)}
                 />
@@ -293,8 +274,8 @@ export default function Grid(props: Props) {
             }}
             onClick={handleItemClick(c.id, bufferIds)}
             onDragEnd={() => setDraggingName("")}
-            onMouseEnter={() => setHoverComponentId([c.id, true])}
-            onMouseLeave={() => setHoverComponentId([null, false])}
+            onMouseEnter={() => setHoverComponentId(c.id)}
+            onMouseLeave={() => setHoverComponentId(null)}
             unselectable="on"
             title={c.props.gridArea}
             key={c.id}
@@ -306,7 +287,7 @@ export default function Grid(props: Props) {
       </div>
 
       {hoverComponentId && (
-        <HoverInfo top={hoverComponentToTop}>
+        <HoverInfo>
           <div className="info">
             {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
             <MdInfoOutline />
@@ -329,9 +310,23 @@ const Wrapper = styled.div`
   position: relative;
   padding-bottom: 200px;
 
+  /**
+   * the drop area gets its own tone, so the light component cards read
+   * against it the same way the buffer tiles read against the strip below.
+   * The background sits on the layout itself, not on the measured wrapper -
+   * useGridWidth reads that wrapper's width and hands it to react-grid-layout
+   */
   .react-grid-layout {
     padding-bottom: 50px;
     box-sizing: content-box;
+    min-height: ${ROW_HEIGHT}px;
+    background: ${theme.color.canvas};
+    /**
+     * the 50px of padding below the last row are drop space, not layout, so
+     * the tone stops at the content edge instead of trailing an empty strip
+     */
+    background-clip: content-box;
+    border-radius: ${theme.radius};
   }
 
   > .drag {
@@ -348,39 +343,57 @@ const Wrapper = styled.div`
       box-sizing: border-box;
       margin: ${GRID_MARGIN}px 0;
       width: ${CONTEXT_WIDTH}px;
-      border: 1px solid lightgrey;
-      border-radius: 8px;
+      border: 1px solid ${theme.color.border};
+      border-radius: ${theme.radius};
+      background: ${theme.color.surface};
       display: flex;
+      overflow: hidden;
 
       > button {
         flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         font-size: 15px;
+        color: ${theme.color.textMuted};
         background: none;
         border: none;
+        border-left: 1px solid ${theme.color.border};
         cursor: pointer;
-        border-left: 1px solid lightgrey;
-        padding-top: 3px;
+
         &:first-child {
           border-left: none;
+        }
+        &:hover {
+          background: ${theme.color.surfaceMuted};
+          color: ${theme.color.text};
         }
       }
     }
 
     > .width {
       flex: 1;
-      line-height: 40px;
       margin: ${GRID_MARGIN}px;
       text-align: center;
       > input {
         display: block;
         width: 100%;
         height: 100%;
-        font-size: 14px;
-        border: none;
-        background: whitesmoke;
+        box-sizing: border-box;
+        font-size: 13px;
+        color: ${theme.color.textMuted};
+        border: 1px solid transparent;
+        border-radius: 5px;
+        background: ${theme.color.surfaceMuted};
         text-align: center;
+        outline: none;
+        &:hover {
+          background: #e8ecf1;
+        }
         &:focus {
-          background: white;
+          background: ${theme.color.surface};
+          border-color: ${theme.color.accent};
+          color: ${theme.color.text};
         }
       }
     }
@@ -404,19 +417,18 @@ const Wrapper = styled.div`
 
   > .buffer {
     position: fixed;
-    background: whitesmoke;
+    background: ${theme.color.canvas};
     z-index: 999999999;
-    box-shadow: 0px -3px 5px 1px rgba(0, 0, 0, 0.19);
+    box-shadow: 0 -1px 0 ${theme.color.border}, 0 -6px 16px rgba(31, 41, 51, 0.08);
     left: 0;
     right: 0;
     bottom: 0;
     height: 200px;
     overflow: auto;
-    padding: 20px 20px 50px 20px;
-    border-top: 1px solid lightgrey;
+    padding: 14px 14px 50px 14px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-gap: 5px;
+    grid-gap: 8px;
 
     @media (min-width: 800px) {
       grid-template-columns: 1fr 1fr 1fr;
@@ -441,24 +453,25 @@ const Wrapper = styled.div`
   }
 `;
 
+/**
+ * one position instead of the previous top/bottom pair: the top variant
+ * covered the row of grid controls, and the bottom one hid behind the buffer
+ * strip. Just above the strip is clear of both
+ */
 const HoverInfo = styled.div`
   position: fixed;
-  ${(p) =>
-    p.top
-      ? css`
-          top: 20px;
-        `
-      : css`
-          bottom: 20px;
-        `}
-  left: 20px;
-  background: #607d8b;
+  bottom: 214px;
+  left: 14px;
+  max-width: calc(100vw - 28px);
+  background: ${theme.color.text};
   color: white;
-  padding: 5px 10px;
-  padding-right: 20px;
-  font-size: 14px;
+  border-radius: ${theme.radius};
+  box-shadow: ${theme.shadowRaised};
+  padding: 7px 12px 7px 9px;
+  font-size: 12px;
   z-index: 9999999999;
   display: flex;
+  pointer-events: none;
 
   > .info {
     width: 20px;
@@ -487,20 +500,26 @@ const BufferComponent = styled.div`
   align-items: center;
   justify-content: center;
   user-select: none;
-  background: ${theme.color.accent};
-  border-radius: 4px;
+  background: ${theme.color.surface};
+  border: 1px solid #d5dae0;
+  border-radius: 5px;
+  box-shadow: ${theme.shadow};
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
   padding: 0 10px;
-  color: white;
-  cursor: pointer;
+  color: ${theme.color.text};
+  cursor: grab;
   height: ${ROW_HEIGHT}px;
   font-family: ${theme.font};
   font-size: 13px;
   overflow: hidden;
+  transition: box-shadow 120ms ease, border-color 120ms ease;
 
-  border-left: 6px solid transparent;
+  &:hover {
+    border-color: #bcc4cd;
+    box-shadow: ${theme.shadowRaised};
+  }
 
   /**
    * grid-area names get long. Centering them with flex would clip both ends,
@@ -517,9 +536,13 @@ const BufferComponent = styled.div`
     line-height: 15px;
   }
 
+  /* a brown edge on a solid blue tile was the worst offender, selection
+     reads the same everywhere now */
   ${(props: any) =>
     props.active &&
     `
-    border-left: 8px solid #795548;
+    background: ${theme.color.accentSoft};
+    border-color: ${theme.color.accent};
+    box-shadow: inset 0 0 0 1px ${theme.color.accent};
   `}
 `;

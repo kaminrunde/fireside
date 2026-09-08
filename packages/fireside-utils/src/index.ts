@@ -5,5 +5,6 @@ export { default as preprocessComponent } from "./preprocessComponent";
 export { default as formatGrid } from "./formatGrid";
 export { default as createController } from "./createController";
 export { default as createPlugin } from "./createPlugin";
+export type { ButtonIcon } from "./createPlugin/extendComponentButtonList";
 export { default as versionUpdate } from "./versionUpdate";
 export { pluginEvents };

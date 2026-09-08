@@ -138,6 +138,12 @@ export type Component = {
     id: string;
     createdAt: number;
     updatedAt: number;
+    /**
+     * hash over name, props and id, written by the storybook addon whenever it
+     * hands a component back. Comparing it against the one a stored component
+     * carries is how the editor tells whether the knobs were touched
+     */
+    hash?: string;
     props: {
         gridArea: string;
     };

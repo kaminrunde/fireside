@@ -2,17 +2,35 @@ import * as React from "react";
 import styled from "styled-components";
 import { useExtendedButtonList } from "modules/plugins";
 import { Component } from "@kaminrunde/fireside-utils";
-import { FiMoreVertical } from "react-icons/fi";
+import {
+  FiMoreVertical,
+  FiCopy,
+  FiClipboard,
+  FiLayers,
+  FiLink,
+  FiStar,
+  FiSettings,
+} from "react-icons/fi";
 import theme from "theme";
+import runPluginAction from "../utils/runPluginAction";
 
 type Props = {
   c: Component;
 };
 
+const ICONS: Record<string, any> = {
+  copy: FiCopy,
+  paste: FiClipboard,
+  duplicate: FiLayers,
+  link: FiLink,
+  star: FiStar,
+  settings: FiSettings,
+};
+
 /**
- * plugin actions for a single component row. They used to render as full
- * labelled buttons, which ate most of the row inside the 600px contentful
- * embed. One icon opening a popover instead, no matter how many there are
+ * plugin actions for a single component row. A plugin that names an icon gets
+ * a button of its own in the row, everything else stays behind the context
+ * menu, where the label is the only thing to go by
  */
 export default function ExtendedButtonRowList(props: Props) {
   const btns = useExtendedButtonList();
@@ -40,32 +58,46 @@ export default function ExtendedButtonRowList(props: Props) {
 
   if (rowBtns.length === 0) return null;
 
-  /**
-   * component placed buttons are curried: onClickFn(component) returns the
-   * actual handler. Older ones do the work directly and return nothing, so
-   * only call the result when we got a function back
-   */
+  const withIcon = rowBtns.filter((b) => b.payload.btnIcon && ICONS[b.payload.btnIcon]);
+  const inMenu = rowBtns.filter((b) => !b.payload.btnIcon || !ICONS[b.payload.btnIcon]);
+
   const run = (onClickFn: (arg?: any) => any) => () => {
-    const result = onClickFn(props.c);
-    if (typeof result === "function") result();
+    runPluginAction(onClickFn, props.c);
     setOpen(false);
   };
 
   return (
     <Wrapper ref={ref}>
-      <button
-        className="toggle"
-        title="More actions"
-        aria-label="More actions"
-        onClick={() => setOpen(!open)}
-      >
-        {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
-        <FiMoreVertical />
-      </button>
+      {withIcon.map((btn) => {
+        const Icon = ICONS[btn.payload.btnIcon as string];
+        return (
+          <button
+            key={btn.payload.btnLabel}
+            className="icon-btn"
+            data-tooltip={btn.payload.btnLabel}
+            aria-label={btn.payload.btnLabel}
+            onClick={run(btn.payload.onClickFn)}
+          >
+            <Icon />
+          </button>
+        );
+      })}
 
-      {open && (
+      {inMenu.length > 0 && (
+        <button
+          className="icon-btn"
+          data-tooltip="More actions"
+          aria-label="More actions"
+          onClick={() => setOpen(!open)}
+        >
+          {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+          <FiMoreVertical />
+        </button>
+      )}
+
+      {open && inMenu.length > 0 && (
         <div className="menu">
-          {rowBtns.map((btn) => (
+          {inMenu.map((btn) => (
             <button
               key={btn.payload.btnLabel}
               className="entry"
@@ -80,32 +112,12 @@ export default function ExtendedButtonRowList(props: Props) {
   );
 }
 
+/** the .icon-btn look itself is owned by the row in ComponentList */
 const Wrapper = styled.div`
   position: relative;
   display: flex;
-
-  > .toggle {
-    height: 30px;
-    width: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    border: none;
-    border-radius: 4px;
-    background: none;
-    color: ${theme.color.textMuted};
-    cursor: pointer;
-
-    > svg {
-      font-size: 17px;
-    }
-
-    &:hover {
-      background: ${theme.color.surfaceMuted};
-      color: ${theme.color.text};
-    }
-  }
+  align-items: center;
+  gap: 2px;
 
   > .menu {
     position: absolute;

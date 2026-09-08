@@ -1,6 +1,6 @@
 {
   "storybookUrl": "http://localhost:6006/",
-  "defaultStory": "cms/base/Button/Builder",
+  "defaultStory": "base/Button",
   "mediaSizes": [
     {
       "label": "PHONE",

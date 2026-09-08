@@ -25,10 +25,52 @@ export const OPEN_COMPONENT: ShortcutInfo = {
   description: "Open the selected component in storybook",
 };
 
+export const COPY_COMPONENT: ShortcutInfo = {
+  key: "c",
+  mod: true,
+  description: "Copy the selected component (component list)",
+};
+
+export const DELETE_COMPONENT: ShortcutInfo = {
+  key: "d",
+  mod: true,
+  description: "Delete the selected component (component list)",
+};
+
+export const CLOSE_STORYBOOK: ShortcutInfo = {
+  key: "Escape",
+  description: "Close storybook, asking first when there are unsaved changes",
+};
+
+export const NEXT_COMPONENT: ShortcutInfo = {
+  key: "Tab",
+  allowInInput: true,
+  description: "Make the next component in the list active",
+};
+
+export const PREV_COMPONENT: ShortcutInfo = {
+  key: "Tab",
+  shift: true,
+  allowInInput: true,
+  description: "Make the previous component in the list active",
+};
+
+export const FOCUS_SEARCH: ShortcutInfo = {
+  key: "s",
+  mod: true,
+  description: "Jump to the component list and focus the search",
+};
+
 export const EDITOR_SHORTCUTS: ShortcutInfo[] = [
   BUFFER,
   BUFFER_ALL,
   OPEN_COMPONENT,
+  CLOSE_STORYBOOK,
+  COPY_COMPONENT,
+  DELETE_COMPONENT,
+  FOCUS_SEARCH,
+  NEXT_COMPONENT,
+  PREV_COMPONENT,
 ];
 
 /**

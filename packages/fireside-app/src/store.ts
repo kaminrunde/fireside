@@ -13,6 +13,7 @@ import settingsReducer from "modules/settings";
 import pluginsReducer from "modules/plugins";
 import modalReducer from "modules/modal";
 import selectionReducer from "modules/selection";
+import searchReducer from "modules/search";
 
 const { createReduxHistory, routerMiddleware, routerReducer } =
   createReduxHistoryContext({
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   plugins: pluginsReducer,
   modal: modalReducer,
   selection: selectionReducer,
+  search: searchReducer,
 });
 
 let composeEnhancers = compose;

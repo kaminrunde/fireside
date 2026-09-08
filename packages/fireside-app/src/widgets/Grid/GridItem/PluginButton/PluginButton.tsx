@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { usePluginState } from "modules/plugins";
 import { PluginComponentAPI } from "@kaminrunde/fireside-utils";
 import { useComponent } from "modules/components";
+import theme from "theme";
 
 type Props = {
   pluginKey: string;
@@ -49,8 +50,14 @@ export default React.memo(function PluginComponent(props: Props) {
 const Wrapper = styled.button`
   width: max-content;
   font-size: 15px;
-  background: ${(props) => (props.active ? "#4782B4" : "none")};
-  color: ${(props) => (props.active ? "white" : "black")};
+  background: ${(props) => (props.active ? theme.color.accent : "none")};
+  color: ${(props) => (props.active ? "white" : theme.color.textMuted)};
+
+  &:hover {
+    background: ${(props) =>
+      props.active ? theme.color.accent : theme.color.surfaceMuted};
+    color: ${(props) => (props.active ? "white" : theme.color.text)};
+  }
   border: none;
   padding: 0 15px;
   cursor: pointer;

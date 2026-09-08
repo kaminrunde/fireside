@@ -6,20 +6,157 @@ import parseTimestamp from "./utils/parseTimestamp";
 import { useUsedComponents } from "modules/grid";
 import ExtendedButtonRowList from "./ExtendedButtonRowList";
 import ExtendedButtonBottomList from "./ExtendedButtonBottomList";
+import BreakpointIcons from "./BreakpointIcons";
+import * as $selection from "modules/selection";
+import { useSearch } from "modules/search";
 import { findMatches, matchesQuery, Match } from "./utils/searchComponents";
-import { FiSearch, FiX } from "react-icons/fi";
+import runPluginAction from "./utils/runPluginAction";
+import { registerSearchInput } from "./searchInput";
+import { useExtendedButtonList } from "modules/plugins";
+import useShortcut from "hooks/useShortcut";
+import * as shortcuts from "shortcuts";
+import { FiSearch, FiX, FiEdit2, FiTrash2 } from "react-icons/fi";
 import theme from "theme";
+import tooltip from "tooltip";
 
 export default function ComponentList() {
   const components = useComponents();
   const loading = useLoadingComponent();
   const usedComponents = useUsedComponents();
-  const [query, setQuery] = React.useState("");
+  const selection = $selection.useSelection();
+  const pluginButtons = useExtendedButtonList();
+  // in redux rather than local state so it survives a route change
+  const { query, setQuery } = useSearch();
+
+  const selectedIds = React.useMemo(
+    () => new Set(selection.ids),
+    [selection.ids]
+  );
 
   const visible = React.useMemo(
     () => components.data.filter((c) => matchesQuery(c, query)),
     [components.data, query]
   );
+
+  /**
+   * a shift range runs over what is on screen, so it follows the search
+   * filter instead of jumping over hidden components
+   */
+  const visibleIds = React.useMemo(() => visible.map((c) => c.id), [visible]);
+
+  /**
+   * the shortcuts act on a single pick only, and only while it is on screen:
+   * acting on a component hidden by the search would happen invisibly
+   */
+  const target = React.useMemo(() => {
+    if (selection.ids.length !== 1) return null;
+    return visible.find((c) => c.id === selection.ids[0]) || null;
+  }, [selection.ids, visible]);
+
+  const canAct = !!target && !loading.isLoading;
+
+  useShortcut(
+    shortcuts.OPEN_COMPONENT,
+    () => target && loading.load(target.id),
+    canAct
+  );
+
+  /** cmd+c maps to whatever plugin action asks for the copy icon */
+  const copyAction = React.useMemo(
+    () =>
+      pluginButtons.data.find(
+        (b) =>
+          b.payload.btnPlacement === "component" && b.payload.btnIcon === "copy"
+      ) || null,
+    [pluginButtons.data]
+  );
+
+  useShortcut(
+    shortcuts.COPY_COMPONENT,
+    () => target && copyAction && runPluginAction(copyAction.payload.onClickFn, target),
+    canAct && !!copyAction
+  );
+
+  useShortcut(
+    shortcuts.DELETE_COMPONENT,
+    () => target && components.removeComponent(target),
+    canAct
+  );
+
+  /** first active component in list order, the one the list scrolls to */
+  const firstActive = React.useMemo(
+    () => visibleIds.find((id) => selectedIds.has(id)) || null,
+    [visibleIds, selectedIds]
+  );
+
+  const rows = React.useRef(new Map<string, HTMLDivElement>());
+  const setRowRef = (id: string) => (el: HTMLDivElement | null) => {
+    if (el) rows.current.set(id, el);
+    else rows.current.delete(id);
+  };
+
+  /**
+   * keep the active component in view, both when arriving on the route and
+   * when tab moves it. "nearest" leaves an already visible row alone, the
+   * scroll-margin on the row keeps it from ending up under the fixed header
+   */
+  React.useEffect(() => {
+    if (!firstActive) return;
+    rows.current.get(firstActive)?.scrollIntoView({ block: "nearest" });
+  }, [firstActive]);
+
+  /**
+   * tab walks the active component instead of the browser focus: it steps on
+   * from whatever is active, collapses a multi selection to the first entry,
+   * and starts at either end when nothing usable is active. It wraps around,
+   * so the last entry is not a dead end
+   */
+  const moveActive = (delta: number) => () => {
+    if (!visibleIds.length) return;
+
+    // leave the search field, otherwise the other shortcuts stay muted
+    const el = document.activeElement;
+    if (el instanceof HTMLElement && el.tagName === "INPUT") el.blur();
+
+    const current =
+      selection.ids.length === 1 ? visibleIds.indexOf(selection.ids[0]) : -1;
+
+    let index: number;
+    if (selection.ids.length > 1) index = 0;
+    else if (current === -1) index = delta > 0 ? 0 : visibleIds.length - 1;
+    else index = (current + delta + visibleIds.length) % visibleIds.length;
+
+    const id = visibleIds[index];
+    selection.set([id], id);
+  };
+
+  useShortcut(shortcuts.NEXT_COMPONENT, moveActive(1));
+  useShortcut(shortcuts.PREV_COMPONENT, moveActive(-1));
+
+  /**
+   * a changed query means the list under the selection changed, so what was
+   * active is no longer what the user is looking at
+   */
+  const lastQuery = React.useRef(query);
+  React.useEffect(() => {
+    if (lastQuery.current === query) return;
+    lastQuery.current = query;
+    if (selection.ids.length) selection.clear();
+  }, [query, selection.ids.length, selection.clear]);
+
+  const handleRowSelect =
+    (id: string) => (e: React.MouseEvent | React.KeyboardEvent) => {
+      const next = $selection.nextSelection(
+        { ids: selection.ids, anchor: selection.anchor },
+        {
+          id,
+          siblings: visibleIds,
+          multi: e.ctrlKey || e.metaKey,
+          range: e.shiftKey,
+        }
+      );
+      selection.set(next.ids, next.anchor);
+    };
 
   const isSearching = query.trim().length > 0;
 
@@ -29,6 +166,7 @@ export default function ComponentList() {
         {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
         <FiSearch className="icon" />
         <input
+          ref={registerSearchInput}
           type="text"
           value={query}
           placeholder="Search components"
@@ -53,7 +191,13 @@ export default function ComponentList() {
       )}
 
       {visible.map((c) => (
-        <Row key={c.id} inUse={usedComponents.data.has(c.id)}>
+        <Row
+          key={c.id}
+          inUse={usedComponents.data.has(c.id)}
+          selected={selectedIds.has(c.id)}
+          ref={setRowRef(c.id)}
+          onClick={handleRowSelect(c.id)}
+        >
           <div className="head">
             {/* the title attribute keeps the full name reachable once it is cut off */}
             <div className="title" title={c.props.gridArea}>
@@ -63,25 +207,34 @@ export default function ComponentList() {
               {c.name}
             </div>
             <div className="meta">
-              changed {parseTimestamp(c.updatedAt)}
-              <span className="dot">·</span>
               created {parseTimestamp(c.createdAt)}
+              <span className="dot">·</span>
+              changed {parseTimestamp(c.updatedAt)}
             </div>
             <MatchPreview component={c} query={query} />
           </div>
-          <div className="button-list">
+          {/* stopPropagation so acting on a row does not also toggle it */}
+          <div className="button-list" onClick={(e) => e.stopPropagation()}>
+            <BreakpointIcons componentId={c.id} />
+            <div className="divider" />
             <ExtendedButtonRowList c={c} />
             <button
-              className="btn btn-update"
+              className="icon-btn"
+              data-tooltip="Update"
+              aria-label="Update"
               onClick={() => loading.load(c.id)}
             >
-              update
+              {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+              <FiEdit2 />
             </button>
             <button
-              className="btn btn-remove"
+              className="icon-btn danger"
+              data-tooltip="Remove"
+              aria-label="Remove"
               onClick={() => components.removeComponent(c)}
             >
-              remove
+              {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+              <FiTrash2 />
             </button>
           </div>
         </Row>
@@ -272,15 +425,20 @@ const Wrapper = styled.div`
   }
 `;
 
-const Row = styled.div<{ inUse: boolean }>`
+const Row = styled.div<{ inUse: boolean; selected: boolean }>`
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
   margin-bottom: 8px;
-  background: ${theme.color.surface};
-  border: 1px solid ${theme.color.border};
+  background: ${(p) => (p.selected ? "#eff5fb" : theme.color.surface)};
+  border: 1px solid
+    ${(p) => (p.selected ? theme.color.accent : theme.color.border)};
   border-radius: ${theme.radius};
+  cursor: pointer;
+  user-select: none;
+  /* the header is fixed at 60px, do not scroll a row underneath it */
+  scroll-margin: 70px 0 16px;
   /**
    * the accent for components that sit in no grid is drawn as an inset
    * shadow rather than a left border, so the card keeps its full outline
@@ -355,35 +513,44 @@ const Row = styled.div<{ inUse: boolean }>`
   > .button-list {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 2px;
     flex-shrink: 0;
+    cursor: default;
 
-    .btn {
+    > .divider {
+      width: 1px;
+      height: 20px;
+      margin: 0 6px;
+      background: ${theme.color.border};
+    }
+
+    /* also applies to the plugin buttons, they render into this row */
+    .icon-btn {
+      ${tooltip}
+      width: 30px;
       height: 30px;
-      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
       border: none;
       border-radius: 4px;
-      font-family: inherit;
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-      color: white;
+      background: none;
+      color: ${theme.color.textMuted};
       cursor: pointer;
-      white-space: nowrap;
-    }
 
-    .btn-update {
-      background: ${theme.color.primary};
-      &:hover {
-        background: ${theme.color.primaryHover};
+      > svg {
+        font-size: 16px;
       }
-    }
 
-    .btn-remove {
-      background: ${theme.color.danger};
       &:hover {
-        background: ${theme.color.dangerHover};
+        background: ${theme.color.surfaceMuted};
+        color: ${theme.color.text};
+      }
+
+      &.danger:hover {
+        background: #fdeceb;
+        color: ${theme.color.danger};
       }
     }
   }

@@ -11,6 +11,7 @@ export { default } from "./reducer";
 
 export { default as useGrid } from "./hooks/useGrid";
 export { default as useUsedComponents } from "./hooks/useUsedComponents";
+export { default as useUsedComponentsByMediaSize } from "./hooks/useUsedComponentsByMediaSize";
 
 declare global {
   interface RootState {

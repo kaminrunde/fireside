@@ -9,6 +9,7 @@ export { a, c, s };
 export { default } from "./reducer";
 
 export { default as useSelection } from "./hooks/useSelection";
+export { default as nextSelection } from "./utils/nextSelection";
 
 declare global {
   interface RootState {

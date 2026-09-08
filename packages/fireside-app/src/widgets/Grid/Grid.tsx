@@ -75,42 +75,22 @@ export default function Grid(props: Props) {
   const isSelected = React.useMemo(() => new Set(selectedIds), [selectedIds]);
 
   /**
-   * ctrl/cmd-click toggles a single component, shift-click selects the range
-   * from the anchor and a plain click replaces the whole selection.
    * `siblings` is the ordered list of the pane the clicked item lives in,
-   * so a range never spans grid and buffer
+   * so a range never spans grid and buffer. The semantics themselves are
+   * shared with the component list
    */
   const handleItemClick =
     (id: string, siblings: string[]) => (e: React.MouseEvent) => {
-      const multi = e.ctrlKey || e.metaKey;
-      const anchorIndex = selection.anchor
-        ? siblings.indexOf(selection.anchor)
-        : -1;
-
-      if (e.shiftKey && anchorIndex !== -1) {
-        const targetIndex = siblings.indexOf(id);
-        const [from, to] =
-          anchorIndex < targetIndex
-            ? [anchorIndex, targetIndex]
-            : [targetIndex, anchorIndex];
-        const range = siblings.slice(from, to + 1);
-        // ctrl+shift extends the current selection, plain shift replaces it
-        selection.set(
-          multi
-            ? selectedIds.concat(range.filter((rid) => !isSelected.has(rid)))
-            : range,
-          selection.anchor
-        );
-        return;
-      }
-
-      if (multi || e.shiftKey) {
-        selection.toggle(id);
-        return;
-      }
-
-      const onlySelected = selectedIds.length === 1 && selectedIds[0] === id;
-      selection.set(onlySelected ? [] : [id], onlySelected ? null : id);
+      const next = $selection.nextSelection(
+        { ids: selectedIds, anchor: selection.anchor },
+        {
+          id,
+          siblings,
+          multi: e.ctrlKey || e.metaKey,
+          range: e.shiftKey,
+        }
+      );
+      selection.set(next.ids, next.anchor);
     };
 
   const selectedInGrid = React.useMemo(

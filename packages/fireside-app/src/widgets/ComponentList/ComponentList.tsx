@@ -29,6 +29,25 @@ export default function ComponentList() {
     [components.data, query]
   );
 
+  /**
+   * a shift range runs over what is on screen, so it follows the search
+   * filter instead of jumping over hidden components
+   */
+  const visibleIds = React.useMemo(() => visible.map((c) => c.id), [visible]);
+
+  const handleRowClick = (id: string) => (e: React.MouseEvent) => {
+    const next = $selection.nextSelection(
+      { ids: selection.ids, anchor: selection.anchor },
+      {
+        id,
+        siblings: visibleIds,
+        multi: e.ctrlKey || e.metaKey,
+        range: e.shiftKey,
+      }
+    );
+    selection.set(next.ids, next.anchor);
+  };
+
   const isSearching = query.trim().length > 0;
 
   return (
@@ -65,7 +84,7 @@ export default function ComponentList() {
           key={c.id}
           inUse={usedComponents.data.has(c.id)}
           selected={selectedIds.has(c.id)}
-          onClick={() => selection.toggle(c.id)}
+          onClick={handleRowClick(c.id)}
         >
           <div className="head">
             {/* the title attribute keeps the full name reachable once it is cut off */}
@@ -305,6 +324,7 @@ const Row = styled.div<{ inUse: boolean; selected: boolean }>`
     ${(p) => (p.selected ? theme.color.accent : theme.color.border)};
   border-radius: ${theme.radius};
   cursor: pointer;
+  user-select: none;
   /**
    * the accent for components that sit in no grid is drawn as an inset
    * shadow rather than a left border, so the card keeps its full outline

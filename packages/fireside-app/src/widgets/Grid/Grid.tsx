@@ -321,6 +321,11 @@ const Wrapper = styled.div`
     box-sizing: content-box;
     min-height: ${ROW_HEIGHT}px;
     background: ${theme.color.canvas};
+    /**
+     * the 50px of padding below the last row are drop space, not layout, so
+     * the tone stops at the content edge instead of trailing an empty strip
+     */
+    background-clip: content-box;
     border-radius: ${theme.radius};
   }
 

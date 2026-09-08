@@ -20,7 +20,20 @@ export default function Storybook() {
       if (typeof e.data !== "object" || !e.data.type) return;
       switch (e.data.type) {
         case "fireside-update-component": {
-          setComponent({ ...e.data.component });
+          const next = { ...e.data.component };
+          /**
+           * hydrating echoes the props straight back, and they legitimately
+           * differ from what is stored: the preview reports the whole knob
+           * set, filling anything the saved component does not carry with
+           * the knob default, and a controller's versionUpdate may migrate
+           * values on the way in. So the baseline for "was this edited" is
+           * what the preview reports just after opening, not what is on
+           * record - comparing against the latter called every open an edit
+           */
+          if (Date.now() - hydratedAt.current < HYDRATION_SETTLE_MS) {
+            baseline.current = next.hash;
+          }
+          setComponent(next);
           break;
         }
         case "fireside-init": {
@@ -37,6 +50,8 @@ export default function Storybook() {
     if (!setupFinished) return;
     if (!loadingComponent.isLoading) return;
 
+    hydratedAt.current = Date.now();
+    baseline.current = null;
     ref.current?.contentWindow?.postMessage(
       {
         type: "fireside-hydrate-component",
@@ -52,6 +67,14 @@ export default function Storybook() {
    * Save can be blocked by validation rules (e.g. duplicate grid-area),
    * in that case isLoading stays true and the knob values must be kept
    */
+  /**
+   * hydration answers within a few frames. Anything the preview reports
+   * later than this came from someone turning a knob
+   */
+  const HYDRATION_SETTLE_MS = 1500;
+  const hydratedAt = React.useRef(0);
+  const baseline = React.useRef<string | null>(null);
+
   const wasLoading = React.useRef(loadingComponent.isLoading);
   React.useEffect(() => {
     if (wasLoading.current && !loadingComponent.isLoading) {
@@ -62,6 +85,7 @@ export default function Storybook() {
       // otherwise the next session starts out looking edited
       setComponent(null);
       setConfirmClose(false);
+      baseline.current = null;
     }
     wasLoading.current = loadingComponent.isLoading;
   }, [loadingComponent.isLoading]);
@@ -75,14 +99,12 @@ export default function Storybook() {
   };
 
   /**
-   * the addon hashes name, props and id and sends that along, and a stored
-   * component carries the hash it was saved with - so a differing hash means
-   * the knobs were touched. A component that is being created is dirty as
-   * soon as the preview reports anything at all
+   * edited means the preview reports something else than it did right after
+   * opening. Without a baseline yet nothing has been reported, so nothing
+   * can have changed
    */
-  const hasChanges = component
-    ? !loadingComponent.data || component.hash !== loadingComponent.data.hash
-    : false;
+  const hasChanges =
+    !!component && !!baseline.current && component.hash !== baseline.current;
 
   const close = () => {
     if (hasChanges) setConfirmClose(true);

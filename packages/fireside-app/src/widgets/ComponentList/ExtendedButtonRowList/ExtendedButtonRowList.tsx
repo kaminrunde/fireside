@@ -74,7 +74,6 @@ export default function ExtendedButtonRowList(props: Props) {
           <button
             key={btn.payload.btnLabel}
             className="icon-btn"
-            tabIndex={-1}
             title={btn.payload.btnLabel}
             aria-label={btn.payload.btnLabel}
             onClick={run(btn.payload.onClickFn)}
@@ -87,7 +86,6 @@ export default function ExtendedButtonRowList(props: Props) {
       {inMenu.length > 0 && (
         <button
           className="icon-btn"
-          tabIndex={-1}
           title="More actions"
           aria-label="More actions"
           onClick={() => setOpen(!open)}

@@ -37,6 +37,19 @@ export const DELETE_COMPONENT: ShortcutInfo = {
   description: "Delete the selected component (component list)",
 };
 
+export const NEXT_COMPONENT: ShortcutInfo = {
+  key: "Tab",
+  allowInInput: true,
+  description: "Make the next component in the list active",
+};
+
+export const PREV_COMPONENT: ShortcutInfo = {
+  key: "Tab",
+  shift: true,
+  allowInInput: true,
+  description: "Make the previous component in the list active",
+};
+
 export const FOCUS_SEARCH: ShortcutInfo = {
   key: "s",
   mod: true,
@@ -50,6 +63,8 @@ export const EDITOR_SHORTCUTS: ShortcutInfo[] = [
   COPY_COMPONENT,
   DELETE_COMPONENT,
   FOCUS_SEARCH,
+  NEXT_COMPONENT,
+  PREV_COMPONENT,
 ];
 
 /**

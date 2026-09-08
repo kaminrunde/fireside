@@ -82,6 +82,45 @@ export default function ComponentList() {
     canAct
   );
 
+  /**
+   * tab walks the active component instead of the browser focus: it steps on
+   * from whatever is active, collapses a multi selection to the first entry,
+   * and starts at either end when nothing usable is active. It wraps around,
+   * so the last entry is not a dead end
+   */
+  const moveActive = (delta: number) => () => {
+    if (!visibleIds.length) return;
+
+    // leave the search field, otherwise the other shortcuts stay muted
+    const el = document.activeElement;
+    if (el instanceof HTMLElement && el.tagName === "INPUT") el.blur();
+
+    const current =
+      selection.ids.length === 1 ? visibleIds.indexOf(selection.ids[0]) : -1;
+
+    let index: number;
+    if (selection.ids.length > 1) index = 0;
+    else if (current === -1) index = delta > 0 ? 0 : visibleIds.length - 1;
+    else index = (current + delta + visibleIds.length) % visibleIds.length;
+
+    const id = visibleIds[index];
+    selection.set([id], id);
+  };
+
+  useShortcut(shortcuts.NEXT_COMPONENT, moveActive(1));
+  useShortcut(shortcuts.PREV_COMPONENT, moveActive(-1));
+
+  /**
+   * a changed query means the list under the selection changed, so what was
+   * active is no longer what the user is looking at
+   */
+  const lastQuery = React.useRef(query);
+  React.useEffect(() => {
+    if (lastQuery.current === query) return;
+    lastQuery.current = query;
+    if (selection.ids.length) selection.clear();
+  }, [query, selection.ids.length, selection.clear]);
+
   const handleRowSelect =
     (id: string) => (e: React.MouseEvent | React.KeyboardEvent) => {
       const next = $selection.nextSelection(
@@ -94,15 +133,6 @@ export default function ComponentList() {
         }
       );
       selection.set(next.ids, next.anchor);
-    };
-
-  /** space picks the focused row, the same way a click would */
-  const handleRowKeyDown =
-    (id: string) => (e: React.KeyboardEvent) => {
-      if (e.key !== " ") return;
-      // space would scroll the list away under the focused row
-      e.preventDefault();
-      handleRowSelect(id)(e);
     };
 
   const isSearching = query.trim().length > 0;
@@ -143,10 +173,6 @@ export default function ComponentList() {
           inUse={usedComponents.data.has(c.id)}
           selected={selectedIds.has(c.id)}
           onClick={handleRowSelect(c.id)}
-          onKeyDown={handleRowKeyDown(c.id)}
-          tabIndex={0}
-          role="button"
-          aria-pressed={selectedIds.has(c.id)}
         >
           <div className="head">
             {/* the title attribute keeps the full name reachable once it is cut off */}
@@ -170,7 +196,6 @@ export default function ComponentList() {
             <ExtendedButtonRowList c={c} />
             <button
               className="icon-btn"
-              tabIndex={-1}
               title="Update"
               aria-label="Update"
               onClick={() => loading.load(c.id)}
@@ -180,7 +205,6 @@ export default function ComponentList() {
             </button>
             <button
               className="icon-btn danger"
-              tabIndex={-1}
               title="Remove"
               aria-label="Remove"
               onClick={() => components.removeComponent(c)}
@@ -389,15 +413,6 @@ const Row = styled.div<{ inUse: boolean; selected: boolean }>`
   border-radius: ${theme.radius};
   cursor: pointer;
   user-select: none;
-
-  &:focus {
-    outline: none;
-  }
-
-  &:focus-visible {
-    outline: 2px solid ${theme.color.accent};
-    outline-offset: 1px;
-  }
   /**
    * the accent for components that sit in no grid is drawn as an inset
    * shadow rather than a left border, so the card keeps its full outline

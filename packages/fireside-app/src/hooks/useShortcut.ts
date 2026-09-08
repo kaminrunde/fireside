@@ -6,6 +6,11 @@ export type Shortcut = {
   /** ctrl on windows/linux, cmd on mac */
   mod?: boolean;
   shift?: boolean;
+  /**
+   * fire even while a text field has focus. Only for keys that are not
+   * text input themselves, such as tab
+   */
+  allowInInput?: boolean;
 };
 
 /**
@@ -33,7 +38,7 @@ export default function useShortcut(
   enabled: boolean = true
 ) {
   const handlerRef = React.useRef(handler);
-  const { key, mod = false, shift = false } = shortcut;
+  const { key, mod = false, shift = false, allowInInput = false } = shortcut;
 
   React.useEffect(() => {
     handlerRef.current = handler;
@@ -46,7 +51,7 @@ export default function useShortcut(
       if (e.key.toLowerCase() !== key.toLowerCase()) return;
       if (mod !== (e.ctrlKey || e.metaKey)) return;
       if (shift !== e.shiftKey) return;
-      if (isEditable(e.target)) return;
+      if (!allowInInput && isEditable(e.target)) return;
       // browsers bind some of these themselves (ctrl+b opens the bookmark
       // sidebar in firefox)
       e.preventDefault();
@@ -54,5 +59,5 @@ export default function useShortcut(
     };
     window.addEventListener("keydown", listener);
     return () => window.removeEventListener("keydown", listener);
-  }, [key, mod, shift, enabled]);
+  }, [key, mod, shift, allowInInput, enabled]);
 }

@@ -51,6 +51,7 @@ exports.default = (0, fireside_utils_1.createPlugin)(function (ctx) {
             localStorage.setItem("copy-storybook-component-timestamp", new Date().toString());
         }; },
         btnLabel: "Copy Component",
+        btnIcon: "copy",
         btnPlacement: "component",
         btnRenderCondition: true,
     });

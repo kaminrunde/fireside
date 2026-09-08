@@ -17,6 +17,7 @@ export default createPlugin((ctx) => {
       );
     },
     btnLabel: "Copy Component",
+    btnIcon: "copy",
     btnPlacement: "component",
     btnRenderCondition: true,
   });

@@ -7,7 +7,7 @@ import { useUsedComponents } from "modules/grid";
 import ExtendedButtonRowList from "./ExtendedButtonRowList";
 import ExtendedButtonBottomList from "./ExtendedButtonBottomList";
 import { findMatches, matchesQuery, Match } from "./utils/searchComponents";
-import { FiSearch, FiX } from "react-icons/fi";
+import { FiSearch, FiX, FiEdit2, FiTrash2 } from "react-icons/fi";
 import theme from "theme";
 
 export default function ComponentList() {
@@ -72,16 +72,22 @@ export default function ComponentList() {
           <div className="button-list">
             <ExtendedButtonRowList c={c} />
             <button
-              className="btn btn-update"
+              className="icon-btn"
+              title="Update"
+              aria-label="Update"
               onClick={() => loading.load(c.id)}
             >
-              update
+              {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+              <FiEdit2 />
             </button>
             <button
-              className="btn btn-remove"
+              className="icon-btn danger"
+              title="Remove"
+              aria-label="Remove"
               onClick={() => components.removeComponent(c)}
             >
-              remove
+              {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+              <FiTrash2 />
             </button>
           </div>
         </Row>
@@ -355,35 +361,35 @@ const Row = styled.div<{ inUse: boolean }>`
   > .button-list {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 2px;
     flex-shrink: 0;
 
-    .btn {
+    /* also applies to the plugin buttons, they render into this row */
+    .icon-btn {
+      width: 30px;
       height: 30px;
-      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
       border: none;
       border-radius: 4px;
-      font-family: inherit;
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-      color: white;
+      background: none;
+      color: ${theme.color.textMuted};
       cursor: pointer;
-      white-space: nowrap;
-    }
 
-    .btn-update {
-      background: ${theme.color.primary};
-      &:hover {
-        background: ${theme.color.primaryHover};
+      > svg {
+        font-size: 16px;
       }
-    }
 
-    .btn-remove {
-      background: ${theme.color.danger};
       &:hover {
-        background: ${theme.color.dangerHover};
+        background: ${theme.color.surfaceMuted};
+        color: ${theme.color.text};
+      }
+
+      &.danger:hover {
+        background: #fdeceb;
+        color: ${theme.color.danger};
       }
     }
   }

@@ -125,6 +125,7 @@ export type ExtendComponentButtonListEvent = {
     payload: {
         onClickFn: (arg?: any) => any;
         btnLabel: string;
+        btnIcon?: import("./extendComponentButtonList").ButtonIcon;
         btnPlacement: "component" | "global";
         btnRenderCondition: boolean | ((...args: any) => boolean);
     };

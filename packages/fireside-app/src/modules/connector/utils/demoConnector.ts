@@ -38,50 +38,56 @@ initContentfulExtension((_sdk) => {
  * multi-select, buffering across devices and the component search can be
  * tried out without a running CMS
  */
+/**
+ * dev fixture. Fifteen components across two enabled media-sizes, with the
+ * long names, nested props and partial grid placement the editors actually
+ * work with, so multi-select, buffering across devices, the search and the
+ * keyboard navigation can be tried out without a running CMS
+ */
 const DEMO_STORY = {
   "version": "2.0.0",
   "componentsById": {
-    "2e7728ba66196ce3a53d08e8": {
-      "id": "2e7728ba66196ce3a53d08e8",
+    "017728ba66196ce3a53d08e": {
+      "id": "017728ba66196ce3a53d08e",
       "name": "Button",
       "props": {
         "gridArea": "Button123",
-        "position": "left",
         "__version": 1,
+        "position": "left",
         "label": "foo"
       },
       "createdAt": 1626710762275,
       "updatedAt": 1626710762275,
-      "hash": "5b85fc8a8523c2f5c5f41c88592ca718"
+      "hash": "21093375e312b8c173100c35080b23f2"
     },
-    "3f8839cb77207df4b64e19f9": {
-      "id": "3f8839cb77207df4b64e19f9",
+    "027728ba66196ce3a53d08e": {
+      "id": "027728ba66196ce3a53d08e",
       "name": "Button",
       "props": {
         "gridArea": "Button456",
-        "position": "left",
         "__version": 1,
+        "position": "left",
         "label": "bar"
       },
       "createdAt": 1626710862275,
       "updatedAt": 1626710862275,
-      "hash": "527c68ad10e93304d9ab7e576c2c49d3"
+      "hash": "ae9d9d0262d70150d4fb8072784b8cec"
     },
-    "4a9940dc88318ea5c75f2a0a": {
-      "id": "4a9940dc88318ea5c75f2a0a",
+    "037728ba66196ce3a53d08e": {
+      "id": "037728ba66196ce3a53d08e",
       "name": "Button",
       "props": {
         "gridArea": "Button789",
-        "position": "left",
         "__version": 1,
+        "position": "left",
         "label": "baz"
       },
       "createdAt": 1626710962275,
       "updatedAt": 1626710962275,
-      "hash": "5e3f66c1e79e4ae01d9475a2b0203300"
+      "hash": "dc1aed78da01d4329f83435c96bcf411"
     },
-    "5b0051ed99429fb6d8603b1b": {
-      "id": "5b0051ed99429fb6d8603b1b",
+    "047728ba66196ce3a53d08e": {
+      "id": "047728ba66196ce3a53d08e",
       "name": "CategoryHeadlineWithProducts",
       "props": {
         "gridArea": "home_category_products_k2_bestecksets",
@@ -96,10 +102,10 @@ const DEMO_STORY = {
       },
       "createdAt": 1758844800000,
       "updatedAt": 1758844800000,
-      "hash": "df5f4f3b856a81b406fd08e9d2edeab9"
+      "hash": "22691a93614a2d933c2f1e45bddf3ab4"
     },
-    "6c1162fea053a0c7e9714c2c": {
-      "id": "6c1162fea053a0c7e9714c2c",
+    "057728ba66196ce3a53d08e": {
+      "id": "057728ba66196ce3a53d08e",
       "name": "CategoryImageTeaserWithProducts",
       "props": {
         "gridArea": "home_category_highlight_k1_buffet_20250622",
@@ -120,15 +126,190 @@ const DEMO_STORY = {
       },
       "createdAt": 1750550400000,
       "updatedAt": 1750550400000,
-      "hash": "35d3056e94cdbf118632ad0d50efd1c0"
+      "hash": "2184d2c872ef108fd87b1bceb4932bdf"
+    },
+    "067728ba66196ce3a53d08e": {
+      "id": "067728ba66196ce3a53d08e",
+      "name": "HeroStage",
+      "props": {
+        "gridArea": "hero_stage_home",
+        "__version": 1,
+        "headline": "Willkommen bei Lusini",
+        "cta": "Jetzt entdecken",
+        "link": "/de-de/"
+      },
+      "createdAt": 1745000000000,
+      "updatedAt": 1745000000000,
+      "hash": "1a0d082677e70873d08d171453b4cb89"
+    },
+    "077728ba66196ce3a53d08e": {
+      "id": "077728ba66196ce3a53d08e",
+      "name": "UspRow",
+      "props": {
+        "gridArea": "usp_row_versand",
+        "__version": 1,
+        "items": [
+          "Gratis Versand ab 99 EUR",
+          "30 Tage Rueckgabe",
+          "Kauf auf Rechnung"
+        ]
+      },
+      "createdAt": 1745100000000,
+      "updatedAt": 1745100000000,
+      "hash": "fd12284230f1accdab3843fac7cfb6c8"
+    },
+    "087728ba66196ce3a53d08e": {
+      "id": "087728ba66196ce3a53d08e",
+      "name": "ImageTeaser",
+      "props": {
+        "gridArea": "teaser_gastro_k1",
+        "__version": 1,
+        "headline": "Gastronomiebedarf",
+        "link": "/de-de/gastronomie/"
+      },
+      "createdAt": 1745200000000,
+      "updatedAt": 1745200000000,
+      "hash": "fa4e7911b6f95dc3cc90c8c51e49e204"
+    },
+    "097728ba66196ce3a53d08e": {
+      "id": "097728ba66196ce3a53d08e",
+      "name": "ImageTeaser",
+      "props": {
+        "gridArea": "teaser_hotel_k2",
+        "__version": 1,
+        "headline": "Hotelausstattung",
+        "link": "/de-de/hotel/"
+      },
+      "createdAt": 1745300000000,
+      "updatedAt": 1745300000000,
+      "hash": "7de2722c212eb0205e5df6200e0feb35"
+    },
+    "0a7728ba66196ce3a53d08e": {
+      "id": "0a7728ba66196ce3a53d08e",
+      "name": "ProductSlider",
+      "props": {
+        "gridArea": "product_slider_bestseller",
+        "__version": 1,
+        "headline": "Unsere Bestseller",
+        "skus": [
+          "30099973",
+          "30089818",
+          "10010717",
+          "10013182",
+          "30071122"
+        ]
+      },
+      "createdAt": 1745400000000,
+      "updatedAt": 1745400000000,
+      "hash": "7e00c8b9026891a6c3061636e3e23770"
+    },
+    "0b7728ba66196ce3a53d08e": {
+      "id": "0b7728ba66196ce3a53d08e",
+      "name": "ProductListing",
+      "props": {
+        "gridArea": "product_listing_neuheiten",
+        "__version": 1,
+        "headline": "Neuheiten",
+        "maxSize": 40,
+        "skus": [
+          "40011223",
+          "40011224",
+          "40011225"
+        ]
+      },
+      "createdAt": 1745500000000,
+      "updatedAt": 1745500000000,
+      "hash": "4d8bdf9353c7a37f54110bc14bc1d9bb"
+    },
+    "0c7728ba66196ce3a53d08e": {
+      "id": "0c7728ba66196ce3a53d08e",
+      "name": "Markdown",
+      "props": {
+        "gridArea": "markdown_versandinfo",
+        "__version": 1,
+        "content": "## Versand und Lieferung\nLieferung erfolgt in 2-4 Werktagen."
+      },
+      "createdAt": 1745600000000,
+      "updatedAt": 1745600000000,
+      "hash": "ef12c259f7173e31a17d64a0dc342780"
+    },
+    "0d7728ba66196ce3a53d08e": {
+      "id": "0d7728ba66196ce3a53d08e",
+      "name": "NewsletterForm",
+      "props": {
+        "gridArea": "newsletter_signup",
+        "__version": 1,
+        "headline": "Newsletter",
+        "subline": "5 EUR Gutschein sichern"
+      },
+      "createdAt": 1745700000000,
+      "updatedAt": 1745700000000,
+      "hash": "33a7388b53c10121ae8fdba9f97c1333"
+    },
+    "0e7728ba66196ce3a53d08e": {
+      "id": "0e7728ba66196ce3a53d08e",
+      "name": "Accordion",
+      "props": {
+        "gridArea": "faq_gastronomie",
+        "__version": 1,
+        "items": [
+          {
+            "question": "Liefert ihr an Gastronomiebetriebe?",
+            "answer": "Ja, deutschlandweit."
+          },
+          {
+            "question": "Gibt es Mengenrabatte?",
+            "answer": "Ab 10 Stueck."
+          }
+        ]
+      },
+      "createdAt": 1745800000000,
+      "updatedAt": 1745800000000,
+      "hash": "ce4a1cc020ac92a97496a61151167a84"
+    },
+    "0f7728ba66196ce3a53d08e": {
+      "id": "0f7728ba66196ce3a53d08e",
+      "name": "LinkList",
+      "props": {
+        "gridArea": "footer_kategorien",
+        "__version": 1,
+        "headline": "Beliebte Kategorien",
+        "links": [
+          {
+            "label": "Bestecke",
+            "href": "/de-de/tischkultur/bestecke"
+          },
+          {
+            "label": "Glaeser",
+            "href": "/de-de/tischkultur/glaeser"
+          },
+          {
+            "label": "Chafing Dishes",
+            "href": "/de-de/buffet/chafing-dishes"
+          }
+        ]
+      },
+      "createdAt": 1745900000000,
+      "updatedAt": 1745900000000,
+      "hash": "6f021e5cf2b3479e515a33e00dc911ca"
     }
   },
   "allComponents": [
-    "2e7728ba66196ce3a53d08e8",
-    "3f8839cb77207df4b64e19f9",
-    "4a9940dc88318ea5c75f2a0a",
-    "5b0051ed99429fb6d8603b1b",
-    "6c1162fea053a0c7e9714c2c"
+    "017728ba66196ce3a53d08e",
+    "027728ba66196ce3a53d08e",
+    "037728ba66196ce3a53d08e",
+    "047728ba66196ce3a53d08e",
+    "057728ba66196ce3a53d08e",
+    "067728ba66196ce3a53d08e",
+    "077728ba66196ce3a53d08e",
+    "087728ba66196ce3a53d08e",
+    "097728ba66196ce3a53d08e",
+    "0a7728ba66196ce3a53d08e",
+    "0b7728ba66196ce3a53d08e",
+    "0c7728ba66196ce3a53d08e",
+    "0d7728ba66196ce3a53d08e",
+    "0e7728ba66196ce3a53d08e",
+    "0f7728ba66196ce3a53d08e"
   ],
   "grids": {
     "XS": {
@@ -136,11 +317,31 @@ const DEMO_STORY = {
       "gap": 10,
       "grid": [
         [
-          "2e7728ba66196ce3a53d08e8",
-          "3f8839cb77207df4b64e19f9"
+          "067728ba66196ce3a53d08e",
+          "067728ba66196ce3a53d08e"
         ],
         [
-          "4a9940dc88318ea5c75f2a0a",
+          "017728ba66196ce3a53d08e",
+          "027728ba66196ce3a53d08e"
+        ],
+        [
+          "037728ba66196ce3a53d08e",
+          "."
+        ],
+        [
+          "077728ba66196ce3a53d08e",
+          "077728ba66196ce3a53d08e"
+        ],
+        [
+          "087728ba66196ce3a53d08e",
+          "097728ba66196ce3a53d08e"
+        ],
+        [
+          "0a7728ba66196ce3a53d08e",
+          "0a7728ba66196ce3a53d08e"
+        ],
+        [
+          "0c7728ba66196ce3a53d08e",
           "."
         ]
       ],
@@ -150,6 +351,11 @@ const DEMO_STORY = {
       ],
       "heights": [
         "auto",
+        "auto",
+        "auto",
+        "auto",
+        "auto",
+        "auto",
         "auto"
       ]
     },
@@ -158,19 +364,35 @@ const DEMO_STORY = {
       "gap": 15,
       "grid": [
         [
-          "2e7728ba66196ce3a53d08e8"
+          "067728ba66196ce3a53d08e"
         ],
         [
-          "3f8839cb77207df4b64e19f9"
+          "017728ba66196ce3a53d08e"
         ],
         [
-          "4a9940dc88318ea5c75f2a0a"
+          "027728ba66196ce3a53d08e"
+        ],
+        [
+          "037728ba66196ce3a53d08e"
+        ],
+        [
+          "0a7728ba66196ce3a53d08e"
+        ],
+        [
+          "0d7728ba66196ce3a53d08e"
+        ],
+        [
+          "0f7728ba66196ce3a53d08e"
         ]
       ],
       "widths": [
         "1fr"
       ],
       "heights": [
+        "auto",
+        "auto",
+        "auto",
+        "auto",
         "auto",
         "auto",
         "auto"
@@ -222,7 +444,7 @@ const DEMO_STORY = {
       ]
     }
   },
-  "hash": "faf3b4ebce8c6d66cb9af5cd4457e596",
+  "hash": "c621b9eaafd95be1bb4346fee73a0c56",
   "plugins": {
     "fullWidth": {},
     "bg": {}

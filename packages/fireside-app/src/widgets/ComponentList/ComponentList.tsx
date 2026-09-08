@@ -82,6 +82,28 @@ export default function ComponentList() {
     canAct
   );
 
+  /** first active component in list order, the one the list scrolls to */
+  const firstActive = React.useMemo(
+    () => visibleIds.find((id) => selectedIds.has(id)) || null,
+    [visibleIds, selectedIds]
+  );
+
+  const rows = React.useRef(new Map<string, HTMLDivElement>());
+  const setRowRef = (id: string) => (el: HTMLDivElement | null) => {
+    if (el) rows.current.set(id, el);
+    else rows.current.delete(id);
+  };
+
+  /**
+   * keep the active component in view, both when arriving on the route and
+   * when tab moves it. "nearest" leaves an already visible row alone, the
+   * scroll-margin on the row keeps it from ending up under the fixed header
+   */
+  React.useEffect(() => {
+    if (!firstActive) return;
+    rows.current.get(firstActive)?.scrollIntoView({ block: "nearest" });
+  }, [firstActive]);
+
   /**
    * tab walks the active component instead of the browser focus: it steps on
    * from whatever is active, collapses a multi selection to the first entry,
@@ -172,6 +194,7 @@ export default function ComponentList() {
           key={c.id}
           inUse={usedComponents.data.has(c.id)}
           selected={selectedIds.has(c.id)}
+          ref={setRowRef(c.id)}
           onClick={handleRowSelect(c.id)}
         >
           <div className="head">
@@ -413,6 +436,8 @@ const Row = styled.div<{ inUse: boolean; selected: boolean }>`
   border-radius: ${theme.radius};
   cursor: pointer;
   user-select: none;
+  /* the header is fixed at 60px, do not scroll a row underneath it */
+  scroll-margin: 70px 0 16px;
   /**
    * the accent for components that sit in no grid is drawn as an inset
    * shadow rather than a left border, so the card keeps its full outline

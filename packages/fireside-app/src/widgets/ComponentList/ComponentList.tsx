@@ -9,6 +9,10 @@ import ExtendedButtonBottomList from "./ExtendedButtonBottomList";
 import BreakpointIcons from "./BreakpointIcons";
 import * as $selection from "modules/selection";
 import { findMatches, matchesQuery, Match } from "./utils/searchComponents";
+import runPluginAction from "./utils/runPluginAction";
+import { useExtendedButtonList } from "modules/plugins";
+import useShortcut from "hooks/useShortcut";
+import * as shortcuts from "shortcuts";
 import { FiSearch, FiX, FiEdit2, FiTrash2 } from "react-icons/fi";
 import theme from "theme";
 
@@ -17,6 +21,7 @@ export default function ComponentList() {
   const loading = useLoadingComponent();
   const usedComponents = useUsedComponents();
   const selection = $selection.useSelection();
+  const pluginButtons = useExtendedButtonList();
   const [query, setQuery] = React.useState("");
 
   const selectedIds = React.useMemo(
@@ -34,6 +39,45 @@ export default function ComponentList() {
    * filter instead of jumping over hidden components
    */
   const visibleIds = React.useMemo(() => visible.map((c) => c.id), [visible]);
+
+  /**
+   * the shortcuts act on a single pick only, and only while it is on screen:
+   * acting on a component hidden by the search would happen invisibly
+   */
+  const target = React.useMemo(() => {
+    if (selection.ids.length !== 1) return null;
+    return visible.find((c) => c.id === selection.ids[0]) || null;
+  }, [selection.ids, visible]);
+
+  const canAct = !!target && !loading.isLoading;
+
+  useShortcut(
+    shortcuts.OPEN_COMPONENT,
+    () => target && loading.load(target.id),
+    canAct
+  );
+
+  /** cmd+c maps to whatever plugin action asks for the copy icon */
+  const copyAction = React.useMemo(
+    () =>
+      pluginButtons.data.find(
+        (b) =>
+          b.payload.btnPlacement === "component" && b.payload.btnIcon === "copy"
+      ) || null,
+    [pluginButtons.data]
+  );
+
+  useShortcut(
+    shortcuts.COPY_COMPONENT,
+    () => target && copyAction && runPluginAction(copyAction.payload.onClickFn, target),
+    canAct && !!copyAction
+  );
+
+  useShortcut(
+    shortcuts.DELETE_COMPONENT,
+    () => target && components.removeComponent(target),
+    canAct
+  );
 
   const handleRowClick = (id: string) => (e: React.MouseEvent) => {
     const next = $selection.nextSelection(

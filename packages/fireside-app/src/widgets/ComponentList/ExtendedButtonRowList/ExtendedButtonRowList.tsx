@@ -12,6 +12,7 @@ import {
   FiSettings,
 } from "react-icons/fi";
 import theme from "theme";
+import runPluginAction from "../utils/runPluginAction";
 
 type Props = {
   c: Component;
@@ -60,14 +61,8 @@ export default function ExtendedButtonRowList(props: Props) {
   const withIcon = rowBtns.filter((b) => b.payload.btnIcon && ICONS[b.payload.btnIcon]);
   const inMenu = rowBtns.filter((b) => !b.payload.btnIcon || !ICONS[b.payload.btnIcon]);
 
-  /**
-   * component placed buttons are curried: onClickFn(component) returns the
-   * actual handler. Older ones do the work directly and return nothing, so
-   * only call the result when we got a function back
-   */
   const run = (onClickFn: (arg?: any) => any) => () => {
-    const result = onClickFn(props.c);
-    if (typeof result === "function") result();
+    runPluginAction(onClickFn, props.c);
     setOpen(false);
   };
 

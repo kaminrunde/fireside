@@ -25,10 +25,24 @@ export const OPEN_COMPONENT: ShortcutInfo = {
   description: "Open the selected component in storybook",
 };
 
+export const COPY_COMPONENT: ShortcutInfo = {
+  key: "c",
+  mod: true,
+  description: "Copy the selected component (component list)",
+};
+
+export const DELETE_COMPONENT: ShortcutInfo = {
+  key: "d",
+  mod: true,
+  description: "Delete the selected component (component list)",
+};
+
 export const EDITOR_SHORTCUTS: ShortcutInfo[] = [
   BUFFER,
   BUFFER_ALL,
   OPEN_COMPONENT,
+  COPY_COMPONENT,
+  DELETE_COMPONENT,
 ];
 
 /**

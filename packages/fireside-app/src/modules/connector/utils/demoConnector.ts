@@ -28,21 +28,14 @@ initContentfulExtension((_sdk) => {
 });
 
 /**
- * dev fixture. Three components, two enabled media-sizes with a different
- * layout each, so multi-select, shift-ranges and buffering across devices
- * can be tried out without a running CMS
- */
-/**
- * dev fixture. Five components across two enabled media-sizes, two of them
- * with the long names and nested props the editors actually work with, so
- * multi-select, buffering across devices and the component search can be
- * tried out without a running CMS
- */
-/**
- * dev fixture. Fifteen components across two enabled media-sizes, with the
- * long names, nested props and partial grid placement the editors actually
- * work with, so multi-select, buffering across devices, the search and the
- * keyboard navigation can be tried out without a running CMS
+ * dev fixture. Fifteen components taken from the lusini theme - the names and
+ * the prop keys come from the k.create() calls in its story files under
+ * src/theme/organisms, so what shows up here is what the editors actually
+ * see. Hashes are computed the way the addon computes them, otherwise every
+ * close would look like an unsaved edit.
+ *
+ * Only some of them are placed in the two enabled grids, which is what makes
+ * the breakpoint icons show a mix of placed and missing
  */
 const DEMO_STORY = {
   "version": "2.0.0",
@@ -51,247 +44,311 @@ const DEMO_STORY = {
       "id": "017728ba66196ce3a53d08e",
       "name": "Button",
       "props": {
-        "gridArea": "Button123",
+        "gridArea": "home_cta_beratung",
         "__version": 1,
-        "position": "left",
-        "label": "foo"
-      },
-      "createdAt": 1626710762275,
-      "updatedAt": 1626710762275,
-      "hash": "3802932857080"
-    },
-    "027728ba66196ce3a53d08e": {
-      "id": "027728ba66196ce3a53d08e",
-      "name": "Button",
-      "props": {
-        "gridArea": "Button456",
-        "__version": 1,
-        "position": "left",
-        "label": "bar"
-      },
-      "createdAt": 1626710862275,
-      "updatedAt": 1626710862275,
-      "hash": "5808450017995"
-    },
-    "037728ba66196ce3a53d08e": {
-      "id": "037728ba66196ce3a53d08e",
-      "name": "Button",
-      "props": {
-        "gridArea": "Button789",
-        "__version": 1,
-        "position": "left",
-        "label": "baz"
-      },
-      "createdAt": 1626710962275,
-      "updatedAt": 1626710962275,
-      "hash": "11811966853731"
-    },
-    "047728ba66196ce3a53d08e": {
-      "id": "047728ba66196ce3a53d08e",
-      "name": "CategoryHeadlineWithProducts",
-      "props": {
-        "gridArea": "home_category_products_k2_bestecksets",
-        "__version": 1,
-        "headline": "Bestecksets fuer die Gastronomie",
-        "subline": "Hochwertige Bestecke fuer Hotellerie und Restaurant",
-        "skus": [
-          "30099973",
-          "30089818",
-          "10010717"
-        ]
-      },
-      "createdAt": 1758844800000,
-      "updatedAt": 1758844800000,
-      "hash": "9889326816714"
-    },
-    "057728ba66196ce3a53d08e": {
-      "id": "057728ba66196ce3a53d08e",
-      "name": "CategoryImageTeaserWithProducts",
-      "props": {
-        "gridArea": "home_category_highlight_k1_buffet_20250622",
-        "__version": 1,
-        "headline": "Buffet Highlights",
-        "slides": [
-          {
-            "headline": "Chafing Dishes",
-            "sku": "30099973",
-            "link": "/de-de/buffet/chafing-dishes"
-          },
-          {
-            "headline": "Bestecksets",
-            "sku": "10013182",
-            "link": "/de-de/tischkultur/bestecke"
-          }
-        ]
-      },
-      "createdAt": 1750550400000,
-      "updatedAt": 1750550400000,
-      "hash": "4426129109089"
-    },
-    "067728ba66196ce3a53d08e": {
-      "id": "067728ba66196ce3a53d08e",
-      "name": "HeroStage",
-      "props": {
-        "gridArea": "hero_stage_home",
-        "__version": 1,
-        "headline": "Willkommen bei Lusini",
-        "cta": "Jetzt entdecken",
-        "link": "/de-de/"
+        "label": "Jetzt beraten lassen",
+        "link": "/de-de/service/beratung/",
+        "variation": "primary"
       },
       "createdAt": 1745000000000,
       "updatedAt": 1745000000000,
-      "hash": "11290263511443"
+      "hash": "9623372344105"
     },
-    "077728ba66196ce3a53d08e": {
-      "id": "077728ba66196ce3a53d08e",
-      "name": "UspRow",
+    "027728ba66196ce3a53d08e": {
+      "id": "027728ba66196ce3a53d08e",
+      "name": "Markdown",
       "props": {
-        "gridArea": "usp_row_versand",
+        "gridArea": "home_markdown_versandinfo",
         "__version": 1,
+        "md": "## Versand und Lieferung\nLieferung innerhalb von 2-3 Werktagen von lagernder Ware.",
+        "imagePosition": "left",
+        "imageSrc": "",
+        "imageAlt": ""
+      },
+      "createdAt": 1745086400000,
+      "updatedAt": 1745086400000,
+      "hash": "1184564908666"
+    },
+    "037728ba66196ce3a53d08e": {
+      "id": "037728ba66196ce3a53d08e",
+      "name": "UspList",
+      "props": {
+        "gridArea": "home_usp_row",
+        "__version": 1,
+        "dividerTop": false,
+        "dividerBottom": true,
         "items": [
-          "Gratis Versand ab 99 EUR",
-          "30 Tage Rueckgabe",
-          "Kauf auf Rechnung"
+          {
+            "icon": "assortment",
+            "headline": "Großes Sortiment",
+            "text": "50.000 Produkte für Hotellerie und Gastronomie",
+            "link": "",
+            "linkLabel": "Mehr erfahren"
+          },
+          {
+            "icon": "delivery",
+            "headline": "Hohe Warenverfügbarkeit",
+            "text": "Lieferung innerhalb von 2-3 Werktagen",
+            "link": "",
+            "linkLabel": "Mehr erfahren"
+          }
         ]
       },
-      "createdAt": 1745100000000,
-      "updatedAt": 1745100000000,
-      "hash": "3692887777458"
+      "createdAt": 1745172800000,
+      "updatedAt": 1745172800000,
+      "hash": "3299613148275"
     },
-    "087728ba66196ce3a53d08e": {
-      "id": "087728ba66196ce3a53d08e",
-      "name": "ImageTeaser",
-      "props": {
-        "gridArea": "teaser_gastro_k1",
-        "__version": 1,
-        "headline": "Gastronomiebedarf",
-        "link": "/de-de/gastronomie/"
-      },
-      "createdAt": 1745200000000,
-      "updatedAt": 1745200000000,
-      "hash": "12414483267216"
-    },
-    "097728ba66196ce3a53d08e": {
-      "id": "097728ba66196ce3a53d08e",
-      "name": "ImageTeaser",
-      "props": {
-        "gridArea": "teaser_hotel_k2",
-        "__version": 1,
-        "headline": "Hotelausstattung",
-        "link": "/de-de/hotel/"
-      },
-      "createdAt": 1745300000000,
-      "updatedAt": 1745300000000,
-      "hash": "9832362403007"
-    },
-    "0a7728ba66196ce3a53d08e": {
-      "id": "0a7728ba66196ce3a53d08e",
+    "047728ba66196ce3a53d08e": {
+      "id": "047728ba66196ce3a53d08e",
       "name": "ProductSlider",
       "props": {
-        "gridArea": "product_slider_bestseller",
+        "gridArea": "home_slider_bestseller",
         "__version": 1,
-        "headline": "Unsere Bestseller",
-        "skus": [
+        "title": "Unsere Bestseller",
+        "searchSwitch": false,
+        "maxProducts": 20,
+        "search": "",
+        "skuList": [
           "30099973",
           "30089818",
           "10010717",
-          "10013182",
-          "30071122"
+          "10013182"
         ]
       },
-      "createdAt": 1745400000000,
-      "updatedAt": 1745400000000,
-      "hash": "3574903501758"
+      "createdAt": 1745259200000,
+      "updatedAt": 1745259200000,
+      "hash": "13325884295360"
     },
-    "0b7728ba66196ce3a53d08e": {
-      "id": "0b7728ba66196ce3a53d08e",
+    "057728ba66196ce3a53d08e": {
+      "id": "057728ba66196ce3a53d08e",
       "name": "ProductListing",
       "props": {
-        "gridArea": "product_listing_neuheiten",
+        "gridArea": "home_listing_neuheiten",
         "__version": 1,
-        "headline": "Neuheiten",
-        "maxSize": 40,
-        "skus": [
+        "title": "Neuheiten",
+        "searchSwitch": false,
+        "search": "",
+        "limitRows": true,
+        "initialRows": "2",
+        "skuList": [
           "40011223",
           "40011224",
           "40011225"
         ]
       },
-      "createdAt": 1745500000000,
-      "updatedAt": 1745500000000,
-      "hash": "8026462518237"
+      "createdAt": 1745345600000,
+      "updatedAt": 1745345600000,
+      "hash": "7960642089445"
+    },
+    "067728ba66196ce3a53d08e": {
+      "id": "067728ba66196ce3a53d08e",
+      "name": "CategoryHeadlineWithProducts",
+      "props": {
+        "gridArea": "home_category_products_k2_bestecksets",
+        "__version": 1,
+        "headline": "Bestecksets für die Gastronomie",
+        "image": "/img/kategorien/bestecke.jpg",
+        "imageText": "Bestecke",
+        "skuList": [
+          "30099973",
+          "30089818",
+          "10010717"
+        ]
+      },
+      "createdAt": 1745432000000,
+      "updatedAt": 1745432000000,
+      "hash": "9902718266689"
+    },
+    "077728ba66196ce3a53d08e": {
+      "id": "077728ba66196ce3a53d08e",
+      "name": "CategoryImageTeaserWithProducts",
+      "props": {
+        "gridArea": "home_category_highlight_k1_buffet_20250622",
+        "__version": 1,
+        "bg": "#f5f7fa",
+        "title": "Buffet Highlights",
+        "style": "left",
+        "skuList": [
+          "30099973",
+          "10013182"
+        ]
+      },
+      "createdAt": 1745518400000,
+      "updatedAt": 1745518400000,
+      "hash": "9236504674042"
+    },
+    "087728ba66196ce3a53d08e": {
+      "id": "087728ba66196ce3a53d08e",
+      "name": "ImageTeaserSingle",
+      "props": {
+        "gridArea": "home_teaser_gastro",
+        "__version": 1,
+        "dySelector": "",
+        "showDefaultDataByControlGroup": true,
+        "imgSrc": "/img/teaser/gastronomie.jpg",
+        "title": "Gastronomiebedarf",
+        "description": "Alles für Küche und Service",
+        "linkLabel": "Zur Kategorie",
+        "link": "/de-de/gastronomie/"
+      },
+      "createdAt": 1745604800000,
+      "updatedAt": 1745604800000,
+      "hash": "14510394890736"
+    },
+    "097728ba66196ce3a53d08e": {
+      "id": "097728ba66196ce3a53d08e",
+      "name": "TeaserSlider",
+      "props": {
+        "gridArea": "home_teaser_slider_kategorien",
+        "__version": 1,
+        "title": "Beliebte Kategorien",
+        "description": "",
+        "link": "",
+        "linkLabel": "",
+        "items": [
+          {
+            "title": "Chafing Dishes",
+            "description": "Speisen warmhalten",
+            "link": "/de-de/buffet/chafing-dishes/",
+            "linkLabel": "Entdecken"
+          },
+          {
+            "title": "Gläser",
+            "description": "Für jeden Anlass",
+            "link": "/de-de/tischkultur/glaeser/",
+            "linkLabel": "Entdecken"
+          }
+        ]
+      },
+      "createdAt": 1745691200000,
+      "updatedAt": 1745691200000,
+      "hash": "1627289781565"
+    },
+    "0a7728ba66196ce3a53d08e": {
+      "id": "0a7728ba66196ce3a53d08e",
+      "name": "MarkdownAccordion",
+      "props": {
+        "gridArea": "service_faq_gastronomie",
+        "__version": 1,
+        "title": "Häufige Fragen",
+        "items": [
+          {
+            "title": "Liefert ihr an Gastronomiebetriebe?",
+            "md": "Ja, deutschlandweit und in 14 europäische Länder."
+          },
+          {
+            "title": "Gibt es Mengenrabatte?",
+            "md": "Ab 10 Stück auf Anfrage."
+          }
+        ]
+      },
+      "createdAt": 1745777600000,
+      "updatedAt": 1745777600000,
+      "hash": "2293556684517"
+    },
+    "0b7728ba66196ce3a53d08e": {
+      "id": "0b7728ba66196ce3a53d08e",
+      "name": "ServiceLinkList",
+      "props": {
+        "gridArea": "footer_service_links",
+        "__version": 1,
+        "label": "Service",
+        "serviceLinkLabel": "Alle Services",
+        "serviceLink": "/de-de/service/",
+        "items": [
+          {
+            "imgSrc": "/img/service/versand.svg",
+            "link": "/de-de/service/versand/",
+            "linkLabel": "Mehr",
+            "name": "Versand"
+          },
+          {
+            "imgSrc": "/img/service/retoure.svg",
+            "link": "/de-de/service/retoure/",
+            "linkLabel": "Mehr",
+            "name": "Retoure"
+          }
+        ]
+      },
+      "createdAt": 1745864000000,
+      "updatedAt": 1745864000000,
+      "hash": "15800024822295"
     },
     "0c7728ba66196ce3a53d08e": {
       "id": "0c7728ba66196ce3a53d08e",
-      "name": "Markdown",
+      "name": "NewsletterRegistrationForm",
       "props": {
-        "gridArea": "markdown_versandinfo",
+        "gridArea": "home_newsletter",
         "__version": 1,
-        "content": "## Versand und Lieferung\nLieferung erfolgt in 2-4 Werktagen."
+        "subscriptionID": "newsletter-de",
+        "showb2x": false,
+        "headline": "Newsletter",
+        "description": "5 EUR Gutschein sichern",
+        "submitButtonText": "Anmelden",
+        "showFirstname": true,
+        "showLastname": false,
+        "successHeadline": "Fast geschafft"
       },
-      "createdAt": 1745600000000,
-      "updatedAt": 1745600000000,
-      "hash": "14719274316547"
+      "createdAt": 1745950400000,
+      "updatedAt": 1745950400000,
+      "hash": "2887880721667"
     },
     "0d7728ba66196ce3a53d08e": {
       "id": "0d7728ba66196ce3a53d08e",
-      "name": "NewsletterForm",
+      "name": "HeadlineWithProducts",
       "props": {
-        "gridArea": "newsletter_signup",
+        "gridArea": "home_headline_produkte_hotel",
         "__version": 1,
-        "headline": "Newsletter",
-        "subline": "5 EUR Gutschein sichern"
+        "headline": "Hotelausstattung",
+        "image": "/img/kategorien/hotel.jpg",
+        "imageText": "Hotel",
+        "link": "/de-de/hotel/",
+        "searchSwitch": true,
+        "search": "hotel",
+        "skuList": []
       },
-      "createdAt": 1745700000000,
-      "updatedAt": 1745700000000,
-      "hash": "13213330746910"
+      "createdAt": 1746036800000,
+      "updatedAt": 1746036800000,
+      "hash": "10076675207553"
     },
     "0e7728ba66196ce3a53d08e": {
       "id": "0e7728ba66196ce3a53d08e",
-      "name": "Accordion",
+      "name": "BrandLogoSlider",
       "props": {
-        "gridArea": "faq_gastronomie",
+        "gridArea": "home_marken_slider",
         "__version": 1,
+        "showDefaultDataByControlGroup": true,
+        "title": "Unsere Marken",
+        "linkLabel": "Alle Marken",
+        "link": "/de-de/marken/",
         "items": [
           {
-            "question": "Liefert ihr an Gastronomiebetriebe?",
-            "answer": "Ja, deutschlandweit."
+            "imgSrc": "/img/marken/villeroy.svg",
+            "link": "/de-de/marken/villeroy-boch/",
+            "name": "Villeroy & Boch"
           },
           {
-            "question": "Gibt es Mengenrabatte?",
-            "answer": "Ab 10 Stueck."
+            "imgSrc": "/img/marken/schott.svg",
+            "link": "/de-de/marken/schott-zwiesel/",
+            "name": "Schott Zwiesel"
           }
         ]
       },
-      "createdAt": 1745800000000,
-      "updatedAt": 1745800000000,
-      "hash": "13768266733301"
+      "createdAt": 1746123200000,
+      "updatedAt": 1746123200000,
+      "hash": "10711756954066"
     },
     "0f7728ba66196ce3a53d08e": {
       "id": "0f7728ba66196ce3a53d08e",
-      "name": "LinkList",
+      "name": "Divider",
       "props": {
-        "gridArea": "footer_kategorien",
+        "gridArea": "home_divider_1",
         "__version": 1,
-        "headline": "Beliebte Kategorien",
-        "links": [
-          {
-            "label": "Bestecke",
-            "href": "/de-de/tischkultur/bestecke"
-          },
-          {
-            "label": "Glaeser",
-            "href": "/de-de/tischkultur/glaeser"
-          },
-          {
-            "label": "Chafing Dishes",
-            "href": "/de-de/buffet/chafing-dishes"
-          }
-        ]
+        "transparent": false
       },
-      "createdAt": 1745900000000,
-      "updatedAt": 1745900000000,
-      "hash": "11501770996311"
+      "createdAt": 1746209600000,
+      "updatedAt": 1746209600000,
+      "hash": "12069468707606"
     }
   },
   "allComponents": [
@@ -317,32 +374,32 @@ const DEMO_STORY = {
       "gap": 10,
       "grid": [
         [
-          "067728ba66196ce3a53d08e",
-          "067728ba66196ce3a53d08e"
+          "087728ba66196ce3a53d08e",
+          "087728ba66196ce3a53d08e"
         ],
         [
           "017728ba66196ce3a53d08e",
-          "027728ba66196ce3a53d08e"
+          "0f7728ba66196ce3a53d08e"
         ],
         [
           "037728ba66196ce3a53d08e",
-          "."
+          "037728ba66196ce3a53d08e"
         ],
         [
-          "077728ba66196ce3a53d08e",
+          "047728ba66196ce3a53d08e",
+          "047728ba66196ce3a53d08e"
+        ],
+        [
+          "067728ba66196ce3a53d08e",
           "077728ba66196ce3a53d08e"
         ],
         [
-          "087728ba66196ce3a53d08e",
-          "097728ba66196ce3a53d08e"
+          "027728ba66196ce3a53d08e",
+          "."
         ],
         [
           "0a7728ba66196ce3a53d08e",
           "0a7728ba66196ce3a53d08e"
-        ],
-        [
-          "0c7728ba66196ce3a53d08e",
-          "."
         ]
       ],
       "widths": [
@@ -364,25 +421,25 @@ const DEMO_STORY = {
       "gap": 15,
       "grid": [
         [
-          "067728ba66196ce3a53d08e"
+          "087728ba66196ce3a53d08e"
         ],
         [
           "017728ba66196ce3a53d08e"
         ],
         [
-          "027728ba66196ce3a53d08e"
-        ],
-        [
           "037728ba66196ce3a53d08e"
         ],
         [
+          "047728ba66196ce3a53d08e"
+        ],
+        [
+          "0c7728ba66196ce3a53d08e"
+        ],
+        [
+          "0e7728ba66196ce3a53d08e"
+        ],
+        [
           "0a7728ba66196ce3a53d08e"
-        ],
-        [
-          "0d7728ba66196ce3a53d08e"
-        ],
-        [
-          "0f7728ba66196ce3a53d08e"
         ]
       ],
       "widths": [
@@ -444,7 +501,7 @@ const DEMO_STORY = {
       ]
     }
   },
-  "hash": "68fe2c3b81f5e66be15f1a9c6eef4633",
+  "hash": "ed4f6b3a870ab5fc28b1f9190838876a",
   "plugins": {
     "fullWidth": {},
     "bg": {}

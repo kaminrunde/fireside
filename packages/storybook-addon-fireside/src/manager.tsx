@@ -21,10 +21,23 @@ addons.register("addons:storyboard-bridge", (api) => {
     ),
   });
 
-  let component = {
+  let component: {
+    id: string;
+    name: string;
+    props: object;
+    createdAt?: number;
+    updatedAt?: number;
+  } = {
     id: uuidv4(),
     name: "not-known",
     props: {},
+  };
+
+  /** a component that is about to be created must not inherit timestamps */
+  const resetComponent = () => {
+    component.id = uuidv4();
+    delete component.createdAt;
+    delete component.updatedAt;
   };
 
   if (window.localStorage.getItem("debugFireside")) {
@@ -117,17 +130,25 @@ addons.register("addons:storyboard-bridge", (api) => {
     if (typeof e.data !== "object" || !e.data.type) return;
     switch (e.data.type) {
       case 'fireside-abort-component': {
-        component.id = uuidv4();
+        resetComponent();
         channel.emit("storyboard-bridge/clear-props");
         break;
       }
       case "fireside-hydrate-component": {
         if (!e.data.component) {
-          component.id = uuidv4();
+          resetComponent();
           channel.emit("storyboard-bridge/clear-props");
         }
 
         if (e.data.component) {
+          /**
+           * carry over the timestamps of the component being edited. The
+           * preview only sends the id back, so without this
+           * sendToFiresideApp() sees no createdAt and stamps a fresh one,
+           * which made every edit look like a new creation
+           */
+          component.createdAt = e.data.component.createdAt;
+          component.updatedAt = e.data.component.updatedAt;
           channel.emit("storyboard-bridge/hydrate-component", e.data.component);
         } else if (e.data.defaultStory) {
           let paths = e.data.defaultStory.split("/");

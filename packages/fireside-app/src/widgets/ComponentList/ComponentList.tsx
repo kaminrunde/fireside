@@ -63,9 +63,9 @@ export default function ComponentList() {
               {c.name}
             </div>
             <div className="meta">
-              changed {parseTimestamp(c.updatedAt)}
-              <span className="dot">·</span>
               created {parseTimestamp(c.createdAt)}
+              <span className="dot">·</span>
+              changed {parseTimestamp(c.updatedAt)}
             </div>
             <MatchPreview component={c} query={query} />
           </div>

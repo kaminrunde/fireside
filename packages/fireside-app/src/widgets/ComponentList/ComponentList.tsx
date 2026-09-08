@@ -6,6 +6,8 @@ import parseTimestamp from "./utils/parseTimestamp";
 import { useUsedComponents } from "modules/grid";
 import ExtendedButtonRowList from "./ExtendedButtonRowList";
 import ExtendedButtonBottomList from "./ExtendedButtonBottomList";
+import BreakpointIcons from "./BreakpointIcons";
+import * as $selection from "modules/selection";
 import { findMatches, matchesQuery, Match } from "./utils/searchComponents";
 import { FiSearch, FiX, FiEdit2, FiTrash2 } from "react-icons/fi";
 import theme from "theme";
@@ -14,7 +16,13 @@ export default function ComponentList() {
   const components = useComponents();
   const loading = useLoadingComponent();
   const usedComponents = useUsedComponents();
+  const selection = $selection.useSelection();
   const [query, setQuery] = React.useState("");
+
+  const selectedIds = React.useMemo(
+    () => new Set(selection.ids),
+    [selection.ids]
+  );
 
   const visible = React.useMemo(
     () => components.data.filter((c) => matchesQuery(c, query)),
@@ -53,7 +61,12 @@ export default function ComponentList() {
       )}
 
       {visible.map((c) => (
-        <Row key={c.id} inUse={usedComponents.data.has(c.id)}>
+        <Row
+          key={c.id}
+          inUse={usedComponents.data.has(c.id)}
+          selected={selectedIds.has(c.id)}
+          onClick={() => selection.toggle(c.id)}
+        >
           <div className="head">
             {/* the title attribute keeps the full name reachable once it is cut off */}
             <div className="title" title={c.props.gridArea}>
@@ -69,7 +82,10 @@ export default function ComponentList() {
             </div>
             <MatchPreview component={c} query={query} />
           </div>
-          <div className="button-list">
+          {/* stopPropagation so acting on a row does not also toggle it */}
+          <div className="button-list" onClick={(e) => e.stopPropagation()}>
+            <BreakpointIcons componentId={c.id} />
+            <div className="divider" />
             <ExtendedButtonRowList c={c} />
             <button
               className="icon-btn"
@@ -278,15 +294,17 @@ const Wrapper = styled.div`
   }
 `;
 
-const Row = styled.div<{ inUse: boolean }>`
+const Row = styled.div<{ inUse: boolean; selected: boolean }>`
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
   margin-bottom: 8px;
-  background: ${theme.color.surface};
-  border: 1px solid ${theme.color.border};
+  background: ${(p) => (p.selected ? "#eff5fb" : theme.color.surface)};
+  border: 1px solid
+    ${(p) => (p.selected ? theme.color.accent : theme.color.border)};
   border-radius: ${theme.radius};
+  cursor: pointer;
   /**
    * the accent for components that sit in no grid is drawn as an inset
    * shadow rather than a left border, so the card keeps its full outline
@@ -363,6 +381,14 @@ const Row = styled.div<{ inUse: boolean }>`
     align-items: center;
     gap: 2px;
     flex-shrink: 0;
+    cursor: default;
+
+    > .divider {
+      width: 1px;
+      height: 20px;
+      margin: 0 6px;
+      background: ${theme.color.border};
+    }
 
     /* also applies to the plugin buttons, they render into this row */
     .icon-btn {

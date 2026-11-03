@@ -1,5 +1,5 @@
-import { jsx as _jsx } from "react/jsx-runtime";
 import { v4 as uuidv4 } from "uuid";
+import * as React from "react";
 import { addons, types } from "storybook/manager-api";
 import { AddonPanel } from "storybook/internal/components";
 import Panel from "./Panel/Panel";
@@ -11,7 +11,8 @@ addons.register("addons:storyboard-bridge", (api) => {
     addons.add("addons:storyboard-bridge", {
         type: types.PANEL,
         title: "Eigenschaften",
-        render: ({ active }) => (_jsx(AddonPanel, { active: active, children: _jsx(Panel, { channel: channel, api: api }, "fireside") })),
+        render: ({ active }) => (React.createElement(AddonPanel, { active: active },
+            React.createElement(Panel, { channel: channel, api: api, key: "fireside" }))),
     });
     let component = {
         id: uuidv4(),

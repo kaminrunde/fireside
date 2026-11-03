@@ -1,4 +1,3 @@
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import * as React from "react";
 import styled from "styled-components";
 import useKnobs from "./hooks/useKnobs";
@@ -17,13 +16,16 @@ export default function Panel({ channel }) {
         // @ts-ignore
         window.__addCustomKnob = (name, component) => setCustomComponents((dict) => ({ ...dict, [name]: component }));
     }, []);
-    return (_jsx(CustomComponentsProvider, { value: customComponents, children: _jsxs(Wrapper, { children: [_jsx(Tabs, { tabs: tabs }, key), knobs
-                    .filter((knob) => {
-                    if (!knob.options.shouldDisplay)
-                        return true;
-                    return knob.options.shouldDisplay(props);
-                })
-                    .map((knob) => (_jsx(Widget, { knob: knob, parentProps: props, onUpdate: (val) => update(knob, val) }, knob.id + key)))] }) }));
+    return (React.createElement(CustomComponentsProvider, { value: customComponents },
+        React.createElement(Wrapper, null,
+            React.createElement(Tabs, { key: key, tabs: tabs }),
+            knobs
+                .filter((knob) => {
+                if (!knob.options.shouldDisplay)
+                    return true;
+                return knob.options.shouldDisplay(props);
+            })
+                .map((knob) => (React.createElement(Widget, { key: knob.id + key, knob: knob, parentProps: props, onUpdate: (val) => update(knob, val) }))))));
 }
 const Wrapper = styled.div `
   color-scheme: light;

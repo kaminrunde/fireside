@@ -11,7 +11,29 @@ let forceReRender: () => void = () => null;
 let currentStoryId = "";
 let currentKnobs: t.Knob[] = [];
 let currentController: t.Controller = {};
-const channel: t.Channel = addons.getChannel();
+// Den Channel NICHT beim Modul-Load abgreifen: Im Production-Preview-Bundle
+// (storybook build) wird dieses Modul über preview.tsx -> registerWidgetSelector
+// ausgewertet, bevor Storybook den Browser-Channel gesetzt hat. `addons.getChannel()`
+// liefert dann einen Mock ohne Transport, alle Emits/Listener hier liefen ins
+// Leere und das Panel blieb im Static-Build leer (im Dev-Server stimmte das
+// Timing zufällig). Deshalb lazy: erster Zugriff aus `getKnobs()` zur Render-Zeit,
+// die Listener werden dabei einmalig registriert.
+let realChannel: t.Channel | null = null;
+let listenersRegistered = false;
+const channel: Pick<t.Channel, "emit" | "on"> = {
+  emit: (event: t.Event, data?: any) => resolveChannel().emit(event, data),
+  on: (event: t.Event, cb: (val: any) => void) => resolveChannel().on(event, cb),
+};
+function resolveChannel(): t.Channel {
+  if (!realChannel) {
+    realChannel = addons.getChannel();
+    if (!listenersRegistered) {
+      listenersRegistered = true;
+      registerListeners();
+    }
+  }
+  return realChannel;
+}
 let hydratedProps: null | object = null;
 const functionRegistry: any = {};
 
@@ -24,6 +46,7 @@ export function getKnobs(
   name: string,
   rerender: () => void
 ) {
+  resolveChannel();
   contextStore[context.id] = context;
   forceReRender = rerender;
   const knobs = simpleKnobs.map((simpleKnob) => {
@@ -91,102 +114,104 @@ function clearKnobs() {
   );
 }
 
-channel.on("storyboard-bridge/clear-props", () => {
-  clearKnobs();
-});
-
-channel.on("storyboard-bridge/set-knob-value", ({ knobId, payload }) => {
-  const knob = knobStore[knobId];
-  if (!knob) throw new Error("#1 something strange happen");
-  knob.value = payload;
-  channel.emit(
-    "storyboard-bridge/update-component-props",
-    getProps(currentKnobs)
-  );
-  forceReRender();
-});
-
-channel.on(
-  "storyboard-bridge/hydrate-component",
-  async (component: t.Component) => {
-    const selector = selectorStore[component.name];
-    if (!selector) {
-      throw new Error(
-        'you forgot to implement "registerWidgetSelector" for widget ' +
-          component.name
-      );
-    }
+function registerListeners() {
+  channel.on("storyboard-bridge/clear-props", () => {
     clearKnobs();
-    let context: t.StoryContext = selector(component.props);
-    // transform of the story name to match the storybook id
-    // storybook is doing this, when the story is registered
-    // based on the exported storyname
-    context.id = toId(context.kind, startCase(context.story));
-    context.story = transformIfPascalCase(context.story);
+  });
 
-    const hydrate = () => {
-      const props = currentController.versionUpdate
-        ? currentController.versionUpdate(component.props)
-        : component.props;
-      currentKnobs.forEach((knob) => {
-        const hydratedValue = objPath.get(props, knob.prop);
-        knob.value = hydratedValue ?? knob.value;
-      });
+  channel.on("storyboard-bridge/set-knob-value", ({ knobId, payload }) => {
+    const knob = knobStore[knobId];
+    if (!knob) throw new Error("#1 something strange happen");
+    knob.value = payload;
+    channel.emit(
+      "storyboard-bridge/update-component-props",
+      getProps(currentKnobs)
+    );
+    forceReRender();
+  });
+
+  channel.on(
+    "storyboard-bridge/hydrate-component",
+    async (component: t.Component) => {
+      const selector = selectorStore[component.name];
+      if (!selector) {
+        throw new Error(
+          'you forgot to implement "registerWidgetSelector" for widget ' +
+            component.name
+        );
+      }
+      clearKnobs();
+      let context: t.StoryContext = selector(component.props);
+      // transform of the story name to match the storybook id
+      // storybook is doing this, when the story is registered
+      // based on the exported storyname
+      context.id = toId(context.kind, startCase(context.story));
+      context.story = transformIfPascalCase(context.story);
+
+      const hydrate = () => {
+        const props = currentController.versionUpdate
+          ? currentController.versionUpdate(component.props)
+          : component.props;
+        currentKnobs.forEach((knob) => {
+          const hydratedValue = objPath.get(props, knob.prop);
+          knob.value = hydratedValue ?? knob.value;
+        });
+        channel.emit(
+          "storyboard-bridge/set-knobs",
+          replaceFunctionsWithIdsAndEmit(currentKnobs)
+        );
+        channel.emit(
+          "storyboard-bridge/update-component-props",
+          getProps(currentKnobs)
+        );
+        forceReRender();
+      };
+
+      if (currentStoryId !== context.id) {
+        hydratedProps = component.props;
+        channel.emit("storyboard-bridge/select-story", context);
+        while (componentToBeHydrated !== context.id) {
+          await new Promise((resolve) =>
+            setTimeout(() => {
+              resolve(true);
+            }, 16)
+          );
+        }
+        hydrate();
+      } else hydrate();
+    }
+  );
+
+  channel.emit("storyboard-bridge/init-knob-manager");
+
+  // Re-emit current knobs when the manager panel requests them (fixes race condition
+  // where preview emits knobs before the manager panel has mounted its listeners)
+  channel.on("storyboard-bridge/request-knobs", () => {
+    if (currentKnobs.length > 0) {
       channel.emit(
         "storyboard-bridge/set-knobs",
         replaceFunctionsWithIdsAndEmit(currentKnobs)
       );
+    }
+  });
+
+  channel.on("storyboard-bridge/story-component-loaded", (loadedComponent) => {
+    componentToBeHydrated = loadedComponent;
+  });
+
+  channel.on("storyboard-bridge/register-function", ({ id, fn }) => {
+    functionRegistry[id] = fn;
+  });
+
+  channel.on("storyboard-bridge/request-function", (id) => {
+    if (functionRegistry[id]) {
       channel.emit(
-        "storyboard-bridge/update-component-props",
-        getProps(currentKnobs)
+        `storyboard-bridge/response-function-${id}`,
+        functionRegistry[id]
       );
-      forceReRender();
-    };
-
-    if (currentStoryId !== context.id) {
-      hydratedProps = component.props;
-      channel.emit("storyboard-bridge/select-story", context);
-      while (componentToBeHydrated !== context.id) {
-        await new Promise((resolve) =>
-          setTimeout(() => {
-            resolve(true);
-          }, 16)
-        );
-      }
-      hydrate();
-    } else hydrate();
-  }
-);
-
-channel.emit("storyboard-bridge/init-knob-manager");
-
-// Re-emit current knobs when the manager panel requests them (fixes race condition
-// where preview emits knobs before the manager panel has mounted its listeners)
-channel.on("storyboard-bridge/request-knobs", () => {
-  if (currentKnobs.length > 0) {
-    channel.emit(
-      "storyboard-bridge/set-knobs",
-      replaceFunctionsWithIdsAndEmit(currentKnobs)
-    );
-  }
-});
-
-channel.on("storyboard-bridge/story-component-loaded", (loadedComponent) => {
-  componentToBeHydrated = loadedComponent;
-});
-
-channel.on("storyboard-bridge/register-function", ({ id, fn }) => {
-  functionRegistry[id] = fn;
-});
-
-channel.on("storyboard-bridge/request-function", (id) => {
-  if (functionRegistry[id]) {
-    channel.emit(
-      `storyboard-bridge/response-function-${id}`,
-      functionRegistry[id]
-    );
-  }
-});
+    }
+  });
+}
 
 const startCase = (str: string) => {
   return str

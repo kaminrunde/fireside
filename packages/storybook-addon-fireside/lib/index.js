@@ -1,4 +1,3 @@
-import { jsx as _jsx } from "react/jsx-runtime";
 import * as React from "react";
 import * as manager from "./knob-manager";
 import WidgetWrapper from "./WidgetWrapper";
@@ -129,7 +128,7 @@ export const create = (name, component, simpleKnobs, controller = {}) => (args, 
     }, [context.id]);
     const knobs = manager.getKnobs(context, simpleKnobs, controller, name, () => update((i) => i + 1));
     let props = manager.getProps(knobs);
-    return _jsx(WidgetWrapper, { component, props, controller });
+    return React.createElement(WidgetWrapper, { component, props, controller });
 };
 export function registerWidgetSelector(name, cb) {
     manager.addSelector(name, cb);

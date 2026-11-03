@@ -1,7 +1,8 @@
+import * as React from "react";
 type Props = {
     options: {
         __name: string;
     };
 };
-export default function CustomKnobPlaceholder(props: Props): import("react/jsx-runtime").JSX.Element;
+export default function CustomKnobPlaceholder(props: Props): React.JSX.Element;
 export {};

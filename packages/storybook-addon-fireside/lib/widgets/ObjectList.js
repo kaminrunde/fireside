@@ -1,4 +1,3 @@
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import * as React from "react";
 import styled from "styled-components";
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, } from "@dnd-kit/core";
@@ -23,44 +22,49 @@ export default function ObjectList(props) {
             props.onChange(arrayMove(nonNull(props.value), oldIndex, newIndex));
         }
     };
-    return (_jsxs(Wrapper, { children: [isActive && (_jsx("div", { className: "edit", children: props.options.schema
-                    .filter((knob) => {
-                    if (!knob.options.shouldDisplay)
-                        return true;
-                    const objectProps = props.value[activeRowIndex] ?? {};
-                    return knob.options.shouldDisplay(objectProps, props.parentProps);
-                })
-                    .map((knob) => (_jsx(Widget, { knob: {
-                        ...knob,
-                        value: objPath.get(props.value[activeRowIndex], knob.prop),
-                    }, parentProps: props.parentProps, onUpdate: (val) => props.onChange(produce(nonNull(props.value), (value) => {
-                        objPath.set(value[activeRowIndex], knob.prop, val);
-                    })) }, knob.prop))) })), isActive || (_jsx(DndContext, { sensors: sensors, collisionDetection: closestCenter, onDragEnd: handleDragEnd, children: _jsx(SortableContext, { items: props.value.map((_, i) => String(i)), strategy: verticalListSortingStrategy, children: _jsx("ul", { children: props.value.map((value, index) => (_jsx(SortableItem, { id: String(index), value: value, getName: props.options.getRowName, onDelete: () => props.onChange(nonNull(props.value.filter((_, i) => i !== index))), onUpdate: () => setActiveRowIndex(index) }, `item-${index}`))) }) }) })), _jsx(ListActions, { addLabel: isActive ? "SAVE" : "ADD", onAdd: () => {
-                    if (isActive) {
-                        setActiveRowIndex(null);
-                    }
-                    else {
-                        props.onChange(produce(props.value, (value) => {
-                            let entry = {};
-                            for (let knob of props.options.schema) {
-                                objPath.set(entry, knob.prop, knob.value);
-                            }
-                            value.push(entry);
-                        }));
-                        setActiveRowIndex(props.value.length);
-                    }
-                }, 
-                /* while a row is being edited the list is hidden, so are its actions */
-                actions: isActive
-                    ? []
-                    : [
-                        {
-                            label: "DELETE ALL",
-                            disabled: nonNull(props.value).length === 0,
-                            confirm: `Delete all ${nonNull(props.value).length} entries?`,
-                            onClick: () => props.onChange([]),
-                        },
-                    ] })] }));
+    return (React.createElement(Wrapper, null,
+        isActive && (React.createElement("div", { className: "edit" }, props.options.schema
+            .filter((knob) => {
+            if (!knob.options.shouldDisplay)
+                return true;
+            const objectProps = props.value[activeRowIndex] ?? {};
+            return knob.options.shouldDisplay(objectProps, props.parentProps);
+        })
+            .map((knob) => (React.createElement(Widget, { key: knob.prop, knob: {
+                ...knob,
+                value: objPath.get(props.value[activeRowIndex], knob.prop),
+            }, parentProps: props.parentProps, onUpdate: (val) => props.onChange(produce(nonNull(props.value), (value) => {
+                objPath.set(value[activeRowIndex], knob.prop, val);
+            })) }))))),
+        isActive || (React.createElement(DndContext, { sensors: sensors, collisionDetection: closestCenter, onDragEnd: handleDragEnd },
+            React.createElement(SortableContext, { items: props.value.map((_, i) => String(i)), strategy: verticalListSortingStrategy },
+                React.createElement("ul", null, props.value.map((value, index) => (React.createElement(SortableItem, { key: `item-${index}`, id: String(index), value: value, getName: props.options.getRowName, onDelete: () => props.onChange(nonNull(props.value.filter((_, i) => i !== index))), onUpdate: () => setActiveRowIndex(index) }))))))),
+        React.createElement(ListActions, { addLabel: isActive ? "SAVE" : "ADD", onAdd: () => {
+                if (isActive) {
+                    setActiveRowIndex(null);
+                }
+                else {
+                    props.onChange(produce(props.value, (value) => {
+                        let entry = {};
+                        for (let knob of props.options.schema) {
+                            objPath.set(entry, knob.prop, knob.value);
+                        }
+                        value.push(entry);
+                    }));
+                    setActiveRowIndex(props.value.length);
+                }
+            }, 
+            /* while a row is being edited the list is hidden, so are its actions */
+            actions: isActive
+                ? []
+                : [
+                    {
+                        label: "DELETE ALL",
+                        disabled: nonNull(props.value).length === 0,
+                        confirm: `Delete all ${nonNull(props.value).length} entries?`,
+                        onClick: () => props.onChange([]),
+                    },
+                ] })));
 }
 function SortableItem({ id, value, onDelete, onUpdate, getName, }) {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
@@ -72,8 +76,17 @@ function SortableItem({ id, value, onDelete, onUpdate, getName, }) {
     if (!value)
         return null;
     if (pendingDelete)
-        return (_jsxs(Item, { ref: setNodeRef, style: style, ...attributes, className: "SortableItem", highlight: "true", children: [_jsxs("span", { children: ["Delete \"", getName(value), "\"?"] }), _jsx("div", { className: "update keep", onMouseDown: onDelete, children: "Y" }), _jsx("div", { className: "delete keep", onMouseDown: () => setPendingDelete(false), children: "N" })] }));
-    return (_jsxs(Item, { ref: setNodeRef, style: style, ...attributes, ...listeners, className: "SortableItem", highlight: "true", children: [_jsx("span", { children: getName(value) }), _jsx("div", { className: "update", onPointerDown: (e) => e.stopPropagation(), onMouseDown: onUpdate, children: "U" }), _jsx("div", { className: "delete", onPointerDown: (e) => e.stopPropagation(), onMouseDown: () => setPendingDelete(true), children: "D" })] }));
+        return (React.createElement(Item, { ref: setNodeRef, style: style, ...attributes, className: "SortableItem", highlight: "true" },
+            React.createElement("span", null,
+                "Delete \"",
+                getName(value),
+                "\"?"),
+            React.createElement("div", { className: "update keep", onMouseDown: onDelete }, "Y"),
+            React.createElement("div", { className: "delete keep", onMouseDown: () => setPendingDelete(false) }, "N")));
+    return (React.createElement(Item, { ref: setNodeRef, style: style, ...attributes, ...listeners, className: "SortableItem", highlight: "true" },
+        React.createElement("span", null, getName(value)),
+        React.createElement("div", { className: "update", onPointerDown: (e) => e.stopPropagation(), onMouseDown: onUpdate }, "U"),
+        React.createElement("div", { className: "delete", onPointerDown: (e) => e.stopPropagation(), onMouseDown: () => setPendingDelete(true) }, "D")));
 }
 const Wrapper = styled.div `
   > .edit {

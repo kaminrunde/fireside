@@ -1,3 +1,4 @@
+import * as React from "react";
 import * as t from "../types";
 type Props = {
     value: string;
@@ -6,5 +7,5 @@ type Props = {
     options: t.SelectOptions;
     hasError: boolean;
 };
-export default function Select(props: Props): import("react/jsx-runtime").JSX.Element;
+export default function Select(props: Props): React.JSX.Element;
 export {};

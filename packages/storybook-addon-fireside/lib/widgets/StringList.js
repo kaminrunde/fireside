@@ -1,4 +1,3 @@
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import * as React from "react";
 import styled from "styled-components";
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, } from "@dnd-kit/core";
@@ -26,27 +25,35 @@ export default function StringList(props) {
             props.onChange(arrayMove(props.value, oldIndex, newIndex));
         }
     };
-    return (_jsxs(Wrapper, { children: [_jsx(DndContext, { sensors: sensors, collisionDetection: closestCenter, onDragEnd: handleDragEnd, children: _jsx(SortableContext, { items: props.value.map((_, i) => String(i)), strategy: verticalListSortingStrategy, children: _jsx("ul", { children: props.value.map((value, index) => (_jsx(SortableItem, { id: String(index), value: value, onDelete: () => props.onChange(props.value.filter((_, i) => i !== index)), onUpdate: (val) => {
-                                if (!val) {
-                                    props.onChange(props.value.filter((_, i) => i !== index));
-                                    return;
-                                }
-                                const newValue = produce(props.value, (value) => {
-                                    value[index] = val;
-                                });
-                                props.onChange(newValue);
-                            } }, `item-${value + index}`))) }) }) }), _jsx(ListActions, { addLabel: "ADD", onAdd: () => props.onChange([...props.value, ""]), actions: [
-                    {
-                        label: "ADD MULTIPLE",
-                        onClick: () => setShowBulkInput(true),
-                    },
-                    {
-                        label: "DELETE ALL",
-                        disabled: props.value.length === 0,
-                        confirm: `Delete all ${props.value.length} entries?`,
-                        onClick: () => props.onChange([]),
-                    },
-                ] }), showBulkInput && (_jsxs(BulkInputWrapper, { children: [_jsx("textarea", { value: bulkValue, onChange: (e) => setBulkValue(e.target.value), placeholder: "Enter values, one per line..." }), _jsx("button", { onClick: handleBulkAdd, children: "Submit" }), _jsx("button", { onClick: () => setShowBulkInput(false), children: "Close" })] }))] }));
+    return (React.createElement(Wrapper, null,
+        React.createElement(DndContext, { sensors: sensors, collisionDetection: closestCenter, onDragEnd: handleDragEnd },
+            React.createElement(SortableContext, { items: props.value.map((_, i) => String(i)), strategy: verticalListSortingStrategy },
+                React.createElement("ul", null, props.value.map((value, index) => (React.createElement(SortableItem, { key: `item-${value + index}`, id: String(index), value: value, onDelete: () => props.onChange(props.value.filter((_, i) => i !== index)), onUpdate: (val) => {
+                        if (!val) {
+                            props.onChange(props.value.filter((_, i) => i !== index));
+                            return;
+                        }
+                        const newValue = produce(props.value, (value) => {
+                            value[index] = val;
+                        });
+                        props.onChange(newValue);
+                    } })))))),
+        React.createElement(ListActions, { addLabel: "ADD", onAdd: () => props.onChange([...props.value, ""]), actions: [
+                {
+                    label: "ADD MULTIPLE",
+                    onClick: () => setShowBulkInput(true),
+                },
+                {
+                    label: "DELETE ALL",
+                    disabled: props.value.length === 0,
+                    confirm: `Delete all ${props.value.length} entries?`,
+                    onClick: () => props.onChange([]),
+                },
+            ] }),
+        showBulkInput && (React.createElement(BulkInputWrapper, null,
+            React.createElement("textarea", { value: bulkValue, onChange: (e) => setBulkValue(e.target.value), placeholder: "Enter values, one per line..." }),
+            React.createElement("button", { onClick: handleBulkAdd }, "Submit"),
+            React.createElement("button", { onClick: () => setShowBulkInput(false) }, "Close")))));
 }
 function SortableItem({ id, value, onDelete, onUpdate, }) {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
@@ -83,13 +90,23 @@ function SortableItem({ id, value, onDelete, onUpdate, }) {
         return () => input.current && input.current.removeEventListener("keyup", e);
     }, [pendingEdit, newVal]);
     if (pendingDelete)
-        return (_jsxs(Item, { ref: setNodeRef, style: style, className: "SortableItem", highlight: "true", children: [_jsxs("span", { children: ["Delete \"", value, "\"?"] }), _jsx("div", { className: "update keep", onMouseDown: onDelete, children: "Y" }), _jsx("div", { className: "delete keep", onMouseDown: () => setPendingDelete(false), children: "N" })] }));
+        return (React.createElement(Item, { ref: setNodeRef, style: style, className: "SortableItem", highlight: "true" },
+            React.createElement("span", null,
+                "Delete \"",
+                value,
+                "\"?"),
+            React.createElement("div", { className: "update keep", onMouseDown: onDelete }, "Y"),
+            React.createElement("div", { className: "delete keep", onMouseDown: () => setPendingDelete(false) }, "N")));
     if (pendingEdit)
-        return (_jsx(Item, { ref: setNodeRef, style: style, className: "SortableItem", highlight: "true", children: _jsx("input", { ref: input, type: "text", value: newVal, onPointerDown: (e) => e.stopPropagation(), onChange: (e) => setNewVal(e.target.value), onBlur: () => {
+        return (React.createElement(Item, { ref: setNodeRef, style: style, className: "SortableItem", highlight: "true" },
+            React.createElement("input", { ref: input, type: "text", value: newVal, onPointerDown: (e) => e.stopPropagation(), onChange: (e) => setNewVal(e.target.value), onBlur: () => {
                     setPendingEdit(false);
                     onUpdate(newVal);
-                } }) }));
-    return (_jsxs(Item, { ref: setNodeRef, style: style, ...attributes, ...listeners, className: "SortableItem", children: [_jsx("span", { children: value }), _jsx("div", { className: "update", onPointerDown: (e) => e.stopPropagation(), onMouseDown: () => setPendingEdit(true), children: "U" }), _jsx("div", { className: "delete", onPointerDown: (e) => e.stopPropagation(), onMouseDown: () => setPendingDelete(true), children: "D" })] }));
+                } })));
+    return (React.createElement(Item, { ref: setNodeRef, style: style, ...attributes, ...listeners, className: "SortableItem" },
+        React.createElement("span", null, value),
+        React.createElement("div", { className: "update", onPointerDown: (e) => e.stopPropagation(), onMouseDown: () => setPendingEdit(true) }, "U"),
+        React.createElement("div", { className: "delete", onPointerDown: (e) => e.stopPropagation(), onMouseDown: () => setPendingDelete(true) }, "D")));
 }
 const BulkInputWrapper = styled.div `
   margin-top: 15px;

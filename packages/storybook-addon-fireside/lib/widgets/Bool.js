@@ -1,7 +1,7 @@
-import { jsx as _jsx } from "react/jsx-runtime";
+import * as React from "react";
 import styled from "styled-components";
 export default function Bool(props) {
-    return (_jsx(Wrapper, { on: props.value.toString(), onClick: () => props.onChange(!props.value), children: props.value ? "ON" : "OFF" }));
+    return (React.createElement(Wrapper, { on: props.value.toString(), onClick: () => props.onChange(!props.value) }, props.value ? "ON" : "OFF"));
 }
 const Wrapper = styled.button `
   padding: 10px 20px;

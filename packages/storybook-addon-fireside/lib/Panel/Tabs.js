@@ -1,9 +1,9 @@
-import { jsx as _jsx } from "react/jsx-runtime";
+import * as React from "react";
 import styled from "styled-components";
 export default function Tabs(props) {
     if (props.tabs.tabs.length === 1)
         return null;
-    return (_jsx(Wrapper, { children: props.tabs.tabs.map((tab) => (_jsx(Tab, { active: (tab === props.tabs.activeTab).toString(), children: tab, onClick: () => props.tabs.setActiveTab(tab) }, tab))) }));
+    return (React.createElement(Wrapper, null, props.tabs.tabs.map((tab) => (React.createElement(Tab, { key: tab, active: (tab === props.tabs.activeTab).toString(), children: tab, onClick: () => props.tabs.setActiveTab(tab) })))));
 }
 const Wrapper = styled.div `
   display: flex;

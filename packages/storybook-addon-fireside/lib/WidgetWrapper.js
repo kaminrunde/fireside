@@ -1,10 +1,9 @@
-import { jsx as _jsx } from "react/jsx-runtime";
 import * as React from "react";
 export default function WidgetWrapper(props) {
     const [setupFinished, componentProps, key] = useComponentProps(props);
     if (!setupFinished)
         return null;
-    return _jsx(props.component, { ...componentProps }, key);
+    return React.createElement(props.component, { key: key, ...componentProps });
 }
 function useComponentProps(props) {
     const [finished, setFinished] = React.useState(false);

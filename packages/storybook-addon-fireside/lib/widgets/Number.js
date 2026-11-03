@@ -1,7 +1,8 @@
-import { jsx as _jsx } from "react/jsx-runtime";
+import * as React from "react";
 import styled from "styled-components";
 export default function String(props) {
-    return (_jsx(Wrapper, { focus: props.focus.toString(), children: _jsx("input", { type: "number", value: props.value, onChange: (e) => props.onChange(parseInt(e.target.value)) }) }));
+    return (React.createElement(Wrapper, { focus: props.focus.toString() },
+        React.createElement("input", { type: "number", value: props.value, onChange: (e) => props.onChange(parseInt(e.target.value)) })));
 }
 const Wrapper = styled.div `
   border: 1px solid

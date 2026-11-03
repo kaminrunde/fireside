@@ -1,4 +1,3 @@
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import * as React from "react";
 import getWidget from "../widgets";
 import styled from "styled-components";
@@ -17,7 +16,11 @@ export default function Widget(props) {
     const error = props.knob.options.validate
         ? props.knob.options.validate(value)
         : null;
-    return (_jsxs(Wrapper, { ref: ref, onClick: handle, children: [_jsx("h3", { className: "label", children: props.knob.label }), props.knob.options.hint && (_jsx("div", { className: "hint", children: props.knob.options.hint })), error && _jsx("div", { className: "error", children: error }), _jsx(Component, { value: value, onChange: update, focus: focus, hasError: !!error, options: props.knob.options, parentProps: props.parentProps })] }));
+    return (React.createElement(Wrapper, { ref: ref, onClick: handle },
+        React.createElement("h3", { className: "label" }, props.knob.label),
+        props.knob.options.hint && (React.createElement("div", { className: "hint" }, props.knob.options.hint)),
+        error && React.createElement("div", { className: "error" }, error),
+        React.createElement(Component, { value: value, onChange: update, focus: focus, hasError: !!error, options: props.knob.options, parentProps: props.parentProps })));
 }
 const Wrapper = styled.div `
   padding: 10px;

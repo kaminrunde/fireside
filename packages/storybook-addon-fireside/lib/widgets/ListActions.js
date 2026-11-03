@@ -1,4 +1,3 @@
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import * as React from "react";
 import styled from "styled-components";
 /**
@@ -24,17 +23,24 @@ export default function ListActions(props) {
         document.addEventListener("mousedown", listener);
         return () => document.removeEventListener("mousedown", listener);
     }, [open]);
-    return (_jsxs(Wrapper, { ref: ref, className: "ListActions", children: [_jsxs("div", { className: "bar", children: [_jsx("button", { className: "add", onClick: props.onAdd, children: props.addLabel }), props.actions.length > 0 && (_jsx("button", { className: "toggle", title: "More actions", onClick: () => (open ? close() : setOpen(true)), children: "\u22EE" }))] }), open && (_jsx("div", { className: "menu", children: props.actions.map((action, i) => confirming === i ? (_jsxs("div", { className: "confirm", children: [_jsx("span", { children: action.confirm }), _jsx("button", { className: "yes", onClick: () => {
-                                action.onClick();
-                                close();
-                            }, children: "Y" }), _jsx("button", { className: "no", onClick: () => setConfirming(null), children: "N" })] }, action.label)) : (_jsx("button", { className: "entry", disabled: action.disabled, onClick: () => {
-                        if (action.confirm) {
-                            setConfirming(i);
-                            return;
-                        }
-                        action.onClick();
-                        close();
-                    }, children: action.label }, action.label))) }))] }));
+    return (React.createElement(Wrapper, { ref: ref, className: "ListActions" },
+        React.createElement("div", { className: "bar" },
+            React.createElement("button", { className: "add", onClick: props.onAdd }, props.addLabel),
+            props.actions.length > 0 && (React.createElement("button", { className: "toggle", title: "More actions", onClick: () => (open ? close() : setOpen(true)) }, "\u22EE"))),
+        open && (React.createElement("div", { className: "menu" }, props.actions.map((action, i) => confirming === i ? (React.createElement("div", { className: "confirm", key: action.label },
+            React.createElement("span", null, action.confirm),
+            React.createElement("button", { className: "yes", onClick: () => {
+                    action.onClick();
+                    close();
+                } }, "Y"),
+            React.createElement("button", { className: "no", onClick: () => setConfirming(null) }, "N"))) : (React.createElement("button", { key: action.label, className: "entry", disabled: action.disabled, onClick: () => {
+                if (action.confirm) {
+                    setConfirming(i);
+                    return;
+                }
+                action.onClick();
+                close();
+            } }, action.label)))))));
 }
 const Wrapper = styled.div `
   position: relative;

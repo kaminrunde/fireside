@@ -1,3 +1,4 @@
+import * as React from "react";
 export type ListAction = {
     label: string;
     onClick: () => void;
@@ -16,5 +17,5 @@ type Props = {
  * Keeps the primary action a single full width button instead of a growing
  * stack of equally loud buttons
  */
-export default function ListActions(props: Props): import("react/jsx-runtime").JSX.Element;
+export default function ListActions(props: Props): React.JSX.Element;
 export {};

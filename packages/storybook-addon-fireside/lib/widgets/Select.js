@@ -1,4 +1,3 @@
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import * as React from "react";
 import styled from "styled-components";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
@@ -20,7 +19,11 @@ export default function Select(props) {
         const match = props.options.options.find((opt) => opt.value === props.value);
         return match ? match.label : props.value;
     }, [props.value, props.options.options]);
-    return (_jsxs(Wrapper, { tabIndex: 1, "$focus": props.focus.toString(), children: [_jsxs("div", { className: "value", onClick: handleClick, children: [label || "-", open ? _jsx(FaChevronUp, {}) : _jsx(FaChevronDown, {})] }), open && (_jsx("div", { className: "options", children: props.options.options.map((row) => (_jsx(Row, { selected: row.value === props.value, onClick: () => handleOptionSelect(row.value), children: row.label }, row.label))) }))] }));
+    return (React.createElement(Wrapper, { tabIndex: 1, "$focus": props.focus.toString() },
+        React.createElement("div", { className: "value", onClick: handleClick },
+            label || "-",
+            open ? React.createElement(FaChevronUp, null) : React.createElement(FaChevronDown, null)),
+        open && (React.createElement("div", { className: "options" }, props.options.options.map((row) => (React.createElement(Row, { key: row.label, selected: row.value === props.value, onClick: () => handleOptionSelect(row.value) }, row.label)))))));
 }
 const Wrapper = styled.div `
   position: relative;

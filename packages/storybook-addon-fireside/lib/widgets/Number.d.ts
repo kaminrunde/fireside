@@ -1,3 +1,4 @@
+import * as React from "react";
 import * as t from "../types";
 type Props = {
     value: number;
@@ -6,5 +7,5 @@ type Props = {
     options: t.NumberOptions;
     hasError: boolean;
 };
-export default function String(props: Props): import("react/jsx-runtime").JSX.Element;
+export default function String(props: Props): React.JSX.Element;
 export {};

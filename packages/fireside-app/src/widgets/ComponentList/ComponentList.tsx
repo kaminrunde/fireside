@@ -134,15 +134,22 @@ export default function ComponentList() {
   useShortcut(shortcuts.PREV_COMPONENT, moveActive(-1));
 
   /**
-   * a changed query means the list under the selection changed, so what was
-   * active is no longer what the user is looking at
+   * a changed query hides part of the list, and a component the user cannot
+   * see must not stay active. What is still on screen keeps its state, so
+   * clearing the search after a paste does not drop the pasted component
    */
   const lastQuery = React.useRef(query);
   React.useEffect(() => {
     if (lastQuery.current === query) return;
     lastQuery.current = query;
-    if (selection.ids.length) selection.clear();
-  }, [query, selection.ids.length, selection.clear]);
+    const kept = selection.ids.filter((id) => visibleIds.includes(id));
+    if (kept.length === selection.ids.length) return;
+    const anchor =
+      selection.anchor && kept.includes(selection.anchor)
+        ? selection.anchor
+        : kept[0] || null;
+    selection.set(kept, anchor);
+  }, [query, visibleIds, selection.ids, selection.anchor, selection.set]);
 
   const handleRowSelect =
     (id: string) => (e: React.MouseEvent | React.KeyboardEvent) => {

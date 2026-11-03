@@ -2,6 +2,11 @@ import * as React from "react";
 import { createPlugin, RawStory } from "@kaminrunde/fireside-utils";
 import { isOlderThanXMins } from "./utils";
 
+const COMPONENT_KEY = "copy-storybook-component";
+const TIMESTAMP_KEY = "copy-storybook-component-timestamp";
+/** timestamp of the copy that was pasted last */
+const PASTED_KEY = "copy-storybook-component-pasted";
+
 export default createPlugin((ctx) => {
   ctx.extendComponentButtonList({
     onClickFn: (c: any) => () => {
@@ -10,11 +15,10 @@ export default createPlugin((ctx) => {
         title: "Component copied to clipboard",
         content: "You can now paste it into a story.",
       });
-      localStorage.setItem("copy-storybook-component", JSON.stringify(c));
-      localStorage.setItem(
-        "copy-storybook-component-timestamp",
-        new Date().toString()
-      );
+      localStorage.setItem(COMPONENT_KEY, JSON.stringify(c));
+      // iso keeps the milliseconds, so two copies within the same second
+      // still count as two different clipboard contents
+      localStorage.setItem(TIMESTAMP_KEY, new Date().toISOString());
     },
     btnLabel: "Copy Component",
     btnIcon: "copy",
@@ -22,25 +26,50 @@ export default createPlugin((ctx) => {
     btnRenderCondition: true,
   });
 
-  ctx.extendComponentButtonList({
-    onClickFn: (c: any) => {
-      const component = localStorage.getItem("copy-storybook-component");
-      const timestamp = localStorage.getItem(
-        "copy-storybook-component-timestamp"
-      );
+  /**
+   * returns true when a component was inserted, so the paste shortcut of the
+   * app knows whether to switch to the component list
+   */
+  const pasteComponent = (): boolean => {
+    const component = localStorage.getItem(COMPONENT_KEY);
+    const timestamp = localStorage.getItem(TIMESTAMP_KEY);
 
-      // Using localStorage, mimic copyToClipboard by checking if component is older than x
-      if (timestamp && !isOlderThanXMins(timestamp)) {
-        ctx.actions.addComponentToComponentList(component);
-      } else {
-        ctx.actions.triggerSnackbarEvent({
-          type: "warning",
-          title: "Cannot paste component",
-          content: "Please copy a component first",
-        });
-      }
-    },
+    // using localStorage, mimic a clipboard by letting the copy expire
+    if (!component || !timestamp || isOlderThanXMins(timestamp)) {
+      ctx.actions.triggerSnackbarEvent({
+        type: "warning",
+        title: "Cannot paste component",
+        content: "Please copy a component first",
+      });
+      return false;
+    }
+
+    // every copy can be inserted once, a second paste would only add a
+    // duplicate by accident
+    if (localStorage.getItem(PASTED_KEY) === timestamp) {
+      ctx.actions.triggerSnackbarEvent({
+        type: "warning",
+        title: "Component already pasted",
+        content: "Copy the component again to insert it once more",
+      });
+      return false;
+    }
+
+    ctx.actions.addComponentToComponentList(component);
+    localStorage.setItem(PASTED_KEY, timestamp);
+    ctx.actions.triggerSnackbarEvent({
+      type: "info",
+      title: "Component pasted",
+      content: "The component was added to the component list",
+    });
+    return true;
+  };
+
+  ctx.extendComponentButtonList({
+    onClickFn: pasteComponent,
     btnLabel: "Insert Component",
+    // the app binds its paste shortcut to the action carrying this icon
+    btnIcon: "paste",
     btnPlacement: "global",
     btnRenderCondition: () => true,
   });

@@ -31,6 +31,12 @@ export const COPY_COMPONENT: ShortcutInfo = {
   description: "Copy the selected component (component list)",
 };
 
+export const PASTE_COMPONENT: ShortcutInfo = {
+  key: "v",
+  mod: true,
+  description: "Paste the copied component into the component list",
+};
+
 export const DELETE_COMPONENT: ShortcutInfo = {
   key: "d",
   mod: true,
@@ -67,6 +73,7 @@ export const EDITOR_SHORTCUTS: ShortcutInfo[] = [
   OPEN_COMPONENT,
   CLOSE_STORYBOOK,
   COPY_COMPONENT,
+  PASTE_COMPONENT,
   DELETE_COMPONENT,
   FOCUS_SEARCH,
   NEXT_COMPONENT,

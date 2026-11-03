@@ -1,5 +1,7 @@
 import { Component } from "@kaminrunde/fireside-utils";
 import { add } from "modules/components/actions";
+import * as selection from "modules/selection/actions";
+import * as search from "modules/search/actions";
 import store from "store";
 import { v4 as uuidv4 } from "uuid";
 
@@ -9,6 +11,11 @@ export default function addComponentToComponentList(component: string) {
   const state = store.getState().components.byId;
   parsedComponent = updateGridAreaIfDuplicate(state, parsedComponent);
   store.dispatch(add(parsedComponent));
+
+  // make the new component the active one, the component list scrolls to the
+  // active entry. A running search could hide it, so it is dropped first
+  if (store.getState().search.query) store.dispatch(search.setQuery(""));
+  store.dispatch(selection.set([parsedComponent.id], parsedComponent.id));
 }
 
 const updateGridAreaIfDuplicate = (

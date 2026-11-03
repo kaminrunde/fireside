@@ -3,9 +3,10 @@ import store from "store";
 import { push } from "redux-first-history";
 import useShortcut from "hooks/useShortcut";
 import { useLoadingComponent } from "modules/components";
+import { useExtendedButtonList } from "modules/plugins";
 import { useLocation } from "react-router-dom";
 import { focusSearchInput } from "widgets/ComponentList/searchInput";
-import { ROUTES, FOCUS_SEARCH } from "shortcuts";
+import { ROUTES, FOCUS_SEARCH, PASTE_COMPONENT } from "shortcuts";
 
 /**
  * app wide shortcuts. Everything that needs grid or storybook state is
@@ -14,6 +15,30 @@ import { ROUTES, FOCUS_SEARCH } from "shortcuts";
 export default function Shortcuts() {
   const loadingComponent = useLoadingComponent();
   const location = useLocation();
+  const pluginButtons = useExtendedButtonList();
+
+  /**
+   * cmd+v maps to whatever global plugin action asks for the paste icon. The
+   * plugin shows the snackbar itself and tells us whether something was
+   * inserted; only then we switch to the list, a failed paste leaves the user
+   * where they are
+   */
+  const pasteAction = React.useMemo(
+    () =>
+      pluginButtons.data.find(
+        (b) =>
+          b.payload.btnPlacement === "global" && b.payload.btnIcon === "paste"
+      ) || null,
+    [pluginButtons.data]
+  );
+
+  const paste = () => {
+    if (!pasteAction) return;
+    const inserted = pasteAction.payload.onClickFn();
+    if (inserted === true && location.pathname !== "/") {
+      store.dispatch(push("/"));
+    }
+  };
 
   /**
    * coming from another route the list has to mount before its search field
@@ -33,6 +58,11 @@ export default function Shortcuts() {
   };
 
   useShortcut(FOCUS_SEARCH, focusSearch, !loadingComponent.isLoading);
+  useShortcut(
+    PASTE_COMPONENT,
+    paste,
+    !loadingComponent.isLoading && !!pasteAction
+  );
 
   return (
     <>

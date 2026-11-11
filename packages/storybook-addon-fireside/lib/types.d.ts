@@ -54,6 +54,12 @@ export interface SelectOptions extends KnobOptions {
     }[];
 }
 export interface MarkdownOptions extends KnobOptions {
+    /**
+     * visible height of the editor textarea in rows (line-height 30px). defaults to 5
+     * @example
+     * k.markdown('md', 'Markdown', '', { rows: 10 })
+     */
+    rows?: number;
     /** see https://www.npmjs.com/package/simplemde for more info */
     autofocus?: true;
     /** see https://www.npmjs.com/package/simplemde for more info */

@@ -19,7 +19,7 @@ export default function Markdown(props: Props) {
         ref={ref}
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
-        rows={20}
+        rows={props.options.rows ?? 5}
       />
     </Wrapper>
   );

@@ -18,7 +18,7 @@ export default function Sidebar() {
         <div key="content" className="content">
           <Link className="item" to="/">
             <div className="icon">
-              {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+              {/* @ts-ignore react-icons types not yet compatible with React 19 types */}
               <FaListUl />
             </div>
             <div className="label">COMPONENTS</div>
@@ -35,7 +35,7 @@ export default function Sidebar() {
             ))}
           <Link className="item" to="/settings">
             <div className="icon">
-              {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+              {/* @ts-ignore react-icons types not yet compatible with React 19 types */}
               <FaCog />
             </div>
             <div className="label">SETTINGS</div>

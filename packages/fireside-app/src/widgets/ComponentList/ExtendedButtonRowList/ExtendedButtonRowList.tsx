@@ -90,7 +90,7 @@ export default function ExtendedButtonRowList(props: Props) {
           aria-label="More actions"
           onClick={() => setOpen(!open)}
         >
-          {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+          {/* @ts-ignore react-icons types not yet compatible with React 19 types */}
           <FiMoreVertical />
         </button>
       )}

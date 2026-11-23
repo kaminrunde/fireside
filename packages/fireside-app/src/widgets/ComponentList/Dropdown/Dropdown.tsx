@@ -36,7 +36,7 @@ export default function Select(props: Props) {
   return (
     <Wrapper ref={wrapperRef}>
       <Button className="btns" onClick={() => setIsOpen(!isOpen)}>
-        {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+        {/* @ts-ignore react-icons types not yet compatible with React 19 types */}
         {props.value.label} {isOpen ? <FiChevronUp /> : <FiChevronDown />}
       </Button>
       {isOpen && (

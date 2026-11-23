@@ -196,11 +196,11 @@ export default function Grid(props: Props) {
       <div className="top">
         <div className="context">
           <button onClick={() => grid.removeWidth()}>
-            {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+            {/* @ts-ignore react-icons types not yet compatible with React 19 types */}
             <FiMinus />
           </button>
           <button onClick={() => grid.addWidth()}>
-            {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+            {/* @ts-ignore react-icons types not yet compatible with React 19 types */}
             <FiPlus />
           </button>
           <SettingsButton mediaSize={props.mediaSize} />
@@ -289,7 +289,7 @@ export default function Grid(props: Props) {
       {hoverComponentId && (
         <HoverInfo>
           <div className="info">
-            {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+            {/* @ts-ignore react-icons types not yet compatible with React 19 types */}
             <MdInfoOutline />
           </div>
           <div className="labels">

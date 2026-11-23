@@ -10,7 +10,7 @@ export default function IndexRoute() {
     <Wrapper>
       {loadingStatus.data && (
         <div className="loading">
-          {/* @ts-expect-error react-spinners types not yet compatible with React 19 types */}
+          {/* @ts-ignore react-spinners types not yet compatible with React 19 types */}
           <ClockLoader color="#8bc34a" loading size={50} />
 
           <span className="label">Collecting data...</span>

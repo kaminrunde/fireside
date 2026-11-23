@@ -170,7 +170,7 @@ export default function ComponentList() {
   return (
     <Wrapper className="ComponentList">
       <div className="search">
-        {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+        {/* @ts-ignore react-icons types not yet compatible with React 19 types */}
         <FiSearch className="icon" />
         <input
           ref={registerSearchInput}
@@ -181,7 +181,7 @@ export default function ComponentList() {
         />
         {isSearching && (
           <div className="clear" title="Clear" onClick={() => setQuery("")}>
-            {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+            {/* @ts-ignore react-icons types not yet compatible with React 19 types */}
             <FiX />
           </div>
         )}
@@ -231,7 +231,7 @@ export default function ComponentList() {
               aria-label="Update"
               onClick={() => loading.load(c.id)}
             >
-              {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+              {/* @ts-ignore react-icons types not yet compatible with React 19 types */}
               <FiEdit2 />
             </button>
             <button
@@ -240,7 +240,7 @@ export default function ComponentList() {
               aria-label="Remove"
               onClick={() => components.removeComponent(c)}
             >
-              {/* @ts-expect-error react-icons types not yet compatible with React 19 types */}
+              {/* @ts-ignore react-icons types not yet compatible with React 19 types */}
               <FiTrash2 />
             </button>
           </div>

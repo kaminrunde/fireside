@@ -1,7 +1,27 @@
 # fireside
 WIP
 
+[![Publish](https://github.com/kaminrunde/fireside/actions/workflows/publish.yml/badge.svg)](https://github.com/kaminrunde/fireside/actions/workflows/publish.yml)
+
+## Packages
+
+All packages are published **publicly on [npmjs.com](https://www.npmjs.com/org/kaminrunde)** (and mirrored to GitHub Packages).
+
+| Package | npm |
+| --- | --- |
+| `@kaminrunde/fireside-app` | [![npm](https://img.shields.io/npm/v/@kaminrunde/fireside-app)](https://www.npmjs.com/package/@kaminrunde/fireside-app) |
+| `@kaminrunde/fireside-utils` | [![npm](https://img.shields.io/npm/v/@kaminrunde/fireside-utils)](https://www.npmjs.com/package/@kaminrunde/fireside-utils) |
+| `@kaminrunde/gatsby-plugin-fireside` | [![npm](https://img.shields.io/npm/v/@kaminrunde/gatsby-plugin-fireside)](https://www.npmjs.com/package/@kaminrunde/gatsby-plugin-fireside) |
+| `@kaminrunde/storybook-addon-fireside` | [![npm](https://img.shields.io/npm/v/@kaminrunde/storybook-addon-fireside)](https://www.npmjs.com/package/@kaminrunde/storybook-addon-fireside) |
+| `@kaminrunde/fireside-connector-contentful` | [![npm](https://img.shields.io/npm/v/@kaminrunde/fireside-connector-contentful)](https://www.npmjs.com/package/@kaminrunde/fireside-connector-contentful) |
+| `@kaminrunde/fireside-plugin-ab-test` | [![npm](https://img.shields.io/npm/v/@kaminrunde/fireside-plugin-ab-test)](https://www.npmjs.com/package/@kaminrunde/fireside-plugin-ab-test) |
+| `@kaminrunde/fireside-plugin-background-rows` | [![npm](https://img.shields.io/npm/v/@kaminrunde/fireside-plugin-background-rows)](https://www.npmjs.com/package/@kaminrunde/fireside-plugin-background-rows) |
+| `@kaminrunde/fireside-plugin-copy-component` | [![npm](https://img.shields.io/npm/v/@kaminrunde/fireside-plugin-copy-component)](https://www.npmjs.com/package/@kaminrunde/fireside-plugin-copy-component) |
+| `@kaminrunde/fireside-plugin-fullwidth-components` | [![npm](https://img.shields.io/npm/v/@kaminrunde/fireside-plugin-fullwidth-components)](https://www.npmjs.com/package/@kaminrunde/fireside-plugin-fullwidth-components) |
+
 ## Usage
+
+No token and no `.npmrc` configuration needed:
 
 ```bash
 npm install --save \
@@ -11,18 +31,28 @@ npm install --save \
   @kaminrunde/storybook-addon-fireside
 ```
 
+### Migrating from GitHub Packages
+
+Older setups installed these packages from GitHub Packages and needed a GitHub token plus this line in the project's `.npmrc`:
+
+```
+@kaminrunde:registry=https://npm.pkg.github.com
+```
+
+Remove that line (and the token) to install from npmjs.com instead.
+
+> **Note:** a registry mapping in `.npmrc` applies to the whole `@kaminrunde` scope. If your project also uses other `@kaminrunde/*` packages that exist **only** on GitHub Packages, keep the line – the fireside packages are still mirrored there, so both setups keep working.
+
 ## Lerna
 
 Usage:
 
 ```bash
 # bootstrap
-# !!! NOTE comment out registry=... in .npmrc
 lerna bootstrap --force-local
-# !!! NOTE comment in registry=... in .npmrc
 ```
 
-To publish packages with a scope (e.g., `@kaminrunde/rocks`), [you must set `access`](https://github.com/lerna/lerna/tree/master/commands/publish#per-package-configuration) in packages' `package.json`: 
+To publish packages with a scope (e.g., `@kaminrunde/rocks`) publicly, `access` must be set in the packages' `package.json` (all fireside packages already have it):
 
 ```
   "publishConfig": {
@@ -30,60 +60,65 @@ To publish packages with a scope (e.g., `@kaminrunde/rocks`), [you must set `acc
   }
 ```
 
-Lerna copies root license (`LICENSE`) into package location, no need to do this manually (of via symlink for that matter).
+## Releasing
 
-## Configuring npm for use with GitHub Packages
+Publishing happens **only in CI** via [`.github/workflows/publish.yml`](.github/workflows/publish.yml). Nobody needs an npm or GitHub token locally, and there are no secrets in this repository or in the GitHub repository settings:
 
-<https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages>
+- **npmjs.com** – [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers) (OIDC). Packages are published with [provenance](https://docs.npmjs.com/generating-provenance-statements).
+- **GitHub Packages** – the workflow's automatic `GITHUB_TOKEN`.
 
-<https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line>
+### Release flow
 
-Required scopes:
-
-- `repo*` 
-- `write:packages` 
-
-> To authenticate by logging in to npm, use the npm login command, replacing USERNAME with your GitHub username, TOKEN with your [personal access token](https://github.com/settings/tokens), and PUBLIC-EMAIL-ADDRESS with your email address.
+The committed `lib/` folders are published as they are – build (`yarn build` in the package) and commit them before releasing. `fireside-app` is published as source and built in the consuming project (`fireside-build`).
 
 ```bash
-npm login --registry=https://npm.pkg.github.com --scope=@kaminrunde
-> Username: USERNAME
-> Password: TOKEN
+# stable release: bump versions, commit, tag and push
+yarn release
+
+# prerelease (e.g. 1.1.1-alpha.55)
+yarn prerelease
 ```
 
-Publishing a package using a local `.npmrc` file
+Pushing the version tag triggers the **Publish** workflow. It publishes every non-private package in `packages/*` whose version is not yet in the target registry, so re-running it is safe.
 
-<https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages#publishing-a-package-using-a-local-npmrc-file>
+Prereleases (`x.y.z-alpha.n`) are published with dist-tag **`latest`**, because fireside currently only ships alpha versions (same as on GitHub Packages before). To publish them as `next` instead, set `PRERELEASE_DIST_TAG: next` in the workflow.
 
-### manual prerelease `lerna publish prerelease`
+### Choosing the target registry
+
+| Where | How |
+| --- | --- |
+| Default for tag pushes | repository variable `PUBLISH_TARGET` (*Settings → Secrets and variables → Actions → Variables*): `npm`, `github` or `both`. Unset = `both`. |
+| Manual run | *Actions → Publish → Run workflow* and pick `both`, `npm` or `github` |
+
+### One-time setup on npmjs.com
+
+npm Trusted Publishing can only be configured for packages that already exist, so the very first version is published once by hand. Run these steps in a real terminal – npm waits there for the browser 2FA confirmation (without a TTY it fails with `EOTP`):
+
+1. Log in (browser login with 2FA; the session token stays in your `~/.npmrc`, never in this repo):
+   ```bash
+   npm login
+   ```
+2. Publish the current versions (dry run first):
+   ```bash
+   scripts/publish-packages.sh npm --dry-run
+   scripts/publish-packages.sh npm
+   ```
+   If npm answers with a *staged publish*, approve the versions on npmjs.com.
+3. Configure Trusted Publishing for all packages (`npm trust`, needs npm ≥ 11.10 and 2FA on your account):
+   ```bash
+   scripts/setup-trusted-publishing.sh --dry-run
+   scripts/setup-trusted-publishing.sh        # 2FA in the browser: tick "skip 2FA for 5 minutes"
+   scripts/setup-trusted-publishing.sh --list # verify
+   ```
+   With an authenticator app you can pass a code instead: `NPM_OTP=123456 scripts/setup-trusted-publishing.sh`.
+4. Recommended: for each package set *Publishing access* to **"Require two-factor authentication and disallow tokens"** – then only the workflow can publish.
+5. `npm logout`
+
+`scripts/publish-packages.sh` also overrides `@kaminrunde:registry`, so a GitHub scope mapping in your personal `~/.npmrc` does not redirect the publish to GitHub Packages.
+
+### Forced release
 
 ```bash
-❯ yarn run prerelease
-yarn run v1.22.4
-$ lerna publish prerelease
-lerna notice cli v3.20.2
-lerna info current version 1.0.0
-lerna info Assuming all packages changed
-
-Changes:
- - @kaminrunde/example-project-fireside: 1.0.0 => 1.0.1-alpha.0 (private)
- - @kaminrunde/fireside-app: 1.0.0 => 1.0.1-alpha.0
- - @kaminrunde/fireside-utils: 1.0.0 => 1.0.1-alpha.0
- - @kaminrunde/gatsby-plugin-fireside: 1.0.0 => 1.0.1-alpha.0
- - @kaminrunde/storybook-addon-fireside: 1.0.0 => 1.0.1-alpha.0
-
-? Are you sure you want to publish these packages? Yes
-
-[...]
-
-Successfully published:
- - @kaminrunde/fireside-app@1.0.1-alpha.0
- - @kaminrunde/fireside-utils@1.0.1-alpha.0
- - @kaminrunde/gatsby-plugin-fireside@1.0.1-alpha.0
- - @kaminrunde/storybook-addon-fireside@1.0.1-alpha.0
-lerna success published 4 packages
+# bump all packages even if unchanged
+yarn lerna version prerelease --force-publish '*'
 ```
-
-### forced manual prelrelease from branch `master`
-
-`yarn run publish --force-publish '*'`

@@ -15,12 +15,12 @@
     "start:app": "lerna run start --scope='@kaminrunde/fireside-app'",
     "start:storybook": "lerna run storybook --scope='@kaminrunde/example-project-fireside'",
     "build:fireside": "lerna run fireside --scope='@kaminrunde/example-project-fireside'",
-    "prepare-release": "git checkout master && git pull --rebase origin master && lerna updated",
-    "release": "yarn run prepare-release && lerna publish --exact",
-    "prerelease": "lerna publish prerelease"
+    "prepare-release": "git checkout master && git pull --rebase origin master && lerna changed",
+    "release": "yarn run prepare-release && lerna version --exact",
+    "prerelease": "lerna version prerelease"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kaminrunde/firescout.git"
+    "url": "git+https://github.com/kaminrunde/fireside.git"
   }
 }

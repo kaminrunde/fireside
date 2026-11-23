@@ -23,7 +23,7 @@ Lerna monorepo with Yarn, workspaces in `packages/*` and `examples/*`.
 ## Common Commands
 
 ```bash
-# Setup — NOTE: comment out registry=... in .npmrc before bootstrap, comment back after
+# Setup
 yarn bootstrap                    # Lerna bootstrap (link local packages)
 
 # Development
@@ -44,8 +44,8 @@ cd packages/fireside-app && npm test         # Jest (jsdom)
 cd packages/fireside-app && npm run test-types  # TypeScript type check
 
 # Publishing
-yarn prerelease                   # lerna publish prerelease
-yarn release                      # prepare + lerna publish --exact
+yarn prerelease                   # lerna version prerelease (bump + tag + push → CI publishes)
+yarn release                      # prepare + lerna version --exact (bump + tag + push → CI publishes)
 ```
 
 ## Architecture
@@ -87,4 +87,4 @@ Styled-components throughout. The app uses `styled-components@5` while the story
 
 ## Publishing
 
-Packages publish to GitHub Packages (`https://npm.pkg.github.com`) under `@kaminrunde` scope. Requires GitHub personal access token with `repo` + `write:packages` scopes. Only `master` branch can publish.
+Packages publish publicly to npmjs.com (and mirrored to GitHub Packages) under the `@kaminrunde` scope — only from CI via `.github/workflows/publish.yml`, triggered by the version tag that `lerna version` pushes (or manually with target `npm`/`github`/`both`). npmjs.com uses Trusted Publishing (OIDC), GitHub Packages the workflow's `GITHUB_TOKEN` — no tokens or secrets anywhere. `scripts/publish-packages.sh` does the (idempotent) publishing; prereleases go to dist-tag `latest`. Only `master` can be versioned. One-time npmjs setup: see README.

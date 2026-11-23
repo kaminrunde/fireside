@@ -24,7 +24,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kaminrunde/fireside.git"
+    "url": "git+https://github.com/kaminrunde/fireside.git",
+    "directory": "packages/fireside-plugin-copy-component"
   },
   "publishConfig": {
     "access": "public"

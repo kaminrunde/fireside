@@ -45,7 +45,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kaminrunde/fireside.git"
+    "url": "git+https://github.com/kaminrunde/fireside.git",
+    "directory": "packages/storybook-addon-fireside"
   },
   "publishConfig": {
     "access": "public"

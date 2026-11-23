@@ -19,7 +19,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kaminrunde/fireside.git"
+    "url": "git+https://github.com/kaminrunde/fireside.git",
+    "directory": "packages/fireside-connector-contentful"
   },
   "publishConfig": {
     "access": "public"

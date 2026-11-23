@@ -2649,7 +2649,7 @@ __metadata:
   resolution: "@kaminrunde/fireside-plugin-ab-test@workspace:packages/fireside-plugin-ab-test"
   dependencies:
     "@kaminrunde/fireside-utils": "npm:^1.1.1-alpha.52"
-    immer: "npm:^8.0.0"
+    immer: "npm:^9.0.21"
     react: "npm:^19.0.0"
     react-icons: "npm:^4.1.0"
     typescript: "npm:^5.3.3"
@@ -2664,7 +2664,7 @@ __metadata:
   resolution: "@kaminrunde/fireside-plugin-background-rows@workspace:packages/fireside-plugin-background-rows"
   dependencies:
     "@kaminrunde/fireside-utils": "npm:^1.1.1-alpha.52"
-    immer: "npm:^8.0.0"
+    immer: "npm:^9.0.21"
     react: "npm:^19.0.0"
     react-icons: "npm:^4.1.0"
     styled-components: "npm:^6.1.8"
@@ -2693,7 +2693,7 @@ __metadata:
   resolution: "@kaminrunde/fireside-plugin-fullwidth-components@workspace:packages/fireside-plugin-fullwidth-components"
   dependencies:
     "@kaminrunde/fireside-utils": "npm:^1.1.1-alpha.52"
-    immer: "npm:^8.0.0"
+    immer: "npm:^9.0.21"
     react: "npm:^19.0.0"
     react-icons: "npm:^4.1.0"
     typescript: "npm:^5.3.3"
@@ -10927,14 +10927,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"immer@npm:^8.0.0":
-  version: 8.0.4
-  resolution: "immer@npm:8.0.4"
-  checksum: 10c0/c02e9bf6cff1db8c51578663878403beaf2eafaf5ad02fac344dd82336578de948ecf609fd67665d6fe8bf115745866fb8b66f7d6348273cf8b9cc134ac71bb6
-  languageName: node
-  linkType: hard
-
-"immer@npm:^9.0.12":
+"immer@npm:^9.0.12, immer@npm:^9.0.21":
   version: 9.0.21
   resolution: "immer@npm:9.0.21"
   checksum: 10c0/03ea3ed5d4d72e8bd428df4a38ad7e483ea8308e9a113d3b42e0ea2cc0cc38340eb0a6aca69592abbbf047c685dbda04e3d34bf2ff438ab57339ed0a34cc0a05
